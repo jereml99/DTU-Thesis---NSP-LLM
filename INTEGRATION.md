@@ -22,23 +22,17 @@ Example:
 
 ### Step 2: Update main.tex
 
-In `main.tex`, you can choose between:
+The thesis chapters are stored in the `/Chapters/` directory with numbered prefixes.
 
-**Option 1: Use example chapters** (default)
+After converting Markdown files to LaTeX using `md2tex.py`, copy them from `/tex/` to `/Chapters/` with appropriate numbering:
+
 ```latex
 \input{Chapters/01_Introduction.tex}
-\input{Chapters/02_Colours.tex}
-\input{Chapters/03_Examples.tex}
-```
-
-**Option 2: Use generated chapters from Markdown**
-```latex
-\input{tex/introduction}
-\input{tex/background}
-\input{tex/methodology}
-\input{tex/results}
-\input{tex/discussion}
-\input{tex/conclusion}
+\input{Chapters/02_Background.tex}
+\input{Chapters/03_Methodology.tex}
+\input{Chapters/04_Results.tex}
+\input{Chapters/05_Discussion.tex}
+\input{Chapters/06_Conclusion.tex}
 ```
 
 ### Step 3: Compile
@@ -76,13 +70,20 @@ DTU-Thesis---NSP-LLM/
 │   ├── results.md
 │   ├── discussion.md
 │   └── conclusion.md
-├── tex/                   # Generated LaTeX files (auto-generated)
+├── tex/                   # Temporary generated LaTeX files (auto-generated)
 │   ├── introduction.tex
 │   ├── background.tex
 │   ├── methodology.tex
 │   ├── results.tex
 │   ├── discussion.tex
 │   └── conclusion.tex
+├── Chapters/              # Final thesis chapters (numbered)
+│   ├── 01_Introduction.tex
+│   ├── 02_Background.tex
+│   ├── 03_Methodology.tex
+│   ├── 04_Results.tex
+│   ├── 05_Discussion.tex
+│   └── 06_Conclusion.tex
 ├── md2tex.py              # Conversion script
 ├── main.tex               # Main thesis document
 └── bibliography.bib       # Bibliography database
@@ -91,10 +92,11 @@ DTU-Thesis---NSP-LLM/
 ## Workflow
 
 1. **Edit**: Write/edit your content in Markdown files in `content/`
-2. **Convert**: Run `python3 md2tex.py --all` to generate LaTeX files
-3. **Review**: Check generated files in `tex/` directory
-4. **Compile**: Compile `main.tex` with your LaTeX compiler
-5. **Iterate**: Repeat as needed
+2. **Convert**: Run `python3 md2tex.py --all` to generate LaTeX files in `tex/`
+3. **Copy**: Copy converted files from `tex/` to `Chapters/` with appropriate numbering (e.g., `01_`, `02_`, etc.)
+4. **Review**: Check the chapter files in `Chapters/` directory
+5. **Compile**: Compile `main.tex` with your LaTeX compiler
+6. **Iterate**: Repeat as needed
 
 ## Style Compliance
 
@@ -112,17 +114,19 @@ The generated LaTeX files:
 
 You can create additional chapters by:
 1. Creating a new `.md` file in `content/` (e.g., `content/appendix.md`)
-2. Running the conversion script
-3. Adding `\input{tex/appendix}` to `main.tex`
+2. Running the conversion script (`python3 md2tex.py content/appendix.md`)
+3. Copying the generated file to `Chapters/` with appropriate numbering (e.g., `Chapters/07_Appendix.tex`)
+4. Adding `\input{Chapters/07_Appendix.tex}` to `main.tex`
 
 ### Mixed Approach
 
-You can mix manually written LaTeX chapters with generated ones:
+You can mix manually written LaTeX chapters with generated ones in the `Chapters/` directory:
 ```latex
-\input{Chapters/01_Introduction.tex}    % Manual
-\input{tex/background}                   % Generated
-\input{tex/methodology}                  % Generated
-\input{Chapters/04_CustomChapter.tex}   % Manual
+\input{Chapters/01_Introduction.tex}    % Generated from Markdown
+\input{Chapters/02_Background.tex}      % Generated from Markdown
+\input{Chapters/03_Methodology.tex}     % Generated from Markdown
+\input{Chapters/04_CustomChapter.tex}   % Manually written LaTeX
+\input{Chapters/05_Results.tex}         % Generated from Markdown
 ```
 
 ## Troubleshooting
