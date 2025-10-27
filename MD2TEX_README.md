@@ -5,7 +5,8 @@ This system automatically generates and maintains LaTeX files from Markdown cont
 ## Directory Structure
 
 - `/content/` - Source Markdown files (.md)
-- `/tex/` - Generated LaTeX files (.tex)
+- `/tex/` - Temporary directory for generated LaTeX files (.tex)
+- `/Chapters/` - Final LaTeX chapter files to be included in thesis
 - `md2tex.py` - Conversion script
 
 ## Usage
@@ -91,9 +92,10 @@ Converts to:
 ## Workflow
 
 1. **Edit** Markdown files in `/content/` directory
-2. **Convert** using `python3 md2tex.py --all`
-3. **Include** in `main.tex` using `\input{tex/introduction}`, etc.
-4. **Compile** your thesis using your LaTeX compiler
+2. **Convert** using `python3 md2tex.py --all` (outputs to `/tex/`)
+3. **Copy** converted files from `/tex/` to `/Chapters/` with appropriate numbering (01_, 02_, etc.)
+4. **Include** in `main.tex` using `\input{Chapters/01_Introduction.tex}`, etc.
+5. **Compile** your thesis using your LaTeX compiler
 
 ## File Naming
 
@@ -105,22 +107,30 @@ The conversion maintains the base filename:
 - `content/discussion.md` → `tex/discussion.tex`
 - `content/conclusion.md` → `tex/conclusion.tex`
 
+After conversion, copy files to the `/Chapters/` directory with appropriate numbering:
+- `tex/introduction.tex` → `Chapters/01_Introduction.tex`
+- `tex/background.tex` → `Chapters/02_Background.tex`
+- `tex/methodology.tex` → `Chapters/03_Methodology.tex`
+- `tex/results.tex` → `Chapters/04_Results.tex`
+- `tex/discussion.tex` → `Chapters/05_Discussion.tex`
+- `tex/conclusion.tex` → `Chapters/06_Conclusion.tex`
+
 ## Integration with main.tex
 
-To use the generated files in your thesis, include them in `main.tex`:
+To use the chapters in your thesis, they are included in `main.tex`:
 
 ```latex
-\input{tex/introduction}
+\input{Chapters/01_Introduction.tex}
 \cleardoublepage
-\input{tex/background}
+\input{Chapters/02_Background.tex}
 \cleardoublepage
-\input{tex/methodology}
+\input{Chapters/03_Methodology.tex}
 \cleardoublepage
-\input{tex/results}
+\input{Chapters/04_Results.tex}
 \cleardoublepage
-\input{tex/discussion}
+\input{Chapters/05_Discussion.tex}
 \cleardoublepage
-\input{tex/conclusion}
+\input{Chapters/06_Conclusion.tex}
 ```
 
 ## Style Compliance

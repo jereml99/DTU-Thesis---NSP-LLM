@@ -19,28 +19,28 @@ python3 md2tex.py --all
 
 This will generate corresponding `.tex` files in the `/tex/` directory.
 
-### 3. Use in Your Thesis
-In `main.tex`, uncomment the OPTION 2 section and comment out OPTION 1:
-
-```latex
-% OPTION 2: Use automatically generated chapters from tex/ directory
-% Uncomment the lines below and comment out OPTION 1 above
-\pagenumbering{arabic}
-\input{tex/introduction}
-\cleardoublepage 
-\input{tex/background}
-\cleardoublepage 
-\input{tex/methodology}
-\cleardoublepage 
-\input{tex/results}
-\cleardoublepage 
-\input{tex/discussion}
-\cleardoublepage 
-\input{tex/conclusion}
-\cleardoublepage 
+### 3. Copy to Chapters Directory
+Copy the generated files to the `/Chapters/` directory with appropriate numbering:
+```bash
+cp tex/introduction.tex Chapters/01_Introduction.tex
+cp tex/background.tex Chapters/02_Background.tex
+cp tex/methodology.tex Chapters/03_Methodology.tex
+cp tex/results.tex Chapters/04_Results.tex
+cp tex/discussion.tex Chapters/05_Discussion.tex
+cp tex/conclusion.tex Chapters/06_Conclusion.tex
 ```
 
 ### 4. Compile Your Thesis
+The chapters are already configured in `main.tex`:
+```latex
+\input{Chapters/01_Introduction.tex}
+\input{Chapters/02_Background.tex}
+\input{Chapters/03_Methodology.tex}
+\input{Chapters/04_Results.tex}
+\input{Chapters/05_Discussion.tex}
+\input{Chapters/06_Conclusion.tex}
+```
+
 Use your preferred LaTeX compiler:
 ```bash
 lualatex main.tex
