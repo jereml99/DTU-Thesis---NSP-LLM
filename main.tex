@@ -24,6 +24,7 @@
 \cleardoublepage 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OPTION 1: Use example chapters from Chapters/ directory
 \pagenumbering{arabic}
 \input{Chapters/01_Introduction.tex}
 \cleardoublepage 
@@ -31,6 +32,22 @@
 \cleardoublepage 
 \input{Chapters/03_Examples.tex}
 \cleardoublepage 
+
+% OPTION 2: Use automatically generated chapters from tex/ directory
+% Uncomment the lines below and comment out OPTION 1 above
+% \pagenumbering{arabic}
+% \input{tex/introduction}
+% \cleardoublepage 
+% \input{tex/background}
+% \cleardoublepage 
+% \input{tex/methodology}
+% \cleardoublepage 
+% \input{tex/results}
+% \cleardoublepage 
+% \input{tex/discussion}
+% \cleardoublepage 
+% \input{tex/conclusion}
+% \cleardoublepage 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \printbibliography[heading=bibintoc,title={Bibliography}]
