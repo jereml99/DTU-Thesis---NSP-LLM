@@ -113,7 +113,7 @@ Copilot is enabled for all file types including LaTeX and Markdown. To modify:
 ### Quick Terminal Shortcuts
 
 - Open terminal: `` Ctrl+` `` (or `` Cmd+` `` on macOS)
-- New terminal: `Ctrl+Shift+` ` (or `Cmd+Shift+` ` on macOS)
+- New terminal: `` Ctrl+Shift+` `` (or `` Cmd+Shift+` `` on macOS)
 - Split terminal: `Ctrl+Shift+5` (or `Cmd+Shift+5` on macOS)
 
 ## Files Added

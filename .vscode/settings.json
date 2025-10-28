@@ -83,7 +83,7 @@
   "terminal.integrated.cursorBlinking": true,
   "terminal.integrated.enableMultiLinePasteWarning": true,
   
-  // GitHub Copilot terminal settings
+  // GitHub Copilot file type settings
   "github.copilot.enable": {
     "*": true,
     "markdown": true,
