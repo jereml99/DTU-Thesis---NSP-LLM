@@ -69,5 +69,24 @@
   "latex-workshop.latex.rootFile.useSubFile": false,
   
   // Build output directory
-  "latex-workshop.latex.outDir": "build"
+  "latex-workshop.latex.outDir": "build",
+  
+  // Terminal configuration
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  "terminal.integrated.scrollback": 10000,
+  "terminal.integrated.fontSize": 14,
+  "terminal.integrated.fontFamily": "monospace",
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.enableMultiLinePasteWarning": true,
+  
+  // GitHub Copilot terminal settings
+  "github.copilot.enable": {
+    "*": true,
+    "markdown": true,
+    "latex": true
+  }
 }

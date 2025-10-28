@@ -77,9 +77,48 @@ The template uses Arial (`\setmainfont{Arial}` in `Setup/Settings.tex`). Ensure 
 - **macOS**: Arial is pre-installed
 - **Alternative**: Replace with TeX Gyre Heros: `\setmainfont{TeX Gyre Heros}`
 
+## VS Code Terminal Configuration
+
+The workspace includes optimized terminal settings for working with LaTeX and GitHub Copilot:
+
+### How to Change Terminal Settings
+
+Terminal settings are configured in `.vscode/settings.json`. You can customize:
+
+1. **Default Shell**:
+   - Linux: `"terminal.integrated.defaultProfile.linux": "bash"` (or "zsh", "fish")
+   - macOS: `"terminal.integrated.defaultProfile.osx": "zsh"` (or "bash")
+   - Windows: `"terminal.integrated.defaultProfile.windows": "PowerShell"` (or "Command Prompt", "Git Bash")
+
+2. **Terminal Appearance**:
+   - Font size: `"terminal.integrated.fontSize": 14` (adjust as needed)
+   - Font family: `"terminal.integrated.fontFamily": "monospace"` (or "Consolas", "Monaco", etc.)
+   - Cursor style: `"terminal.integrated.cursorStyle": "line"` (or "block", "underline")
+
+3. **Terminal Behavior**:
+   - Working directory: `"terminal.integrated.cwd": "${workspaceFolder}"` (starts in project root)
+   - Scrollback: `"terminal.integrated.scrollback": 10000` (command history size)
+
+### GitHub Copilot Integration
+
+Copilot is enabled for all file types including LaTeX and Markdown. To modify:
+```json
+"github.copilot.enable": {
+  "*": true,
+  "markdown": true,
+  "latex": true
+}
+```
+
+### Quick Terminal Shortcuts
+
+- Open terminal: `` Ctrl+` `` (or `` Cmd+` `` on macOS)
+- New terminal: `Ctrl+Shift+` ` (or `Cmd+Shift+` ` on macOS)
+- Split terminal: `Ctrl+Shift+5` (or `Cmd+Shift+5` on macOS)
+
 ## Files Added
 
 - `.latexmkrc` - XeLaTeX + biber configuration
-- `.vscode/settings.json` - LaTeX Workshop settings
+- `.vscode/settings.json` - LaTeX Workshop and terminal settings
 - `.vscode/tasks.json` - Build tasks
 - `Setup/Preamble.tex` - Updated to use `\addbibresource` (biblatex best practice)
