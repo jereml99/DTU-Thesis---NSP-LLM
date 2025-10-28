@@ -9,6 +9,7 @@
         "-synctex=1",
         "-interaction=nonstopmode",
         "-file-line-error",
+        "-outdir=build",
         "%DOC%"
       ]
     },
@@ -19,6 +20,7 @@
         "-synctex=1",
         "-interaction=nonstopmode",
         "-file-line-error",
+        "-output-directory=build",
         "%DOC%"
       ]
     },
@@ -64,5 +66,8 @@
   
   // Root file detection
   "latex-workshop.latex.rootFile.doNotPrompt": true,
-  "latex-workshop.latex.rootFile.useSubFile": false
+  "latex-workshop.latex.rootFile.useSubFile": false,
+  
+  // Build output directory
+  "latex-workshop.latex.outDir": "build"
 }
