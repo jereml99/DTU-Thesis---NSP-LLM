@@ -134,3 +134,4 @@ __pycache__/
 ## Latex Workshop temporary files
 *.bbl.sav
 *.bcf.sav
+content/papers

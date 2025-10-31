@@ -50,6 +50,12 @@ Purpose: This repo is a XeLaTeX + biblatex/biber thesis template with DTU stylin
 - Font errors: install Arial (Linux: `ttf-mscorefonts-installer`) or switch to TeX Gyre Heros in `Settings.tex` as documented in `LATEX_SETUP.md`.
 - Check logs in `build/main.log` if `latexmk` continues after an error.
 
+## Zotero storage and local PDF paths
+- Windows Zotero storage is linked into WSL at `/home/ledwo/Zotero/storage` (symlink to `/mnt/c/Users/ledwo/Zotero/storage`).
+- The repository provides a convenient symlink at `content/papers` → `/home/ledwo/Zotero/storage`.
+- Some entries in `bibliography.bib` include Windows `file = {C:\Users\ledwo\Zotero\storage\...}` paths. When you see such paths, you can resolve the corresponding PDF under `content/papers/...` in this workspace.
+- Prefer citing via keys and using DOI/URL for portability. The symlink is for local reading only and is not required by LaTeX builds.
+
 ## Writing guidance for AI
 - For content/style help (tone, page budget, epistemic logic notation), follow `.github/chatmodes/Thesis Writing agent.chatmode.md`.
 - Keep changes minimal and localized; do not reformat large LaTeX files or alter `Setup/*` unless the change is clearly justified and commented.
