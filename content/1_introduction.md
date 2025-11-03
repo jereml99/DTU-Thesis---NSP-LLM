@@ -22,13 +22,14 @@ To develop and evaluate a hybrid neuro-symbolic scaffolding system in which an L
 
 Objectives:
 
-1. Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs (symbolic scaffolding).
-2. Implement a prototype that integrates an LLM sketching module with the symbolic validator, including tooling to surface explanations and repair proposals.
-3. Evaluate the prototype on objective metrics (constraint violations, repair frequency) and human judgments of believability and narrative coherence.
+1. Reimplement the original system codebase in a modular, well-documented, and extensible architecture to ease future extensions and maintenance.
+2. Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs (symbolic scaffolding), and implement a prototype that integrates an LLM sketching module with this symbolic validator (including tooling to surface explanations and repair proposals).
+3. Improve UI/UX and tooling to surface explanations, visualizations, and decision rationales so that agent decisions/plans are inspectable by researchers and evaluators.
+4. Evaluate the prototype using both symbolic evaluation (constraint adherence, repair frequency, diagnostic coverage) and human-centered evaluation (perceived believability, narrative coherence).
 
 ## Methodological overview
 
-The study combines computational implementation with human-centered evaluation, integrating a large language model with a symbolic validator (symbolic scaffolding) that inspects LLM-generated plans. Evaluation metrics include constraint satisfaction, repair rates, and human-rated believability.
+The study combines computational implementation with human-centered evaluation, integrating a large language model with a symbolic validator (symbolic scaffolding) that inspects LLM-generated plans. Evaluation comprises two complementary strands: symbolic evaluation (constraint adherence, repair frequency, and diagnostic coverage) and human-centered evaluation (perceived believability and narrative coherence).
 
 ## Scope and limitations
 
