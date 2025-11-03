@@ -37,12 +37,6 @@ The project focuses on simulation environments rather than real-world robotics. 
 
 ## Thesis structure
 
-- Chapter 2: Related Work — overview of neuro-symbolic methods and generative agent architectures.  
-- Chapter 3: Methodology — experimental setup and system design.  
-- Chapter 4: Implementation and Evaluation.  
-- Chapter 5: Results and Discussion.  
-- Chapter 6: Conclusion and Future Work.
-
 - Chapter 2: Related Work — overview of neuro symbolic methods and generative agent architectures. This chapter situates the validator first approach within prior work on symbolic planners, neural planners, and hybrid systems. It also reviews literature on agent believability and techniques for explanation and debugging in interactive settings.
 - Chapter 3: Methodology — experimental setup and system design. This chapter describes the running example, the environment and data used in experiments, the validator schema and data contract, and the evaluation protocol for both symbolic metrics and human subject studies.
 - Chapter 4: Implementation and Evaluation — prototype implementation details and tooling. Here we present the software architecture, the LLM sketching module, the symbolic validator implementation and the visualization and explainability tools used to surface diagnostics and repair proposals.
