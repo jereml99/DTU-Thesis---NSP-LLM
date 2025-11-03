@@ -1,9 +1,45 @@
-\chapter{Background}
+\chapter{Theoretical background}
 
-\section{Related Work}
+This chapter unifies the conceptual foundations and the most relevant prior work that motivate the design choices in this thesis. It first introduces the core notions: large language models, agents, and planning paradigms (symbolic, neural, and hierarchical), and clarifies how they interact in neuro-symbolic systems. It then reviews research on LLM-driven generative agents, with an emphasis on the original "Generative Agents" paper \cite{park2023}, and contrasts it with hybrid planning approaches that combine symbolic guarantees with neural flexibility. A running example is used: Maya, a café barista NPC whose schedule, social obligations, and physical constraints illustrate the trade-offs between fluency and coherence.
 
-This section will cover related work in neuro-symbolic planning and LLM-based agents.
+\section{Core concepts and definitions}
 
-\section{Theoretical Framework}
+\subsection{Large Language Models}
 
-Description of the theoretical foundations.
+Large language models are transformer-based sequence predictors that learn conditional distributions over tokens from large corpora \cite{Vaswani2017, Brown2020}. Given a context window, the model estimates the next-token distribution and iteratively generates text. Self-attention enables the model to integrate information across the prompt, in-context examples, and tool-augmented inputs (for example, retrieval), producing emergent abilities such as instruction following, few-shot generalization, and approximate reasoning. However, LLMs do not compute logical consequences with formal guarantees; they perform pattern-conditioned statistical inference that can be steered with prompting and scaffolding but remains non-deductive in nature \cite{Wei2022, Kojima2022}.
+
+In this thesis, the LLM is treated as a neural reasoning module within a broader agent architecture rather than the agent itself. Concretely, it is responsible for tasks such as: (i) inferring goals from observations and social context, (ii) elaborating task decompositions into natural-language steps, and (iii) synthesizing utterances and reflections. The LLM's strengths — world knowledge, pragmatic inference, and linguistic fluency — are leveraged where open-ended interpretation is needed. Its weaknesses — lack of hard constraint enforcement, occasional hallucination, and limited temporal precision — are mitigated by a symbolic validator (symbolic scaffolding) that checks proposals against an explicit model of states, actions, and time and reports diagnostics or suggested repairs \cite{Shinn2023, Yao2023}. In the running example, the LLM can draft Maya's day plan from a calendar and social cues, but the final schedule must respect café hours, shift constraints, and travel times; the validator will flag violations and indicate repair options.
+
+\subsection{Agents}
+
+Classical AI defines an agent as an entity that perceives its environment through sensors and acts upon it through actuators to maximize a performance measure \cite{RussellNorvig}. Architectures range from reactive agents to goal- and utility-based agents, with internal states (beliefs, desires, intentions) modeling information about the world and future courses of action. In simulated environments and games, non-player characters (NPCs) extend this notion: their primary purpose is not reward maximization but producing behaviour that human observers find plausible, consistent, and engaging over time \cite{Mateas2002, Loyall1997}.
+
+This thesis adopts the NPC perspective. Agents are situated characters whose core objective is believability — psychological plausibility, narrative consistency, and social coherence — rather than numerical reward. Plans must satisfy constraints that humans expect (for example, working shifts, social commitments, physical limitations), and explainability matters: the agent's choices should be understandable post hoc via causal and temporal rationales grounded in an explicit world model.
+
+\subsection{Planning}
+
+A classical planning problem can be formalised as a tuple $(S, A, T, I, G)$, where $S$ is a set of states, $A$ a set of actions, $T$ a transition relation $T: S \times A \to S$, $I \subseteq S$ the initial states, and $G \subseteq S$ the goal states \cite{Ghallab2004}. A plan is a finite sequence of actions $\pi = \langle a_1, \dots, a_n \rangle$ that transforms an initial state into a goal state. Temporal planning augments this with durations and temporal constraints; epistemic extensions reason about agents' knowledge and information change \cite{Bolander2011}.
+
+For NPCs, planning provides causal and temporal coherence: by requiring goal achievement via explicit preconditions, effects, and constraints, planning ensures behaviour is not merely locally plausible but globally consistent with the environment over time.
+
+\subsection{Symbolic planning}
+
+Symbolic planning represents states as logical structures and actions as operators with preconditions and effects, enabling algorithmic search over an explicit, compositional model (for example, STRIPS and PDDL) \cite{Fikes1971, McDermott1998, Ghallab2004}. Its strengths include explainability via declarative models and plan traces, reliable constraint handling, and well-defined cost models. The limitations are complementary to LLM strengths: symbolic planning presumes a closed-world model that is costly to author and brittle under open-ended goals.
+
+\subsection{Neural planning and hierarchy}
+
+Neural or LLM-based planning refers to using learned models to produce action sequences or subgoal decompositions from textual descriptions or trajectories \cite{Ahn2022, Huang2022}. Hierarchical task networks (HTN) decompose high-level tasks into subtasks until primitive actions are reached \cite{Erol1994, Nau2003}. LLMs often approximate hierarchy by producing outlines and subgoals in natural language. In this thesis, we make hierarchy explicit and use hierarchical sketches as the LLM's primary output: the LLM produces a tree-structured proposal that names high-level intentions and refines them into subtasks; the validator inspects these sketches and suggests repairs.
+
+\section{Literature review}
+
+This section reviews work relevant to neuro-symbolic planning for LLM-driven agents, focusing on the "Generative Agents" paper and situating it among hybrid approaches that combine LLMs with symbolic models. The lens is pragmatic: how to obtain believable, coherent NPC behaviour that is both flexible and constrained.
+
+\subsection{Generative Agents (Park et al., 2023)}
+
+Park et al. propose a social simulation in which LLM-driven agents inhabit a sandbox town, yielding emergent behaviours such as planning events \cite{park2023}. The architecture centers on Memory, Reflection, and Planning: a memory stream stores time-stamped observations, Reflection summarises salient patterns into insights, and Planning prompts the LLM to generate daily schedules. This design yields lifelike narratives with minimal hand-coded rules but lacks symbolic grounding: there is no explicit model of time, resources, or invariants with which plans must comply.
+
+\subsection{Neuro-symbolic planning approaches}
+
+Several lines of work combine LLMs with formal planning to balance commonsense flexibility and constraint satisfaction. In robotics, SayCan pairs an LLM's language grounding with value estimates over affordances to select feasible actions \cite{Ahn2022}. In task planning, LLM+P and related frameworks prompt an LLM to propose high-level plans that are then checked or completed by a PDDL/HTN planner, iterating until validity is achieved \cite{Silver2023, Valmeekam2023}. Critique-and-repair loops and symbolic constraints improve robustness \cite{Shinn2023, Yao2023}.
+
+Compared to Park et al., these hybrid methods assume an explicit domain model and delegate feasibility checking to a solver. They trade authoring cost for guarantees. This thesis follows the hybrid path but emphasises a validator-first approach: the LLM generates goals and hierarchical sketches; a symbolic validator checks constraints and suggests repairs; and feedback is fed back to the LLM to improve future proposals.

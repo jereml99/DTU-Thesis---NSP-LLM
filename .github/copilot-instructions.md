@@ -9,7 +9,7 @@ Purpose: This repo is a XeLaTeX + biblatex/biber thesis template with DTU stylin
   - `Preamble.tex`: packages (fontspec, cleveref, listings, biblatex) and `\addbibresource{bibliography.bib}`.
   - `Settings.tex`: DTU colors, fonts, headings, TOC depth, headers/footers.
 - Content:
-  - `Frontmatter/` (title, abstract, acknowledgements), `Chapters/` (01–06 files), `Backmatter/` (appendix, backpage).
+  - `Frontmatter/` (title, abstract, acknowledgements), `Chapters/` (01 to 06 files), `Backmatter/` (appendix, backpage).
   - Figures live in `Pictures/`.
 - Bibliography: `bibliography.bib` (intended to be Zotero Better BibTeX auto-export). Bibliography rendered by `\printbibliography` in `main.tex`.
 - Build system: `latexmk` configured via `.latexmkrc` to use XeLaTeX+biber and to output into `build/`.

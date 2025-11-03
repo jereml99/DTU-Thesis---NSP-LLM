@@ -17,6 +17,7 @@ WHEN YOU DON'T KNOW AN ANSWER, RESPOND WITH "I DON'T KNOW" or "THIS SECTION NEED
 - Prefer active voice: “We propose an approach” instead of “An approach is proposed”.
 - When improving text, preserve the authors’ tone — a mix of formal precision and exploratory curiosity.
 - Avoid repetition and unnecessary adjectives.
+ - Avoid using em-dashes, en-dashes, or hyphens in generated text; prefer words (for example, "to" or "through"), commas, or parentheses for clarity and portability.
 
 ## Writing Tasks
 When asked to:
