@@ -1,40 +1,42 @@
 \chapter{Introduction}
 
-\section{Background and Context}
-Artificial intelligence has increasingly turned toward \textbf{Large Language Models (LLMs)} for generating human-like text and behavior. When embedded in \textit{generative agents}, these models can simulate complex social dynamics and interactive narratives. However, despite their linguistic fluency, such agents frequently exhibit \textbf{logical inconsistencies} and \textbf{incoherent action sequences} within simulated environments.
+\section{Background and context}
 
-Recent research—such as \cite{park2023} and \cite{zhao2023}—shows that combining symbolic planning with LLM reasoning can significantly improve \textbf{task coherence} and \textbf{narrative believability}.
+Artificial intelligence has increasingly turned toward \textbf{Large Language Models (LLMs)} for generating human-like text and behaviour. When embedded in generative agents, these models can simulate complex social dynamics and interactive narratives. Despite their linguistic fluency, such agents frequently exhibit logical inconsistencies and incoherent action sequences within simulated environments.
 
-\section{Problem Statement}
-While generative agents can engage in dynamic, human-like interactions, their lack of \textbf{consistent, constraint-respecting planning} undermines realism. Current approaches either rely too heavily on symbolic systems—limiting flexibility—or on purely neural models, which lack logical guarantees.
+Recent work (for example, \cite{park2023} and \cite{zhao2023}) suggests that combining symbolic reasoning with LLMs can improve task coherence and narrative believability. This thesis focuses first on a neuro-symbolic validator, a form of symbolic scaffolding: the LLM continues to propose goals and hierarchical sketches, while a symbolic validator checks proposed plans against explicit constraints, reports violations, and suggests repairs or diagnostics. The aim is to obtain the benefits of symbolic guarantees such as constraint enforcement, temporal checks, and explainability without initially replacing the LLM's proposal role with a planner.
 
-\textbf{Problem:}  
-How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents in interactive environments?
+\section{Problem statement}
 
-\section{Research Aim and Objectives}
-\textbf{Aim:}  
-To develop and evaluate a hybrid neuro-symbolic planning framework combining the reasoning power of LLMs with the formal structure of symbolic planning.
+Generative agents produce dynamic, human-like interactions, but their lack of consistent, constraint-respecting planning undermines realism. Current approaches either rely too heavily on symbolic systems, limiting flexibility, or on purely neural models, which lack logical guarantees.
 
-\textbf{Objectives:}
+	extbf{Problem statement:} How can a neuro-symbolic scaffolding system improve the coherence and believability of LLM-driven generative agents in interactive environments?
+
+\section{Research aim and objectives}
+
+	extbf{Aim:} To develop and evaluate a hybrid neuro-symbolic scaffolding system in which an LLM proposes plans and a symbolic validator verifies, critiques, and suggests repairs to those plans.
+
+	extbf{Objectives:}
 \begin{enumerate}
-\item Review and categorize state-of-the-art approaches to neuro-symbolic planning and LLM-based agents.  
-\item Design a framework where LLMs generate and refine \textbf{PDDL schemas}.  
-\item Implement the system in an \textbf{interactive simulation environment}.  
-\item Evaluate the resulting agents for logical coherence and perceived believability.  
-\item Reflect on broader implications for narrative AI and multi-agent systems.
+\item Reimplement the original system codebase in a modular, well-documented, and extensible architecture to ease future extensions and maintenance.
+\item Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs, and implement a prototype that integrates an LLM sketching module with this symbolic validator, including tooling to surface explanations and repair proposals.
+\item Improve UI and UX tooling to surface explanations, visualizations, and decision rationales so that agent decisions and plans are inspectable by researchers and evaluators.
+\item Evaluate the prototype using both symbolic evaluation (constraint adherence, repair frequency, diagnostic coverage) and human-centered evaluation (perceived believability, narrative coherence).
 \end{enumerate}
 
-\section{Methodological Overview}
-The study will combine \textbf{computational implementation} with \textbf{human-centered evaluation}, integrating a large language model with a symbolic planner (PDDL). Evaluation metrics include both \textbf{constraint satisfaction} and \textbf{human-rated believability}.
+\section{Methodological overview}
 
-\section{Scope and Limitations}
-The project focuses on \textbf{simulation environments} rather than real-world robotics. Symbolic representations will be limited to deterministic domains, and results will primarily assess \textbf{narrative consistency} and \textbf{social plausibility}.
+The study combines computational implementation with human-centered evaluation, integrating a large language model with a symbolic validator that inspects LLM-generated plans. Evaluation comprises two complementary strands: symbolic evaluation (constraint adherence, repair frequency, and diagnostic coverage) and human-centered evaluation (perceived believability, narrative coherence, and qualitative feedback on explainability and user-facing tooling).
 
-\section{Thesis Structure}
+\section{Scope and limitations}
+
+The project focuses on simulation environments rather than real-world robotics. Symbolic representations are limited to deterministic domains, and results primarily assess narrative consistency and social plausibility.
+
+\section{Thesis structure}
 \begin{itemize}
-\item \textbf{Chapter 2:} Related Work — overview of neuro-symbolic methods and generative agent architectures.  
-\item \textbf{Chapter 3:} Methodology — experimental setup and system design.  
-\item \textbf{Chapter 4:} Implementation and Evaluation.  
-\item \textbf{Chapter 5:} Results and Discussion.  
-\item \textbf{Chapter 6:} Conclusion and Future Work.
+	\item \textbf{Chapter 2:} Theoretical background and related work.
+	\item \textbf{Chapter 3:} Methodology — experimental setup and system design.
+	\item \textbf{Chapter 4:} Implementation and Evaluation.
+	\item \textbf{Chapter 5:} Results and Discussion.
+	\item \textbf{Chapter 6:} Conclusion and Future Work.
 \end{itemize}

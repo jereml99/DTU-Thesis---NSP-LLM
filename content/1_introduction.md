@@ -43,6 +43,12 @@ The project focuses on simulation environments rather than real-world robotics. 
 - Chapter 5: Results and Discussion.  
 - Chapter 6: Conclusion and Future Work.
 
+- Chapter 2: Related Work — overview of neuro symbolic methods and generative agent architectures. This chapter situates the validator first approach within prior work on symbolic planners, neural planners, and hybrid systems. It also reviews literature on agent believability and techniques for explanation and debugging in interactive settings.
+- Chapter 3: Methodology — experimental setup and system design. This chapter describes the running example, the environment and data used in experiments, the validator schema and data contract, and the evaluation protocol for both symbolic metrics and human subject studies.
+- Chapter 4: Implementation and Evaluation — prototype implementation details and tooling. Here we present the software architecture, the LLM sketching module, the symbolic validator implementation and the visualization and explainability tools used to surface diagnostics and repair proposals.
+- Chapter 5: Results and Discussion — quantitative and qualitative findings. This chapter reports symbolic evaluation results, summarizes outcomes from human centered studies, analyzes common failure modes, and interprets what the results imply for agent coherence and believability.
+- Chapter 6: Conclusion and Future Work — summary of contributions and limitations, and an agenda for next steps. We close by discussing directions for integrating planning components, expanding to non deterministic domains, and improving user facing explainability.
+
 ---
 
 This markdown was generated from `Chapters/01_Introduction.tex`. It preserves the original section structure while adapting to the thesis content style used in `content/` markdown drafts. Consider adding citations where indicated and a short introductory paragraph that names the running example (Maya the barista) if you prefer that to appear here (it currently appears in Chapter 2 drafts).
