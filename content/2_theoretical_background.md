@@ -2,13 +2,23 @@
 
 This chapter unifies the conceptual foundations and the most relevant prior work that motivate the design choices in this thesis. It first introduces the core notions—large language models, agents, and planning paradigms (symbolic, neural, and hierarchical)—and clarifies how they interact in neuro-symbolic systems. It then reviews research on LLM-driven generative agents, with an emphasis on the original “Generative Agents” paper [Park et al., 2023], and contrasts it with hybrid planning approaches that combine symbolic guarantees with neural flexibility. Throughout, a running example is used: a small-town non-player character (NPC) named Maya, a café barista who lives, works, and socializes in a simulated environment. The example illustrates how different planning formalisms and LLM capabilities bear on believability and coherence.
 
+<!-- review-Jeremi: Are sure this running example is what we want? Why do we talk here about the tradeoff between fluency and coherence? -->
+
 ## 2.2 Core Concepts and Definitions
 
 ### 2.2.1 Large Language Models (LLMs)
 
 Large language models are transformer-based sequence predictors that learn conditional distributions over tokens from large corpora [Vaswani et al., 2017; Brown et al., 2020]. Given a context window, the model estimates the next-token distribution and iteratively generates text. Self-attention enables the model to integrate information across the prompt, in-context examples, and tool-augmented inputs (e.g., retrieval), which in practice yields emergent abilities such as instruction following, few-shot generalization, and approximate reasoning. However, LLMs do not compute logical consequences with formal guarantees; they perform pattern-conditioned statistical inference that can be steered with prompting and scaffolding but remains non-deductive in nature [Wei et al., 2022; Kojima et al., 2022].
 
-In this thesis, the LLM is treated as a neural reasoning module within a broader agent architecture rather than the agent itself. Concretely, it is responsible for tasks such as: (i) inferring goals from observations and social context, (ii) elaborating task decompositions into natural-language steps, and (iii) synthesizing utterances and reflections. The LLM’s strengths—world knowledge, pragmatic inference, and linguistic fluency—are leveraged where open-ended interpretation is needed. Its weaknesses—lack of hard constraint enforcement, occasional hallucination, and limited temporal precision—are mitigated by a symbolic validator (symbolic scaffolding) that checks proposals against an explicit model of states, actions, and time and reports diagnostics or suggested repairs [Shinn et al., 2023; Yao et al., 2023]. In the running example, the LLM can draft Maya’s day plan from a calendar and social cues, but the final schedule must respect café hours, shift constraints, and travel times; the validator will flag violations and indicate repair options.
+In this thesis, the LLM is treated as a neural reasoning module within a broader agent architecture rather than the agent itself. Concretely, it is responsible for tasks such as: (i) inferring goals from observations and social context, (ii) elaborating task decompositions into natural-language steps, and (iii) synthesizing utterances and reflections. 
+
+<!-- review-Jeremi: The paragraph below seems a bit general. It is a lot of text and reads a little like generic AI slope. -->
+
+The LLM’s strengths—world knowledge, pragmatic inference, and linguistic fluency—are leveraged where open-ended interpretation is needed. Its weaknesses—lack of hard constraint enforcement, occasional hallucination, and limited temporal precision—are mitigated by a symbolic validator (symbolic scaffolding) that checks proposals against an explicit model of states, actions, and time and reports diagnostics or suggested repairs [Shinn et al., 2023; Yao et al., 2023]. In the running example, the LLM can draft Maya’s day plan from a calendar and social cues, but the final schedule must respect café hours, shift constraints, and travel times; 
+
+<!-- review-Jeremi: We mention the validator without explaining what it is. Provide a minimal definition or pointer. -->
+
+the validator will flag violations and indicate repair options.
 
 ### 2.2.2 Agents
 
