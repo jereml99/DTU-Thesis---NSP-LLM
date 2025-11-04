@@ -71,7 +71,7 @@ Tip: when the AI suggests a paper, verify the title, authors, and venue via the 
 ### DTU guidance and citation norms
 Follow DTU's guidance on the use of AI in academic work: disclose AI-assisted writing and code generation in the thesis (which model, date, and the role it played), keep records of the key system prompts and model versions that influenced outputs, and never attribute intellectual authorship to an AI. See the official DTU guidance: https://www.bibliotek.dtu.dk/en/publishing/reference-management/kunstig-intelligens/eksempler
 
-Evidence from the research literature supports using AI to assist parts of the review workflow (refining search strategies, screening, data extraction, and summarization) when usage is disclosed and methods remain auditable \cite{fabianoHowOptimizeSystematic2024}. Our use aligns with these supported activities and we maintain the key system prompts and representative examples rather than a comprehensive log, balancing transparency with practicality.
+Evidence from the research literature supports using AI to assist parts of the review workflow (refining search strategies, screening, data extraction, and summarization) when usage is disclosed and methods remain auditable \cite{fabianoHowOptimizeSystematic2024}. Our use aligns with these supported activities and we maintain the key system prompts and representative examples rather than a full log with all our interaction with AI agents, balancing transparency with practicality.
 
 Short checklist for DTU compliance:
 - Add a short paragraph in the thesis frontmatter or acknowledgements stating which AI tools were used and for what purpose.
