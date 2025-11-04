@@ -6,9 +6,10 @@
 
 Artificial intelligence has increasingly turned toward Large Language Models (LLMs) for generating human-like text and behaviour. When embedded in generative agents, these models can simulate complex social dynamics and interactive narratives. Despite their linguistic fluency, such agents frequently exhibit logical inconsistencies and incoherent action sequences within simulated environments.
 
-Recent work (e.g., Park et al., 2023; Zhao et al., 2023) suggests that combining symbolic reasoning with LLMs can improve task coherence and narrative believability. This thesis focuses first on a neuro-symbolic validator (a form of symbolic scaffolding): the LLM continues to propose goals and sketches, while a symbolic validator checks proposed plans against explicit constraints, reports violations, and suggests repairs or diagnostics. The aim is to obtain the benefits of symbolic guarantees (constraint enforcement, temporal checks, explainability) without initially replacing the LLM's proposal role with a planner.
+LLM-driven generative agents are compelling (Park et al., 2023) but often violate task or profile constraints, undermining believability (Xiao et al., 2024). Motivated by recent neuro-symbolic planning work, we adopt a validator-first approach in which a symbolic component checks LLM-proposed goals and plan sketches against explicit constraints to improve coherence and provide explainable diagnostics (Tantakoun et al., 2025; Huang et al., 2024). This thesis focuses first on a neuro-symbolic validator (a form of symbolic scaffolding): the LLM continues to propose goals and sketches, while a symbolic validator checks proposed plans against explicit constraints, reports violations, and suggests repairs or diagnostics. The aim is to obtain the benefits of symbolic guarantees (constraint enforcement, temporal checks, explainability) without initially replacing the LLM's proposal role with a planner.
 
-<!-- review-Jeremi: I don't think the park2023 reference suggest what is claimed here -->
+<!-- review-Jeremi: I don't think the park2023 reference suggest what is claimed here
+review-Alex: I rephrased some of it to make it fit what the sources say better -->
 
 <!-- review-Jeremi: I would stick with closer description to our thesis proposal here. Currently we don't mention anything about belivablity iprovmentents. Also it seems maybe to specific. I would rather stick with more general description and leave specifics to methodology chapter  -->
 
