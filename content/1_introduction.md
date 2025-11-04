@@ -6,33 +6,36 @@
 
 Artificial intelligence has increasingly turned toward Large Language Models (LLMs) for generating human-like text and behaviour. When embedded in generative agents, these models can simulate complex social dynamics and interactive narratives. Despite their linguistic fluency, such agents frequently exhibit logical inconsistencies and incoherent action sequences within simulated environments.
 
+<!-- review-Jeremi: I don't think the park2023 reference suggest what is claimed here -->
 Recent work (e.g., Park et al., 2023; Zhao et al., 2023) suggests that combining symbolic reasoning with LLMs can improve task coherence and narrative believability. This thesis focuses first on a neuro-symbolic validator (a form of symbolic scaffolding): the LLM continues to propose goals and sketches, while a symbolic validator checks proposed plans against explicit constraints, reports violations, and suggests repairs or diagnostics. The aim is to obtain the benefits of symbolic guarantees (constraint enforcement, temporal checks, explainability) without initially replacing the LLM's proposal role with a planner.
 
-<!-- review-Jeremi: I don't think the park2023 reference suggest what is claimed here -->
 
 <!-- review-Jeremi: I would stick with closer description to our thesis proposal here. Currently we don't mention anything about belivablity iprovmentents. Also it seems maybe to specific. I would rather stick with more general description and leave specifics to methodology chapter  -->
 
 ## Problem statement
 
+<!-- review-Jeremi: I like this section. Problem statement is good. -->
 Generative agents produce dynamic, human-like interactions, but their lack of consistent, constraint-respecting planning undermines realism. Current approaches either rely too heavily on symbolic systems, limiting flexibility, or on purely neural models, which lack logical guarantees.
 
 Problem statement:
 
 How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents in interactive environments?
 
-<!-- review-Jeremi: I like this section. Problem statement is good. -->
 
 ## Research aim and objectives
 
 Aim:
-
+<!-- review-Jeremi: should be actualy use the word scaffodling? is it accademic?
+ -->
 To develop and evaluate a hybrid neuro-symbolic scaffolding system in which an LLM proposes plans and a symbolic validator ("symbolic scaffolding") verifies, critiques, and suggests repairs to those plans.
 
 Objectives:
-
+<!-- review-Jeremi: Do we actually need to state this goals? -->
 1. Reimplement the original system codebase in a modular, well-documented, and extensible architecture to ease future extensions and maintenance.
+<!-- review-Jeremi: I don't really understend this goal. surface explanation? what is that?-->
 2. Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs (symbolic scaffolding), and implement a prototype that integrates an LLM sketching module with this symbolic validator (including tooling to surface explanations and repair proposals).
 3. Improve UI/UX and tooling to surface explanations, visualizations, and decision rationales so that agent decisions/plans are inspectable by researchers and evaluators.
+<!-- review-Jeremi: Is it what we actualy mesure? are we actually messuring narrative coherence? -->
 4. Evaluate the prototype using: (a) quantitative, validator-based metrics (constraint violations per run, violation rate per 100 actions, success rate, rounds-to-zero, and repair efficiency), comparing the baseline against our system after R revision rounds; and (b) human-centered evaluation (perceived believability and narrative coherence).
 
 ## Methodological overview
@@ -48,9 +51,9 @@ The study combines computational implementation with human-centered evaluation, 
 
 ## Scope and limitations
 
+<!-- review-Jeremi: Maybe I don't understend but why do we say that symbolic representations are limited to deterministic domains? What sans it has here?  -->
 The project focuses on simulation environments rather than real-world robotics. Symbolic representations are limited to deterministic domains, and results primarily assess narrative consistency and social plausibility.
 
-<!-- review-Jeremi: Maybe I don't understend but why do we say that symbolic representations are limited to deterministic domains? What sans it has here?  -->
 
 ## Thesis structure
 
