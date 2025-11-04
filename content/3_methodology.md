@@ -51,6 +51,8 @@ Optional qualitative-linked metrics (brief): explanation coverage and repair pre
 
 We compare conditions on distributions of violation counts/rates and simple trends across small R (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Day-level and task-level summaries are reported separately and in aggregate.
 
+<!-- review-unknown: Specify the exact analysis methods; add references and a short explanation of chosen methods (e.g., paired tests, mixed models for event-level data). -->
+
 ### Reporting
 
 Concise tables/figures that highlight the main differences (e.g., violation counts/rates by condition and level); a small script will allow re-running scenarios with the validator.
@@ -97,22 +99,30 @@ Primary: overall believability (Likert), action-level unbelievable rate (e.g., f
 
 Straightforward attention/completeness checks and implausibly fast completion will guide exclusions (rules preregistered).
 
+<!-- review-unknown: Double check exclusion criteria — is this what we want? -->
+
 ### Analysis
 
 Within-subject comparisons between conditions for the primary outcomes (e.g., paired tests or simple mixed models for event-level data), with concise effect summaries and confidence intervals; qualitative reasons are coded to contextualize quantitative findings.
 
 ### Ethics
 
-<!-- TODO: Will we ask DTU board? -->
 
 The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives. We will seek approval from the institutional ethics board prior to recruitment.
+
+<!-- review-unknown: Confirm whether DTU ethics board approval is required for this study. -->
 
 ### Power and timing
 
 We target a practical within-subject study size appropriate for detecting moderate differences and will confirm with a simple power check; a short pilot informs timing and minor interface tweaks.
 
+<!-- review-unknown: Clarify if this subsection is needed; define what “power” refers to and outline a simple power check. -->
+
 ### Preregistration and availability
 
-<!-- TODO: This subsection may be optional for the final thesis; keep if useful. -->
 
 We will preregister hypotheses, exclusion rules, and primary or secondary outcomes, and release the anonymized dataset, analysis scripts, and the evaluation interface after publication.
+
+<!-- review-unknown: Consider whether this subsection is necessary for the final thesis or keep it if useful. -->
+
+
