@@ -8,6 +8,21 @@ Details of the experimental setup.
 
 Description of the system architecture and design.
 
+\section{Quantitative Evaluation — Validator-based (summary)}
+\label{sec:quant-eval-summary}
+
+We complement the human study with a concise, automated evaluation that compares a GA-like baseline against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds~$R$ and observe how violations change. Validation is separated into day-level (schedule) and task-level (within-task) checks.
+
+\paragraph{Conditions} Baseline (no repair) vs. ours with small~$R$ (iterative critique-and-repair).
+
+\paragraph{Scenarios/protocol} Matched scenarios with the same initial states and settings across conditions; for each run: generate plan~$\rightarrow$ validate~$\rightarrow$ (optional) repair~$\rightarrow$ re-run from the same initial state; uniform logging.
+
+\paragraph{Metrics (concise)} Counts of validator-detected violations at day-level and task-level, plus an overall aggregate; simple derived indicators (e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).
+
+\paragraph{Analysis (brief)} Compare conditions on distributions of violation counts/rates and trends across small~$R$ (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Report day-level and task-level summaries separately and in aggregate.
+
+\paragraph{Reporting} Concise tables/figures highlighting main differences and a small script to re-run scenarios with the validator.
+
 \section{User Study: Believability Evaluation}
 \label{sec:user-study-believability}
 
@@ -33,64 +48,35 @@ Each participant evaluates both conditions on the same character and scenario to
 
 \subsection{Participants}
 \label{subsec:participants}
-We target 10-15 adult participants recruited from the university community and online platforms. Inclusion criteria are English proficiency. We will run an initial pilot (3-4 participants) to validate timing and the interface, then proceed to the main study. All participants provide informed consent and can withdraw at any time without penalty.
+Small-to-moderate within-subject sample recruited from the university community and online platforms; English proficiency required. We will run a short pilot to validate timing and the interface. All participants provide informed consent and can withdraw at any time without penalty.
 
 \subsection{Materials and stimuli}
 \label{subsec:materials}
-The stimulus for each condition is a replay of a single random character's day in the sandbox world. To keep tasks focused on action believability, we present:
-\begin{itemize}
-	\item a time-lapse \emph{video replay} of the agent acting in the world; participants can control playback speed and pause/seek;
-	\item an optional overlay with the \emph{high-level plan} (intentions and sub-goals) and a \emph{low-level action log}; and
-	\item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
-\end{itemize}
-Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile and randomness seed across conditions, so any observed variation is attributable to the agent architecture (baseline vs.~ours) rather than scenario noise.
+For each condition, participants view a replay of an agent’s day in the sandbox world with: (i) controllable playback; (ii) an optional overlay for the high-level plan and action log; and (iii) simple controls to flag unbelievable actions and provide short reasons. Replays use matched scenarios and character profiles across conditions.
 
 \subsection{Procedure}
 \label{subsec:procedure}
-Each session (~30 minutes) proceeds as follows:
-\begin{enumerate}
-	\item \textbf{Introduction.} A short scripted briefing introduces the task and the notion of believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
-	\item \textbf{Practice.} Participants complete a 2--3 minute tutorial on the interface using a neutral example not used in the main study.
-	\item \textbf{Condition A.} Watch the replay, freely scrub, and mark any actions that feel unbelievable. For each mark, add a short explanation (optional but encouraged).
-	\item \textbf{Condition B.} Repeat with the other system. Order is counterbalanced.
-	\item \textbf{Summary ratings.} For each condition: provide (i) an overall believability rating (7-point Likert), (ii) a perceived causal coherence rating (7-point Likert), and (iii) a preference judgment (forced-choice which was more believable and why).
-\end{enumerate}
-We record time-on-task and whether the plan overlay was opened, to analyse how explanations affect believability judgments.
+Brief introduction and practice; then two matched conditions in counterbalanced order. Participants watch, flag unbelievable actions with optional short reasons, and provide summary ratings. We record simple interaction logs (e.g., time-on-task, overlay openings) for context.
 
 
 \subsection{Measures}
 \label{subsec:measures}
-We operationalize believability with complementary participant-reported and behaviour-linked measures. Unless noted, higher values indicate higher believability.
-
-\paragraph{Primary outcomes}
-\begin{enumerate}
-	\item \textbf{Overall believability (Likert).} Single item per condition on a 7-point scale with anchors: 1 ``not at all believable'', 4 ``moderately believable'', 7 ``extremely believable''. The item prompt is: ``How believable was the agent's behaviour overall in this replay?''
-	\item \textbf{Action-level unbelievable rate (event-normalized).} Participants can flag any on-screen action as unbelievable. Let $F$ be the number of unique action events a participant flagged in a condition and $A$ the number of \emph{atomic actions} actually viewed by that participant (derived from the action log restricted to watched timestamps). The primary rate is
-	\begin{equation*}
-		r_{\mathrm{unbel}} = \frac{F}{A} \times 100\, ,
-	\end{equation*}
-	expressed as flags per 100 atomic actions. Atomic actions are the smallest logged action units (e.g., open-door, pick-up, speak, move-to). If a participant sets multiple flags within a 2-second window around the same atomic action, we merge them into one event-level flag.
-	\item \textbf{Pairwise preference.} Forced-choice question: ``Which of the two replays was more believable overall?'' (Baseline vs. Ours).
-\end{enumerate}
-
-\paragraph{Secondary outcomes}
+We combine participant-reported and behaviour-linked measures:
 \begin{itemize}
-	\item \textbf{Causal coherence (Likert).} 7-point rating of how coherent the behaviour felt as a sequence of goals and subgoals: 1 ``not coherent'', 7 ``highly coherent''.
-	\item \textbf{Plan adherence (Likert).} 7-point rating of alignment between visible high-level plan and observed actions (recorded even if the plan overlay is not opened, in which case the item is skipped and treated as missing by design).
-	\item \textbf{Unbelievable-action categories (coded).} Free-text reasons for each flag are open-coded into categories such as: goal inconsistency, environment rule violation, temporal implausibility, social norm violation, and low-level control failure. Two independent coders label a stratified sample (≥30% of flags); disagreements are adjudicated and inter-rater agreement (Cohen's $\kappa$) is reported.
+	\item \textbf{Primary:} overall believability (Likert), action-level unbelievable rate (e.g., flags per 100 actions), and pairwise preference.
+	\item \textbf{Secondary:} perceived causal coherence and plan adherence (Likert), plus brief coding of reasons for flagged actions (e.g., goal inconsistency, rule/time violations, social norms, control failures).
+	\item \textbf{Context logs:} simple usage signals (e.g., order, time-on-task, overlay openings) for potential order/interface effects.
 \end{itemize}
-
-\paragraph{Logged covariates (for analysis, not outcomes)} We log condition order, scenario ID, participant playback time, number of overlay openings, and self-reported prior experience with simulations/games. These are used as covariates in exploratory models and to check for order effects.
 
 \subsection{Data quality and exclusion}
 \label{subsec:quality}
 %% TODO: double-check exclusion criteria, is that what we want?
-Sessions are excluded if participants fail an attention check (simple comprehension question about the replay), leave more than half the session unanswered, or complete in less than one-third of the median time. We pre-register exclusion rules prior to data collection.
+Exclusions will be based on straightforward attention/completeness checks and implausibly fast completion; rules will be preregistered.
 
 \subsection{Analysis}
 \label{subsec:analysis}
 %% TODO: what kind of analysis we would like to do? Give references and a small explanation of the chosen methods.
-We analyse overall believability with within-subject comparisons (paired \emph{t}-test when normality holds; otherwise Wilcoxon signed-rank). For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged as unbelievable: \texttt{flag ~ condition + (1|participant) + (1|scenario)}. We report effect sizes (Cohen's $d$ or odds ratios) and 95\% CIs. Qualitative reasons are open-coded into categories of failure (e.g., goal inconsistency, environment rule violation) to contextualize quantitative effects.
+Within-subject comparisons between conditions for the primary outcomes (e.g., paired tests or simple mixed models for event-level data). We report concise effect summaries and confidence intervals; qualitative reasons are coded to contextualize quantitative findings.
 
 \subsection{Ethics}
 \label{subsec:ethics}
@@ -100,7 +86,7 @@ The study involves only minimal risk. No personal data beyond demographics is co
 \subsection{Power and timing}
 \label{subsec:power}
 %% TODO: What is that? Do we need to have it?
-A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx34$. We therefore aim for 24--36 valid participants after exclusions; the pilot is analysed descriptively and may inform small interface adjustments.
+We target a practical within-subject study size appropriate for detecting moderate differences and will confirm with a simple power check; a short pilot informs timing and minor interface tweaks.
 
 %%% TODO: I don't think it is necessary to have this subsection in master thesis
 \subsection{Preregistration and availability}
