@@ -1,19 +1,15 @@
 \chapter{Introduction}
 
 \section{Background and context}
-% review-Jeremi: I think we miss a bit of context, why is it important to have believable generative agents? We can inspire by Generative Agents paper intro here. Also I think that we should say that we building on top of the generative agents paper. So maybe a sentence or two about that paper and then how we extend it with our neuro-symbolic approach.
 Artificial intelligence has increasingly turned toward \textbf{Large Language Models (LLMs)} for generating human-like text and behaviour. When embedded in generative agents, these models can simulate complex social dynamics and interactive narratives. Despite their linguistic fluency, such agents frequently exhibit logical inconsistencies and incoherent action sequences within simulated environments.
 
 Recent work
-% review-Jeremi: I don't think the park2023 reference suggest what is claimed here
 (for example, \cite{park2023} and \cite{zhao2023})
 suggests that combining symbolic reasoning with LLMs can improve task coherence and narrative believability. This thesis focuses first on a neuro-symbolic validator, a form of symbolic scaffolding: the LLM continues to propose goals and hierarchical sketches, while a symbolic validator checks proposed plans against explicit constraints, reports violations, and suggests repairs or diagnostics.
-% review-Jeremi: I would stick with closer description to our thesis proposal here. Currently we don't mention anything about belivablity iprovmentents. Also it seems maybe to specific. I would rather stick with more general description and leave specifics to methodology chapter 
 The aim is to obtain the benefits of symbolic guarantees such as constraint enforcement, temporal checks, and explainability without initially replacing the LLM's proposal role with a planner.
 
 \section{Problem statement}
 
-% review-Jeremi: I like this section. Problem statement is good.
 Generative agents produce dynamic, human-like interactions, but their lack of consistent, constraint-respecting planning undermines realism. Current approaches either rely too heavily on symbolic systems, limiting flexibility, or on purely neural models, which lack logical guarantees.
 
 	\textbf{Problem statement:} How can a neuro-symbolic scaffolding system improve the coherence and believability of LLM-driven generative agents in interactive environments?
@@ -27,23 +23,19 @@ Generative agents produce dynamic, human-like interactions, but their lack of co
 \item Reimplement the original system codebase in a modular, well-documented, and extensible architecture to ease future extensions and maintenance.
 \item Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs, and implement a prototype that integrates an LLM sketching module with this symbolic validator, including tooling to surface explanations and repair proposals.
 \item Improve UI and UX tooling to surface explanations, visualizations, and decision rationales so that agent decisions and plans are inspectable by researchers and evaluators.
-\item Evaluate the prototype using both symbolic evaluation (constraint adherence, repair frequency, diagnostic coverage) and human-centered evaluation (perceived believability, narrative coherence).
+\item Evaluate the prototype using: (a) quantitative, validator-based metrics (e.g., constraint violations per run, violation rate per 100 actions, success rate, rounds-to-zero, repair efficiency) comparing a baseline against our system after a small number of validator-guided revision rounds; and (b) human-centered evaluation (perceived believability and narrative coherence).
 \end{enumerate}
 
 \section{Methodological overview}
-% review-Jeremi: I think we should more specific here that we build on top of the generative agents paper and that we will be changing how the planning is done by introducing symbolic scaffolding
 The study combines computational implementation with human-centered evaluation,
 
 integrating a large language model with a symbolic validator that inspects LLM-generated plans. 
-% review-Jeremi: two complementary strands seems a bit too fancy for me. 
-Evaluation comprises two complementary strands: symbolic evaluation (constraint adherence, repair frequency, and diagnostic coverage) and human-centered evaluation (perceived believability, narrative coherence, and qualitative feedback on explainability and user-facing tooling).
+Evaluation comprises two complementary strands: (i) quantitative, validator-based evaluation that compares a GA-like baseline against our validator-augmented system on matched scenarios (e.g., counts/rates of constraint violations and simple repair indicators across a small number of revision rounds), and (ii) human-centered evaluation that measures perceived believability and narrative coherence (with brief qualitative feedback on explainability and tooling).
 
 \section{Scope and limitations}
-% review-Jeremi: Maybe I don't understend but why do we say that symbolic representations are limited to deterministic domains? What sans it has here? 
 The project focuses on simulation environments rather than real-world robotics. Symbolic representations are limited to deterministic domains, and results primarily assess narrative consistency and social plausibility.
 
 \section{Thesis structure}
-% review-Jeremi: this should have a clear description of each chapter. but it should probably be don't at the end of the writing thesis. for now it should be to be blank or very high level.
 The thesis is structured as follows:
 \begin{itemize}
 	\item \textbf{Chapter 2:} Theoretical background and related work.
