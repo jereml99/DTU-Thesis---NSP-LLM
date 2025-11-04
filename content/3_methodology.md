@@ -10,6 +10,72 @@ Details of the experimental setup.
 
 Description of the system architecture and design.
 
+## Quantitative Evaluation — Validator-based
+
+This section specifies the automated, repeatable evaluation that complements the human study. We quantify coherence by counting constraint violations detected by the symbolic validator under matched scenarios, comparing a baseline system to our neuro-symbolic system with an increasing number of validator-guided revision rounds.
+
+### Objectives and comparisons
+
+- Quantify how many violations the validator finds in: (i) the baseline (GA-like) system and (ii) our system after R revision rounds.
+- Measure repair efficiency: how quickly violations are eliminated (rounds-to-zero), and how plan quality evolves across rounds.
+
+We evaluate the following conditions on identical scenarios:
+
+1. Baseline (GA): no symbolic repair; the validator only logs violations.
+2. Ours-R: our system with R ∈ {0, 1, 2, 3} revision rounds, where each round feeds validator diagnostics back to the LLM to propose targeted repairs. R = 0 corresponds to “ours without repairs” (validator-only logging); R ≥ 1 enables iterative critique-and-repair.
+
+### Scenarios and protocol
+
+- Scenarios: one or more daily scenarios; exact counts and durations will be specified later.
+- Controls: identical character initial states, calendars, environment settings, prompts/system settings, and time budgets across conditions.
+- Execution: for each scenario × condition, generate a high-level plan, refine to actions/schedule, and run the simulated day with logging. After each revision round (if any), re-validate and re-run from the same initial state.
+
+### Granularity: day-level vs task-level validation
+
+We separate validation into two stages to reflect how plans are produced and executed:
+
+1. Day-plan validation (schedule level): checks on the daily schedule before execution (e.g., temporal overlaps across tasks, outside-hours scheduling, resource/location conflicts, unmet prerequisites that must be arranged earlier in the day).
+2. Task-plan validation (within-task level): for each scheduled task, checks on the subplan/steps during refinement and execution (e.g., missing preconditions, intra-task temporal/order violations, local resource/contention issues).
+
+Repairs can target either level (rescheduling at the day level vs. refining/fixing at the task level). We log violations and repairs separately for each level and also provide an overall aggregate.
+
+### Metrics (computed per run unless noted)
+
+Hard-constraint metrics (lower is better), computed at both levels and in aggregate:
+
+- Total violations (overall, day-level, task-level): counts of validator-detected violations across all checks.
+- Temporal overlaps (day-level): number of overlapping scheduled tasks that conflict in time (resource or location bound).
+- Deadline/window violations (day-level): tasks scheduled after deadlines or outside valid windows (e.g., café hours).
+- Precondition failures (task-level): attempts to execute actions whose preconditions are unmet at execution time.
+- Intra-task order/temporal violations (task-level): step ordering or duration conflicts within a task.
+- Resource/invariant breaches (both levels): exclusivity/capacity violations (e.g., double-booked shift, two places at once).
+
+Derived rates and outcomes:
+
+- Violation rate per 100 actions (overall and task-level): (violations ÷ executed atomic actions) × 100.
+- Success rates: proportion of runs with zero violations at each level (day-level success, task-level success) and overall.
+- Rounds-to-zero: the smallest r ≤ R such that violations = 0 at each level and overall; ∞ if never zero within R.
+- Plan edit distance Δ: number of edits (insert/delete/move) between the proposed plan at round r and r+1, tracked separately for day-plan edits (Δ_day) and task-plan edits (Δ_task).
+- Time-to-fix: wall-clock seconds spent by LLM+validator to reach zero (if achieved), reported per level and overall.
+
+Optional qualitative-linked metrics:
+
+- Explanation coverage: fraction of violations with a validator explanation that cites the specific rule and context.
+- Repair precision: fraction of applied repair edits that directly address at least one cited violation.
+
+### Analysis
+
+- Primary effect: compare Total violations and Violation rate between Baseline and Ours-R, focusing on R = 1..3. Report medians, IQRs, and effect sizes (Cliff’s δ or Hodges–Lehmann). For paired scenarios, use Wilcoxon signed-rank; for counts, optionally fit a mixed-effects (negative binomial) model: `violations ~ condition + (1|scenario)`.
+- Two-level effects: analyse day-level and task-level metrics separately (and optionally a joint model with a level factor) to see where improvements accrue.
+- Repair dynamics: plot violations vs. revision round (r = 0..R). Report Success rate and distribution of Rounds-to-zero at each level and overall.
+- Robustness: stratify by scenario type (e.g., workday vs. social). If stochastic controls are introduced later, we may add sensitivity checks as an optional ablation.
+
+### Reporting
+
+- Tables: per-condition summaries for Total violations, Violation rates, Success rates, and Rounds-to-zero, broken out by day-level, task-level, and overall.
+- Figures: (i) violation curves across rounds (by level); (ii) violin/box plots per condition; (iii) plan edit distance across rounds (Δ_day vs. Δ_task).
+- Reproducibility: publish scenario definitions and logs; provide a script to re-run the full benchmark.
+
 ## User Study: Believability Evaluation
 
 This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behaviour compared to the baseline architecture introduced in Generative Agents [CITE: parkGenerativeAgentsInteractive2023a]. We focus the evaluation on the believability of actions rather than only on agent personalities or prompted conversations.

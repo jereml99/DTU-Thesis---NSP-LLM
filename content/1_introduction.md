@@ -25,11 +25,14 @@ Objectives:
 1. Reimplement the original system codebase in a modular, well-documented, and extensible architecture to ease future extensions and maintenance.
 2. Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs (symbolic scaffolding), and implement a prototype that integrates an LLM sketching module with this symbolic validator (including tooling to surface explanations and repair proposals).
 3. Improve UI/UX and tooling to surface explanations, visualizations, and decision rationales so that agent decisions/plans are inspectable by researchers and evaluators.
-4. Evaluate the prototype using both symbolic evaluation (constraint adherence, repair frequency, diagnostic coverage) and human-centered evaluation (perceived believability, narrative coherence).
+4. Evaluate the prototype using: (a) quantitative, validator-based metrics (constraint violations per run, violation rate per 100 actions, success rate, rounds-to-zero, and repair efficiency), comparing the baseline against our system after R revision rounds; and (b) human-centered evaluation (perceived believability and narrative coherence).
 
 ## Methodological overview
 
-The study combines computational implementation with human-centered evaluation, integrating a large language model with a symbolic validator (symbolic scaffolding) that inspects LLM-generated plans. Evaluation comprises two complementary strands: symbolic evaluation (constraint adherence, repair frequency, and diagnostic coverage) and human-centered evaluation (perceived believability and narrative coherence).
+The study combines computational implementation with human-centered evaluation, integrating a large language model with a symbolic validator (symbolic scaffolding) that inspects LLM-generated plans. Evaluation comprises two complementary strands:
+
+- Quantitative (validator-based): count and analyse constraint violations on matched scenarios for (i) a GA-like baseline and (ii) our system after R validator-guided revision rounds, reporting violation counts/rates, success rates (zero violations), and rounds-to-zero.
+- Qualitative (human-centered): perceived believability and narrative coherence via a within-subjects user study with matched replays.
 
 ## Scope and limitations
 
