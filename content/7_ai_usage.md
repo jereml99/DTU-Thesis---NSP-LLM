@@ -3,7 +3,7 @@
 We used artificial intelligence as an assistive tool for three purposes: (i) drafting and editing text, (ii) literature discovery and screening, and (iii) coding assistance. Human authorship and responsibility are preserved throughout; all outputs were reviewed, verified, and, when needed, rewritten by the authors.
 
 ### Activities
-- Writing: large language models were used to improve clarity and structure of human-written drafts without introducing new claims.
+- Writing: large language models were used to improve clarity and structure of human-written drafts <!-- review-Jeremi: It's actually introduct a lot of new claims XD-->  without introducing new claims.
 - Literature: AI assisted query refinement, screening, data extraction, and summarization, consistent with evidence that such use can improve the efficiency of systematic reviews when disclosed and auditable \cite{fabianoHowOptimizeSystematic2024}.
 - Coding: GitHub Copilot was used to suggest code, refactorings, and edits to agent definitions and prompts; changes were reviewed and tested.
 
@@ -19,5 +19,8 @@ We follow DTU guidance on responsible AI use: we disclose the role of AI tools, 
 ### Limitations and verification
 - Factual statements and references suggested by AI were checked against primary sources.
 - Copyright and licensing were verified for any third-party material.
-- For reproducibility, model versions and important settings were recorded; random seeds and environment details were captured where relevant.
+- For reproducibility, model versions and important settings were recorded; <!-- review-Jeremi: Were they?--> random seeds and environment details were captured where relevant.
+
+<!-- review-Jeremi: We should enclose the thesis agent definiton.-->
+<!-- review-Jeremi: We should say that for literature review we used Notebook LM and chatGPT deepsearch  -->
 
