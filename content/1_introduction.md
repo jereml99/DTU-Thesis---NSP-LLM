@@ -2,7 +2,7 @@
 
 ## Background and context
 
-<!-- review-Jeremi: I think we miss a bit of context, why is it important to have believable generative agents? We can inspire by Generative Agents paper intro here. Also I think that we should say that we building on top of the generative agents paper. So maybe a sentence or two about that paper and then how we extend it with our neuro-symbolic approach. -->
+<!-- review-Jeremi: I think we miss a bit of context, why is it important to have believable generative agents? We can get inspired by Generative Agents paper intro here. Also I think that we should say that we are building on top of the generative agents paper. So maybe a sentence or two about that paper and then how we extend it with our neuro-symbolic approach. -->
 
 Artificial intelligence has increasingly turned toward Large Language Models (LLMs) for generating human-like text and behaviour. When embedded in generative agents, these models can simulate complex social dynamics and interactive narratives. Despite their linguistic fluency, such agents frequently exhibit logical inconsistencies and incoherent action sequences within simulated environments.
 
