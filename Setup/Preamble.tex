@@ -9,6 +9,7 @@
 \usepackage{pgfplots}       % Package for creating graphs and charts
 \usepackage{xcolor}         % Package for defining DTU colours to be used
 \usepackage{amsmath}        % For aligning equations among other
+\usepackage{amsthm}         % Theorem-like environments
 \usepackage{siunitx}        % SI units
 \usepackage{listings}       % Package for inserting code, (before cleveref)
 \PassOptionsToPackage{hyphens}{url} % Ability to line break urls at hyphens
@@ -26,3 +27,12 @@
 \usepackage{float}          % floating figures in correct places
 \usepackage{calc}           % Adds ability for latex to calculate (3pt+2pt) 
 \usepackage{blindtext}
+
+% Theorem-like environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{example}{Example}[chapter]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}{Lemma}[chapter]
+\newtheorem{proposition}{Proposition}[chapter]
