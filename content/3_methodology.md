@@ -29,6 +29,7 @@ The implementation transforms the original monolithic Generative Agents codebase
 
 ### Neuro-Symbolic Planning Pipeline
 
+**[Figure: Neuro-Symbolic Planning Pipeline – Reserved Space]**
 We implement a three-stage LLM-propose/symbolic-validate framework \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}:
 
 1. **Task Generation**: The LLM generates daily tasks from memory, grounding them in wants, needs, and commitments \cite{parkGenerativeAgentsInteractive2023a}.
@@ -38,24 +39,6 @@ We implement a three-stage LLM-propose/symbolic-validate framework \cite{kambham
 3. **Schema Generation & Validation**: The LLM generates PDDL schemas (preconditions, effects, durations) for each action. A symbolic validator checks causal consistency, temporal feasibility, resource limits, and environmental invariants. Violations trigger diagnostic feedback (e.g., "unsatisfied precondition `(at-location student hall)`") for iterative LLM repair until constraints satisfy or iteration budget exhausts.
 
 
-### Visualization and Logging Infrastructure
-
-The system includes a Vue.js frontend with RESTful API integration for:
-
-- **Real-time Simulation Monitoring**: Live agent state, current actions, and plan visualization
-- **Replay Interface**: Time-lapse playback with plan overlay and action logs for user study evaluation
-- **Constraint Violation Logging**: Automated flagging and timestamping of validator-detected violations for quantitative analysis
-- **Diagnostic Visualization**: Display of PDDL validation errors with context (violated action, precondition, timestamp)
-
-**[Figure: Neuro-Symbolic Planning Pipeline – Reserved Space]**
-
-### Design Rationale and Extensibility
-
-This architecture prioritizes **experimental validity** through controlled comparison and **extensibility** for future planning approaches. Key benefits:
-
-- **Testability**: Mock LLM repository enables deterministic testing without API costs (coverage increased from 0% to 75%+)
-- **Reproducibility**: Environment variables control all experimental conditions; simulation logs capture complete state histories
-- **Modularity**: New planning services (e.g., HTN-based, reinforcement learning-augmented) can be added by implementing the `PlanningService` interface without modifying core simulation logic
 
 ## Quantitative Evaluation: Constraint Violation Analysis
 
