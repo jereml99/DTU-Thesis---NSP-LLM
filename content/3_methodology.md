@@ -104,7 +104,7 @@ We report effect sizes (Cohen's $d$ or odds ratios) and 95% CIs. Qualitative rea
 The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.
 
 ### Power and timing
-
+<!-- review-Jeremi: Dose this make sens? --> 
 A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx 34$. Given resource constraints, we aim for 10 to 15 valid participants after exclusions; the pilot is analyzed descriptively and may inform small interface adjustments.
 
 
