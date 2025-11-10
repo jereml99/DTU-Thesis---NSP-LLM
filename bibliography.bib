@@ -184,6 +184,22 @@
   keywords = {Business & Economics / Management,BUSINESS & ECONOMICS / Production & Operations Management,Computers / Artificial Intelligence / Expert Systems,Computers / Artificial Intelligence / General,TECHNOLOGY & ENGINEERING / Industrial Engineering,TECHNOLOGY & ENGINEERING / Industrial Technology,Technology & Engineering / Robotics}
 }
 
+@online{guanLeveragingPretrainedLarge2023,
+  title = {Leveraging {{Pre-trained Large Language Models}} to {{Construct}} and {{Utilize World Models}} for {{Model-based Task Planning}}},
+  author = {Guan, Lin and Valmeekam, Karthik and Sreedharan, Sarath and Kambhampati, Subbarao},
+  date = {2023-11-02},
+  eprint = {2305.14909},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2305.14909},
+  url = {http://arxiv.org/abs/2305.14909},
+  urldate = {2025-11-10},
+  abstract = {There is a growing interest in applying pre-trained large language models (LLMs) to planning problems. However, methods that use LLMs directly as planners are currently impractical due to several factors, including limited correctness of plans, strong reliance on feedback from interactions with simulators or even the actual environment, and the inefficiency in utilizing human feedback. In this work, we introduce a novel alternative paradigm that constructs an explicit world (domain) model in planning domain definition language (PDDL) and then uses it to plan with sound domain-independent planners. To address the fact that LLMs may not generate a fully functional PDDL model initially, we employ LLMs as an interface between PDDL and sources of corrective feedback, such as PDDL validators and humans. For users who lack a background in PDDL, we show that LLMs can translate PDDL into natural language and effectively encode corrective feedback back to the underlying domain model. Our framework not only enjoys the correctness guarantee offered by the external planners but also reduces human involvement by allowing users to correct domain models at the beginning, rather than inspecting and correcting (through interactive prompting) every generated plan as in previous work. On two IPC domains and a Household domain that is more complicated than commonly used benchmarks such as ALFWorld, we demonstrate that GPT-4 can be leveraged to produce high-quality PDDL models for over 40 actions, and the corrected PDDL models are then used to successfully solve 48 challenging planning tasks. Resources, including the source code, are released at: https://guansuns.github.io/pages/llm-dm.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence},
+  file = {C\:\\Users\\ledwo\\Zotero\\storage\\5ZJUZBPK\\Guan et al. - 2023 - Leveraging Pre-trained Large Language Models to Construct and Utilize World Models for Model-based T.pdf;C\:\\Users\\ledwo\\Zotero\\storage\\TA57MGJ3\\2305.html}
+}
+
 @book{haslumIntroductionPlanningDomain2019,
   title = {An {{Introduction}} to the {{Planning Domain Definition Language}}},
   author = {Haslum, Patrik and Lipovetzky, Nir and Magazzeni, Daniele and Muise, Christian},
@@ -262,6 +278,83 @@
   author = {Loyall, A Bryan},
   langid = {english},
   file = {C:\Users\ledwo\Zotero\storage\4BEAP3J6\Loyall - Believable Agents Building Interactive Personalities.pdf}
+}
+
+@online{lyuFaithfulChainofThoughtReasoning2023,
+  title = {Faithful {{Chain-of-Thought Reasoning}}},
+  author = {Lyu, Qing and Havaldar, Shreya and Stein, Adam and Zhang, Li and Rao, Delip and Wong, Eric and Apidianaki, Marianna and Callison-Burch, Chris},
+  date = {2023-09-20},
+  eprint = {2301.13379},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2301.13379},
+  url = {http://arxiv.org/abs/2301.13379},
+  urldate = {2025-11-10},
+  abstract = {While Chain-of-Thought (CoT) prompting boosts Language Models' (LM) performance on a gamut of complex reasoning tasks, the generated reasoning chain does not necessarily reflect how the model arrives at the answer (aka. faithfulness). We propose Faithful CoT, a reasoning framework involving two stages: Translation (Natural Language query \$\textbackslash rightarrow\$ symbolic reasoning chain) and Problem Solving (reasoning chain \$\textbackslash rightarrow\$ answer), using an LM and a deterministic solver respectively. This guarantees that the reasoning chain provides a faithful explanation of the final answer. Aside from interpretability, Faithful CoT also improves empirical performance: it outperforms standard CoT on 9 of 10 benchmarks from 4 diverse domains, with a relative accuracy gain of 6.3\% on Math Word Problems (MWP), 3.4\% on Planning, 5.5\% on Multi-hop Question Answering (QA), and 21.4\% on Relational Inference. Furthermore, with GPT-4 and Codex, it sets the new state-of-the-art few-shot performance on 7 datasets (with 95.0+ accuracy on 6 of them), showing a strong synergy between faithfulness and accuracy.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Computation and Language},
+  file = {C\:\\Users\\ledwo\\Zotero\\storage\\FWDREI2B\\Lyu et al. - 2023 - Faithful Chain-of-Thought Reasoning.pdf;C\:\\Users\\ledwo\\Zotero\\storage\\UUYDB6KJ\\2301.html}
+}
+
+@inproceedings{valmeekamonPlanningLargeLanguage2023,
+  title = {On the {{Planning Abilities}} of {{Large Language Models}}: {{A Critical Investigation}}},
+  shorttitle = {On the {{Planning Abilities}} of {{Large Language Models}}},
+  author = {Valmeekam, Karthik and Marquez, Matthew and Sreedharan, Sarath and Kambhampati, Subbarao},
+  date = {2023},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  volume = {36},
+  pages = {75993--76005},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper_files/paper/2023/hash/efb2072a358cefb75886a315a6fcf880-Abstract-Conference.html},
+  urldate = {2025-11-10},
+  abstract = {Motivated by the impressive performance of large language models (LLMs) on a wide variety of NLP tasks, there has been considerable interest in evaluating their abilities on planning tasks. In this paper, we present a systematic evaluation of the planning capabilities of several state-of-the-art LLMs across a variety of planning domains and problem complexities. Our results show that LLMs' ability to generate valid plans is quite limited, with the best model (GPT-4) having an average success rate of just 12\% on planning problems across different domains and complexities.},
+  keywords = {planning,large language models,evaluation}
+}
+
+@inproceedings{silverGeneralizedPlanningLarge2023,
+  title = {Generalized {{Planning}} in {{PDDL Domains}} with {{Pretrained Large Language Models}}},
+  author = {Silver, Tom and Dan, Soham and Srinivas, Kavitha and Tenenbaum, Joshua B. and Kaelbling, Leslie Pack and Katz, Michael},
+  date = {2024},
+  booktitle = {Proceedings of the {{AAAI Conference}} on {{Artificial Intelligence}}},
+  volume = {38},
+  number = {18},
+  pages = {20256--20264},
+  doi = {10.1609/aaai.v38i18.30006},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/30006},
+  urldate = {2025-11-10},
+  abstract = {Recent work has considered whether large language models (LLMs) can function as planners: given a task, generate a plan. We investigate whether LLMs can serve as generalized planners: given a domain and training tasks, generate a program that efficiently produces plans for other tasks in the domain.},
+  keywords = {planning,large language models,generalized planning,PDDL}
+}
+
+@online{collinsGroundingLanguageGeneralized2022,
+  title = {Structured, Flexible, and Robust: Benchmarking and Improving Large Language Models towards More Human-like Behavior in Out-of-Distribution Reasoning Tasks},
+  shorttitle = {Structured, Flexible, and Robust},
+  author = {Collins, Katherine M. and Wong, Catherine and Feng, Jiahai and Wei, Megan and Tenenbaum, Joshua B.},
+  date = {2022-05-12},
+  eprint = {2205.05718},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2205.05718},
+  url = {http://arxiv.org/abs/2205.05718},
+  urldate = {2025-11-10},
+  abstract = {Large language models (LLMs) have demonstrated impressive capabilities in natural language processing, but their reasoning abilities remain limited. We present a systematic evaluation of LLMs on out-of-distribution reasoning tasks.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Computation and Language,large language models,reasoning}
+}
+
+@inproceedings{cashmorePlanningTemporalDomains2019,
+  title = {Robustness {{Envelopes}} for {{Temporal Plans}}},
+  author = {Cashmore, Michael and Cimatti, Alessandro and Magazzeni, Daniele and Micheli, Andrea and Zehtabi, Parisa},
+  date = {2019},
+  booktitle = {Proceedings of the {{AAAI Conference}} on {{Artificial Intelligence}}},
+  volume = {33},
+  number = {01},
+  pages = {7538--7545},
+  doi = {10.1609/aaai.v33i01.33017538},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/4745},
+  urldate = {2025-11-10},
+  abstract = {Temporal planning allows the generation of concurrent plans where durations of actions are crucial. However, temporal plans are often brittle to uncertainty in action durations. This paper introduces the concept of robustness envelopes for temporal plans.},
+  keywords = {temporal planning,PDDL,robustness}
 }
 
 @incollection{mateasOzCentricReviewInteractive1999,
@@ -441,6 +534,22 @@
   eprint = {1706.03762},
   eprinttype = {arXiv},
   url = {https://arxiv.org/abs/1706.03762}
+}
+
+@online{wangGroundingLanguagePlans2024,
+  title = {Grounding {{Language Plans}} in {{Demonstrations Through Counterfactual Perturbations}}},
+  author = {Wang, Yanwei and Wang, Tsun-Hsuan and Mao, Jiayuan and Hagenow, Michael and Shah, Julie},
+  date = {2024-04-29},
+  eprint = {2403.17124},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2403.17124},
+  url = {http://arxiv.org/abs/2403.17124},
+  urldate = {2025-11-10},
+  abstract = {Grounding the common-sense reasoning of Large Language Models (LLMs) in physical domains remains a pivotal yet unsolved problem for embodied AI. Whereas prior works have focused on leveraging LLMs directly for planning in symbolic spaces, this work uses LLMs to guide the search of task structures and constraints implicit in multi-step demonstrations. Specifically, we borrow from manipulation planning literature the concept of mode families, which group robot configurations by specific motion constraints, to serve as an abstraction layer between the high-level language representations of an LLM and the low-level physical trajectories of a robot. By replaying a few human demonstrations with synthetic perturbations, we generate coverage over the demonstrations' state space with additional successful executions as well as counterfactuals that fail the task. Our explanation-based learning framework trains an end-to-end differentiable neural network to predict successful trajectories from failures and as a by-product learns classifiers that ground low-level states and images in mode families without dense labeling. The learned grounding classifiers can further be used to translate language plans into reactive policies in the physical domain in an interpretable manner. We show our approach improves the interpretability and reactivity of imitation learning through 2D navigation and simulated and real robot manipulation tasks. Website: https://yanweiw.github.io/glide},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computation and Language,Computer Science - Machine Learning,Computer Science - Robotics},
+  file = {C\:\\Users\\ledwo\\Zotero\\storage\\NC85KMZ4\\Wang et al. - 2024 - Grounding Language Plans in Demonstrations Through Counterfactual Perturbations.pdf;C\:\\Users\\ledwo\\Zotero\\storage\\9QE4Y34N\\2403.html}
 }
 
 @online{weiChainofThoughtPromptingElicits2023,
