@@ -14,11 +14,11 @@ In this thesis, the LLM serves two primary functions: (i) generating PDDL schema
 
 \subsection{Agents and Believability}
 
-In AI, an agent receives percepts and produces actions via sensors and actuators; formally, an agent implements a mapping $f: P^{*} \to A$, where $P^{*}$ is the set of percept histories and $A$ is the set of possible actions \cite{russellArtificialIntelligenceModern2021}. In simulated environments and games, non-player characters (NPCs) extend this notion: their primary objective is not necessarily numerical reward maximization but producing behavior that human observers find plausible, consistent, and engaging over time \cite{mateasInteractiveDramaArt2002, loyallBelievableAgentsBuilding1997}.
+In AI, an agent receives percepts and produces actions via sensors and actuators; formally, an agent implements a mapping $f: P^{*} \to A$, where $P^{*}$ is the set of percept histories and $A$ is the set of possible actions \cite{russellArtificialIntelligenceModern2022}. In simulated environments and games, non-player characters (NPCs) extend this notion: their primary objective is not necessarily numerical reward maximization but producing behavior that human observers find plausible, consistent, and engaging over time \cite{mateasOzCentricReviewInteractive1999, loyallBelievableAgentsBuilding}.
 
-\textbf{Believability}, often described in the literature as an ``illusion of life,'' refers to the human-perceived realism of an agent's behaviour---whether actions align with the character's goals, personality, knowledge, and social norms \cite{batesRoleEmotionBelievable1994, loyallBelievableAgentsBuilding1997}. Empirical studies report that constraining agents with realistic physical and environmental limits, so that they appear resource-bounded and aware of their surroundings, increases perceived believability \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Recent work operationalizes believability through controlled human evaluations (Likert ratings, pairwise preference tests, and interview protocols); Park et al.\ demonstrated that LLM-driven agents with memory, reflection, and planning mechanisms were rated more believable than human crowdworkers in controlled evaluations \cite{parkGenerativeAgentsInteractive2023}. Xiao et al.\ formalize evaluation metrics such as Consistency and Robustness for profile-grounded simulation \cite{xiaoHowFarAre2024}.
+\textbf{Believability}, often described in the literature as an ``illusion of life,'' refers to the human-perceived realism of an agent's behaviour---whether actions align with the character's goals, personality, knowledge, and social norms \cite{batesRoleEmotionBelievable1994, loyallBelievableAgentsBuilding}. Empirical studies report that constraining agents with realistic physical and environmental limits, so that they appear resource-bounded and aware of their surroundings, increases perceived believability \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Recent work operationalizes believability through controlled human evaluations (Likert ratings, pairwise preference tests, and interview protocols); Park et al.\ demonstrated that LLM-driven agents with memory, reflection, and planning mechanisms were rated more believable than human crowdworkers in controlled evaluations \cite{parkGenerativeAgentsInteractive2023}. Xiao et al.\ formalize evaluation metrics such as Consistency and Robustness for profile-grounded simulation \cite{xiaoHowFarAre2024}.
 
-\textbf{Coherence} is the causal and temporal consistency of behavior---whether actions are feasible, properly ordered, and do not contradict prior commitments or environmental constraints \cite{youngArchitectureNarrativeEnvironments2001, riedlNarrativePlanningBalancing2010}. This can be measured through constraint adherence metrics: violations of environmental invariants, temporal overlaps, resource limit breaches, and unsatisfied action preconditions. In our running example, a coherent agent must not schedule overlapping commitments (e.g., attending two classes simultaneously) or attempt impossible actions (e.g., submitting an assignment before completing it).
+\textbf{Coherence} is the causal and temporal consistency of behavior---whether actions are feasible, properly ordered, and do not contradict prior commitments or environmental constraints \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}. This can be measured through constraint adherence metrics: violations of environmental invariants, temporal overlaps, resource limit breaches, and unsatisfied action preconditions. In our running example, a coherent agent must not schedule overlapping commitments (e.g., attending two classes simultaneously) or attempt impossible actions (e.g., submitting an assignment before completing it).
 
 This thesis adopts the NPC perspective where believability is the primary objective. We hypothesize that coherence---enforced through symbolic planning---is a necessary but not sufficient condition for believability. The neuro-symbolic approach aims to maintain the naturalistic, context-aware behavior of LLM agents while eliminating the logical inconsistencies that undermine perceived realism.
 
@@ -35,11 +35,11 @@ A classical planning problem is formalized as a tuple $\langle S, A, T, I, G \ra
 
 \textbf{Example.} For a student managing coursework, predicates might include \texttt{(enrolled ?s - student ?c - course)}, \texttt{(completed ?s - student ?a - assignment)}, and \texttt{(at-location ?s - student ?l - location)}. An action schema \texttt{attend-lecture} would specify preconditions (student must be enrolled, lecture must be scheduled, student must be at the lecture hall) and effects (student gains knowledge of lecture content, updates current location).
 
-PDDL extensions support temporal planning (durative actions with start/end conditions and continuous effects) and resource constraints (numeric fluents tracking quantities like time or energy) \cite{haslumIntroductionPlanningAutomated2019}. These extensions are particularly relevant for simulated agents whose actions have durations and consume resources (e.g., working a shift at a café consumes several hours, traveling between locations requires time proportional to distance).
+PDDL extensions support temporal planning (durative actions with start/end conditions and continuous effects) and resource constraints (numeric fluents tracking quantities like time or energy) \cite{haslumIntroductionPlanningDomain2019}. These extensions are particularly relevant for simulated agents whose actions have durations and consume resources (e.g., working a shift at a café consumes several hours, traveling between locations requires time proportional to distance).
 
 \subsection{Symbolic Planning}
 
-Symbolic planning uses explicit, compositional representations of states and actions to algorithmically search for valid plans \cite{fikesSTRIPSNewApproach1971, mcdermottPDDLPlanningDomain1998}. Key strengths include:
+Symbolic planning uses explicit, compositional representations of states and actions to algorithmically search for valid plans \cite{fikesStripsNewApproach1971, mcdermottPDDLPlanningDomain1998}. Key strengths include:
 
 \begin{enumerate}
     \item \textbf{Explainability}: Plans are sequences of named actions with explicit preconditions and effects, enabling causal trace inspection.
@@ -49,7 +49,7 @@ Symbolic planning uses explicit, compositional representations of states and act
 
 These properties directly address the coherence challenge in agent simulation: if an agent's behavior is synthesized via a symbolic planner, environmental constraints are satisfied by construction.
 
-The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended or underspecified environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless these are explicitly encoded, increasing complexity \cite{haslumIntroductionPlanningAutomated2019}.
+The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended or underspecified environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless these are explicitly encoded, increasing complexity \cite{haslumIntroductionPlanningDomain2019}.
 
 \subsection{LLM-Based Planning}
 
@@ -67,7 +67,7 @@ For believability-centric NPCs, these failure modes manifest as broken commitmen
 
 \subsection{Hierarchical Planning}
 
-Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods that encode admissible refinements and constraints \cite{erolUMCPSoundComplete1994, nauSHOPSimpleHierarchical2003}. Hierarchy supports abstraction, reuse, and tractable search.
+Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods that encode admissible refinements and constraints \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. Hierarchy supports abstraction, reuse, and tractable search.
 
 LLMs often approximate hierarchical planning implicitly by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2022}. Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition but without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023}.
 
@@ -75,7 +75,7 @@ A formal HTN or temporal PDDL planner can validate such decompositions, ensuring
 
 \subsection{Neuro-Symbolic Systems for Planning}
 
-Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic representations and reasoning to achieve both flexibility and guarantees \cite{garcezNeuralSymbolicComputing2015, davilaGarcezNeuralSymbolicLearning2020}. Common integration patterns for planning include:
+Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic representations and reasoning to achieve both flexibility and guarantees \cite{garcezNeuralSymbolicComputingEffective2019, garcezNeurosymbolicAI3rd2020}. Common integration patterns for planning include:
 
 \begin{enumerate}
     \item \textbf{LLM-propose/symbolic-validate}: The LLM generates candidate schemas or plans; a symbolic component validates them against domain constraints \cite{huangPlanningDarkLLMSymbolic2024}.
