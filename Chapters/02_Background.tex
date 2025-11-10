@@ -199,11 +199,11 @@ The survey introduces a taxonomy of three paradigms:
 
 Within LLMs-as-Modelers, three categories emerge:
 
-\textbf{Task Modeling} (approximately 30 papers): LLMs generate PDDL problem files from goal specifications. Approaches range from few-shot prompting \cite{collinsGroundingLanguageGeneralized2022} to chain-of-thought techniques \cite{lyuFaithfulChainofThoughtReasoning2023} and closed-loop systems with visual perception and error self-correction \cite{birrLeveragingPre-trainedLarge2024}. Task modeling is well-explored but relies on explicit natural language to PDDL mapping requiring detailed predicate specification.
+\textbf{Task Modeling} (approximately 30 papers): LLMs generate PDDL problem files from goal specifications. Approaches range from few-shot prompting \cite{collinsGroundingLanguageGeneralized2022} to chain-of-thought techniques \cite{lyuFaithfulChainofThoughtReasoning2023}. Task modeling is well-explored but relies on explicit natural language to PDDL mapping requiring detailed predicate specification.
 
-\textbf{Domain Modeling} (approximately 15 papers): LLMs generate PDDL domain files (predicates and action schemas). This is inherently more challenging than task specification. Approaches include one-shot generation \cite{oatesGenerativeAgentsConstructing2024}, generate-test-critique loops that incrementally build components \cite{guanLeveragingPreTrainedLarge2023}, and closed-loop frameworks with iterative symbolic task decomposition \cite{wongLeveragingPreTrainedLarge2023}. Single-domain generation risks misalignment with human expectations due to ambiguity in natural language descriptions.
+\textbf{Domain Modeling} (approximately 15 papers): LLMs generate PDDL domain files (predicates and action schemas). This is inherently more challenging than task specification. Approaches include generate-test-critique loops that incrementally build components \cite{guanLeveragingPretrainedLarge2023}. Single-domain generation risks misalignment with human expectations due to ambiguity in natural language descriptions.
 
-\textbf{Hybrid Modeling} (approximately 15 papers): LLMs generate both domain and problem files. Systems use iterative refinement with planner error messages as feedback \cite{kellyIterativeRefinementAutomated2023}, domain-agnostic end-to-end natural language planning \cite{gestrinNaturalLanguagePlanning2024}, and human-in-the-loop approaches with anomaly detection \cite{ye2024domainindependent}. Coordinating domain and problem generation introduces complexity; linear pipelines risk cascading errors.
+\textbf{Hybrid Modeling} (approximately 15 papers): LLMs generate both domain and problem files. Systems use human-in-the-loop approaches with anomaly detection \cite{ye2024domainindependent}. Coordinating domain and problem generation introduces complexity; linear pipelines risk cascading errors.
 
 \textbf{Key findings} relevant to this thesis:
 \begin{enumerate}
