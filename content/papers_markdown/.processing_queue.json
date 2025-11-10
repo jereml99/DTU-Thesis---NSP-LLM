@@ -1,8 +1,8 @@
 {
   "queue_created": "2025-10-31T00:00:00Z",
-  "total_papers": 14,
-  "processed": 3,
-  "remaining": 11,
+  "total_papers": 17,
+  "processed": 5,
+  "remaining": 12,
   "papers": [
     {
       "id": "chengEvolvingBeYour2024",
@@ -136,6 +136,44 @@
       "priority": 2,
       "locked_by": "agent_1762601169",
       "locked_at": "2025-11-08T12:26:09+01:00"
+    },
+    {
+      "id": "mateasOzCentricReviewInteractive1999",
+      "status": "completed",
+      "title": "An Oz-Centric Review of Interactive Drama and Believable Agents",
+      "authors": "Mateas, Michael",
+      "year": 1999,
+      "pdf_path": "/home/ledwo/Zotero/storage/BRNZNWQX/Mateas - 1999 - An Oz-Centric Review of Interactive Drama and Believable Agents.pdf",
+      "output_file": "Mateas_1999_Oz_Centric_Review.md",
+      "priority": 2,
+      "locked_by": null,
+      "locked_at": null,
+      "completed_at": "2025-11-10T15:24:58+01:00"
+    },
+    {
+      "id": "riedlNarrativePlanningBalancing2010",
+      "status": "completed",
+      "title": "Narrative Planning: Balancing Plot and Character",
+      "authors": "Riedl, M. O. and Young, R. M.",
+      "year": 2010,
+      "pdf_path": "/home/ledwo/Zotero/storage/QMWCCV9Y/Riedl and Young - 2010 - Narrative Planning Balancing Plot and Character.pdf",
+      "output_file": "Riedl_2010_Narrative_Planning.md",
+      "priority": 2,
+      "locked_by": null,
+      "locked_at": null,
+      "completed_at": "2025-11-10T15:30:18+01:00"
+    },
+    {
+      "id": "youngOverviewMimesisArchitecture",
+      "status": "processing",
+      "title": "An Overview of the Mimesis Architecture: Integrating Intelligent Narrative Control into an Existing Gaming Environment",
+      "authors": "Young, R Michael",
+      "year": null,
+      "pdf_path": "/home/ledwo/Zotero/storage/65AIEUW4/Young - An Overview of the Mimesis Architecture Integrating Intelligent Narrative Control into an Existing.pdf",
+      "output_file": "Young_Mimesis_Architecture.md",
+      "priority": 2,
+      "locked_by": "agent_1762778156",
+      "locked_at": "2025-11-10T15:30:18+01:00"
     }
   ],
   "completed_papers": [
@@ -171,6 +209,21 @@
       "id": "fabianoHowOptimizeSystematic2024",
       "reason": "Methodological paper about systematic reviews, not core to thesis",
       "title": "How to optimize the systematic review process using AI tools"
+    },
+    {
+      "id": "russellArtificialIntelligenceModern2022",
+      "reason": "Textbook, not a research paper",
+      "title": "Artificial Intelligence: A Modern Approach"
+    },
+    {
+      "id": "loyallBelievableAgentsBuildinga",
+      "reason": "Duplicate of loyallBelievableAgentsBuilding",
+      "title": "Believable Agents: Building Interactive Personalities (duplicate)"
+    },
+    {
+      "id": "parkGenerativeAgentsInteractive2023a",
+      "reason": "Duplicate conference proceedings version of parkGenerativeAgentsInteractive2023",
+      "title": "Generative Agents: Interactive Simulacra of Human Behavior (UIST proceedings)"
     }
   ]
 }
