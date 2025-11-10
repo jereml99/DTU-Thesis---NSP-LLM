@@ -1,8 +1,8 @@
 {
   "queue_created": "2025-10-31T00:00:00Z",
   "total_papers": 17,
-  "processed": 5,
-  "remaining": 12,
+  "processed": 14,
+  "remaining": 0,
   "papers": [
     {
       "id": "chengEvolvingBeYour2024",
@@ -90,52 +90,55 @@
     },
     {
       "id": "huangPlanningDarkLLMSymbolic2024",
-      "status": "processing",
+      "status": "completed",
       "title": "Planning in the Dark: LLM-Symbolic Planning Pipeline without Experts",
       "authors": "Huang, Sukai and Lipovetzky, Nir and Cohn, Trevor",
       "year": 2024,
       "pdf_path": "/home/ledwo/Zotero/storage/TRJ63QFI/Huang et al. - 2024 - Planning in the Dark LLM-Symbolic Planning Pipeline without Experts.pdf",
       "output_file": "Huang_2024_Planning_Dark.md",
       "priority": 2,
-      "locked_by": "agent_1762601151",
-      "locked_at": "2025-11-08T12:25:51+01:00"
+      "locked_by": null,
+      "locked_at": null,
+      "completed_at": "2025-11-10T15:57:05+01:00"
     },
     {
       "id": "kwonFastAccurateTask",
-      "status": "processing",
+      "status": "completed",
       "title": "Fast and Accurate Task Planning using Neuro-Symbolic Language Models and Multi-level Goal Decomposition",
       "authors": "Kwon, Minseo and Kim, Yaesol and Kim, Young J",
       "year": null,
       "pdf_path": "/home/ledwo/Zotero/storage/YJJ7RIXK/Kwon et al. - Fast and Accurate Task Planning using Neuro-Symbolic Language Models and Multi-level Goal Decomposit.pdf",
       "output_file": "Kwon_Fast_Accurate_Task.md",
       "priority": 2,
-      "locked_by": "agent_1762601155",
-      "locked_at": "2025-11-08T12:25:55+01:00",
-      "completed_at": null
+      "locked_by": null,
+      "locked_at": "2025-11-10T15:57:05+01:00",
+      "completed_at": "2025-11-10T16:00:52+01:00"
     },
     {
       "id": "nayakLongHorizonPlanningMultiAgent",
-      "status": "processing",
+      "status": "completed",
       "title": "Long-Horizon Planning for Multi-Agent Robots in Partially Observable Environments",
       "authors": "Nayak, Siddharth et al.",
       "year": null,
       "pdf_path": "/home/ledwo/Zotero/storage/7JRYCB3W/Nayak et al. - Long-Horizon Planning for Multi-Agent Robots in Partially Observable Environments.pdf",
       "output_file": "Nayak_Long_Horizon_Planning.md",
       "priority": 2,
-      "locked_by": "agent_1762601167",
-      "locked_at": "2025-11-08T12:26:07+01:00"
+      "locked_by": null,
+      "locked_at": null,
+      "completed_at": "2025-11-10T16:00:52+01:00"
     },
     {
       "id": "zhouISRLLMIterativeSelfRefined2023",
-      "status": "processing",
+      "status": "completed",
       "title": "ISR-LLM: Iterative Self-Refined Large Language Model for Long-Horizon Sequential Task Planning",
       "authors": "Zhou et al.",
       "year": 2023,
       "pdf_path": "/home/ledwo/Zotero/storage/MNH3JEXP/Zhou et al. - 2023 - ISR-LLM Iterative Self-Refined Large Language Model for Long-Horizon Sequential Task Planning.pdf",
       "output_file": "Zhou_2023_ISR_LLM.md",
       "priority": 2,
-      "locked_by": "agent_1762601169",
-      "locked_at": "2025-11-08T12:26:09+01:00"
+      "locked_by": null,
+      "locked_at": null,
+      "completed_at": "2025-11-10T16:00:52+01:00"
     },
     {
       "id": "mateasOzCentricReviewInteractive1999",
@@ -165,15 +168,16 @@
     },
     {
       "id": "youngOverviewMimesisArchitecture",
-      "status": "processing",
+      "status": "completed",
       "title": "An Overview of the Mimesis Architecture: Integrating Intelligent Narrative Control into an Existing Gaming Environment",
       "authors": "Young, R Michael",
       "year": null,
       "pdf_path": "/home/ledwo/Zotero/storage/65AIEUW4/Young - An Overview of the Mimesis Architecture Integrating Intelligent Narrative Control into an Existing.pdf",
       "output_file": "Young_Mimesis_Architecture.md",
       "priority": 2,
-      "locked_by": "agent_1762778156",
-      "locked_at": "2025-11-10T15:30:18+01:00"
+      "locked_by": null,
+      "locked_at": "2025-11-10T15:30:18+01:00",
+      "completed_at": "2025-11-10T15:52:49+01:00"
     }
   ],
   "completed_papers": [
