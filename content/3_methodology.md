@@ -29,26 +29,14 @@ The implementation transforms the original monolithic Generative Agents codebase
 
 ### Neuro-Symbolic Planning Pipeline
 
-We implement a neuro-symbolic planning framework following the LLM-propose/symbolic-validate pattern \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}. Unlike the baseline hierarchical planner, our pipeline validates all proposed action sequences against formal constraints before execution, directly addressing the coherence challenge.
+We implement a three-stage LLM-propose/symbolic-validate framework \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}:
 
-**Stage 1: Task Generation**  
-The LLM generates daily tasks from the agent's memory stream using the baseline retrieval mechanism \cite{parkGenerativeAgentsInteractive2023a}, grounding tasks in wants, needs, commitments, and objectives.
+1. **Task Generation**: The LLM generates daily tasks from memory, grounding them in wants, needs, and commitments \cite{parkGenerativeAgentsInteractive2023a}.
 
-**Stage 2: Action Decomposition**  
-Each task is decomposed into atomic actions with environment-grounded parameters (locations, objects, relationships). Example: "complete assignment" decomposes to `open-laptop`, `navigate-to-file`, `work-on-document(90min)`, `submit-via-portal`.
+2. **Action Decomposition**: Tasks decompose into atomic actions with environment parameters. Example: "complete assignment" → `open-laptop`, `navigate-to-file`, `work-on-document(90min)`, `submit-via-portal`.
 
-**Stage 3: Schema Generation and Validation**  
-The LLM generates PDDL schemas encoding preconditions, effects, and durations for each action. A symbolic validator then checks:
-- **Causal consistency**: Precondition–effect chains across actions
-- **Temporal feasibility**: No overlapping activities
-- **Resource limits**: Numeric fluents (time, energy) stay within bounds
-- **Environmental invariants**: Domain constraints (e.g., single-location occupancy)
+3. **Schema Generation & Validation**: The LLM generates PDDL schemas (preconditions, effects, durations) for each action. A symbolic validator checks causal consistency, temporal feasibility, resource limits, and environmental invariants. Violations trigger diagnostic feedback (e.g., "unsatisfied precondition `(at-location student hall)`") for iterative LLM repair until constraints satisfy or iteration budget exhausts.
 
-When validation fails, diagnostic feedback (e.g., "unsatisfied precondition `(at-location student hall)`" or "temporal overlap between `study-session` and `coffee-break`") is returned to the LLM for iterative repair until constraints are satisfied or the iteration budget is exhausted.
-
-**Integration and Rationale**: The pipeline integrates with memory retrieval, reflection synthesis, and execution monitoring from the baseline architecture \cite{parkGenerativeAgentsInteractive2023a}, preserving naturalistic behavior while enforcing coherence. We use LLM-generated schemas rather than pre-defined models to enable adaptation to novel situations \cite{tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}, at the cost of potential schema misalignment. The validation layer mitigates this risk through constraint checking and iterative repair.
-
-**Baseline Comparison**: The baseline `PlanningServiceShim` implements the original Generative Agents hierarchical planner without symbolic validation, enabling direct measurement of constraint violation rates and believability differences.
 
 ### Visualization and Logging Infrastructure
 
