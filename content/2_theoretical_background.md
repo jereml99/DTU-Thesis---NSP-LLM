@@ -155,24 +155,7 @@ Planning in the Dark: LLM‑Symbolic Planning Pipeline without Experts (Huang et
 
 **Relevance to this thesis**: Huang et al. demonstrate that LLM diversity and semantic validation can produce solvable PDDL schemas without expert intervention. Their pipeline validates the feasibility of LLM-generated schemas via symbolic planners, ensuring coherence. We adapt this insight: rather than generating diverse schema libraries, we use iterative refinement with planner feedback to improve schema quality, prioritizing human-perceived believability alongside solvability.
 
-<!-- review-Jeremi:  In our study we focus on the plan consistency so this paper dosen't seems to be directly relevant. We could do sth smilar but for the plans-->
-### 2.3.4 Evaluating Believability in LLM-Driven Agents (Xiao et al., 2024)
-
-Xiao et al. introduce SimulateBench, a benchmark for evaluating believability in LLM-based human behavior simulation [Xiao et al., 2024]. They propose two critical dimensions:
-
-1. **Consistency Ability (CA)**: How well LLMs align behavior with character profiles. Measured via accuracy on multiple-choice questions requiring reasoning from profile information (average profile length: 3,277 tokens vs. 203 tokens in Park et al.).
-
-2. **Robustness Ability (RA)**: How stable LLM behaviors remain under profile perturbations (education, surname, race, age modifications). Measured as standard deviation of CA scores across profile variants.
-
-**Key findings** from evaluating 10 LLMs:
-- Best model (GPT-4): CA = 0.77; worst (Vicuna-7B-16K): CA = 0.46.
-- Longer context windows do not guarantee better consistency (e.g., LongChat-7B-32K achieved CA = 0.48, worse than GPT-4 with 8k context).
-- **Simulation hallucination**: Models perform significantly worse on questions where the profile lacks sufficient information (GPT-4: 1.00 on known questions, 0.47 on unknown), indicating tendency to answer based on training knowledge rather than profile constraints.
-- Better consistency does not imply better robustness; some models with lower CA scores exhibited higher robustness to perturbations.
-
-**Relevance to this thesis**: Xiao et al. operationalize believability evaluation through profile-grounded consistency metrics and hallucination detection. Their findings underscore the challenge of maintaining coherence when LLMs improvise beyond available information. This motivates our approach of using symbolic constraints to ground agent behavior: the PDDL domain acts as an explicit "profile" of environmental rules, and planner validation prevents hallucinated actions that violate these rules.
-
-### 2.3.5 Other Neuro-Symbolic Planning Approaches
+### 2.3.4 Other Neuro-Symbolic Planning Approaches
 
 Several additional lines of work combine LLMs with formal planning:
 
@@ -184,7 +167,7 @@ Several additional lines of work combine LLMs with formal planning:
 
 Compared to Park et al., these hybrid methods assume an explicit domain model and delegate feasibility checking to a solver, trading authoring cost for guarantees. This thesis follows the hybrid path but investigates PDDL schema generation by LLMs to reduce authoring cost while preserving symbolic validation guarantees.
 
-### 2.3.6 Summary of Insights and Research Focus
+### 2.3.5 Summary of Insights and Research Focus
 
 The literature suggests three converging insights:
 
