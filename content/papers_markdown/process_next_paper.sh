@@ -1,13 +1,13 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 # Paper Processing Script for Parallel Execution
 # Usage: ./process_next_paper.sh <agent_id>
 
 set -e
 
 AGENT_ID="${1:-agent_$(date +%s)}"
-QUEUE_FILE="/home/ledwo/DTU-Thesis---NSP-LLM/content/papers_markdown/.processing_queue.json"
+QUEUE_FILE="/home/alexcomas/DTU-Thesis---NSP-LLM/content/papers_markdown/.processing_queue.json"
 LOCK_FILE="${QUEUE_FILE}.lock"
-OUTPUT_DIR="/home/ledwo/DTU-Thesis---NSP-LLM/content/papers_markdown"
+OUTPUT_DIR="/home/alexcomas/DTU-Thesis---NSP-LLM/content/papers_markdown"
 
 echo "🤖 Agent: $AGENT_ID"
 
@@ -114,8 +114,12 @@ echo "   PDF: $PDF_PATH"
 echo "   Output: $OUTPUT_FILE"
 
 # Convert Windows path to WSL if needed
-if [[ "$PDF_PATH" == C:\\* ]]; then
-    PDF_PATH=$(echo "$PDF_PATH" | sed 's|C:\\Users\\ledwo\\Zotero\\storage|/home/ledwo/Zotero/storage|' | sed 's|\\|/|g')
+if [[ "$PDF_PATH" == C:\\Users\\s233148\\* ]]; then
+    PDF_PATH=$(echo "$PDF_PATH" | sed 's|C:\\Users\\s233148|/mnt/c/Users/s233148|' | sed 's|\\|/|g')
+elif [[ "$PDF_PATH" == C:\\Users\\ledwo\\* ]]; then
+    PDF_PATH=$(echo "$PDF_PATH" | sed 's|C:\\Users\\ledwo|/mnt/c/Users/s233148|' | sed 's|\\|/|g')
+elif [[ "$PDF_PATH" == /home/ledwo/* ]]; then
+    PDF_PATH=$(echo "$PDF_PATH" | sed 's|/home/ledwo/Zotero/storage|/mnt/c/Users/s233148/Zotero/storage|')
 fi
 
 echo "   Resolved: $PDF_PATH"

@@ -1,95 +1,197 @@
 # Chapter 2 – Theoretical Background
 
-This chapter unifies the conceptual foundations and the most relevant prior work that motivate the design choices in this thesis. It first introduces the core notions—large language models, agents, and planning paradigms (symbolic, neural, and hierarchical)—and clarifies how they interact in neuro-symbolic systems. It then reviews research on LLM-driven generative agents, with an emphasis on the original “Generative Agents” paper [Park et al., 2023], and contrasts it with hybrid planning approaches that combine symbolic guarantees with neural flexibility. Throughout, a running example is used: a small-town non-player character (NPC) named Maya, a café barista who lives, works, and socializes in a simulated environment. The example illustrates how different planning formalisms and LLM capabilities bear on believability and coherence.
-
-<!-- review-Jeremi: Are sure this running example is what we want? Why do we talk here about the tradeoff between fluency and coherence? -->
+This chapter establishes the conceptual foundations and reviews the relevant prior work motivating this thesis. It first defines the core concepts—large language models (LLMs), agents, and planning paradigms—with particular emphasis on symbolic planning formalisms such as PDDL and how LLMs can be leveraged to generate such formalisms. It then reviews research on LLM-driven generative agents, focusing on the seminal "Generative Agents" paper [Park et al., 2023], and examines hybrid neuro-symbolic approaches that combine LLM flexibility with symbolic planning guarantees [Huang et al., 2024; Tantakoun et al., 2025]. Throughout, we emphasize the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents. A running example—an NPC simulating a university student managing academic and social commitments—illustrates how different planning paradigms address logical inconsistencies and incoherent action sequences.
 
 ## 2.2 Core Concepts and Definitions
 
 ### 2.2.1 Large Language Models (LLMs)
 
-Large language models are transformer-based sequence predictors that learn conditional distributions over tokens from large corpora [Vaswani et al., 2017; Brown et al., 2020]. Given a context window, the model estimates the next-token distribution and iteratively generates text. Self-attention enables the model to integrate information across the prompt, in-context examples, and tool-augmented inputs (e.g., retrieval), which in practice yields emergent abilities such as instruction following, few-shot generalization, and approximate reasoning. However, LLMs do not compute logical consequences with formal guarantees; they perform pattern-conditioned statistical inference that can be steered with prompting and scaffolding but remains non-deductive in nature [Wei et al., 2022; Kojima et al., 2022].
+Large language models are transformer-based sequence predictors trained on large corpora to estimate conditional token distributions [Vaswani et al., 2017; Brown et al., 2020]. Given a context window, an LLM generates text autoregressively by sampling or selecting from the next-token distribution. Self-attention mechanisms enable integration of information across prompts, in-context examples, and tool-augmented inputs, yielding capabilities such as instruction following, few-shot generalization, and approximate commonsense reasoning [Wei et al., 2022; Kojima et al., 2022].
 
-In this thesis, the LLM is treated as a neural reasoning module within a broader agent architecture rather than the agent itself. Concretely, it is responsible for tasks such as: (i) inferring goals from observations and social context, (ii) elaborating task decompositions into natural-language steps, and (iii) synthesizing utterances and reflections. 
+Critically for planning applications, LLMs do not perform deductive logical inference with formal guarantees. They execute pattern-conditioned statistical inference that can be steered via prompting but remains fundamentally non-symbolic. Recent work has shown that LLMs can generate structured outputs such as PDDL action schemas and task specifications when prompted with domain descriptions [Tantakoun et al., 2025; Huang et al., 2024], but these outputs require external validation to ensure logical consistency and adherence to constraints.
 
-<!-- review-Jeremi: The paragraph below seems a bit general. It is a lot of text and reads a little like generic AI slope. -->
+In this thesis, the LLM serves two primary functions: (i) generating PDDL schemas from natural language domain descriptions, and (ii) proposing high-level goals and task decompositions into individual actions grounded in agent memory and social context. The symbolic planning scaffolding layer then validates these LLM-generated artifacts against environmental constraints and performs plan validation, that is, it checks whether a proposed plan is executable given the domain and problem. When a plan is invalid the validator produces failure diagnostics that indicate which action or actions have unsatisfied preconditions, which invariants are violated, where temporal or resource constraints clash, or whether the problem is unsolvable. Some planners or validators expose richer traces or error messages that help locate the cause of failure (for example, naming a missing predicate or the numeric fluent that was exceeded); however, validators typically provide diagnostics rather than human-ready repair suggestions. The LLM remains responsible for producing and sequencing final action plans, while the symbolic validator enforces feasibility.
 
-The LLM’s strengths (world knowledge, pragmatic inference, and linguistic fluency) are leveraged where open-ended interpretation is needed. Its weaknesses (lack of hard constraint enforcement, occasional hallucination, and limited temporal precision) are mitigated by a symbolic validator (symbolic scaffolding) that checks proposals against an explicit model of states, actions, and time and reports diagnostics or suggested repairs [Shinn et al., 2023; Yao et al., 2023]. In the running example, the LLM can draft Maya’s day plan from a calendar and social cues, but the final schedule must respect café hours, shift constraints, and travel times;
-the validator will flag violations and indicate repair options.
+### 2.2.2 Agents and Believability
 
-### 2.2.2 Agents
+In AI, an agent receives percepts and produces actions via sensors and actuators; formally, an agent implements a mapping $f: P^{*} \to A$, where $P^{*}$ is the set of percept histories and $A$ is the set of possible actions [Russell and Norvig, 2021]. In simulated environments and games, non-player characters (NPCs) extend this notion: their primary objective is not necessarily numerical reward maximization but producing behavior that human observers find plausible, consistent, and engaging over time [Mateas, 2002; Loyall, 1997].
 
-Classical AI defines an agent as an entity that perceives its environment through sensors and acts upon it through actuators to maximize a performance measure [Russell and Norvig, 2021]. Architectures range from reactive agents to goal- and utility-based agents, with internal states (beliefs, desires, intentions) modeling information about the world and future courses of action. In simulated environments and games, non-player characters (NPCs) extend this notion: their primary purpose is not reward maximization but producing behavior that human observers find plausible, consistent, and engaging over time [Mateas, 2002; Loyall, 1997].
+**Believability**, often described in the literature as an "illusion of life," refers to the human-perceived realism of an agent's behaviour — whether actions align with the character's goals, personality, knowledge, and social norms [Bates, 1994; Loyall, 1997]. Empirical studies report that constraining agents with realistic physical and environmental limits, so that they appear resource-bounded and aware of their surroundings, increases perceived believability [Bates, 1994; Bogdanovych et al., 2016]. Recent work operationalizes believability through controlled human evaluations (Likert ratings, pairwise preference tests, and interview protocols); Park et al. demonstrated that LLM-driven agents with memory, reflection, and planning mechanisms were rated more believable than human crowdworkers in controlled evaluations [Park et al., 2023]. Xiao et al. formalize evaluation metrics such as Consistency and Robustness for profile-grounded simulation [Xiao et al., 2024].
 
-This thesis adopts the NPC perspective. Agents are situated characters whose core objective is believability: psychological plausibility, narrative consistency, and social coherence, rather than numerical reward. This reorientation has two implications. First, plans must satisfy constraints that humans expect (e.g., working shifts, social commitments, physical limitations), even when utility differences are trivial. Second, explainability matters: the agent's choices should be understandable post hoc via causal and temporal rationales grounded in an explicit world model. For example, Maya's choices (covering a colleague's shift, attending an evening art class, sending a message about a delayed delivery) should align with her goals, knowledge, and the environment's rules, even when improvised by an LLM.
+**Coherence** is the causal and temporal consistency of behavior—whether actions are feasible, properly ordered, and do not contradict prior commitments or environmental constraints [Young, 2001; Riedl and Young, 2010]. This can be measured through constraint adherence metrics: violations of environmental invariants, temporal overlaps, resource limit breaches, and unsatisfied action preconditions. In our running example, a coherent agent must not schedule overlapping commitments (e.g., attending two classes simultaneously) or attempt impossible actions (e.g., submitting an assignment before completing it).
 
-### 2.2.3 Planning
+This thesis adopts the NPC perspective where believability is the primary objective. We hypothesize that coherence—enforced through symbolic planning—is a necessary but not sufficient condition for believability. The neuro-symbolic approach aims to maintain the naturalistic, context-aware behavior of LLM agents while eliminating the logical inconsistencies that undermine perceived realism.
 
-A (classical) planning problem can be formalized as a tuple (S, A, T, I, G), where S is a set of states, A a set of actions, T a transition relation or function T: S × A → S, I ⊆ S the set of initial states, and G ⊆ S the set of goal states [Ghallab et al., 2004]. A plan is a finite sequence of actions π = ⟨a1, …, an⟩ such that executing π from any s ∈ I via T reaches some g ∈ G; a policy generalizes this to a mapping from states to actions. Preconditions and effects of actions implicitly define the causal structure by which actions change the world. Temporal planning enriches this with durations and temporal constraints; epistemic extensions reason about agents’ knowledge and information change [Bolander and Andersen, 2011].
+### 2.2.3 Planning and PDDL
 
-<!-- review-Jeremi:  A bit of AI slope talk here, provide little value with a lot of words-->
-For simulated agents, planning is a means to causal and temporal coherence. By requiring goal achievement via explicit preconditions, effects, and constraints, planning ensures that the agent’s behavior is not merely locally plausible but globally consistent with the environment over time.
+A classical planning problem is formalized as a tuple $\langle S, A, T, I, G \rangle$, where $S$ is a set of states, $A$ a set of actions, $T: S \times A \to S$ a transition function, $I \subseteq S$ the set of initial states, and $G \subseteq S$ the set of goal states [Ghallab et al., 2004]. A plan is a finite sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$ such that executing $\pi$ from any $s \in I$ via $T$ reaches some $g \in G$. Actions have preconditions (conditions that must hold before execution) and effects (state changes produced by execution), which define the causal structure of how actions transform the world.
 
-<!-- review-Jeremi: We need to adjust the running examples to better fit our actual envirment-->
- In our example, a plan that schedules Maya to open the café must first ensure that keys are possessed, that commute time is available, and that the espresso machine warm-up precedes serving customers. Plans produce traces whose causal explanations can be inspected, supporting both believability and transparency.
+**PDDL (Planning Domain Definition Language)** is the standard formalism for encoding planning problems [McDermott et al., 1998; Ghallab et al., 2004]. A PDDL specification consists of two files:
+
+1. **Domain file (DF)**: Defines predicates (representing the state space $S$) and action schemas (representing actions $A$ with typed parameters, preconditions, and effects). This captures universal aspects of the planning problem.
+
+2. **Problem file (PF)**: Defines objects, the initial state $s_I$, and goal conditions $G$ for a specific problem instance.
+
+**Example.** For a student managing coursework, predicates might include `(enrolled ?s - student ?c - course)`, `(completed ?s - student ?a - assignment)`, and `(at-location ?s - student ?l - location)`. An action schema `attend-lecture` would specify preconditions (student must be enrolled, lecture must be scheduled, student must be at the lecture hall) and effects (student gains knowledge of lecture content, updates current location).
+
+PDDL extensions support temporal planning (durative actions with start/end conditions and continuous effects) and resource constraints (numeric fluents tracking quantities like time or energy) [Haslum et al., 2019]. These extensions are particularly relevant for simulated agents whose actions have durations and consume resources (e.g., working a shift at a café consumes several hours, traveling between locations requires time proportional to distance).
 
 ### 2.2.4 Symbolic Planning
 
-Symbolic planning represents states as logical structures and actions as operators with preconditions and effects, enabling algorithmic search over an explicit, compositional model (e.g., STRIPS and PDDL) [Fikes and Nilsson, 1971; McDermott et al., 1998; Ghallab et al., 2004]. Its key strengths include: (i) explainability via declarative models and plan traces; (ii) reliable constraint handling (state invariants, resource bounds, mutual exclusions); and (iii) optimality or bounded-suboptimality under well-defined cost models. These properties are valuable for ensuring that NPC behavior respects <!-- review-Jeremi: Do they actually respect narrative? Do we have to focus on it?--> narrative and physical constraints and that deviations can be diagnosed.
+Symbolic planning uses explicit, compositional representations of states and actions to algorithmically search for valid plans [Fikes and Nilsson, 1971; McDermott et al., 1998]. Key strengths include:
 
-<!-- review-Jeremi:  this sentence is hard to read. I don't understed what it's trying to say -->
-The limitations are complementary to LLM strengths. Symbolic planning presumes a closed-world model that is costly to author and brittle under open-ended, underspecified goals.
+1. **Explainability**: Plans are sequences of named actions with explicit preconditions and effects, enabling causal trace inspection.
+2. **Constraint enforcement**: Planners guarantee that generated plans satisfy all preconditions, avoid violated invariants, and respect temporal and resource bounds.
+3. **Optimality**: Many planners find optimal or bounded-suboptimal solutions under well-defined cost models.
 
- It struggles with commonsense interpretation, social nuance, and incomplete or stochastic dynamics unless extended with belief, probabilistic, or temporal logics, which increase complexity [Kvarnström, 2011; Haslum et al., 2019]. In our setting, a purely symbolic approach would require hand-coding the café domain’s social norms and exceptions (e.g., covering a sick colleague) and still fail to improvise natural dialogue.
- <!-- review-Jeremi: Why we making this claim. I'm not sure it symbolic planning is necessary.-->
-  Hence, symbolic planning is necessary but insufficient for believability on its own.
+These properties directly address the coherence challenge in agent simulation: if an agent's behavior is synthesized via a symbolic planner, environmental constraints are satisfied by construction.
 
-### 2.2.5 Neural Planning
+The primary limitation is **authoring cost**: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended or underspecified environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless these are explicitly encoded, increasing complexity [Haslum et al., 2019].
 
-Neural or LLM-based planning refers to using learned models to produce action sequences or subgoal decompositions directly from textual descriptions, scenes, or trajectories [Ahn et al., 2022; Huang et al., 2022]. LLMs excel at drafting plausible multi-step procedures (“chain-of-thought”), proposing alternatives, and adapting plans to soft preferences. Retrieval and tool-use can augment LLMs with up-to-date knowledge (e.g., schedules), while sampling and verification loops can improve robustness [Shinn et al., 2023; Yao et al., 2023].
+### 2.2.5 LLM-Based Planning
 
-<!-- review-Jeremi: I don' think we will have any formal guarantees for our aproch right? -->
-The downside is the absence of formal guarantees. LLM-generated plans can omit preconditions, violate invariants, or drift temporally, especially when context windows truncate earlier commitments. Moreover, stochastic decoding yields non-determinism that complicates reproducibility and debugging. For believability-centric NPCs, these failure modes manifest as broken commitments (double-booked meetings), physical impossibilities (being in two places at once), or social incoherence (forgetting a promise). These gaps motivate a neuro-symbolic design where neural proposals are filtered or refined against a symbolic model.
+LLM-based (or neural) planning refers to using language models to generate action sequences or subgoal decompositions directly from textual descriptions [Ahn et al., 2022; Huang et al., 2022]. LLMs can draft plausible multi-step procedures via prompting techniques such as chain-of-thought [Wei et al., 2022], propose alternatives, and adapt plans to soft preferences without requiring formal domain models.
+
+However, LLMs lack formal guarantees of correctness. LLM-generated plans can:
+- Omit necessary preconditions (e.g., proposing to open a door without first checking if it exists or is accessible from the current location),
+- Violate environmental invariants (e.g., scheduling the agent to be in two different locations simultaneously),
+- Drift temporally (e.g., forgetting earlier commitments or scheduling conflicting activities when context windows truncate),
+- Hallucinate actions or states not grounded in the environment (e.g., interacting with objects or people that do not exist in the current scene) [Xiao et al., 2024].
+
+For believability-centric NPCs, these failure modes manifest as broken commitments, physical impossibilities, and social incoherence. Park et al.'s Generative Agents exhibited emergent social behaviors but lacked mechanisms to enforce hard constraints, relying instead on LLM prompt engineering to maintain temporal coherence heuristically [Park et al., 2023].
 
 ### 2.2.6 Hierarchical Planning
 
-Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods that encode admissible refinements and constraints [Erol et al., 1994; Nau et al., 2003]. Hierarchy supports abstraction, reuse, and tractable search, and mirrors human planning practices (e.g., “prepare café for opening” → “arrive,” “unlock,” “start machines,” “set up pastries”). Temporal and resource constraints can be attached at different levels, yielding coherent schedules.
+Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods that encode admissible refinements and constraints [Erol et al., 1994; Nau et al., 2003]. Hierarchy supports abstraction, reuse, and tractable search.
 
-LLMs often approximate hierarchical planning implicitly by proposing outlines, subgoals, and steps in natural language [Wei et al., 2022]. Systems like “Generative Agents” prompt an LLM to produce daily plans that look hierarchical—morning, afternoon, evening blocks with embedded tasks—without an explicit HTN semantics [Park et al., 2023]. This produces understandable behavior but lacks machine-checkable guarantees. A <!-- review-Jeremi: Dose sth like this exist - symbolic HTN?--> symbolic HTN or PDDL+temporal planner can validate and schedule such decompositions, ensuring that high-level commitments (e.g., “cover afternoon shift”) are refined into feasible, non-overlapping actions. In this thesis, we make hierarchy explicit and begin by implementing a symbolic validator <!-- review-Jeremi: Again I don't thing we should call it like this in the actual thesis -->  (symbolic scaffolding) that inspects LLM decompositions for feasibility and suggests targeted repairs; full planner-based synthesis remains a possible extension.
+LLMs often approximate hierarchical planning implicitly by proposing outlines, subgoals, and steps in natural language [Wei et al., 2022]. Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition but without explicit HTN semantics or validation [Park et al., 2023].
 
-### 2.2.7 Neuro-Symbolic Systems
-<!-- review-Jeremi: Not bad, but we Did a great literature review and I think we should ground background more into the papers that we have actually read --> 
-Neuro-symbolic systems combine learned, sub-symbolic components with symbolic representations and reasoning to achieve both flexibility and guarantees [Garcez et al., 2015; d’Avila Garcez and Lamb, 2020]. Common integration patterns include: (i) neural-propose/symbolic-dispose, where an LLM proposes goals or plans and a symbolic component validates them; (ii) symbolic-in-the-loop, where constraints are injected into decoding or used to critique/repair candidates; and (iii) shared-world models, where a symbolic state is updated from neural perception and queried for decision making. The interface must specify data contracts: how tasks are typed, how constraints are represented, and how failures are explained.
+A formal HTN or temporal PDDL planner can validate such decompositions, ensuring that high-level commitments refine into feasible, non-overlapping primitive actions. In our running example, a high-level goal "complete coursework this week" might decompose into "attend lectures," "complete assignments," and "study for exam," with temporal constraints ensuring no overlaps and deadlines are met.
 
-<!-- review-Jeremi: Again this paragraph is hard to read for me. I fell like there is a lot of words but not a lot of actual information.--> 
-In this work, the LLM supplies open-ended interpretation (goal inference, social reasoning, utterance generation) and produces hierarchical sketches, which are tree-structured proposals that name high-level intentions and recursively refine them into subtasks. These sketches can optionally annotate nodes with duration, resources, and informal preconditions. The validator inspects the sketches and reports diagnostics or suggested repairs.<!-- review-Jeremi: This seems good -->  We focus first on a symbolic validator (symbolic scaffolding) that enforces hard constraints (resources, temporal relations, invariants) as checks, produces diagnostics and suggested repairs, and can emit traces suitable for inspection and replay. The result aims to preserve the believability afforded by neural fluency while adding the coherence and explainability provided by symbolic checks. For the running example,<!-- review-Jeremi: Example is good but I think it should be specific like what kind of constrain -->  the neuro-symbolic layer ensures that Maya’s socially driven, LLM-generated intentions are realized only after passing validator checks or being repaired to satisfy café domain constraints.
+### 2.2.7 Neuro-Symbolic Systems for Planning
+
+Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic representations and reasoning to achieve both flexibility and guarantees [Garcez et al., 2015; d'Avila Garcez and Lamb, 2020]. Common integration patterns for planning include:
+
+1. **LLM-propose/symbolic-validate**: The LLM generates candidate schemas or plans; a symbolic component validates them against domain constraints [Huang et al., 2024].
+2. **Iterative refinement**: Plans are critiqued by symbolic validators or planners, and feedback is used to improve LLM proposals [Silver et al., 2023; Valmeekam et al., 2023].
+3. **Shared world models**: A symbolic state representation is updated from neural perception and queried for decision making.
+
+Recent work has explored these patterns specifically for PDDL generation. Tantakoun et al. survey approaches where LLMs construct PDDL domain and problem files from natural language descriptions, with symbolic planners used for validation and execution [Tantakoun et al., 2025]. Huang et al. propose a pipeline where multiple LLM instances generate diverse PDDL action schemas, which are filtered via semantic coherence checks and validated by symbolic planners to identify solvable schema sets [Huang et al., 2024].
+
+This thesis follows the LLM-propose/symbolic-validate pattern. The LLM generates tasks and action sequences grounded in agent memory and context; these are then translated into PDDL schemas and validated by a symbolic planner to enforce temporal, causal, and resource constraints. Validation failures produce diagnostic feedback that can be returned to the LLM for iterative repair, preserving naturalistic behavior while ensuring logical coherence.
+
+In our running example, the LLM might propose a daily schedule for an agent working at a café: "open the shop," "serve customers," "take a break," and "attend a social event in the evening." The PDDL validator checks this schedule against location constraints (the agent cannot be at the café and the park simultaneously), temporal constraints (shift hours, event times), and action preconditions (the café door must exist and be unlocked before opening). Violations such as overlapping commitments or attempts to interact with non-existent objects are flagged, and diagnostic feedback indicates which constraints were violated (e.g., "action attend_event at 18:00 conflicts with shift ending at 19:00; agent location café incompatible with event location park").
 
 ## 2.3 Literature Review
 
-This section reviews work relevant to neuro-symbolic planning for LLM-driven agents, focusing on the Generative Agents paper that our system extends and situating it among hybrid approaches that combine LLMs with symbolic models.
+This section reviews work relevant to neuro-symbolic planning for LLM-driven agents, focusing on the Generative Agents paper that motivates our system and situating it among hybrid approaches that combine LLMs with symbolic planning.
 
-### 2.3.1 Original Paper – Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)
+### 2.3.1 Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)
 
-<!-- review-Jeremi: Excelent introduction--> 
-Park et al. propose a social simulation in which LLM-driven agents inhabit a sandbox town, yielding emergent behaviors such as planning a Valentine’s Day party [Park et al., 2023]. The architecture centers on three components: Memory, Reflection, and Planning. A memory stream stores time-stamped observations (own actions, others’ actions, environment events), with retrieval based on a weighted mix of recency, importance, and relevance. Reflection summarizes salient patterns into “insights” that shape future behavior (e.g., “Maya values punctuality at work”). Planning prompts the LLM to generate daily schedules and update them as the day unfolds. Inter-agent interactions are mediated by natural language; the environment is updated from parsed action descriptions.
+Park et al. introduced generative agents: LLM-driven NPCs that simulate believable human behavior in a sandbox town environment called Smallville [Park et al., 2023]. The architecture comprises three components:
 
-This design yields lifelike narratives with minimal hand-coded rules. However, it lacks symbolic grounding. There is no explicit model of time, resources, or invariants with which plans must comply; temporal coherence is maintained heuristically through textual schedules that can drift. Actions are not verified against preconditions and effects beyond ad hoc checks, limiting transparency and reproducibility. The memory-retrieval heuristic does not guarantee that prior commitments are respected when the context window shifts. These limitations motivate integrating a neuro-symbolic planning layer that (i) encodes domain rules explicitly, (ii) validates or repairs LLM-generated plans, and (iii) <!-- review-Jeremi: Is that our goal? I mean it's nice, but is it sth that we should focus on--> produces executable schedules and traces that can be audited.
-<!-- review-Jeremi: We should add paragraph about how did the evaluated the Beliviblity. and also add in introdustion to this paper that belivable agents were the goal of their study (they were right?)--> 
+1. **Memory Stream**: A comprehensive record of time-stamped observations (own actions, others' actions, environment events), retrieved based on a weighted combination of recency (exponential decay), importance (LLM-rated 1 to 10), and relevance (cosine similarity of embeddings).
 
-### 2.3.2 Neuro-Symbolic Planning Approaches
+2. **Reflection**: Periodic synthesis triggered when importance scores exceed a threshold (150 in the implementation). The LLM generates questions about recent experiences, produces insights with citations to source memories, and creates reflection trees (observations → reflections → meta-reflections).
 
-Several lines of work combine LLMs with formal planning to balance commonsense flexibility and constraint satisfaction. In robotics, SayCan pairs an LLM’s language grounding with value estimates over affordances to select feasible actions [Ahn et al., 2022]. In task planning, LLM+P and related frameworks prompt an LLM to propose tasks or high-level plans that are checked or completed by a PDDL/<!-- review-Jeremi: Interesting thing with HTN planners I haven't seen them befor reading this background--> HTN planner, iterating until a valid plan is found [Silver et al., 2023; Valmeekam et al., 2023; Lyu et al., 2023]. Critique-and-repair loops (e.g., Reflexion, Tree-of-Thought/Graph-of-Thought) add self-evaluation and search over candidate plans, while symbolic constraints prune or guide the search [Shinn et al., 2023; Yao et al., 2023]. Temporal planning integrations incorporate duration and resource checks to prevent overlaps and enforce deadlines [Cashmore and Fox, 2019].
+3. **Planning**: Top-down recursive decomposition into day-level plans (5 to 8 chunks), hour-level plans, and 5 to 15 minute action plans. Agents dynamically re-plan when circumstances change, with the LLM deciding whether to continue the current plan or react to new observations.
 
-Compared to Park et al., these hybrid methods assume an explicit domain model and delegate feasibility checking to a solver. They trade authoring cost for guarantees: once a café domain and calendar constraints are specified, any LLM proposal must pass validation, yielding consistent, executable traces. Conversely, pure LLM systems require little modeling but provide weaker assurances, especially over long horizons. This thesis follows the hybrid path but emphasizes a validator-first approach: the LLM generates goals and hierarchical sketches; a symbolic validator <!-- review-Jeremi: Again scaffolding --> (symbolic scaffolding) <!-- review-Jeremi: Good explenation`--> checks constraints and suggests repairs; and feedback (failures, explanations) is fed back to the LLM to improve future proposals and achieve coherence.
+**Emergent behaviors** observed in a 25-agent, two-day simulation included:
+- **Information diffusion**: News of a mayoral candidacy spread from 1 agent to 8 (32%); a Valentine's Day party invitation spread to 13 agents (52%).
+- **Relationship formation**: Social network density increased from 0.167 to 0.74.
+- **Coordination**: Isabella planned a party, invited agents, decorated the café, and 5 out of 12 invited agents attended at the correct time and location.
 
-### 2.3.3 Believability and Coherence in Agent Simulations
+**Evaluation** used a controlled study with 100 human participants ranking agents via TrueSkill ratings. The full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming ablated versions and even human crowdworkers ($\mu = 22.95, \sigma = 0.69$) with an effect size of $d = 8.16$ (p < 0.001). Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections.
 
-Believability is the human-perceived realism of an agent’s behavior—whether actions align with the character’s goals, personality, knowledge, and social norms [Loyall, 1997; Mateas, 2002]. Coherence is the causal and temporal consistency of behavior—whether actions are feasible, properly ordered, and do not contradict prior commitments [Young, 2001; Riedl and Young, 2010]. Prior work assesses these properties through (i) human evaluation (Likert ratings, pairwise preferences, Turing-style interviews), (ii) constraint adherence metrics (violations of invariants, deadlines, and resource limits), and <!-- review-Jeremi: Are we messuring anything about naratives?-->  (iii) narrative structure measures (event-graph consistency, unresolved causal links) [Swanson and Gordon, 2010; Ammanabrolu et al., 2022]. <!-- review-Jeremi: We do not focus so much about epistemic so I don't think we have to add that. Also let's maybe not brownnose Bolander Xd--> Epistemic coherence adds that the agent’s beliefs should be internally consistent and updated appropriately after observations, often modeled with epistemic planning [Bolander and Andersen, 2011].
+**Failure modes** included:
+- Memory retrieval errors (missing relevant information),
+- Hallucination (embellishing details not in memory),
+- Overly formal dialogue (artifact of instruction tuning),
+- Over-cooperation (agents too agreeable).
 
-For our evaluation, these perspectives are unified. The symbolic layer provides measurable proxies, which could be things like counts of violated constraints, temporal overlaps, plan repair frequency, and explanation coverage, while human studies capture perceived realism and social plausibility. Concretely, we compare a <!-- review-Jeremi: let's use the full name - Generative agents. --> GA-like baseline against our validator-augmented system across $R$ revision rounds, tracking how violations decrease as repairs are applied. In the running example, we can quantify whether Maya double-books or violates café policies, and we can ask evaluators whether her behavior feels natural given her role and relationships. This dual lens acknowledges that believability is ultimately a human judgment, but coherence can be instrumented and improved through planning.
+**Relevance to this thesis**: Park et al. demonstrated that LLM-driven agents can achieve high believability ratings through memory, reflection, and planning mechanisms. However, the system lacks explicit symbolic grounding: there is no formal model of time, resources, or environmental constraints. Temporal coherence is maintained heuristically through textual schedules that can drift or produce overlaps. Actions are not verified against preconditions and effects beyond ad hoc checks, limiting transparency and reproducibility when context windows shift or prior commitments are forgotten. This motivates our neuro-symbolic approach of integrating PDDL-based validation to detect and repair constraint violations.
 
-### 2.3.4 Summary of Insights and Research Focus
+### 2.3.2 LLMs as Planning Modelers (Tantakoun et al., 2025)
 
-The literature suggests three converging insights. First, pure LLM planning produces impressively human-like behavior but lacks consistency over longer horizons due to missing symbolic grounding. Second, neuro-symbolic methods offer a principled way to inject structure and guarantees by validating or synthesizing plans against explicit models of actions, time, and resources. Third, believability and coherence should be assessed jointly: constraint adherence is necessary for plausibility, but human evaluation is required to confirm perceived realism.
+Tantakoun et al. provide a comprehensive survey of how LLMs can be leveraged to construct and refine automated planning models rather than directly perform planning [Tantakoun et al., 2025]. They review approximately 80 papers and position LLMs as tools for extracting planning models to support reliable planners, addressing the limitation that LLMs struggle with long-horizon planning requiring structured reasoning.
 
-Motivated by these insights, this thesis investigates a neuro-symbolic planning layer for LLM-driven NPCs. The research focus is to design an architecture in which an LLM proposes goals and hierarchical plan sketches, a PDDL-based validator checks them against domain constraints, and explanations and repair suggestions are used to improve proposals. The aim is to enhance causal and temporal coherence without sacrificing the naturalistic behavior that makes LLM agents engaging, thereby improving overall believability in simulated social environments. 
+The survey introduces a taxonomy of three paradigms:
+1. **LLMs-as-Heuristics**: Enhance planner search efficiency.
+2. **LLMs-as-Planners**: Directly generate action sequences or plan proposals.
+3. **LLMs-as-Modelers**: Construct PDDL domain and problem files (survey focus).
+
+Within LLMs-as-Modelers, three categories emerge:
+
+**Task Modeling** (approximately 30 papers): LLMs generate PDDL problem files from goal specifications. Approaches range from few-shot prompting [Collins et al., 2022] to chain-of-thought techniques [Lyu et al., 2023] and closed-loop systems with visual perception and error self-correction [Birr et al., 2024]. Task modeling is well-explored but relies on explicit natural language to PDDL mapping requiring detailed predicate specification.
+
+**Domain Modeling** (approximately 15 papers): LLMs generate PDDL domain files (predicates and action schemas). This is inherently more challenging than task specification. Approaches include one-shot generation [Oates et al., 2024], generate-test-critique loops that incrementally build components [Guan et al., 2023], and closed-loop frameworks with iterative symbolic task decomposition [Wong et al., 2023]. Single-domain generation risks misalignment with human expectations due to ambiguity in natural language descriptions.
+
+**Hybrid Modeling** (approximately 15 papers): LLMs generate both domain and problem files. Systems use iterative refinement with planner error messages as feedback [Kelly et al., 2023], domain-agnostic end-to-end natural language planning [Gestrin et al., 2024], and human-in-the-loop approaches with anomaly detection [Ye et al., 2024]. Coordinating domain and problem generation introduces complexity; linear pipelines risk cascading errors.
+
+**Key findings** relevant to this thesis:
+1. LLMs can generate syntactically valid PDDL but struggle with semantic consistency.
+2. Iterative refinement with symbolic planner feedback improves model quality.
+
+This survey grounds our approach: we position the LLM as a PDDL schema generator (domain modeling) with symbolic validator feedback and iterative refinement.
+
+### 2.3.3 Planning in the Dark: LLM-Symbolic Pipeline without Experts (Huang et al., 2024)
+
+Planning in the Dark: LLM‑Symbolic Planning Pipeline without Experts (Huang et al., 2024) propose an LLM-symbolic planning pipeline that eliminates expert intervention in action schema generation and validation. They note that natural-language task descriptions are inherently ambiguous and that, under reasonable assumptions, the probability of a single LLM instance generating a solvable action-schema set is less than 0.0001%, but by combining multiple LLM instances the probability can rise to over 95%.
+
+**Three-step architecture**:
+
+1. **Diverse Schema Library Construction**: Deploy $N$ LLM instances with high temperature to generate complete sets of action schemas for $M$ actions. Aggregate into a library with approximately $N^M$ possible schema set combinations.
+
+2. **Semantic Coherence Filtering**: Use sentence encoders to compute cosine similarity between natural language descriptions $E(Z(\alpha))$ and generated schemas $E(\hat{\alpha})$. Apply Conformal Prediction (CP) to calculate a threshold $\hat{q}$ at confidence level $1 - \epsilon$, filtering schemas below the threshold. This reduces combinations from $N^M$ to $\prod_{i=1}^{M} m_i$ where $m_i$ is the number of passing schemas per action. Fine-tune the encoder with triplet loss using hard negative samples (manipulated schemas with predicate swaps, negations, removals).
+
+3. **Plan Generation and Ranking**: Feed solvable schema sets into a symbolic planner (DUAL-BWFS). Rank generated plans by cumulative semantic similarity: $\sum_{i=1}^{M} \frac{E(Z(\alpha_i)) \cdot E(\hat{\alpha}_i)}{\|E(Z(\alpha_i))\| \|\hat{\alpha}_i\|}$.
+
+**Key experimental findings**:
+- Layman (ambiguous) descriptions yield 2.35 times more distinct solvable schema sets than detailed expert descriptions (8039 vs. 3419 with 10 LLMs, no CP), reflecting diverse valid interpretations.
+- With 10 LLM instances, the probability of generating at least one solvable schema set exceeds 95% under reasonable assumptions.
+- CP filtering reduces combinations to 3.3% of the original (1051/31,483) while increasing the solvable ratio from 10.9% to 23.0%.
+- Human evaluators ranked pipeline-generated plans (mean rank 2.97) significantly higher than Tree-of-Thought baselines (3.58); gold standard ranked 1.79.
+- The pipeline successfully solved the Sussman Anomaly (requiring interleaved subgoal handling), while direct LLM approaches (GLM, GPT-3.5, GPT-4o) failed by attempting linear goal ordering.
+
+**Relevance to this thesis**: Huang et al. demonstrate that LLM diversity and semantic validation can produce solvable PDDL schemas without expert intervention. Their pipeline validates the feasibility of LLM-generated schemas via symbolic planners, ensuring coherence. We adapt this insight: rather than generating diverse schema libraries, we use iterative refinement with planner feedback to improve schema quality, prioritizing human-perceived believability alongside solvability.
+
+<!-- review-Jeremi:  In our study we focus on the plan consistency so this paper dosen't seems to be directly relevant. We could do sth smilar but for the plans-->
+### 2.3.4 Evaluating Believability in LLM-Driven Agents (Xiao et al., 2024)
+
+Xiao et al. introduce SimulateBench, a benchmark for evaluating believability in LLM-based human behavior simulation [Xiao et al., 2024]. They propose two critical dimensions:
+
+1. **Consistency Ability (CA)**: How well LLMs align behavior with character profiles. Measured via accuracy on multiple-choice questions requiring reasoning from profile information (average profile length: 3,277 tokens vs. 203 tokens in Park et al.).
+
+2. **Robustness Ability (RA)**: How stable LLM behaviors remain under profile perturbations (education, surname, race, age modifications). Measured as standard deviation of CA scores across profile variants.
+
+**Key findings** from evaluating 10 LLMs:
+- Best model (GPT-4): CA = 0.77; worst (Vicuna-7B-16K): CA = 0.46.
+- Longer context windows do not guarantee better consistency (e.g., LongChat-7B-32K achieved CA = 0.48, worse than GPT-4 with 8k context).
+- **Simulation hallucination**: Models perform significantly worse on questions where the profile lacks sufficient information (GPT-4: 1.00 on known questions, 0.47 on unknown), indicating tendency to answer based on training knowledge rather than profile constraints.
+- Better consistency does not imply better robustness; some models with lower CA scores exhibited higher robustness to perturbations.
+
+**Relevance to this thesis**: Xiao et al. operationalize believability evaluation through profile-grounded consistency metrics and hallucination detection. Their findings underscore the challenge of maintaining coherence when LLMs improvise beyond available information. This motivates our approach of using symbolic constraints to ground agent behavior: the PDDL domain acts as an explicit "profile" of environmental rules, and planner validation prevents hallucinated actions that violate these rules.
+
+### 2.3.5 Other Neuro-Symbolic Planning Approaches
+
+Several additional lines of work combine LLMs with formal planning:
+
+**Robotics and grounded planning**: SayCan pairs LLM language grounding with value estimates over affordances to select feasible actions in robotic manipulation tasks [Ahn et al., 2022].
+
+**Iterative refinement loops**: LLM+P and related frameworks prompt an LLM to propose high-level plans, check them with a PDDL planner, and iterate until a valid plan is found [Silver et al., 2023; Valmeekam et al., 2023; Lyu et al., 2023]. Critique-and-repair loops such as Reflexion and Tree-of-Thought add self-evaluation and search over candidate plans, while symbolic constraints prune or guide the search [Shinn et al., 2023; Yao et al., 2023].
+
+**Temporal planning integration**: Extensions incorporate duration and resource checks to prevent overlaps and enforce deadlines [Cashmore and Fox, 2019].
+
+Compared to Park et al., these hybrid methods assume an explicit domain model and delegate feasibility checking to a solver, trading authoring cost for guarantees. This thesis follows the hybrid path but investigates PDDL schema generation by LLMs to reduce authoring cost while preserving symbolic validation guarantees.
+
+### 2.3.6 Summary of Insights and Research Focus
+
+The literature suggests three converging insights:
+
+1. **LLM planning produces human-like behavior but lacks long-horizon coherence** due to missing symbolic grounding, context window limitations, and hallucination [Park et al., 2023; Xiao et al., 2024].
+
+2. **Neuro-symbolic methods offer structure and guarantees** by validating or synthesizing plans against explicit models of actions, time, and resources [Huang et al., 2024; Tantakoun et al., 2025].
+
+3. **Believability and coherence should be assessed jointly**: constraint adherence is necessary for plausibility (coherence), but human evaluation is required to confirm perceived realism (believability) [Park et al., 2023; Xiao et al., 2024].
+
+This thesis investigates whether LLM-generated PDDL schemas combined with symbolic validation can reduce logical inconsistencies and incoherent action sequences while maintaining the naturalistic, context-aware behavior that makes LLM agents engaging. The specific research questions guiding this work are articulated in Chapter 1 and operationalized through the experimental design described in Chapter 3.
