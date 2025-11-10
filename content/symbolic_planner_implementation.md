@@ -1,7 +1,7 @@
 # Symbolic Planning Implementation
 
 ## Neuro-Symbolic Planning Pipeline
-
+[This section will be subject to change after finalizing the implementation details.]
 We implement a neuro-symbolic planning framework following the LLM-propose/symbolic-validate pattern \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}. Unlike the baseline hierarchical planner (§2.3), our pipeline validates all proposed action sequences against formal constraints before execution, directly addressing the coherence challenge (§2.2.2).
 
 ### Three-Stage Pipeline
