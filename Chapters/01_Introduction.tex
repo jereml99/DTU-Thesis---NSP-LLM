@@ -4,17 +4,17 @@
 \section{Background and Context}
 \label{sec:background-context}
 
-Generative agents powered by Large Language Models (LLMs) can simulate complex, human-like behavior in interactive environments such as virtual worlds, simulation games, and social scenarios. These agents enable rich narrative experiences and dynamic interactions by drawing on the commonsense reasoning and natural language capabilities of LLMs \cite{parkGenerativeAgentsInteractive2023a}. However, purely neural approaches to agent behavior often produce logical inconsistencies and incoherent action sequences. For example, an agent may attempt actions that violate environmental constraints (such as opening a door that does not exist) or pursue goals that conflict with its stated motivations, undermining the plausibility and believability of the simulation \cite{batesRoleEmotionBelievable1994}.
+Large Language Model (LLM)-driven generative agents can simulate complex, human-like behavior in virtual worlds, games, and social scenarios by leveraging commonsense reasoning and natural language capabilities \cite{parkGenerativeAgentsInteractive2023a}. However, purely neural approaches produce logical inconsistencies: agents attempt impossible actions (opening nonexistent doors), violate temporal constraints (simultaneous commitments), or pursue conflicting goals, undermining believability \cite{batesRoleEmotionBelievable1994}.
 
-Park et al.\ \cite{parkGenerativeAgentsInteractive2023a} introduced a generative agent architecture that uses memory streams, reflection, and hierarchical planning to guide agent behavior. While this architecture demonstrates compelling emergent social dynamics, the hierarchical planning component lacks explicit mechanisms for verifying logical consistency or ensuring adherence to environmental constraints. As a result, agents can generate plans that are fluent and contextually plausible but nonetheless violate hard constraints or exhibit temporal inconsistencies.
+Park et al.\ \cite{parkGenerativeAgentsInteractive2023a} demonstrated emergent social dynamics through memory streams, reflection, and hierarchical planning. Yet their planning component lacks mechanisms to verify logical consistency or enforce environmental constraints, producing plans that are contextually plausible but violate hard constraints or exhibit temporal inconsistencies.
 
-Recent work in neuro-symbolic AI explores combining neural generation with symbolic planning representations to address these limitations. Tantakoun et al.\ \cite{tantakounLLMsPlanningModelers2025} demonstrate that LLMs can serve as planning modelers, generating Planning Domain Definition Language (PDDL) schemas that formalize domain constraints and action preconditions. By pairing LLM-generated PDDL with symbolic planners or validators, such approaches provide explicit, inspectable guarantees about constraint satisfaction and logical coherence. This neuro-symbolic strategy retains the flexibility and commonsense reasoning of LLMs while introducing structured verification to detect and repair invalid plans before they are executed in the environment.
+Neuro-symbolic AI addresses this by combining neural generation with symbolic planning. LLMs generate Planning Domain Definition Language (PDDL) schemas encoding constraints and action preconditions \cite{tantakounLLMsPlanningModelers2025}; symbolic validators then verify plans, providing guarantees about constraint satisfaction. This retains LLM flexibility while introducing structured verification to detect and repair invalid plans before execution.
 
 
 \section{Problem Statement}
 \label{sec:problem-statement}
 
-Generative agents produce dynamic, human-like interactions, but their lack of consistent, constraint-respecting planning undermines realism. Current approaches either rely too heavily on symbolic systems, limiting flexibility, or on purely neural models, which lack logical guarantees.
+Current LLM-driven agents sacrifice either flexibility (over-reliance on symbolic systems) or logical consistency (purely neural models). 
 
 \textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents in interactive environments?
 
@@ -37,18 +37,18 @@ Generative agents produce dynamic, human-like interactions, but their lack of co
 \section{Methodological Overview}
 \label{sec:methodological-overview}
 
-This study builds on the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing the hierarchical planning component with a neuro-symbolic planning framework. The LLM generates PDDL action schemas and plans, which are then validated by a symbolic checker that detects constraint violations. The approach is evaluated through two methods:
+This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates PDDL action schemas and plans; a symbolic validator detects constraint violations. Evaluation combines:
 
 \begin{itemize}
-    \item \textbf{Quantitative evaluation}: Constraint violation counts and rates are measured on matched scenarios for (i) a baseline system using hierarchical planning and (ii) the neuro-symbolic system with validator-guided revision rounds. Metrics include violation rates per 100 actions, plan success rates (zero violations), and repair efficiency.
-    \item \textbf{Qualitative evaluation}: Perceived believability is assessed via a within-subjects user study comparing agent behaviors from both systems.
+    \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. Metrics include violations per 100 actions, plan success rates, and repair efficiency.
+    \item \textbf{Qualitative assessment}: Within-subjects user study comparing perceived believability of agent behaviors from both systems.
 \end{itemize}
 
 
 \section{Scope and Limitations}
 \label{sec:scope-limitations}
 
-This project focuses on simulation environments rather than real-world robotics, where sensing uncertainty and physical dynamics introduce additional complexity. The symbolic planning component uses PDDL, which assumes deterministic action effects and complete observability within the simulated domain. Evaluation emphasizes narrative consistency, environmental constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.
+This project focuses on simulation environments with deterministic action effects and complete observability. Real-world robotics introduces sensing uncertainty and physical dynamics beyond our scope. Evaluation emphasizes narrative consistency, constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.
 
 
 \section{Thesis Structure}
