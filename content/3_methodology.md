@@ -2,36 +2,38 @@
 
 ## Experimental Setup
 
-Details of the experimental setup.
+[To be completed: overview of simulation environment, agent initialization, scenario design, and logging infrastructure.]
 
 ## System Design
+[To be completed: architecture diagram and description of the neuro-symbolic planning pipeline, including LLM-to-PDDL generation, symbolic validation, and repair mechanisms.]
 
-Description of the system architecture and design.
+<!-- review-Jeremi: The Quantitative Evaluation seems underpolished. I think we should drop it right now for mitpoint review and just write is as to be complited.-->
+## Quantitative Evaluation: Constraint Violation Analysis
 
-## Quantitative Evaluation — Validator-based (summary)
-
-We complement the human study with a concise, automated evaluation that compares a GA-like baseline against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
+We complement the human study with a concise, automated evaluation that compares a <!-- review-Jeremi: Let's say it's copmperions of herechical palnning to the to our system--> GA-like baseline against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
 
 **(label: sec:quant-eval-summary)**
 
 **Conditions**
 
-Baseline (no repair) vs. ours with small $R$ (iterative critique-and-repair).
+ <!-- review-Jeremi: Isn't basline the herarchical planning from GA paper?-->Baseline (no repair) vs. ours with small $R$ (iterative critique-and-repair).
 
 **Scenarios/protocol**
 
+ <!-- review-Jeremi: is it right? --> 
 Matched scenarios with the same initial states and settings across conditions; for each run: generate plan → validate → (optional) repair → re-run from the same initial state; uniform logging.
-
+ <!-- review-Jeremi: Should we keep this things in ()-->
 **Metrics (concise)**
 
-Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; simple derived indicators (e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).
+Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; simple derived indicators  <!-- review-Jeremi: Are we actualy know what are those metrics -->(e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).
 
 **Analysis (brief)**
 
+ <!-- review-Jeremi: Is it what we do actually? -->
 Compare conditions on distributions of violation counts/rates and trends across small $R$ (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Report day-level and action-level summaries separately and in aggregate.
 
 **Reporting**
-
+ <!-- review-Jeremi: Should we keep this? -->
 Concise tables/figures highlighting main differences and a small script to re-run scenarios with the validator.
 
 
@@ -48,16 +50,16 @@ We evaluate two primary hypotheses:
 - H1 (overall believability): Participants judge agents powered by our method as more believable overall than the baseline Generative Agents architecture in matched scenarios.
 - H2 (action believability): For the same scenario, participants flag fewer actions as "unbelievable" in our method than in the baseline.
 
-We also explore two secondary outcomes: (i) perceived causal coherence of behaviour when the high-level plan is visible, and (ii) free-text reasons participants provide when they deem an action unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
+We also explore two secondary outcomes: (i)  <!-- review-Jeremi: I'm not sure about it. Will we do that? --> perceived causal coherence of behaviour when the high-level plan is visible, and (ii) free-text reasons participants provide when they deem an action unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
 
 ### Conditions
 
-We compare two between-system conditions on the same simulated world and character seeds:
+We compare two  <!-- review-Jeremi: is that a proper word --> between-system conditions on the same simulated world and character seeds:
 
 1. **Baseline (GA)**: Our faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
 2. **Ours (Neuro-symbolic)**: The proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 
-Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced (Latin square) to reduce presentation effects.
+Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced  <!-- review-Jeremi: what is latin squere?-->(Latin square) to reduce presentation effects.
 
 ### Participants
 
@@ -102,7 +104,8 @@ expressed as flags per 100 atomic actions. Atomic actions are the smallest logge
 #### Secondary outcomes
 
 - **Causal coherence (Likert).** 7-point rating of how coherent the behaviour felt as a sequence of goals and subgoals: 1 "not coherent", 7 "highly coherent".
-- **Plan adherence (Likert).** 7-point rating of alignment between visible high-level plan and observed actions (recorded even if the plan overlay is not opened, in which case the item is skipped and treated as missing by design).
+- **Plan adherence (Likert).** 7-point rating of alignment between visible high-level plan and observed actions
+ <!-- review-Jeremi: Isn't that an overkill?-->
 - **Unbelievable-action categories (coded).** Free-text reasons for each flag are open-coded into categories such as: goal inconsistency, environment rule violation, temporal implausibility, social norm violation, and low-level control failure. Two independent coders label a stratified sample (≥30% of flags); disagreements are adjudicated and inter-rater agreement (Cohen's $\kappa$) is reported.
 
 **Logged covariates (for analysis, not outcomes)** We log condition order, scenario ID, participant playback time, number of overlay openings, and self-reported prior experience with simulations/games. These are used as covariates in exploratory models and to check for order effects.
@@ -113,7 +116,7 @@ Sessions are excluded if participants fail an attention check (simple comprehens
 
 ### Analysis
 
-We analyse overall believability with within-subject comparisons (paired *t*-test when normality holds; otherwise Wilcoxon signed-rank). For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged as unbelievable:
+We analyse overall believability with within-subject comparisons   <!-- review-Jeremi: Check if those methods makes sens-->(paired *t*-test when normality holds; otherwise Wilcoxon signed-rank).  <!-- review-Jeremi: Dose this make sens? --> For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged as unbelievable:
 
 ```
 flag ~ condition + (1|participant) + (1|scenario)
@@ -123,12 +126,12 @@ We report effect sizes (Cohen's $d$ or odds ratios) and 95% CIs. Qualitative rea
 
 ### Ethics
 
-The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives. We will seek approval from the institutional ethics board prior to recruitment.
+The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.
 
 ### Power and timing
-
+ <!-- review-Jeremi: We have less participants so should we include this?-->
 A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx34$. We therefore aim for 24--36 valid participants after exclusions; the pilot is analysed descriptively and may inform small interface adjustments.
 
 ### Preregistration and availability
-
+ <!-- review-Jeremi: I don't think we will do it-->
 We will preregister hypotheses, exclusion rules, and primary/secondary outcomes, and release the anonymized dataset, analysis scripts, and the evaluation interface after publication.
