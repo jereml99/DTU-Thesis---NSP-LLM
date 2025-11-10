@@ -9,29 +9,7 @@
 
 ## Quantitative Evaluation: Constraint Violation Analysis
 
-We complement the human study with a concise, automated evaluation that compares a hierarchical planning baseline (replicating the Generative Agents approach) against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
-
-**(label: sec:quant-eval-summary)**
-
-**Conditions**
-
-Baseline (hierarchical planning from the Generative Agents architecture) vs. ours with small $R$ (iterative critique-and-repair).
-
-**Scenarios/protocol**
-
-Matched scenarios with the same initial states and settings across conditions; for each run: generate plan $\to$ validate $\to$ (optional) repair $\to$ re-run from the same initial state; uniform logging.
-
-**Metrics**
-
-Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; derived indicators include violation rate per 100 actions, zero-violation success rate, rounds to zero violations, and coarse plan edit/repair magnitude.
-
-**Analysis**
-
-Compare conditions on distributions of violation counts/rates and trends across small $R$ using paired nonparametric tests or simple count models, with minimal plots/tables. Report day-level and action-level summaries separately and in aggregate.
-
-**Reporting**
-
-Concise tables/figures highlighting main differences and a small script to reproduce scenarios with the validator.
+[To be completed: automated evaluation comparing the hierarchical planning baseline against our validator-augmented system. The validator will automatically detect and flag constraint violations such as attempting to use items that are not available, scheduling overlapping activities, violating location constraints, or executing actions whose preconditions are not satisfied. Metrics will include violation counts at day-level and action-level, violation rates per 100 actions, and success rates after optional validator-guided repair rounds.]
 
 
 ## User Study: Believability Evaluation
