@@ -29,23 +29,24 @@ The implementation transforms the original monolithic Generative Agents codebase
 
 ### Neuro-Symbolic Planning Pipeline
 
-The neuro-symbolic planning service implements an LLM-propose, symbolic-validate loop with optional iterative repair:
+We implement a neuro-symbolic planning framework following the LLM-propose/symbolic-validate pattern \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}. Unlike the baseline hierarchical planner, our pipeline validates all proposed action sequences against formal constraints before execution, directly addressing the coherence challenge.
 
-1. **High-Level Goal Generation**: The LLM generates daily goals and intentions based on agent memory, personality, and recent events (identical to baseline).
+**Stage 1: Task Generation**  
+The LLM generates daily tasks from the agent's memory stream using the baseline retrieval mechanism \cite{parkGenerativeAgentsInteractive2023a}, grounding tasks in wants, needs, commitments, and objectives.
 
-2. **Task Decomposition**: Goals are decomposed into tasks with temporal constraints (morning, afternoon, evening blocks). Tasks specify durations, locations, and preconditions in natural language.
+**Stage 2: Action Decomposition**  
+Each task is decomposed into atomic actions with environment-grounded parameters (locations, objects, relationships). Example: "complete assignment" decomposes to `open-laptop`, `navigate-to-file`, `work-on-document(90min)`, `submit-via-portal`.
 
-3. **PDDL Translation**: Tasks and environment state are translated into PDDL problem and domain files:
-   - **Domain**: Predicates encode agent location, object possession, knowledge state, and social commitments. Action schemas formalize preconditions (e.g., `attend-class` requires enrollment, correct time, and location) and effects (knowledge updates, location changes).
-   - **Problem**: Initial state includes agent beliefs, world configuration, and scheduled events. Goals capture task completion criteria.
+**Stage 3: Schema Generation and Validation**  
+The LLM generates PDDL schemas encoding preconditions, effects, and durations for each action. A symbolic validator then checks:
+- **Causal consistency**: Precondition–effect chains across actions
+- **Temporal feasibility**: No overlapping activities
+- **Resource limits**: Numeric fluents (time, energy) stay within bounds
+- **Environmental invariants**: Domain constraints (e.g., single-location occupancy)
 
-4. **Symbolic Validation**: A PDDL validator checks plan feasibility, detecting violations such as:
-   - Temporal conflicts (overlapping tasks)
-   - Unsatisfied preconditions (attempting unavailable actions)
-   - Location inconsistencies (simultaneous presence in multiple locations)
-   - Resource constraint violations (insufficient time or inventory)
+When validation fails, diagnostic feedback (e.g., "unsatisfied precondition `(at-location student hall)`" or "temporal overlap between `study-session` and `coffee-break`") is returned to the LLM for iterative repair until constraints are satisfied or the iteration budget is exhausted.
 
-5. **Diagnostic Feedback and Repair** (optional): If validation fails, diagnostic messages indicate violated constraints. These can be returned to the LLM for plan revision, though the current implementation focuses on detection rather than automated repair.
+**Integration and Rationale**: The pipeline integrates with memory retrieval, reflection synthesis, and execution monitoring from the baseline architecture \cite{parkGenerativeAgentsInteractive2023a}, preserving naturalistic behavior while enforcing coherence. We use LLM-generated schemas rather than pre-defined models to enable adaptation to novel situations \cite{tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}, at the cost of potential schema misalignment. The validation layer mitigates this risk through constraint checking and iterative repair.
 
 **Baseline Comparison**: The baseline `PlanningServiceShim` implements the original Generative Agents hierarchical planner without symbolic validation, enabling direct measurement of constraint violation rates and believability differences.
 
