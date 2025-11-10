@@ -212,10 +212,3 @@ This architecture directly enables:
 2. Design PDDL domain/problem definitions for household environment
 3. Develop LLM-to-PDDL translation
 4. Collect comparative metrics (baseline vs. neuro-symbolic)
-
-**Beyond Thesis:**
-- Microservices architecture
-- WebSocket support for real-time viewing
-- Cloud deployment (Kubernetes)
-- Alternative storage backends (PostgreSQL, S3)
-
