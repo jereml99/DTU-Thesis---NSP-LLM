@@ -22,26 +22,26 @@ Generative agents produce dynamic, human-like interactions, but their lack of co
 \section{Research Aim and Objectives}
 \label{sec:research-aim-objectives}
 
-\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates PDDL-based plans and a symbolic validator verifies logical consistency, identifies constraint violations, and suggests repairs.
+\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates PDDL-based plans and a symbolic validator verifies logical consistency and identifies constraint violations.
 
 \textbf{Objectives:}
 
 \begin{enumerate}
-    \item Reimplement the generative agents architecture with a modular, extensible codebase that supports integration of symbolic planning components.
-    \item Design and implement a PDDL-based validator that formalizes environmental constraints, detects planning violations, and generates actionable diagnostic feedback.
+    \item Reimplement the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} with a modular, extensible codebase that supports integration of symbolic planning components.
+    \item Design and implement a PDDL-based validator that formalizes environmental constraints, detects planning violations, and outputs actionable diagnostic feedback.
     \item Develop visualization and explanation tools that make agent plans, constraint violations, and repair proposals inspectable to researchers and evaluators.
-    \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) qualitative human evaluation of perceived believability and narrative coherence.
+    \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) qualitative human evaluation of perceived believability.
 \end{enumerate}
 
 
 \section{Methodological Overview}
 \label{sec:methodological-overview}
 
-This study builds on the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing the hierarchical planning component with a neuro-symbolic planning framework. The LLM generates PDDL action schemas and plans, which are then validated by a symbolic checker that detects constraint violations and proposes repairs. The approach is evaluated through two methods:
+This study builds on the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing the hierarchical planning component with a neuro-symbolic planning framework. The LLM generates PDDL action schemas and plans, which are then validated by a symbolic checker that detects constraint violations. The approach is evaluated through two methods:
 
 \begin{itemize}
     \item \textbf{Quantitative evaluation}: Constraint violation counts and rates are measured on matched scenarios for (i) a baseline system using hierarchical planning and (ii) the neuro-symbolic system with validator-guided revision rounds. Metrics include violation rates per 100 actions, plan success rates (zero violations), and repair efficiency.
-    \item \textbf{Qualitative evaluation}: Perceived believability and narrative coherence are assessed via a within-subjects user study comparing agent behaviors from both systems.
+    \item \textbf{Qualitative evaluation}: Perceived believability is assessed via a within-subjects user study comparing agent behaviors from both systems.
 \end{itemize}
 
 
