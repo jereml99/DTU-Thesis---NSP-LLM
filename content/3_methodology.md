@@ -7,39 +7,36 @@
 ## System Design
 [To be completed: architecture diagram and description of the neuro-symbolic planning pipeline, including LLM-to-PDDL generation, symbolic validation, and repair mechanisms.]
 
-<!-- review-Jeremi: The Quantitative Evaluation seems underpolished. I think we should drop it right now for mitpoint review and just write is as to be complited.-->
 ## Quantitative Evaluation: Constraint Violation Analysis
 
-We complement the human study with a concise, automated evaluation that compares a <!-- review-Jeremi: Let's say it's copmperions of herechical palnning to the to our system--> GA-like baseline against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
+We complement the human study with a concise, automated evaluation that compares a hierarchical planning baseline (replicating the Generative Agents approach) against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
 
 **(label: sec:quant-eval-summary)**
 
 **Conditions**
 
- <!-- review-Jeremi: Isn't basline the herarchical planning from GA paper?-->Baseline (no repair) vs. ours with small $R$ (iterative critique-and-repair).
+Baseline (hierarchical planning from the Generative Agents architecture) vs. ours with small $R$ (iterative critique-and-repair).
 
 **Scenarios/protocol**
 
- <!-- review-Jeremi: is it right? --> 
-Matched scenarios with the same initial states and settings across conditions; for each run: generate plan → validate → (optional) repair → re-run from the same initial state; uniform logging.
- <!-- review-Jeremi: Should we keep this things in ()-->
-**Metrics (concise)**
+Matched scenarios with the same initial states and settings across conditions; for each run: generate plan $\to$ validate $\to$ (optional) repair $\to$ re-run from the same initial state; uniform logging.
 
-Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; simple derived indicators  <!-- review-Jeremi: Are we actualy know what are those metrics -->(e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).
+**Metrics**
 
-**Analysis (brief)**
+Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; derived indicators include violation rate per 100 actions, zero-violation success rate, rounds to zero violations, and coarse plan edit/repair magnitude.
 
- <!-- review-Jeremi: Is it what we do actually? -->
-Compare conditions on distributions of violation counts/rates and trends across small $R$ (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Report day-level and action-level summaries separately and in aggregate.
+**Analysis**
+
+Compare conditions on distributions of violation counts/rates and trends across small $R$ using paired nonparametric tests or simple count models, with minimal plots/tables. Report day-level and action-level summaries separately and in aggregate.
 
 **Reporting**
- <!-- review-Jeremi: Should we keep this? -->
-Concise tables/figures highlighting main differences and a small script to re-run scenarios with the validator.
+
+Concise tables/figures highlighting main differences and a small script to reproduce scenarios with the validator.
 
 
 ## User Study: Believability Evaluation
 
-This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behaviour compared to the baseline architecture introduced in Generative Agents \cite{parkGenerativeAgentsInteractive2023a}. We focus the evaluation on the believability of *actions* rather than only on agent personalities or prompted conversations.
+This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behavior compared to the baseline architecture introduced in Generative Agents \cite{parkGenerativeAgentsInteractive2023a}. We focus the evaluation on the believability of *actions* rather than only on agent personalities or prompted conversations.
 
 **(label: sec:user-study-believability)**
 
@@ -54,12 +51,12 @@ We also explore two secondary outcomes: (i)  <!-- review-Jeremi: I'm not sure ab
 
 ### Conditions
 
-We compare two  <!-- review-Jeremi: is that a proper word --> between-system conditions on the same simulated world and character seeds:
+We compare two within-subject conditions on the same simulated world and character seeds:
 
 1. **Baseline (GA)**: Our faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
 2. **Ours (Neuro-symbolic)**: The proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 
-Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced  <!-- review-Jeremi: what is latin squere?-->(Latin square) to reduce presentation effects.
+Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced (Latin square design) to reduce presentation effects.
 
 ### Participants
 
@@ -129,9 +126,7 @@ We report effect sizes (Cohen's $d$ or odds ratios) and 95% CIs. Qualitative rea
 The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.
 
 ### Power and timing
- <!-- review-Jeremi: We have less participants so should we include this?-->
-A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx34$. We therefore aim for 24--36 valid participants after exclusions; the pilot is analysed descriptively and may inform small interface adjustments.
 
-### Preregistration and availability
- <!-- review-Jeremi: I don't think we will do it-->
-We will preregister hypotheses, exclusion rules, and primary/secondary outcomes, and release the anonymized dataset, analysis scripts, and the evaluation interface after publication.
+A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx 34$. Given resource constraints, we aim for 10 to 15 valid participants after exclusions; the pilot is analyzed descriptively and may inform small interface adjustments.
+
+
