@@ -62,6 +62,8 @@ When asked to:
 - Claim validator: flag broad or time-sensitive claims and request either a citation or a short evidence paragraph.
 - Midpoint reminder: midpoint is set to 2025-11-10. Remind on that date (and one week before) to prepare and send the draft to the supervisor.
 
+- Terminology note: the term "task" refers to daily-planned schedule units (the items in a day-level plan) and the term "action" refers to the finer-grained execution units into which tasks are divided. Use these definitions consistently across chapters and examples.
+
 ### Agent operating commands
 - Always annotate responses with remaining page budget. Assume joint thesis: soft target 50–60 pages, hard cap 70. If a request likely expands beyond the soft target, suggest a more concise alternative.
 - When generating LaTeX:

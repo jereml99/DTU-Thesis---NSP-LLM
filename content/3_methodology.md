@@ -1,5 +1,3 @@
-% Chapter 3 — Methodology
-
 # Chapter 3 — Methodology
 
 ## Experimental Setup
@@ -12,54 +10,36 @@ Description of the system architecture and design.
 
 ## Quantitative Evaluation — Validator-based (summary)
 
-This section specifies the automated, repeatable evaluation that complements the human study. We quantify coherence by counting constraint violations detected by the symbolic validator under matched scenarios, comparing a baseline system to our neuro-symbolic system with an increasing number of validator-guided revision rounds.
+We complement the human study with a concise, automated evaluation that compares a GA-like baseline against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
 
-### Objectives and comparisons
+**(label: sec:quant-eval-summary)**
 
-- Quantify how many violations the validator finds in: (i) the baseline (GA-like) system and (ii) our system after R revision rounds.
-- Measure repair efficiency: how quickly violations are eliminated (rounds-to-zero), and how plan quality evolves across rounds.
+**Conditions**
 
-We evaluate the following conditions on identical scenarios:
+Baseline (no repair) vs. ours with small $R$ (iterative critique-and-repair).
 
-1. Baseline (GA): no symbolic repair; the validator only logs violations.
-2. Ours-R: our system with R ∈ {0, 1, 2, 3} revision rounds, where each round feeds validator diagnostics back to the LLM to propose targeted repairs. R = 0 corresponds to “ours without repairs” (validator-only logging); R ≥ 1 enables iterative critique-and-repair.
+**Scenarios/protocol**
 
-### Scenarios and protocol
+Matched scenarios with the same initial states and settings across conditions; for each run: generate plan → validate → (optional) repair → re-run from the same initial state; uniform logging.
 
-- Scenarios: one or more daily scenarios; exact counts and durations will be specified later.
-- Controls: identical character initial states, calendars, environment settings, prompts/system settings, and time budgets across conditions.
-- Execution: for each scenario × condition, generate a high-level plan, refine to actions/schedule, and run the simulated day with logging. After each revision round (if any), re-validate and re-run from the same initial state.
+**Metrics (concise)**
 
-### Granularity: day-level vs task-level validation
+Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; simple derived indicators (e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).
 
-We separate validation into two stages to reflect how plans are produced and executed:
+**Analysis (brief)**
 
-1. Day-plan validation (schedule level): checks on the daily schedule before execution (e.g., temporal overlaps across tasks, outside-hours scheduling, resource/location conflicts, unmet prerequisites that must be arranged earlier in the day).
-2. Task-plan validation (within-task level): for each scheduled task, checks on the subplan/steps during refinement and execution (e.g., missing preconditions, intra-task temporal/order violations, local resource/contention issues).
+Compare conditions on distributions of violation counts/rates and trends across small $R$ (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Report day-level and action-level summaries separately and in aggregate.
 
-Repairs can target either level (rescheduling at the day level vs. refining/fixing at the task level). We log violations and repairs separately for each level and also provide an overall aggregate.
+**Reporting**
 
-### Metrics
+Concise tables/figures highlighting main differences and a small script to re-run scenarios with the validator.
 
-- Counts of validator-detected violations at day-level (schedule) and task-level (within-task), plus an overall aggregate.  
-- Simple derived indicators (e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).  
-- We report compact tables/plots to summarize patterns rather than exhaustive per-check breakdowns.
-
-Optional qualitative-linked metrics (brief): explanation coverage and repair precision (reported only if helpful).
-
-### Analysis
-
-We compare conditions on distributions of violation counts/rates and simple trends across small R (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Day-level and task-level summaries are reported separately and in aggregate.
-
-<!-- review-unknown: Specify the exact analysis methods; add references and a short explanation of chosen methods (e.g., paired tests, mixed models for event-level data). -->
-
-### Reporting
-
-Concise tables/figures that highlight the main differences (e.g., violation counts/rates by condition and level); a small script will allow re-running scenarios with the validator.
 
 ## User Study: Believability Evaluation
 
-This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behaviour compared to the baseline architecture introduced in Generative Agents [CITE: parkGenerativeAgentsInteractive2023a]. We focus the evaluation on the believability of actions rather than only on agent personalities or prompted conversations.
+This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behaviour compared to the baseline architecture introduced in Generative Agents \cite{parkGenerativeAgentsInteractive2023a}. We focus the evaluation on the believability of *actions* rather than only on agent personalities or prompted conversations.
+
+**(label: sec:user-study-believability)**
 
 ### Objectives and hypotheses
 
@@ -68,61 +48,87 @@ We evaluate two primary hypotheses:
 - H1 (overall believability): Participants judge agents powered by our method as more believable overall than the baseline Generative Agents architecture in matched scenarios.
 - H2 (action believability): For the same scenario, participants flag fewer actions as "unbelievable" in our method than in the baseline.
 
-We also explore two secondary outcomes: (i) perceived causal coherence of behaviour when the high-level plan is visible, and (ii) free-text reasons participants provide when they deem an action unbelievable (used for qualitative error analysis) [CITE: batesRoleEmotionBelievable1994; bogdanovychWhatMakesVirtual2016; tenceAutomatableEvaluationMethod2010; xiaoHowFarAre2024].
+We also explore two secondary outcomes: (i) perceived causal coherence of behaviour when the high-level plan is visible, and (ii) free-text reasons participants provide when they deem an action unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
 
 ### Conditions
 
 We compare two between-system conditions on the same simulated world and character seeds:
 
-1. **Baseline (GA):** Our faithful re-implementation of Generative Agents [CITE: parkGenerativeAgentsInteractive2023a].
-2. **Ours (Neuro-symbolic):** The proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
+1. **Baseline (GA)**: Our faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
+2. **Ours (Neuro-symbolic)**: The proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 
 Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced (Latin square) to reduce presentation effects.
 
 ### Participants
 
-Small-to-moderate within-subject sample recruited from the university community/online; English proficiency required. A short pilot will validate timing and the interface. Informed consent is required; withdrawal without penalty.
+We target 10-15 adult participants recruited from the university community and online platforms. Inclusion criteria are English proficiency. We will run an initial pilot (3-4 participants) to validate timing and the interface, then proceed to the main study. All participants provide informed consent and can withdraw at any time without penalty.
 
 ### Materials and stimuli
 
-For each condition, participants view a replay of an agent’s day with: (i) controllable playback; (ii) optional overlay for the high-level plan/action log; and (iii) simple controls to flag unbelievable actions with short reasons. Replays use matched scenarios and character profiles across conditions.
+The stimulus for each condition is a replay of a single random character's day in the sandbox world. To keep the evaluation focused on action believability, we present:
+
+- a time-lapse *video replay* of the agent acting in the world; participants can control playback speed and pause/seek;
+- an optional overlay with the *high-level plan* (intentions and sub-goals) and a *low-level action log;* and
+- UI controls to mark an action as unbelievable ("thumbs down"), provide a short reason, and continue.
+
+Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile and randomness seed across conditions, so any observed variation is attributable to the agent architecture (baseline vs. ours) rather than scenario noise.
 
 ### Procedure
 
-Brief intro and practice; then two matched conditions in counterbalanced order. Participants watch, flag unbelievable actions (with optional short reasons), and provide summary ratings. Simple interaction logs (e.g., time-on-task, overlay openings) are recorded for context.
+Each session (~30 minutes) proceeds as follows:
+
+1. **Introduction.** A short scripted briefing introduces the task and the notion of believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
+2. **Practice.** Participants complete a 2--3 minute tutorial on the interface using a neutral example not used in the main study.
+3. **Condition A.** Watch the replay, freely scrub, and mark any actions that feel unbelievable. For each mark, add a short explanation (optional but encouraged).
+4. **Condition B.** Repeat the session with the other planner. The order of conditions is varied across participants, and assignment is double-blind so neither the participant nor the researcher knows which planner comes first.
+5. **Summary ratings.** For each condition: provide (i) an overall believability rating (7-point Likert), (ii) a perceived causal coherence rating (7-point Likert), and (iii) a preference judgment (forced-choice which was more believable and why).
+
+We record duration until the user is finished with the scenario and whether the plan overlay was opened, to analyse how explanations affect believability judgments.
 
 ### Measures
 
-Primary: overall believability (Likert), action-level unbelievable rate (e.g., flags per 100 actions), and pairwise preference. Secondary: perceived causal coherence and plan adherence (Likert), plus brief coding of reasons for flagged actions (e.g., goal inconsistency, rule/time violations, social norms, control failures). Basic usage signals (e.g., order, time-on-task, overlay openings) are logged for context.
+We operationalize believability with complementary participant-reported and behaviour-linked measures. Unless noted, higher values indicate higher believability.
+
+#### Primary outcomes
+
+1. **Overall believability (Likert).** Single item per condition on a 7-point scale with anchors: 1 "not at all believable", 4 "moderately believable", 7 "extremely believable". The item prompt is: "How believable was the agent's behaviour overall in this replay?"
+2. **Action-level unbelievable rate (event-normalized).** Participants can flag any on-screen action as unbelievable. Let $F$ be the number of unique action events a participant flagged in a condition and $A$ the number of *atomic actions* actually viewed by that participant (derived from the action log restricted to watched timestamps). The primary rate is
+
+\[ r_{\mathrm{unbel}} = \frac{F}{A} \times 100\, , \]
+
+expressed as flags per 100 atomic actions. Atomic actions are the smallest logged action units (e.g., open-door, pick-up, speak, move-to). If a participant sets multiple flags within a 2-second window around the same atomic action, we merge them into one event-level flag.
+3. **Pairwise preference.** Forced-choice question: "Which of the two replays was more believable overall?" (Baseline vs. Ours).
+
+#### Secondary outcomes
+
+- **Causal coherence (Likert).** 7-point rating of how coherent the behaviour felt as a sequence of goals and subgoals: 1 "not coherent", 7 "highly coherent".
+- **Plan adherence (Likert).** 7-point rating of alignment between visible high-level plan and observed actions (recorded even if the plan overlay is not opened, in which case the item is skipped and treated as missing by design).
+- **Unbelievable-action categories (coded).** Free-text reasons for each flag are open-coded into categories such as: goal inconsistency, environment rule violation, temporal implausibility, social norm violation, and low-level control failure. Two independent coders label a stratified sample (≥30% of flags); disagreements are adjudicated and inter-rater agreement (Cohen's $\kappa$) is reported.
+
+**Logged covariates (for analysis, not outcomes)** We log condition order, scenario ID, participant playback time, number of overlay openings, and self-reported prior experience with simulations/games. These are used as covariates in exploratory models and to check for order effects.
 
 ### Data quality and exclusion
 
-Straightforward attention/completeness checks and implausibly fast completion will guide exclusions (rules preregistered).
-
-<!-- review-unknown: Double check exclusion criteria — is this what we want? -->
+Sessions are excluded if participants fail an attention check (simple comprehension question about the replay), leave more than half the session unanswered, or complete in less than one-third of the median time. We pre-register exclusion rules prior to data collection.
 
 ### Analysis
 
-Within-subject comparisons between conditions for the primary outcomes (e.g., paired tests or simple mixed models for event-level data), with concise effect summaries and confidence intervals; qualitative reasons are coded to contextualize quantitative findings.
+We analyse overall believability with within-subject comparisons (paired *t*-test when normality holds; otherwise Wilcoxon signed-rank). For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged as unbelievable:
+
+```
+flag ~ condition + (1|participant) + (1|scenario)
+```
+
+We report effect sizes (Cohen's $d$ or odds ratios) and 95% CIs. Qualitative reasons are open-coded into categories of failure (e.g., goal inconsistency, environment rule violation) to contextualize quantitative effects.
 
 ### Ethics
 
-
 The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives. We will seek approval from the institutional ethics board prior to recruitment.
-
-<!-- review-unknown: Confirm whether DTU ethics board approval is required for this study. -->
 
 ### Power and timing
 
-We target a practical within-subject study size appropriate for detecting moderate differences and will confirm with a simple power check; a short pilot informs timing and minor interface tweaks.
-
-<!-- review-unknown: Clarify if this subsection is needed; define what “power” refers to and outline a simple power check. -->
+A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx34$. We therefore aim for 24--36 valid participants after exclusions; the pilot is analysed descriptively and may inform small interface adjustments.
 
 ### Preregistration and availability
 
-
-We will preregister hypotheses, exclusion rules, and primary or secondary outcomes, and release the anonymized dataset, analysis scripts, and the evaluation interface after publication.
-
-<!-- review-unknown: Consider whether this subsection is necessary for the final thesis or keep it if useful. -->
-
-
+We will preregister hypotheses, exclusion rules, and primary/secondary outcomes, and release the anonymized dataset, analysis scripts, and the evaluation interface after publication.
