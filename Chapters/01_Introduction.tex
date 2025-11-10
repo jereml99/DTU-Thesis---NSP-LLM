@@ -1,46 +1,65 @@
 \chapter{Introduction}
+\label{ch:introduction}
 
-\section{Background and context}
-Artificial intelligence has increasingly turned toward \textbf{Large Language Models (LLMs)} for generating human-like text and behaviour. When embedded in generative agents, these models can simulate complex social dynamics and interactive narratives. Despite their linguistic fluency, such agents frequently exhibit logical inconsistencies and incoherent action sequences within simulated environments.
+\section{Background and Context}
+\label{sec:background-context}
 
-Recent work
-(for example, \cite{park2023} and \cite{zhao2023})
-suggests that combining symbolic reasoning with LLMs can improve task coherence and narrative believability. This thesis focuses first on a neuro-symbolic validator, a form of symbolic scaffolding: the LLM continues to propose goals and hierarchical sketches, while a symbolic validator checks proposed plans against explicit constraints, reports violations, and suggests repairs or diagnostics.
-The aim is to obtain the benefits of symbolic guarantees such as constraint enforcement, temporal checks, and explainability without initially replacing the LLM's proposal role with a planner.
+Generative agents powered by Large Language Models (LLMs) can simulate complex, human-like behavior in interactive environments such as virtual worlds, simulation games, and social scenarios. These agents enable rich narrative experiences and dynamic interactions by drawing on the commonsense reasoning and natural language capabilities of LLMs \cite{parkGenerativeAgentsInteractive2023}. However, purely neural approaches to agent behavior often produce logical inconsistencies and incoherent action sequences. For example, an agent may attempt actions that violate environmental constraints (such as opening a door that does not exist) or pursue goals that conflict with its stated motivations, undermining the plausibility and believability of the simulation \cite{batesRoleEmotionBelievable1994}.
 
-\section{Problem statement}
+Park et al.\ \cite{parkGenerativeAgentsInteractive2023} introduced a generative agent architecture that uses memory streams, reflection, and hierarchical planning to guide agent behavior. While this architecture demonstrates compelling emergent social dynamics, the hierarchical planning component lacks explicit mechanisms for verifying logical consistency or ensuring adherence to environmental constraints. As a result, agents can generate plans that are fluent and contextually plausible but nonetheless violate hard constraints or exhibit temporal inconsistencies.
+
+Recent work in neuro-symbolic AI explores combining neural generation with symbolic planning representations to address these limitations. Tantakoun et al.\ \cite{tantakounLLMsPlanningModelers2025} demonstrate that LLMs can serve as planning modelers, generating Planning Domain Definition Language (PDDL) schemas that formalize domain constraints and action preconditions. By pairing LLM-generated PDDL with symbolic planners or validators, such approaches provide explicit, inspectable guarantees about constraint satisfaction and logical coherence. This neuro-symbolic strategy retains the flexibility and commonsense reasoning of LLMs while introducing structured verification to detect and repair invalid plans before they are executed in the environment.
+
+
+\section{Problem Statement}
+\label{sec:problem-statement}
 
 Generative agents produce dynamic, human-like interactions, but their lack of consistent, constraint-respecting planning undermines realism. Current approaches either rely too heavily on symbolic systems, limiting flexibility, or on purely neural models, which lack logical guarantees.
 
-	\textbf{Problem statement:} How can a neuro-symbolic scaffolding system improve the coherence and believability of LLM-driven generative agents in interactive environments?
+\textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents in interactive environments?
 
-\section{Research aim and objectives}
 
-	\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic scaffolding system in which an LLM proposes plans and a symbolic validator verifies, critiques, and suggests repairs to those plans.
+\section{Research Aim and Objectives}
+\label{sec:research-aim-objectives}
 
-	\textbf{Objectives:}
+\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates PDDL-based plans and a symbolic validator verifies logical consistency, identifies constraint violations, and suggests repairs.
+
+\textbf{Objectives:}
+
 \begin{enumerate}
-\item Reimplement the original system codebase in a modular, well-documented, and extensible architecture to ease future extensions and maintenance.
-\item Design a validator schema and data contract for expressing constraints, diagnostics, and suggested repairs, and implement a prototype that integrates an LLM sketching module with this symbolic validator, including tooling to surface explanations and repair proposals.
-\item Improve UI and UX tooling to surface explanations, visualizations, and decision rationales so that agent decisions and plans are inspectable by researchers and evaluators.
-\item Evaluate the prototype using: (a) quantitative, validator-based metrics (e.g., constraint violations per run, violation rate per 100 actions, success rate, rounds-to-zero, repair efficiency) comparing a baseline against our system after a small number of validator-guided revision rounds; and (b) human-centered evaluation (perceived believability and narrative coherence).
+    \item Reimplement the generative agents architecture with a modular, extensible codebase that supports integration of symbolic planning components.
+    \item Design and implement a PDDL-based validator that formalizes environmental constraints, detects planning violations, and generates actionable diagnostic feedback.
+    \item Develop visualization and explanation tools that make agent plans, constraint violations, and repair proposals inspectable to researchers and evaluators.
+    \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) qualitative human evaluation of perceived believability and narrative coherence.
 \end{enumerate}
 
-\section{Methodological overview}
-The study combines computational implementation with human-centered evaluation,
 
-integrating a large language model with a symbolic validator that inspects LLM-generated plans. 
-Evaluation comprises two complementary strands: (i) quantitative, validator-based evaluation that compares a GA-like baseline against our validator-augmented system on matched scenarios (e.g., counts/rates of constraint violations and simple repair indicators across a small number of revision rounds), and (ii) human-centered evaluation that measures perceived believability and narrative coherence (with brief qualitative feedback on explainability and tooling).
+\section{Methodological Overview}
+\label{sec:methodological-overview}
 
-\section{Scope and limitations}
-The project focuses on simulation environments rather than real-world robotics. Symbolic representations are limited to deterministic domains, and results primarily assess narrative consistency and social plausibility.
+This study builds on the generative agents architecture \cite{parkGenerativeAgentsInteractive2023} by replacing the hierarchical planning component with a neuro-symbolic planning framework. The LLM generates PDDL action schemas and plans, which are then validated by a symbolic checker that detects constraint violations and proposes repairs. The approach is evaluated through two methods:
 
-\section{Thesis structure}
-The thesis is structured as follows:
 \begin{itemize}
-	\item \textbf{Chapter 2:} Theoretical background and related work.
-	\item \textbf{Chapter 3:} Methodology — experimental setup and system design.
-	\item \textbf{Chapter 4:} Implementation and Evaluation.
-	\item \textbf{Chapter 5:} Results and Discussion.
-	\item \textbf{Chapter 6:} Conclusion and Future Work.
+    \item \textbf{Quantitative evaluation}: Constraint violation counts and rates are measured on matched scenarios for (i) a baseline system using hierarchical planning and (ii) the neuro-symbolic system with validator-guided revision rounds. Metrics include violation rates per 100 actions, plan success rates (zero violations), and repair efficiency.
+    \item \textbf{Qualitative evaluation}: Perceived believability and narrative coherence are assessed via a within-subjects user study comparing agent behaviors from both systems.
+\end{itemize}
+
+
+\section{Scope and Limitations}
+\label{sec:scope-limitations}
+
+This project focuses on simulation environments rather than real-world robotics, where sensing uncertainty and physical dynamics introduce additional complexity. The symbolic planning component uses PDDL, which assumes deterministic action effects and complete observability within the simulated domain. Evaluation emphasizes narrative consistency, environmental constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.
+
+
+\section{Thesis Structure}
+\label{sec:thesis-structure}
+
+The remainder of the thesis is organized as follows:
+
+\begin{itemize}
+    \item \textbf{Chapter 2: Theoretical Background} --- Establishes core concepts (LLMs, agents, planning paradigms including PDDL) and reviews relevant literature. Emphasizes the Generative Agents architecture and neuro-symbolic approaches that combine LLM flexibility with symbolic constraint enforcement.
+    \item \textbf{Chapter 3: Methodology} --- Describes the system design, experimental setup, and evaluation protocols. Details the symbolic validator architecture and the within-subjects user study for assessing believability and constraint adherence.
+    \item \textbf{Chapter 4: Results} --- Reports quantitative constraint-violation metrics and qualitative believability findings from the user study.
+    \item \textbf{Chapter 5: Discussion} --- Interprets results, situates findings within the literature, and discusses limitations and implications for agent design.
+    \item \textbf{Chapter 6: Conclusion and Future Work} --- Summarizes contributions and suggests directions for future research.
 \end{itemize}
