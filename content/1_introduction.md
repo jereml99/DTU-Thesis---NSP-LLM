@@ -43,9 +43,9 @@ This project focuses on simulation environments rather than real-world robotics,
 
 The remainder of the thesis is organized as follows:
 
-- **Chapter 2: Related Work** — Surveys neuro-symbolic methods, generative agent architectures, and prior work on agent believability. Situates the PDDL-based validation approach within the landscape of symbolic planners, neural planners, and hybrid systems.
-- **Chapter 3: Methodology** — Describes the experimental setup, system design, and evaluation protocols. Presents the running example, the PDDL validator schema, and procedures for both quantitative constraint-violation metrics and qualitative human evaluation.
-- **Chapter 4: Implementation and Evaluation** — Details the software architecture, LLM-to-PDDL generation pipeline, symbolic validator implementation, and visualization tools for surfacing diagnostics and repair proposals.
-- **Chapter 5: Results and Discussion** — Reports quantitative constraint-violation metrics and qualitative believability findings.
-- **Chapter 6: Conclusion and Future Work** — Summarizes contributions and limitations. 
+- **Chapter 2: Theoretical Background** — Establishes core concepts (LLMs, agents, planning paradigms including PDDL) and reviews relevant literature. Emphasizes the Generative Agents architecture and neuro-symbolic approaches that combine LLM flexibility with symbolic constraint enforcement.
+- **Chapter 3: Methodology** — Describes the system design, experimental setup, and evaluation protocols. Details the symbolic validator architecture and the within-subjects user study for assessing believability and constraint adherence.
+- **Chapter 4: Results** — Reports quantitative constraint-violation metrics and qualitative believability findings from the user study.
+- **Chapter 5: Discussion** — Interprets results, situates findings within the literature, and discusses limitations and implications for agent design.
+- **Chapter 6: Conclusion and Future Work** — Summarizes contributions and suggests directions for future research. 
 
