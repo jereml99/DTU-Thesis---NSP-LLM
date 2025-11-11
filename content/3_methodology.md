@@ -2,42 +2,52 @@
 
 ## Experimental Setup
 
-Details of the experimental setup.
+[To be completed: overview of simulation environment, agent initialization, scenario design, and logging infrastructure.]
 
 ## System Design
 
-Description of the system architecture and design.
+Our neuro-symbolic planning system builds on a re-implementation of the Generative Agents architecture [Park et al., 2023] with architectural modifications that enable controlled comparison between purely neural planning (baseline) and neuro-symbolic planning (our approach). This section describes the system architecture, the planning pipeline, and how the design supports rigorous evaluation.
 
-## Quantitative Evaluation — Validator-based (summary)
+### System Architecture
 
-We complement the human study with a concise, automated evaluation that compares a GA-like baseline against our validator-augmented system. The validator flags constraint violations; we optionally allow a small number of validator-guided revision rounds $R$ and observe how violations change. Validation is separated into day-level (schedule) and action-level (within-task) checks.
+The implementation transforms the original monolithic Generative Agents codebase into a modular, service-oriented architecture with three layers:
 
-**(label: sec:quant-eval-summary)**
+1. **Repository Layer**: Abstracts external dependencies (LLM APIs, file storage) behind interfaces, enabling swappable implementations for testing and experimentation. The `LLMRepository` interface supports both OpenAI (production) and mock providers (testing). The `EnvironmentRepository` interface abstracts world state persistence.
 
-**Conditions**
+2. **Service Layer**: Encapsulates cognitive capabilities in swappable service interfaces:
+   - `PlanningService`: Daily planning and task decomposition
+   - `DialogueService`: Conversation generation
+   - `PerceptionService`: Environment observation and memory retrieval
+   - `ReflectionService`: Memory summarization
+   - `EnvironmentService`: Spatial navigation and object interaction
 
-Baseline (no repair) vs. ours with small $R$ (iterative critique-and-repair).
+3. **Orchestration Layer**: The simulation loop consumes services through interfaces, configured via environment variables (`LLM_PROVIDER`, `PLAN_MODULE`) that control which implementations run.
 
-**Scenarios/protocol**
+**Key Design Principle**: The `PlanningService` abstraction enables side-by-side comparison of baseline (LLM-only hierarchical planning) and neuro-symbolic planning by ensuring both implementations share identical environment state, memory retrieval, and LLM infrastructure. Only the planning logic differs, isolating the independent variable for evaluation.
 
-Matched scenarios with the same initial states and settings across conditions; for each run: generate plan → validate → (optional) repair → re-run from the same initial state; uniform logging.
+**[Figure: Service-Oriented Architecture – Reserved Space]**
 
-**Metrics (concise)**
+### Neuro-Symbolic Planning Pipeline
 
-Counts of validator-detected violations at day-level and action-level, plus an overall aggregate; simple derived indicators (e.g., violation rate per 100 actions, zero-violation success, rounds-to-zero, coarse plan edit/repair magnitude).
+**[Figure: Neuro-Symbolic Planning Pipeline – Reserved Space]**
+We implement a three-stage LLM-propose/symbolic-validate framework \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}:
 
-**Analysis (brief)**
+1. **Task Generation**: The LLM generates daily tasks from memory, grounding them in wants, needs, and commitments \cite{parkGenerativeAgentsInteractive2023a}.
 
-Compare conditions on distributions of violation counts/rates and trends across small $R$ (e.g., paired nonparametric tests or simple count models), with minimal plots/tables. Report day-level and action-level summaries separately and in aggregate.
+2. **Action Decomposition**: Tasks decompose into atomic actions with environment parameters. Example: "complete assignment" → `open-laptop`, `navigate-to-file`, `work-on-document(90min)`, `submit-via-portal`.
 
-**Reporting**
+3. **Schema Generation & Validation**: The LLM generates PDDL schemas (preconditions, effects, durations) for each action. A symbolic validator checks causal consistency, temporal feasibility, resource limits, and environmental invariants. Violations trigger diagnostic feedback (e.g., "unsatisfied precondition `(at-location student hall)`") for iterative LLM repair until constraints satisfy or iteration budget exhausts.
 
-Concise tables/figures highlighting main differences and a small script to re-run scenarios with the validator.
+
+
+## Quantitative Evaluation: Constraint Violation Analysis
+
+[To be completed: automated evaluation comparing the hierarchical planning baseline against our validator-augmented system. The validator will automatically detect and flag constraint violations such as attempting to use items that are not available, scheduling overlapping activities, violating location constraints, or executing actions whose preconditions are not satisfied. Metrics will include violation counts at day-level and action-level, violation rates per 100 actions, and success rates after optional validator-guided repair rounds.]
 
 
 ## User Study: Believability Evaluation
 
-This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behaviour compared to the baseline architecture introduced in Generative Agents \cite{parkGenerativeAgentsInteractive2023a}. We focus the evaluation on the believability of *actions* rather than only on agent personalities or prompted conversations.
+This section describes the human-subjects study we designed to test whether our approach improves the perceived believability of agent behavior compared to the baseline architecture introduced in Generative Agents \cite{parkGenerativeAgentsInteractive2023a}. We focus the evaluation on the believability of *actions* rather than only on agent personalities or prompted conversations.
 
 **(label: sec:user-study-believability)**
 
@@ -48,16 +58,16 @@ We evaluate two primary hypotheses:
 - H1 (overall believability): Participants judge agents powered by our method as more believable overall than the baseline Generative Agents architecture in matched scenarios.
 - H2 (action believability): For the same scenario, participants flag fewer actions as "unbelievable" in our method than in the baseline.
 
-We also explore two secondary outcomes: (i) perceived causal coherence of behaviour when the high-level plan is visible, and (ii) free-text reasons participants provide when they deem an action unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
+We also explore two secondary outcomes: (i)  <!-- review-Jeremi: I'm not sure about it. Will we do that? --> perceived causal coherence of behaviour when the high-level plan is visible, and (ii) free-text reasons participants provide when they deem an action unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
 
 ### Conditions
 
-We compare two between-system conditions on the same simulated world and character seeds:
+We compare two within-subject conditions on the same simulated world and character seeds:
 
 1. **Baseline (GA)**: Our faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
 2. **Ours (Neuro-symbolic)**: The proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 
-Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced (Latin square) to reduce presentation effects.
+Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced (Latin square design) to reduce presentation effects.
 
 ### Participants
 
@@ -102,7 +112,8 @@ expressed as flags per 100 atomic actions. Atomic actions are the smallest logge
 #### Secondary outcomes
 
 - **Causal coherence (Likert).** 7-point rating of how coherent the behaviour felt as a sequence of goals and subgoals: 1 "not coherent", 7 "highly coherent".
-- **Plan adherence (Likert).** 7-point rating of alignment between visible high-level plan and observed actions (recorded even if the plan overlay is not opened, in which case the item is skipped and treated as missing by design).
+- **Plan adherence (Likert).** 7-point rating of alignment between visible high-level plan and observed actions
+ <!-- review-Jeremi: Isn't that an overkill?-->
 - **Unbelievable-action categories (coded).** Free-text reasons for each flag are open-coded into categories such as: goal inconsistency, environment rule violation, temporal implausibility, social norm violation, and low-level control failure. Two independent coders label a stratified sample (≥30% of flags); disagreements are adjudicated and inter-rater agreement (Cohen's $\kappa$) is reported.
 
 **Logged covariates (for analysis, not outcomes)** We log condition order, scenario ID, participant playback time, number of overlay openings, and self-reported prior experience with simulations/games. These are used as covariates in exploratory models and to check for order effects.
@@ -113,7 +124,7 @@ Sessions are excluded if participants fail an attention check (simple comprehens
 
 ### Analysis
 
-We analyse overall believability with within-subject comparisons (paired *t*-test when normality holds; otherwise Wilcoxon signed-rank). For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged as unbelievable:
+We analyse overall believability with within-subject comparisons   <!-- review-Jeremi: Check if those methods makes sens-->(paired *t*-test when normality holds; otherwise Wilcoxon signed-rank).  <!-- review-Jeremi: Dose this make sens? --> For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged as unbelievable:
 
 ```
 flag ~ condition + (1|participant) + (1|scenario)
@@ -123,12 +134,10 @@ We report effect sizes (Cohen's $d$ or odds ratios) and 95% CIs. Qualitative rea
 
 ### Ethics
 
-The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives. We will seek approval from the institutional ethics board prior to recruitment.
+The study involves only minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.
 
 ### Power and timing
+<!-- review-Jeremi: Dose this make sens? --> 
+A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx 34$. Given resource constraints, we aim for 10 to 15 valid participants after exclusions; the pilot is analyzed descriptively and may inform small interface adjustments.
 
-A conservative power analysis for a within-subject design with a moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx34$. We therefore aim for 24--36 valid participants after exclusions; the pilot is analysed descriptively and may inform small interface adjustments.
 
-### Preregistration and availability
-
-We will preregister hypotheses, exclusion rules, and primary/secondary outcomes, and release the anonymized dataset, analysis scripts, and the evaluation interface after publication.

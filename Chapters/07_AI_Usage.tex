@@ -1,30 +1,34 @@
-% A short disclosure about the use of AI tools in the thesis.
-% Place this file where you want the section to appear.
-\section*{Use of Artificial Intelligence}
+\chapter{Use of AI in this Thesis}
+\label{chap:ai_usage}
 
 We used artificial intelligence as an assistive tool for three purposes: (i) drafting and editing text, (ii) literature discovery and screening, and (iii) coding assistance. Human authorship and responsibility are preserved throughout; all outputs were reviewed, verified, and, when needed, rewritten by the authors.
 
-\subsection*{Activities}
-\begin{itemize}
-	\item Writing: large language models were used to improve clarity and structure of human-written drafts without introducing new claims.
-	\item Literature: AI assisted query refinement, screening, data extraction, and summarization, consistent with evidence that such use can improve the efficiency of systematic reviews when disclosed and auditable \cite{fabianoHowOptimizeSystematic2024}.
-	\item Coding: GitHub Copilot was used to suggest code, refactorings, and edits to agent definitions and prompts; changes were reviewed and tested.
-\end{itemize}
+\section{Activities}
 
-\subsection*{Workflow (summary)}
+\paragraph{Writing} Large language models were used to improve clarity and structure of human-written drafts.
+
+\paragraph{Literature} AI assisted in query refinement, screening, data extraction, and summarization, consistent with evidence that such use can improve the efficiency of systematic reviews when disclosed and auditable \cite{fabianoHowOptimizeSystematic2024}. Tools included NotebookLM and ChatGPT with Deep Search.
+
+\paragraph{Coding} GitHub Copilot was used to suggest code, refactorings, and edits to agent definitions and prompts; changes were reviewed and tested.
+
+\section{Workflow Summary}
+
+The workflow for AI-assisted work followed these steps:
 \begin{enumerate}
-	\item Human draft or code first.
-	\item Targeted AI pass with explicit constraints.
-	\item Human verification of facts, citations, and behavior; edits and tests as needed.
-	\item Iterate selectively.
+    \item Human draft or code first.
+    \item Targeted AI pass with explicit constraints.
+    \item Human verification of facts, citations, and behavior; edits and tests as needed.
+    \item Iterate selectively.
 \end{enumerate}
 
-\subsection*{Transparency and compliance}
-We follow DTU guidance on responsible AI use: we disclose the role of AI tools, keep the key system prompts that materially influenced outputs (for example, the redaction agent prompt and the coding assistant configuration) together with representative examples and model/version, and do not attribute authorship to AI. See: \url{https://www.bibliotek.dtu.dk/en/publishing/reference-management/kunstig-intelligens/eksempler}
+\section{Transparency and Compliance}
 
-\subsection*{Limitations and verification}
+We follow DTU guidance on responsible AI use. We disclose the role of AI tools, preserve key system prompts that materially influenced outputs, together with representative examples and model versions, and do not attribute authorship to AI.
+
+\section{Limitations and Verification}
+
 \begin{itemize}
-	\item Factual statements and references suggested by AI were checked against primary sources.
-	\item Copyright and licensing were verified for any third-party material.
-	\item For reproducibility, model versions and important settings were recorded; random seeds and environment details were captured where relevant.
+    \item Factual statements and references suggested by AI were checked against primary sources.
+    \item Copyright and licensing were verified for any third-party material.
+    \item For reproducibility, model versions and key settings are documented in Appendix~\ref{app:ai_details}. % TODO: Create appendix reference when appendix is added
 \end{itemize}
