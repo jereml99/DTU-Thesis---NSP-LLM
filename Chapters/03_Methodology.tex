@@ -93,7 +93,7 @@ Two within-subject conditions on the same simulated world and character seeds:
 \item \textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 \end{enumerate}
 
-Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced (Latin square design) to reduce presentation effects.
+Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced to reduce presentation effects.
 
 \subsection{Participants}
 \label{subsec:participants}
@@ -164,23 +164,7 @@ expressed as flags per 100 atomic actions. Multiple flags within 2 seconds aroun
 
 Sessions are excluded if participants fail an attention check (simple comprehension question about the replay), leave more than half the session unanswered, or complete in less than one-third of median time. We pre-register exclusion rules prior to data collection.
 
-\subsection{Analysis}
-\label{subsec:analysis}
-
-We analyze overall believability with within-subject comparisons (paired $t$-test when normality holds; otherwise Wilcoxon signed-rank). For action-level data, we fit a mixed-effects logistic regression on the probability that an action is flagged:
-
-\begin{verbatim}
-flag ~ condition + (1|participant) + (1|scenario)
-\end{verbatim}
-
-We report effect sizes (Cohen's $d$ or odds ratios) and 95\% CIs. Qualitative reasons are open-coded into failure categories (goal inconsistency, environment rule violation) to contextualize quantitative effects.
-
 \subsection{Ethics}
 \label{subsec:ethics}
 
 The study involves minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.
-
-\subsection{Power and Timing}
-\label{subsec:power-timing}
-
-A conservative power analysis for within-subject design with moderate effect (Cohen's $d=0.5$, $\alpha=0.05$, power $=0.8$) suggests $N\approx 34$. Given resource constraints, we aim for 10 to 15 valid participants after exclusions; the pilot is analyzed descriptively and may inform small interface adjustments.
