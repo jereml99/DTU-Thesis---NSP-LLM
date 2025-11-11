@@ -40,16 +40,17 @@ The implementation transforms the original monolithic Generative Agents codebase
 \label{fig:code-structure-architecture-before}
 \end{figure}
 
-\subsection{Neuro-Symbolic Planning Pipeline}
-\label{subsec:neuro-symbolic-pipeline}
-\textbf{[section is subject to changes after final implementation]}
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{Pictures/Code Structure - after.png}
 \caption{Refactored service-oriented architecture with Repository, Service, and Orchestration layers. The \texttt{PlanningService} abstraction enables controlled comparison between baseline and neuro-symbolic planning implementations.}
 \label{fig:code-structure-architecture-after}
 \end{figure}
+
+\subsection{Neuro-Symbolic Planning Pipeline}
+\label{subsec:neuro-symbolic-pipeline}
+\textbf{[section is subject to changes after final implementation]}
+\textbf{[PLACE for neural symbolic planning pipeline digram]}
 
 We implement a three-stage LLM-propose/symbolic-validate framework \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}:
 
