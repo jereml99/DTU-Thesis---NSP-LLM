@@ -4,11 +4,18 @@
 \section{Background and Context}
 \label{sec:background-context}
 
+Believable computational agents that simulate human behavior enable diverse applications: immersive virtual environments and social simulations \cite{parkGenerativeAgentsInteractive2023a}, rehearsal spaces for practicing interpersonal communication, prototyping tools for testing social scenarios, training systems for rare yet difficult social situations, and platforms for validating social science theories. Non-player characters in open-world games can navigate complex social relationships; virtual assistants and social robots can interact more naturally; cognitive models can inform human-computer interaction design. The common requirement is an architecture that produces behavior consistent with past experience, reacts believably to environmental changes, and maintains coherence over extended interactions.
+
 Large Language Model (LLM)-driven generative agents can simulate complex, human-like behavior in virtual worlds, games, and social scenarios by leveraging commonsense reasoning and natural language capabilities \cite{parkGenerativeAgentsInteractive2023a}. However, purely neural approaches produce logical inconsistencies: agents attempt impossible actions (opening nonexistent doors), violate temporal constraints (simultaneous commitments), or pursue conflicting goals, undermining believability \cite{batesRoleEmotionBelievable1994}.
 
 Park et al.\ \cite{parkGenerativeAgentsInteractive2023a} demonstrated emergent social dynamics through memory streams, reflection, and hierarchical planning. Yet their planning component lacks mechanisms to verify logical consistency or enforce environmental constraints, producing plans that are contextually plausible but violate hard constraints or exhibit temporal inconsistencies.
 
 Neuro-symbolic AI can addresses this by combining neural generation with symbolic planning.\cite{tantakounLLMsPlanningModelers2025};
+
+\section*{Note on the Use of AI}
+\label{sec:ai-disclaimer}
+
+AI-assisted tools, including large language models, were used during the preparation of this thesis for tasks such as literature review, code development, writing assistance, and figure generation. A detailed account of AI usage, including specific tools, tasks, and the extent of human oversight, is provided in Chapter~\ref{ch:ai-usage}.
 
 \section{Problem Statement}
 \label{sec:problem-statement}
@@ -39,8 +46,8 @@ Existing agent architectures face a fundamental tradeoff: purely symbolic system
 This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and PDDL action schemas; a symbolic validator detects constraint violations. Evaluation combines:
 
 \begin{itemize}
-    \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. Metrics include violations per 100 actions, plan success rates, and repair efficiency.
     \item \textbf{Qualitative assessment}: Within-subjects user study comparing perceived believability of agent behaviors from both systems.
+    \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. Metrics include violations per 100 actions, plan success rates, and repair efficiency.
 \end{itemize}
 
 
