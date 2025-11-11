@@ -143,7 +143,7 @@ The LLM proposes a daily schedule: ``open the shop,'' ``serve customers,'' ``tak
 \item Action preconditions (café door must exist and be unlocked before opening).
 \end{itemize}
 Violations such as overlapping commitments or interactions with nonexistent objects are flagged with diagnostics (e.g., ``action \texttt{attend\_event} at 18:00 conflicts with shift ending at 19:00; agent location \texttt{café} incompatible with event location \texttt{park}'').
-\end{example>
+\end{example}
 
 \section{Literature Review}
 
@@ -224,7 +224,7 @@ Huang et al.\ \cite{huangPlanningDarkLLMSymbolic2024} propose an LLM-symbolic pl
     \item CP filtering reduces combinations to 3.3\% of original (1051/31,483) while increasing solvable ratio from 10.9\% to 23.0\%.
     \item Human evaluators ranked pipeline-generated plans (mean 2.97) significantly higher than Tree-of-Thought baselines (3.58); gold standard ranked 1.79.
     \item Pipeline successfully solved Sussman Anomaly (requiring interleaved subgoal handling); direct LLM approaches (GLM, GPT-3.5, GPT-4o) failed by attempting linear goal ordering.
-\end{itemize>
+\end{itemize}
 
 \textbf{Relevance}: Huang et al.\ demonstrate that LLM diversity and semantic validation produce solvable PDDL schemas without expert intervention. Their pipeline validates schema feasibility via symbolic planners, ensuring coherence. We adapt this: rather than generating diverse schema libraries, we use iterative refinement with planner feedback to improve schema quality, prioritizing human-perceived believability alongside solvability.
 
