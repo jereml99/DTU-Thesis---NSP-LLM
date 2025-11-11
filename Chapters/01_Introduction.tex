@@ -19,15 +19,15 @@ Neuro-symbolic AI addresses this by combining neural generation with symbolic pl
 % Generative agents powered by Large Language Models (LLMs) can simulate complex, human-like behavior in interactive environments, but often suffer from logical inconsistencies and incoherent action sequences. For example, agents may attempt actions that violate environmental constraints, which undermines the plausibility of their behavior.
 % This project investigates how to improve coherence and believability by replacing hierarchical planning with a neuro-symbolic planning framework. In particular, we will explore approaches where LLMs generate Planning Domain Definition Language (PDDL) schemas, combining symbolic planning for logical consistency with LLMs for natural language understanding and commonsense reasoning. The effectiveness of the approach will be evaluated in simulation environments, measuring both environmental constraint adherence and human-perceived believability.
 
-Current LLM-driven agents sacrifice either flexibility (over-reliance on symbolic systems) or logical consistency (purely neural models). 
+Existing agent architectures face a fundamental tradeoff: purely symbolic systems ensure logical consistency but lack flexibility and commonsense reasoning, while purely neural LLM-driven agents offer adaptability but produce logically inconsistent plans.
 
-\textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents in interactive environments?
+\textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents?
 
 
 \section{Research Aim and Objectives}
 \label{sec:research-aim-objectives}
 
-\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates PDDL-based plans and a symbolic validator verifies logical consistency and identifies constraint violations.
+\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates a hierarchical plan, the plan actions and environment constraints are formalized in PDDL, and a symbolic validator verifies logical consistency, identifies constraint violations, and guides iterative plan refinement.
 
 \textbf{Objectives:}
 
@@ -42,7 +42,7 @@ Current LLM-driven agents sacrifice either flexibility (over-reliance on symboli
 \section{Methodological Overview}
 \label{sec:methodological-overview}
 
-This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates PDDL action schemas and plans; a symbolic validator detects constraint violations. Evaluation combines:
+This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and PDDL action schemas; a symbolic validator detects constraint violations. Evaluation combines:
 
 \begin{itemize}
     \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. Metrics include violations per 100 actions, plan success rates, and repair efficiency.
