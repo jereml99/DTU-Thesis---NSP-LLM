@@ -125,14 +125,14 @@ Formal HTN or temporal PDDL planners can validate such decompositions, ensuring 
 Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic representations and reasoning to achieve both flexibility and guarantees \cite{garcezNeuralSymbolicComputingEffective2019, garcezNeurosymbolicAI3rd2020}. Common integration patterns:
 
 \begin{enumerate}
-    \item \textbf{LLM-propose/symbolic-validate}: The LLM generates candidate schemas or plans; a symbolic component validates them against domain constraints \cite{huangPlanningDarkLLMSymbolic2024}.
+    \item \textbf{LLM-propose/symbolic-plan}: The LLM generates candidate schemas and plans; a symbolic planner forms a sequence of actions that satisfy the constraints \cite{huangPlanningDarkLLMSymbolic2024}.
     \item \textbf{Iterative refinement}: Plans are critiqued by symbolic validators or planners, and feedback improves LLM proposals \cite{silverGeneralizedPlanningLarge2023, valmeekamonPlanningLargeLanguage2023}.
     \item \textbf{Shared world models}: A symbolic state representation is updated from neural perception and queried for decisions.
 \end{enumerate}
 
-Recent work explores these patterns for PDDL generation. Tantakoun et al.\ survey approaches where LLMs construct PDDL domain and problem files from natural language, with symbolic planners validating and executing \cite{tantakounLLMsPlanningModelers2025}. Huang et al.\ propose a pipeline where multiple LLM instances generate diverse PDDL action schemas, filtered via semantic coherence checks and validated by symbolic planners to identify solvable schema sets \cite{huangPlanningDarkLLMSymbolic2024}.
+Recent work explores these patterns for PDDL generation. Tantakoun et al. survey approaches where LLMs construct PDDL domain and problem files from natural language, with symbolic planners validating and executing \cite{tantakounLLMsPlanningModelers2025}. Huang et al. propose a pipeline in which multiple LLM instances generate diverse candidate PDDL action schemas, which are filtered for semantic coherence and validated by a symbolic planner to ensure domain solvability \cite{huangPlanningDarkLLMSymbolic2024}. \footnote{Unlike the present work, Huang et al.\ use the symbolic planner not only for validation but also to generate complete plans once a consistent domain schema has been identified.}
 
-This thesis follows the LLM-propose/symbolic-validate pattern. The LLM generates tasks and action sequences grounded in agent memory; these are translated into PDDL schemas and validated by a symbolic planner to enforce temporal, causal, and resource constraints. Validation failures produce diagnostic feedback that can be returned to the LLM for iterative repair, preserving naturalistic behavior while ensuring logical coherence.
+This thesis follows the iterative refinement pattern with a symbolic verifier. The LLM generates tasks and action sequences grounded in agent memory; these are translated into PDDL schemas and validated by a symbolic planner to enforce temporal, causal, and resource constraints. Validation failures produce diagnostic feedback that can be returned to the LLM for iterative repair, preserving naturalistic behavior while ensuring logical coherence.
 
 \begin{example}[Neuro-Symbolic Validation of Daily Schedule]
 \label{ex:neurosymbolic-validation}
