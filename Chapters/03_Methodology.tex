@@ -33,23 +33,24 @@ The implementation transforms the original monolithic Generative Agents codebase
 
 \textbf{Key Design Principle}: The \texttt{PlanningService} abstraction enables side-by-side comparison of baseline (LLM-only hierarchical planning) and neuro-symbolic planning by ensuring both share identical environment state, memory retrieval, and LLM infrastructure. Only the planning logic differs, isolating the independent variable.
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Pictures/Code Structure - before.png}
-\caption{Original monolithic architecture from the Generative Agents codebase \cite{parkGenerativeAgentsInteractive2023a}, showing tightly coupled components without clear separation of concerns.}
-\label{fig:code-structure-architecture-before}
-\end{figure}
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\textwidth]{Pictures/Code Structure - before.png}
+% \caption{Original monolithic architecture from the Generative Agents codebase \cite{parkGenerativeAgentsInteractive2023a}, showing tightly coupled components without clear separation of concerns.}
+% \label{fig:code-structure-architecture-before}
+% \end{figure}
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[width=\textwidth]{Pictures/Code Structure - after.png}
+% \caption{Refactored service-oriented architecture with Repository, Service, and Orchestration layers. The \texttt{PlanningService} abstraction enables controlled comparison between baseline and neuro-symbolic planning implementations.}
+% \label{fig:code-structure-architecture-after}
+% \end{figure}
 
 \subsection{Neuro-Symbolic Planning Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
 \textbf{[section is subject to changes after final implementation]}
-
-\begin{figure}[H]
-\centering
-\includegraphics[width=\textwidth]{Pictures/Code Structure - after.png}
-\caption{Refactored service-oriented architecture with Repository, Service, and Orchestration layers. The \texttt{PlanningService} abstraction enables controlled comparison between baseline and neuro-symbolic planning implementations.}
-\label{fig:code-structure-architecture-after}
-\end{figure}
+\textbf{[PLACE for neural symbolic planning pipeline digram]}
 
 We implement a three-stage LLM-propose/symbolic-validate framework \cite{kambhampatiLLMsCantPlan2024,tantakounLLMsPlanningModelers2025,huangPlanningDarkLLMSymbolic2024}:
 
