@@ -134,15 +134,15 @@ Recent work explores these patterns for PDDL generation. Tantakoun et al. survey
 
 This thesis follows the iterative refinement pattern with a symbolic verifier. The LLM generates tasks and action sequences grounded in agent memory; these are translated into PDDL schemas and validated by a symbolic planner to enforce temporal, causal, and resource constraints. Validation failures produce diagnostic feedback that can be returned to the LLM for iterative repair, preserving naturalistic behavior while ensuring logical coherence.
 
-\begin{example}[Neuro-Symbolic Validation of Daily Schedule]
+\begin{example}[Neuro-Symbolic Validation of Action Decomposition]
 \label{ex:neurosymbolic-validation}
-The LLM proposes a daily schedule: ``open the shop,'' ``serve customers,'' ``take a break,'' ``attend a social event in the evening.'' The PDDL validator checks:
+The LLM receives a daily task ``work café shift (09:00 to 12:00)'' and decomposes it into fine-grained actions: ``walk to café,'' ``unlock door,'' ``turn on lights,'' ``serve customers,'' ``clean tables.'' The PDDL validator checks each action:
 \begin{itemize}
-\item Location constraints (cannot be at café and park simultaneously),
-\item Temporal constraints (shift hours, event times),
-\item Action preconditions (café door must exist and be unlocked before opening).
+\item Preconditions (door must exist and agent must have key before unlocking; lights require door to be unlocked and agent inside),
+\item Location constraints (agent must be at café to unlock door; cannot serve customers while at storage room),
+\item Temporal ordering (cannot turn on lights before unlocking door; cannot clean tables before serving customers ends).
 \end{itemize}
-Violations such as overlapping commitments or interactions with nonexistent objects are flagged with diagnostics (e.g., ``action \texttt{attend\_event} at 18:00 conflicts with shift ending at 19:00; agent location \texttt{café} incompatible with event location \texttt{park}'').
+Violations are flagged with diagnostics (e.g., ``action \texttt{unlock\_door} fails: precondition \texttt{(has-key agent cafe-key)} unsatisfied in initial state; agent inventory empty'').
 \end{example}
 
 \section{Literature Review}
