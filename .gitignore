@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 .waylog/
-build/
-=======
 ## LaTeX Build Directory
 build/
 
@@ -139,4 +136,3 @@ __pycache__/
 *.bbl.sav
 *.bcf.sav
 content/papers
->>>>>>> origin/alex
