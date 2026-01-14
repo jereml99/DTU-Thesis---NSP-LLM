@@ -32,30 +32,36 @@ In simulated environments and games, non-player characters (NPCs) prioritize pro
 
 \begin{definition}[Believability]
 \label{def:believability}
-\emph{Believability}---the ``illusion of life''---is the human-perceived realism of agent behavior (i.e., perceived plausibility rather than fidelity to real-world cognition): whether actions align with character goals, personality, knowledge, and social norms \cite{batesRoleEmotionBelievable1994, loyallBelievableAgentsBuilding}.
+\emph{Believability}---the ``illusion of life''---is the human-perceived realism of agent behavior: whether actions align with character goals, personality, knowledge, and social norms \cite{batesRoleEmotionBelievable1994, loyallBelievableAgentsBuilding}.
 \end{definition}
 
-Following prior work, we adopt an observer-centric interpretation of believability. Believability is treated as a phenomenological property of agent behavior as experienced by human observers, rather than as a guarantee of cognitive, epistemic, or psychological realism. In particular, alignment with an agent's ``knowledge'' in \cref{def:believability} refers to the perceived consistency of behavior with the agent's established context and prior actions, not to the formal correctness or completeness of its internal belief state.
-
-A closely related but more precise notion is \emph{epistemic plausibility}, which concerns whether an agent's actions are consistent with what it could reasonably know or believe given its observations. In principle, epistemic plausibility can be enforced through explicit belief tracking and uncertainty modeling, as studied in epistemic planning \cite{Bolander_2017}. However, such approaches typically assume a closed or tightly specified world model, including a finite and well-defined set of actions, observability conditions, and belief update rules \cite{bolanderEpistemicPlanning2011}.
-
-In contrast, the agents studied in this work operate in an open-world setting with a natural-language action space, where the set of possible actions and interactions is not exhaustively specified in advance. Moreover, the underlying system maintains only a limited and heuristic representation of agent knowledge, sufficient to condition behavior generation but not to support complete epistemic state tracking. Under these conditions, epistemic plausibility is not a well-defined or enforceable system-level property. Consequently, it is not adopted as an explicit evaluation objective in this work, although reductions in incoherent or logically impossible behavior may indirectly improve epistemic plausibility at the level of observed behavior.
-
-Constraining agents with realistic physical and environmental limits increases perceived believability by reducing violations that are known to break the illusion of life, such as impossible actions or logically inconsistent plans \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Importantly, these constraints are not intended to ensure full realism of cognition or belief, but to restrict the space of possible behaviors to those that remain interpretable and plausible to human observers. Park et al.\ showed that LLM-driven agents augmented with memory, reflection, and planning were rated as more believable than human crowdworkers in controlled evaluations \cite{parkGenerativeAgentsInteractive2023a}. Xiao et al.\ similarly propose metrics such as Consistency and Robustness to assess profile-grounded simulations \cite{xiaoHowFarAre2024}.
+Constraining agents with realistic physical and environmental limits increases perceived believability by reducing violations known to break immersion, such as impossible actions or logically inconsistent plans \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Park et al.\ showed that LLM-driven agents with memory, reflection, and planning were rated more believable than human crowdworkers in controlled evaluations \cite{parkGenerativeAgentsInteractive2023a}. Xiao et al.\ propose metrics such as Consistency and Robustness for profile-grounded simulations \cite{xiaoHowFarAre2024}.
 
 \begin{definition}[Coherence]
 \label{def:coherence}
 \emph{Coherence} is the causal and temporal consistency of behavior: whether actions are feasible, properly ordered, and do not contradict prior commitments or environmental constraints \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}.
 \end{definition}
 
-In this work, coherence is operationalized through constraint adherence, including the satisfaction of action preconditions, the absence of temporal overlaps, respect for resource limits, and compliance with environmental invariants.
+Coherence is operationalized through constraint adherence: satisfaction of action preconditions, absence of temporal overlaps, respect for resource limits, and compliance with environmental invariants.
 
 \begin{example}[Coherence Violation]
 \label{ex:coherence-violation}
 In our running example (\cref{ex:running-student}), a coherent agent must not schedule overlapping commitments (e.g., attending two simultaneous classes) or attempt impossible actions (e.g., submitting an assignment before completing it). A purely LLM-based planner might generate ``attend lecture at 10:00'' and ``work café shift 09:00 to 12:00'' without detecting the temporal conflict.
 \end{example}
 
-We adopt the NPC perspective in which believability is the primary objective. We hypothesize that coherence---enforced through symbolic planning and validation---is a necessary but not sufficient condition for believability. The proposed neuro-symbolic approach aims to preserve the expressive, context-aware behavior enabled by large language models while eliminating logical inconsistencies that undermine perceived intentionality and realism at the level of observed behavior.
+\begin{definition}[Epistemic Plausibility]
+\label{def:epistemic-plausibility}
+\emph{Epistemic plausibility} is the consistency of an agent's actions with what it could reasonably know or believe given its observations and prior experience.
+\end{definition}
+
+While formal epistemic planning explicitly represents agents' beliefs \cite{Bolander_2017}, such approaches typically assume a closed and fully specified domain with a finite set of actions and observability conditions \cite{bolanderEpistemicPlanning2011}. In contrast, open-world systems with natural-language action spaces, such as LLM-driven agents, cannot feasibly maintain complete epistemic state tracking. Thus, epistemic plausibility is not tractable as a system-level enforcement objective in this work. However, improving coherence reduces certain epistemic violations: actions respecting environmental and causal constraints are less likely to presuppose unreasonable or unobserved information, indirectly supporting perceived believability.
+
+\begin{example}[Coherent but Epistemically Implausible]
+\label{ex:epistemic-implausible}
+A detective agent immediately accuses the correct culprit. The accusation is coherent (fits the agent's role, doesn't violate timeline or resources) but epistemically implausible: the agent never observed the key evidence, and no belief update justifies such certainty. From a narrative perspective, the action appears believable; from a knowledge-tracking perspective, it breaks plausibility because the agent acts with unearned certainty.
+\end{example}
+
+We adopt the NPC perspective in which believability is the primary objective. We hypothesize that coherence---enforced through symbolic validation---is a necessary but not sufficient condition for believability. The proposed neuro-symbolic approach preserves expressive, context-aware behavior from large language models while eliminating logical inconsistencies that undermine perceived intentionality.
 
 \subsection{Planning and PDDL}
 
