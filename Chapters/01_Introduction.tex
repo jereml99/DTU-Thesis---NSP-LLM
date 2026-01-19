@@ -4,7 +4,7 @@
 \section{Background and Context}
 \label{sec:background-context}
 
-Believable computational agents that simulate human behavior enable diverse applications: immersive virtual environments and social simulations \cite{parkGenerativeAgentsInteractive2023a}, rehearsal spaces for practicing interpersonal communication, prototyping tools for testing social scenarios, training systems for rare yet difficult social situations, and platforms for validating social science theories. Non-player characters in open-world games can navigate complex social relationships; virtual assistants and social robots can interact more naturally; cognitive models can inform human-computer interaction design. The common requirement is an architecture that produces behavior consistent with past experience, reacts believably to environmental changes, and maintains coherence over extended interactions.
+Believable computational agents that simulate human behavior enable diverse applications: immersive virtual environments and social simulations \cite{parkGenerativeAgentsInteractive2023a}, rehearsal spaces for practicing interpersonal communication, prototyping tools for testing social scenarios, training systems for rare yet difficult social situations, and platforms for validating social science theories. By believability, we mean the human-perceived realism of an agent's behavior: whether its actions appear consistent with its apparent goals, personality, and knowledge. Non-player characters in open-world games can navigate complex social relationships; virtual assistants and social robots can interact more naturally; cognitive models can inform human-computer interaction design. The common requirement is an architecture that produces behavior consistent with past experience, reacts believably to environmental changes, and maintains coherence over extended interactions. A formal treatment of believability is provided in \cref{ch:background}.
 
 Large Language Model (LLM)-driven generative agents can simulate complex, human-like behavior in virtual worlds, games, and social scenarios by leveraging commonsense reasoning and natural language capabilities \cite{parkGenerativeAgentsInteractive2023a}. However, purely neural approaches produce logical inconsistencies: agents attempt impossible actions (opening nonexistent doors), violate temporal constraints (simultaneous commitments), or pursue conflicting goals, undermining believability \cite{batesRoleEmotionBelievable1994}.
 
@@ -22,7 +22,7 @@ AI-assisted tools, including large language models, were used during the prepara
 
 Existing agent architectures face a fundamental tradeoff: purely symbolic systems ensure logical consistency but lack flexibility and commonsense reasoning, while purely neural LLM-driven agents offer adaptability but produce logically inconsistent plans.
 
-\textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents?
+\textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence\ref{def:coherence} and believability\ref{def:believability} of LLM-driven generative agents?
 
 
 \section{Research Aim and Objectives}

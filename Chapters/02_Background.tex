@@ -197,32 +197,44 @@ This section reviews work on neuro-symbolic planning for LLM-driven agents, focu
 
 \subsection{Generative Agents: Interactive Simulacra of Human Behavior (Park et al., 2023)}
 
-Park et al.\ introduced generative agents: LLM-driven NPCs simulating believable human behavior in Smallville, a sandbox town environment \cite{parkGenerativeAgentsInteractive2023a}. The architecture comprises:
+Park et al.\ introduced generative agents: LLM-driven NPCs simulating believable human behavior in Smallville, a sandbox town environment \cite{parkGenerativeAgentsInteractive2023a}. 
+
+\begin{figure}[H]\centering
+    \includegraphics[width=0.8\linewidth]{Pictures/GenerativeAgentsSims.jpg}
+    \caption{Smallville environment (adapted from Park et al.\ \cite{parkGenerativeAgentsInteractive2023a}). A sandbox environment populated with generative agents where agents autonomously plan daily activities, exchange information, form relationships, and coordinate group events with minimal user intervention.}\label{fig:generative-agents-sims}
+\end{figure}
+
+The architecture comprises:
 
 \begin{enumerate}
     \item \textbf{Memory Stream}: Time-stamped observations (own actions, others' actions, environment events), retrieved by weighted combination of recency (exponential decay), importance (LLM-rated 1 to 10), and relevance (embedding cosine similarity).
-    \item \textbf{Reflection}: Periodic synthesis triggered when importance scores exceed a threshold (150). The LLM generates questions about recent experiences, produces insights with citations, and creates reflection trees (observations → reflections → meta-reflections).
-    \item \textbf{Planning}: Top-down recursive decomposition into day-level plans (5 to 8 chunks), hour-level plans, and 5 to 15 minute action plans. Agents dynamically re-plan when circumstances change, with the LLM deciding whether to continue or react to new observations.
+    \item \textbf{Reflection}: Periodic synthesis of experiences into higher-level insights. The LLM generates questions about recent observations, produces abstract insights with citations to source memories, and organizes these into reflection trees (observations → reflections → meta-reflections).
+    \item \textbf{Planning}: 
+    \begin{enumerate}
+        \item Daily objectives are synthesized from the agent's personality profile (innate traits, occupation, background), current situational goals (e.g., organizing a party, meeting deadlines), and established lifestyle patterns (sleep schedule, work hours, meal times, exercise routines).
+        \item These objectives are then decomposed hierarchically: day-level objectives are refined into hour-level plan segments, which are further decomposed into concrete 5-to-15 minute action sequences at execution time as each hour-level task becomes due.
+        \item Agents dynamically re-plan when circumstances change, with the LLM deciding whether to continue the current plan or react to new observations.
+    \end{enumerate}
 \end{enumerate}
 
+\begin{figure}[H]\centering
+    \includegraphics[width=0.8\linewidth]{Pictures/GenerativeAgents-System.jpg}
+    \caption{Generative agent architecture (adapted from Park et al.\ \cite{parkGenerativeAgentsInteractive2023a}). Agents perceive their environment, and all perceptions are saved in a comprehensive record of the agent's experiences called the memory stream. Based on their perceptions, the architecture retrieves relevant memories and uses those retrieved actions to determine an action. These retrieved memories are also used to form longer-term plans and create higher-level reflections, both of which are entered into the memory stream for future use.}\label{fig:generative-agents-architecture}
+\end{figure}
+
 \textbf{Emergent behaviors} in a 25-agent, two-day simulation:
-\begin{itemize}
-    \item \textbf{Information diffusion}: Mayoral candidacy news spread from 1 agent to 8 (32\%); Valentine's party invitation spread to 13 (52\%).
-    \item \textbf{Relationship formation}: Social network density increased from 0.167 to 0.74.
-    \item \textbf{Coordination}: Isabella planned a party, invited agents, decorated the café; 5 of 12 invited agents attended at the correct time and location.
-\end{itemize}
+Within this architecture, agents maintained temporally coherent behavior. Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. Information about Isabella's Valentine's Day party spread to 13 agents (52\%), and notably, 5 of the 12 explicitly invited agents attended at the correct time and location.
 
 \textbf{Evaluation}: Controlled study with 100 human participants ranking agents via TrueSkill. Full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming ablations and human crowdworkers ($\mu = 22.95, \sigma = 0.69$) with effect size $d = 8.16$ (p < 0.001). Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections.
 
-\textbf{Failure modes}:
-\begin{itemize}
-    \item Memory retrieval errors,
-    \item Hallucination (embellishing details not in memory),
-    \item Overly formal dialogue,
-    \item Over-cooperation.
-\end{itemize}
+\begin{figure}[H]\centering
+    \includegraphics[width=0.8\linewidth]{Pictures/GenerativeAgents-Results.jpg}
+    \caption{Evaluation results (adapted from Park et al.\ \cite{parkGenerativeAgentsInteractive2023a}). The full generative agent architecture produces more believable behavior than the ablated architectures and the human crowdworkers. Each additional ablation reduces the performance of the architecture.}\label{fig:generative-agents-results}
+\end{figure}
 
-\textbf{Relevance}: Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. However, the system lacks explicit symbolic grounding: no formal model of time, resources, or environmental constraints. Temporal coherence is maintained heuristically through textual schedules that can drift or produce overlaps. Actions are not verified against preconditions beyond ad hoc checks, limiting transparency when context windows shift or commitments are forgotten. This motivates our neuro-symbolic approach of integrating PDDL-based validation to detect and repair constraint violations.
+However, this believability came at a cost. Park et al.\ identified significant \textbf{failure modes}: memory retrieval errors, hallucinations, and over-cooperation. More critically, the system lacked explicit symbolic grounding—no formal model of time, resources, or environmental constraints. Temporal coherence was maintained heuristically through textual schedules that could drift or produce overlaps. Actions were not verified against preconditions beyond ad hoc checks, limiting transparency when context windows shifted or commitments were forgotten.
+
+This limitation motivates our approach: we propose integrating PDDL-based symbolic validation to *enforce* constraint satisfaction and detect incoherent plans before execution, preserving the expressiveness of LLM-driven planning while eliminating logical inconsistencies that undermine believability.
 
 \subsection{LLMs as Planning Modelers (Tantakoun et al., 2025)}
 
