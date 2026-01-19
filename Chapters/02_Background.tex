@@ -222,17 +222,16 @@ The architecture comprises:
     \caption{Generative agent architecture (adapted from Park et al.\ \cite{parkGenerativeAgentsInteractive2023a}). Agents perceive their environment, and all perceptions are saved in a comprehensive record of the agent's experiences called the memory stream. Based on their perceptions, the architecture retrieves relevant memories and uses those retrieved actions to determine an action. These retrieved memories are also used to form longer-term plans and create higher-level reflections, both of which are entered into the memory stream for future use.}\label{fig:generative-agents-architecture}
 \end{figure}
 
-\textbf{Emergent behaviors} in a 25-agent, two-day simulation:
-Within this architecture, agents maintained temporally coherent behavior. Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. Information about Isabella's Valentine's Day party spread to 13 agents (52\%), and notably, 5 of the 12 explicitly invited agents attended at the correct time and location.
+\textbf{Emergent behaviors} emerged in a 25-agent, two-day simulation where agents maintained temporally coherent behavior. Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. Information about Isabella's Valentine's Day party spread to 13 agents (52\%), and notably, 5 of the 12 explicitly invited agents attended at the correct time and location.
 
-\textbf{Evaluation}: Controlled study with 100 human participants ranking agents via TrueSkill. Full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming ablations and human crowdworkers ($\mu = 22.95, \sigma = 0.69$) with effect size $d = 8.16$ (p < 0.001). Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections.
+\textbf{Evaluation} comprised a controlled study with 100 human participants ranking agents via TrueSkill. Full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming ablations and human crowdworkers ($\mu = 22.95, \sigma = 0.69$) with effect size $d = 8.16$ (p < 0.001). Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections.
 
 \begin{figure}[H]\centering
     \includegraphics[width=0.8\linewidth]{Pictures/GenerativeAgents-Results.jpg}
     \caption{Evaluation results (adapted from Park et al.\ \cite{parkGenerativeAgentsInteractive2023a}). The full generative agent architecture produces more believable behavior than the ablated architectures and the human crowdworkers. Each additional ablation reduces the performance of the architecture.}\label{fig:generative-agents-results}
 \end{figure}
 
-However, this believability came at a cost. Park et al.\ identified significant \textbf{failure modes}: memory retrieval errors, hallucinations, and over-cooperation. More critically, the system lacked explicit symbolic grounding—no formal model of time, resources, or environmental constraints. Temporal coherence was maintained heuristically through textual schedules that could drift or produce overlaps. Actions were not verified against preconditions beyond ad hoc checks, limiting transparency when context windows shifted or commitments were forgotten.
+However, this believability came at a cost. \textbf{Failure modes} included memory retrieval errors, hallucinations, and over-cooperation. More critically, the system lacked explicit symbolic grounding—no formal model of time, resources, or environmental constraints. Temporal coherence was maintained heuristically through textual schedules that could drift or produce overlaps. Actions were not verified against preconditions beyond ad hoc checks, limiting transparency when context windows shifted or commitments were forgotten.
 
 This limitation motivates our approach: we propose integrating PDDL-based symbolic validation to *enforce* constraint satisfaction and detect incoherent plans before execution, preserving the expressiveness of LLM-driven planning while eliminating logical inconsistencies that undermine believability.
 
@@ -240,7 +239,7 @@ This limitation motivates our approach: we propose integrating PDDL-based symbol
 
 Tantakoun et al.\ survey how LLMs construct and refine automated planning models rather than directly perform planning \cite{tantakounLLMsPlanningModelers2025}. They review approximately 80 papers, positioning LLMs as tools for extracting planning models to support reliable planners, addressing the limitation that LLMs struggle with long-horizon planning requiring structured reasoning.
 
-Taxonomy of three paradigms:
+\textbf{Three modeling paradigms} structure the survey:
 \begin{enumerate}
     \item \textbf{LLMs-as-Heuristics}: Enhance planner search efficiency.
     \item \textbf{LLMs-as-Planners}: Directly generate action sequences or plan proposals.
@@ -255,7 +254,7 @@ Within LLMs-as-Modelers:
 
 \textbf{Hybrid Modeling} (approximately 15 papers): LLMs generate both domain and problem files. Systems use human-in-the-loop approaches with anomaly detection \cite{ye2024domainindependent}. Coordinating both introduces complexity; linear pipelines risk cascading errors.
 
-\textbf{Key findings}:
+\textbf{Key findings} from the survey show that:
 \begin{enumerate}
     \item LLMs generate syntactically valid PDDL but struggle with semantic consistency.
     \item Iterative refinement with symbolic planner feedback improves model quality.
@@ -267,7 +266,7 @@ This grounds our approach: we position the LLM as a PDDL schema generator (domai
 
 Huang et al.\ \cite{huangPlanningDarkLLMSymbolic2024} propose an LLM-symbolic planning pipeline eliminating expert intervention in action schema generation and validation. Natural-language task descriptions are inherently ambiguous; under reasonable assumptions, a single LLM instance has less than 0.0001\% probability of generating a solvable action-schema set, but combining multiple LLM instances raises this to over 95\% \cite{huangPlanningDarkLLMSymbolic2024}.
 
-\textbf{Three-step architecture}:
+\textbf{The three-step architecture} comprises:
 
 \begin{enumerate}
     \item \textbf{Diverse Schema Library}: Deploy $N$ LLM instances with high temperature to generate complete action schema sets for $M$ actions. Aggregate into a library with approximately $N^M$ possible combinations.
@@ -275,14 +274,7 @@ Huang et al.\ \cite{huangPlanningDarkLLMSymbolic2024} propose an LLM-symbolic pl
     \item \textbf{Plan Generation and Ranking}: Feed solvable schema sets into symbolic planner (DUAL-BWFS). Rank generated plans by cumulative semantic similarity.
 \end{enumerate}
 
-\textbf{Key findings}:
-\begin{itemize}
-    \item Layman (ambiguous) descriptions yield 2.35 times more distinct solvable schema sets than detailed expert descriptions (8039 vs.\ 3419 with 10 LLMs, no CP), reflecting diverse valid interpretations.
-    \item With 10 LLM instances, probability of generating at least one solvable schema set exceeds 95\%.
-    \item CP filtering reduces combinations to 3.3\% of original (1051/31,483) while increasing solvable ratio from 10.9\% to 23.0\%.
-    \item Human evaluators ranked pipeline-generated plans (mean 2.97) significantly higher than Tree-of-Thought baselines (3.58); gold standard ranked 1.79.
-    \item Pipeline successfully solved Sussman Anomaly (requiring interleaved subgoal handling); direct LLM approaches (GLM, GPT-3.5, GPT-4o) failed by attempting linear goal ordering.
-\end{itemize}
+\textbf{Key findings} demonstrate that layman (ambiguous) descriptions yield 2.35 times more distinct solvable schema sets than detailed expert descriptions (8039 vs.\ 3419 with 10 LLMs, no CP), reflecting diverse valid interpretations. With 10 LLM instances, the probability of generating at least one solvable schema set exceeds 95\%. Conformal Prediction (CP) filtering reduces combinations to 3.3\% of original (1051/31,483) while increasing the solvable ratio from 10.9\% to 23.0\%. Human evaluators ranked pipeline-generated plans (mean 2.97) significantly higher than Tree-of-Thought baselines (3.58), with gold standard at 1.79. The pipeline successfully solved the Sussman Anomaly (requiring interleaved subgoal handling), whereas direct LLM approaches (GLM, GPT-3.5, GPT-4o) failed by attempting linear goal ordering.
 
 \textbf{Relevance}: Huang et al.\ demonstrate that LLM diversity and semantic validation produce solvable PDDL schemas without expert intervention. Their pipeline validates schema feasibility via symbolic planners, ensuring coherence. We adapt this: rather than generating diverse schema libraries, we use iterative refinement with planner feedback to improve schema quality.
 
