@@ -224,7 +224,7 @@ The architecture comprises:
 
 \textbf{Emergent behaviors} emerged in a 25-agent, two-day simulation where agents maintained temporally coherent behavior. Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. Information about Isabella's Valentine's Day party spread to 13 agents (52\%), and notably, 5 of the 12 explicitly invited agents attended at the correct time and location.
 
-\textbf{Evaluation} comprised a controlled study with 100 human participants ranking agents via TrueSkill. Full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming ablations and human crowdworkers ($\mu = 22.95, \sigma = 0.69$) with effect size $d = 8.16$ (p < 0.001). Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections.
+\textbf{Evaluation} comprised a controlled study with 100 human participants recruited via an online crowdsourcing platform, who ranked agent responses using a TrueSkill-based aggregation. A human-authored baseline was constructed by recruiting 25 crowdworkers, each assigned to a single agent; these workers were given access to the agent's full memory stream and a replay of its simulated behavior, and were instructed to role-play the agent when answering interview questions. Baseline responses were manually inspected by the authors for coherence and consistency with the assigned persona, with low-quality or out-of-character submissions discarded and replaced. Evaluators were blind to condition and ranked responses from the full architecture, multiple ablations, and the human baseline. The full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming both ablations and the human-authored baseline ($\mu = 22.95, \sigma = 0.69$), with effect size $d = 8.16$ ($p < 0.001$). Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections.
 
 \begin{figure}[H]\centering
     \includegraphics[width=0.8\linewidth]{Pictures/GenerativeAgents-Results.jpg}
@@ -274,7 +274,14 @@ Huang et al.\ \cite{huangPlanningDarkLLMSymbolic2024} propose an LLM-symbolic pl
     \item \textbf{Plan Generation and Ranking}: Feed solvable schema sets into symbolic planner (DUAL-BWFS). Rank generated plans by cumulative semantic similarity.
 \end{enumerate}
 
-\textbf{Key findings} demonstrate that layman (ambiguous) descriptions yield 2.35 times more distinct solvable schema sets than detailed expert descriptions (8039 vs.\ 3419 with 10 LLMs, no CP), reflecting diverse valid interpretations. With 10 LLM instances, the probability of generating at least one solvable schema set exceeds 95\%. Conformal Prediction (CP) filtering reduces combinations to 3.3\% of original (1051/31,483) while increasing the solvable ratio from 10.9\% to 23.0\%. Human evaluators ranked pipeline-generated plans (mean 2.97) significantly higher than Tree-of-Thought baselines (3.58), with gold standard at 1.79. The pipeline successfully solved the Sussman Anomaly (requiring interleaved subgoal handling), whereas direct LLM approaches (GLM, GPT-3.5, GPT-4o) failed by attempting linear goal ordering.
+\textbf{Key findings} demonstrate that:
+\begin{itemize}
+    \item Layman (ambiguous) descriptions yield 2.35 times more distinct solvable schema sets than detailed expert descriptions (8039 vs.\ 3419 with 10 LLMs, no CP), reflecting diverse valid interpretations.
+    \item With 10 LLM instances, probability of generating at least one solvable schema set exceeds 95\%.
+    \item CP filtering reduces combinations to 3.3\% of original (1051/31,483) while increasing solvable ratio from 10.9\% to 23.0\%.
+    \item Human evaluators ranked pipeline-generated plans (mean 2.97) significantly higher than Tree-of-Thought baselines (3.58); gold standard ranked 1.79.
+    \item Pipeline successfully solved Sussman Anomaly (requiring interleaved subgoal handling); direct LLM approaches (GLM, GPT-3.5, GPT-4o) failed by attempting linear goal ordering.
+\end{itemize}
 
 \textbf{Relevance}: Huang et al.\ demonstrate that LLM diversity and semantic validation produce solvable PDDL schemas without expert intervention. Their pipeline validates schema feasibility via symbolic planners, ensuring coherence. We adapt this: rather than generating diverse schema libraries, we use iterative refinement with planner feedback to improve schema quality.
 
