@@ -1,4 +1,5 @@
 \chapter{Theoretical Background}
+\label{ch:background}
 
 This chapter establishes conceptual foundations and reviews prior work motivating this thesis. It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the seminal Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We emphasize the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
 
@@ -11,6 +12,7 @@ Throughout this chapter, we illustrate concepts using a running example: an NPC 
 \section{Core Concepts and Definitions}
 
 \subsection{Large Language Models (LLMs)}
+\label{subsec:llm}
 
 Large language models are neural networks trained on vast text corpora to generate text one word (or token) at a time. Given a prompt, an LLM predicts the most likely next word based on patterns learned during training. It repeats this process iteratively to produce multi-sentence responses, adapting its output to the context of the prompt and any specified instructions.
 
@@ -87,6 +89,7 @@ PDDL is valuable because it is explicit and verifiable: once a plan is generated
 \textbf{Relevance to LLMs}: LLMs are good at understanding natural language domain descriptions (e.g., ``a student must be enrolled in a course before attending its lecture'') and can be prompted to output PDDL predicates and action schemas. However, LLMs may produce syntactically valid PDDL that is semantically inconsistent or incomplete. For instance, an LLM might forget to include a precondition (e.g., neglecting that the café key is required to unlock the café door), leading to invalid plans. This motivates our approach: use the LLM to generate initial PDDL schemas from natural language, then validate and refine them using automated planning tools.
 
 \subsection{Agents and Believability}
+\label{subsec:agents-believability}
 
 \begin{definition}[Agent]
 \label{def:agent}
@@ -167,6 +170,7 @@ LLMs approximate hierarchical planning by proposing outlines, subgoals, and step
 Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive actions. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
 
 \subsection{Neuro-Symbolic Systems for Planning}
+\label{subsec:neuro-symbolic}
 
 Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic representations and reasoning to achieve both flexibility and guarantees \cite{garcezNeuralSymbolicComputingEffective2019, garcezNeurosymbolicAI3rd2020}. Common integration patterns:
 
