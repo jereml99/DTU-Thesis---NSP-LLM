@@ -109,10 +109,10 @@ Constraining agents with realistic physical and environmental limits increases p
 
 \begin{definition}[Coherence]
 \label{def:coherence}
-\emph{Coherence} is the causal and temporal consistency of behavior: whether actions are feasible, properly ordered, and do not contradict prior commitments or environmental constraints \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}.
+In the context of agent behavior, \emph{coherence} is the degree to which an action sequence respects domain constraints: preconditions are satisfied before each action, temporal and resource constraints are not violated, and the sequence does not contradict environmental invariants or prior commitments \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}. Formally, a sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$ is \emph{coherent with respect to a planning problem} $\langle S, A, T, I, G \rangle$ (from \cref{def:planning-problem}) if executing $\pi$ from the initial state(s) $I$ via the transition function $T$ neither violates action preconditions nor environmental invariants. In other words, a coherent action sequence corresponds to a valid plan (though not necessarily an optimal one, and independent of whether it reaches the goal state $G$).
 \end{definition}
 
-Coherence is operationalized through constraint adherence: satisfaction of action preconditions, absence of temporal overlaps, respect for resource limits, and compliance with environmental invariants.
+Operationally, coherence is enforced through constraint adherence: satisfaction of action preconditions, absence of temporal overlaps, respect for resource limits, and compliance with environmental invariants. While believability literature uses ``coherence'' informally to denote plausible behavior, in this thesis we use it in the stricter sense of constraint satisfaction validated by symbolic planning tools.
 
 \begin{example}[Coherence Violation]
 \label{ex:coherence-violation}
