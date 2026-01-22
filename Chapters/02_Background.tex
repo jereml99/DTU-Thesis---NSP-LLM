@@ -109,10 +109,10 @@ Constraining agents with realistic physical and environmental limits increases p
 
 \begin{definition}[Coherence]
 \label{def:coherence}
-\emph{Coherence} is the causal and temporal consistency of behavior: whether actions are feasible, properly ordered, and do not contradict prior commitments or environmental constraints \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}.
+In the context of agent behavior, \emph{coherence} is the degree to which an action sequence respects domain constraints: preconditions are satisfied before each action, temporal and resource constraints are not violated, and the sequence does not contradict environmental invariants or prior commitments \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}. Formally, a sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$ is \emph{coherent with respect to a planning problem} $\langle S, A, T, I, G \rangle$ (from \cref{def:planning-problem}) if executing $\pi$ from the initial state(s) $I$ via the transition function $T$ neither violates action preconditions nor environmental invariants. In other words, a coherent action sequence corresponds to a valid plan (though not necessarily an optimal one, and independent of whether it reaches the goal state $G$).
 \end{definition}
 
-Coherence is operationalized through constraint adherence: satisfaction of action preconditions, absence of temporal overlaps, respect for resource limits, and compliance with environmental invariants.
+Operationally, coherence is enforced through constraint adherence: satisfaction of action preconditions, absence of temporal overlaps, respect for resource limits, and compliance with environmental invariants. While believability literature uses ``coherence'' informally to denote plausible behavior, in this thesis we use it in the stricter sense of constraint satisfaction validated by symbolic planning tools.
 
 \begin{example}[Coherence Violation]
 \label{ex:coherence-violation}
@@ -131,7 +131,9 @@ While formal epistemic planning explicitly represents agents' beliefs \cite{Bola
 A detective agent immediately accuses the correct culprit. The accusation is coherent (fits the agent's role, doesn't violate timeline or resources) but epistemically implausible: the agent never observed the key evidence, and no belief update justifies such certainty. From a narrative perspective, the action appears believable; from a knowledge-tracking perspective, it breaks plausibility because the agent acts with unearned certainty.
 \end{example}
 
-We adopt the NPC perspective in which believability is the primary objective. We hypothesize that coherence---enforced through symbolic validation---is a necessary but not sufficient condition for believability. The proposed neuro-symbolic approach preserves expressive, context-aware behavior from large language models while eliminating logical inconsistencies that undermine perceived intentionality.
+We adopt the NPC perspective in which believability is the primary objective. While humans remain believable despite occasional planning mistakes, we hypothesize that in LLM-driven agents, *eliminating systematic incoherence*---via symbolic validation---meaningfully improves believability by reducing violations that are immediately recognizable as incoherent to observers. 
+
+For a character portrayed as cognitively sound, coherence boundaries are defined by what is physically or logically impossible versus what is merely implausible. A character has no reasonable justification for certain errors: cooking a meal before purchasing ingredients, or unlocking a door without possessing the key are physically or logically impossible actions. In contrast, more subtle mistakes (forgetting a prior commitment, miscalculating available time, submitting work that was not fully completed) are believable because they are mistakes a person of sound mind might plausibly make. These latter errors fall into a gray zone that observers can forgive or attribute to understandable human fallibility. However, in our system design, we choose not to tolerate plans that violate constraint satisfaction, even if such violations might be forgivable in certain contexts. Since our simulations span only one day, avoiding a single reality-breaking error that violates physical or logical laws is a worthwhile trade-off for preserving immersion, even if it means erring on the side of caution compared to human behavior. This strict interpretation of coherence is thus a pragmatic choice for our scope, and exploring the optimal balance between logical correctness and forgivable mistakes across longer simulations remains a direction for further work.
 
 \subsection{Symbolic Planning}
 
