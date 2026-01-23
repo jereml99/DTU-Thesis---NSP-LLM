@@ -5,7 +5,6 @@ This chapter establishes conceptual foundations and reviews prior work motivatin
 It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the seminal Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We emphasize the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
 
 \begin{example}[Running Example: Student NPC]
-    % Now when we have the actuall simulation let's just get one of our characters as running examople
     \label{ex:running-student}
     Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting temporal constraints (no overlapping commitments), location constraints (cannot be in two places simultaneously), % We mention temporal and location constrains several times but it's not at all a part of our thesis. (in our envirment agent cannot be in two places at once of do to things becous of game enginge)
     and environmental rules (must be enrolled in a course to attend its lectures).
@@ -21,7 +20,6 @@ Large language models are neural networks trained on vast text corpora to genera
 
 \begin{example}[LLM Input and Output]
     \label{ex:llm-example}
-    % Let's get example from our actuall experiments not make up one. right now we don't have a concept of feeling in our thesis 
     \textbf{Input prompt}: ``The student woke up late and missed the morning lecture. How might they feel?''
 
     \textbf{LLM output}: ``The student likely feels frustrated and disappointed. They might worry about missing important content and falling behind in the course. Depending on the course policies, they may also feel anxious about whether they can catch up or access lecture notes.''
@@ -33,18 +31,16 @@ Key capabilities of LLMs relevant to this work:
 \begin{itemize}
     \item \textbf{Instruction following}: Responding appropriately to natural language directives (e.g., ``format this as a list'', ``explain in simple terms'').
     \item \textbf{Few-shot learning}: Improving performance when given a few examples before a task.
-    \item \textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted. % maybe a litte bit more about this, or at least references to OpenAI structured output generatiopn. and othere items as well
+    \item \textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted.
 \end{itemize}
 
 However, LLMs have critical limitations:
-% References 
 \begin{itemize}
     \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs. % any referemces 
     \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories; older context may be lost or forgotten.
     \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory.
 \end{itemize}
 
-% We use the LLM on basicly every step, so for the validation pipeline and also for condition checking at beginning of an action, so the bellows is outdated
 For this thesis, the critical use of LLMs is to generate formal planning specifications and decompose high-level goals into concrete action sequences—tasks where their fluency and commonsense are valuable, but where their lack of formal correctness must be constrained by external validation.
 
 \subsection{Planning and PDDL}
@@ -67,7 +63,6 @@ To ground our approach, we introduce the formal language used to specify plannin
 
 \begin{example}[Student Scheduling Domain in PDDL]
     \label{ex:student-pddl}
-    % good example but maybe sth closser to our experiments. also we mix here formal language and natural language a bit too much
     Consider scheduling a student for our running example. A simplified domain might define:
 
     \textbf{Predicates}:
@@ -86,16 +81,13 @@ To ground our approach, we introduce the formal language used to specify plannin
               \end{itemize}
     \end{itemize}
 
-    % Let's get formal example 
     \textbf{Problem instance}: The student is initially at home, enrolled in two courses (Math and History), and has no assignments completed. The goal is for the student to attend both lectures and complete one assignment by noon.
 
-    % insted of solver let's write about the validatior here 
     A PDDL solver (an automated planner) takes this domain and problem as input and produces a sequence of actions (a plan) that starts in the initial state and reaches the goal. The solver guarantees that all preconditions are satisfied before each action executes, and that temporal and resource constraints (if specified) are respected.
 \end{example}
 
 PDDL is valuable because it is explicit and verifiable: once a plan is generated, anyone (or any algorithm) can check that each step's preconditions are met and that contradictions are absent.
 
-% REFERENCES 
 \textbf{Relevance to LLMs}: LLMs are good at understanding natural language domain descriptions (e.g., ``a student must be enrolled in a course before attending its lecture'') and can be prompted to output PDDL predicates and action schemas. % references
 However, LLMs may produce syntactically valid PDDL that is semantically inconsistent or incomplete. For instance, an LLM might forget to include a precondition (e.g., neglecting that the café key is required to unlock the café door), leading to invalid plans. This motivates our approach: use the LLM to generate initial PDDL schemas from natural language, then validate and refine them using automated planning tools. % It sound vouge 
 
@@ -121,7 +113,6 @@ are grounded in observable, familiar reality. However, this alignment is conting
 Constraining agents with realistic physical and environmental limits increases perceived believability by reducing violations known to break immersion, such as impossible actions or logically inconsistent plans \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Park et al.\ showed that LLM-driven agents with memory, reflection, and planning were rated more believable than human crowdworkers role-playing agents in controlled evaluations. The crowdworker baseline was given access to each agent's full memory stream and simulated behavior, yet LLM-driven agents still significantly outperformed this human-authored comparison \cite{parkGenerativeAgentsInteractive2023a}. Xiao et al.\ propose metrics such as Consistency and Robustness for agent simulations based on character profiles \cite{xiaoHowFarAre2024}.
 
 \begin{definition}[Coherence]
-    % we don't really focus on this kind of coherence in our thesis
     \label{def:coherence}
     In the context of agent behavior, \emph{coherence} is the degree to which an action sequence respects domain constraints: preconditions are satisfied before each action, temporal and resource constraints are not violated, and the sequence does not contradict environmental invariants or prior commitments \cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}. Formally, a sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$ is \emph{coherent with respect to a planning problem} $\langle S, A, T, I, G \rangle$ (from \cref{def:planning-problem}) if executing $\pi$ from the initial state(s) $I$ via the transition function $T$ neither violates action preconditions nor environmental invariants. In other words, a coherent action sequence corresponds to a valid plan (though not necessarily an optimal one, and independent of whether it reaches the goal state $G$).
 \end{definition}
@@ -133,7 +124,7 @@ Operationally, coherence is enforced through constraint adherence: satisfaction 
     In our running example (\cref{ex:running-student}), a coherent agent must not schedule overlapping commitments (e.g., attending two simultaneous classes) or attempt impossible actions (e.g., submitting an assignment before completing it). A purely LLM-based planner might generate ``attend lecture at 10:00'' and ``work café shift 09:00 to 12:00'' without detecting the temporal conflict.
 \end{example}
 
-% Epistemic plasuability also seems out of tuch with what we actually did in our thesis. Also it's kind of filled with asslicking to thomas don't you think so?
+
 \begin{definition}[Epistemic Plausibility]
     \label{def:epistemic-plausibility}
     \emph{Epistemic plausibility} is the consistency of an agent's actions with what it could reasonably know or believe given its observations and prior experience.
@@ -150,7 +141,6 @@ We adopt the NPC perspective in which believability is the primary objective. Wh
 
 For a character portrayed as cognitively sound, coherence boundaries are defined by what is physically or logically impossible versus what is merely implausible. A character has no reasonable justification for certain errors: cooking a meal before purchasing ingredients, or unlocking a door without possessing the key are physically or logically impossible actions. In contrast, more subtle mistakes (forgetting a prior commitment, miscalculating available time, submitting work that was not fully completed) are believable because they are mistakes a person of sound mind might plausibly make. These latter errors fall into a gray zone that observers can forgive or attribute to understandable human fallibility. However, in our system design, we choose not to tolerate plans that violate constraint satisfaction, even if such violations might be forgivable in certain contexts. Since our simulations span only one day, avoiding a single reality-breaking error that violates physical or logical laws is a worthwhile trade-off for preserving immersion, even if it means erring on the side of caution compared to human behavior. This strict interpretation of coherence is thus a pragmatic choice for our scope, and exploring the optimal balance between logical correctness and forgivable mistakes across longer simulations remains a direction for further work.
 
-% Again it would be probably better to focus on the validator 
 \subsection{Symbolic Planning}
 
 Symbolic planning uses explicit, compositional representations to algorithmically search for valid plans \cite{fikesStripsNewApproach1971, mcdermottPDDLPlanningDomain1998}. Key strengths:

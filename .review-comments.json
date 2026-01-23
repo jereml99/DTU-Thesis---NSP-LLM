@@ -232,6 +232,441 @@
           "body": "% seems good now but let's refin at the end"
         }
       ]
+    },
+    {
+      "id": "5862cbbb-4d6f-4896-b7ec-b1c5faea22e0",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 301,
+        "endOffset": 308,
+        "selectedText": "seminal",
+        "prefixContext": "LLM-driven generative agents with emphasis on the ",
+        "suffixContext": " Generative Agents paper \\cite{parkGenerativeAgent",
+        "originalRange": {
+          "startLine": 5,
+          "startCharacter": 59,
+          "endLine": 5,
+          "endCharacter": 66
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:15:49.911Z",
+      "updatedAt": "2026-01-23T11:15:49.911Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "490d8016-d1ae-490a-8f72-a5246b101af0",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:15:49.911Z",
+          "body": "%would anybody ever use this word? "
+        }
+      ]
+    },
+    {
+      "id": "e0661558-4f4c-46ed-beeb-dd15e16d24eb",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 704,
+        "endOffset": 1537,
+        "selectedText": "\\begin{example}[Running Example: Student NPC]\n    \\label{ex:running-student}\n    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting temporal constraints (no overlapping commitments), location constraints (cannot be in two places simultaneously), % We mention temporal and location constrains several times but it's not at all a part of our thesis. (in our envirment agent cannot be in two places at once of do to things becous of game enginge)\n    and environmental rules (must be enrolled in a course to attend its lectures).\n\\end{example}",
+        "prefixContext": " (human-perceived realism) in LLM-driven agents.\n\n",
+        "suffixContext": "\n\n\n\\section{Core Concepts and Definitions}\n\n\\subse",
+        "originalRange": {
+          "startLine": 6,
+          "startCharacter": 0,
+          "endLine": 10,
+          "endCharacter": 13
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:17:05.052Z",
+      "updatedAt": "2026-01-23T11:17:05.052Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "5298234d-ba46-4056-a978-69d5fae27ef6",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:17:05.052Z",
+          "body": "    % Now when we have the actuall simulation let's just get one of our characters as running examople"
+        }
+      ]
+    },
+    {
+      "id": "25759f7f-7712-4e42-9e8f-9a7ceed5f4c1",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 2083,
+        "endOffset": 2192,
+        "selectedText": "    \\textbf{Input prompt}: ``The student woke up late and missed the morning lecture. How might they feel?''\n",
+        "prefixContext": "[LLM Input and Output]\n    \\label{ex:llm-example}\n",
+        "suffixContext": "\n    \\textbf{LLM output}: ``The student likely fee",
+        "originalRange": {
+          "startLine": 22,
+          "startCharacter": 0,
+          "endLine": 23,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:17:26.737Z",
+      "updatedAt": "2026-01-23T11:17:26.737Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "aecfd8e7-aa32-40eb-b160-e5efdcc2b594",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:17:26.737Z",
+          "body": "    % Let's get example from our actuall experiments not make up one. right now we don't have a concept of feeling in our thesis "
+        }
+      ]
+    },
+    {
+      "id": "9531b562-664f-415b-b093-3d0c6238396a",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 3068,
+        "endOffset": 3188,
+        "selectedText": "\\item \\textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted.",
+        "prefixContext": "ance when given a few examples before a task.\n    ",
+        "suffixContext": "\n\\end{itemize}\n\nHowever, LLMs have critical limita",
+        "originalRange": {
+          "startLine": 33,
+          "startCharacter": 4,
+          "endLine": 33,
+          "endCharacter": 124
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:18:06.336Z",
+      "updatedAt": "2026-01-23T11:18:06.336Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "1d3856be-941f-4d8f-a96a-cb29016a9dfc",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:18:06.336Z",
+          "body": " % maybe a litte bit more about this, or at least references to OpenAI structured output generatiopn. and othere items as well"
+        }
+      ]
+    },
+    {
+      "id": "1784da58-56df-4a68-a058-ab288a642596",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 3261,
+        "endOffset": 3733,
+        "selectedText": "    \\item \\textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs. % any referemces \n    \\item \\textbf{Context window limits}: They cannot retain information from arbitrarily long histories; older context may be lost or forgotten.\n    \\item \\textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory.",
+        "prefixContext": ", LLMs have critical limitations:\n\\begin{itemize}\n",
+        "suffixContext": "\n\\end{itemize}\n\n% We use the LLM on basicly every ",
+        "originalRange": {
+          "startLine": 38,
+          "startCharacter": 0,
+          "endLine": 40,
+          "endCharacter": 131
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:18:27.424Z",
+      "updatedAt": "2026-01-23T11:18:27.424Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "6cee92a8-30b0-4451-8c50-3c61492c73e9",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:18:27.424Z",
+          "body": "% References "
+        }
+      ]
+    },
+    {
+      "id": "7c67d400-c676-47b6-a126-13625bd6955a",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 3749,
+        "endOffset": 4042,
+        "selectedText": "For this thesis, the critical use of LLMs is to generate formal planning specifications and decompose high-level goals into concrete action sequences—tasks where their fluency and commonsense are valuable, but where their lack of formal correctness must be constrained by external validation.\n",
+        "prefixContext": "the actual domain or agent memory.\n\\end{itemize}\n\n",
+        "suffixContext": "\n\\subsection{Planning and PDDL}\n\nTo ground our app",
+        "originalRange": {
+          "startLine": 43,
+          "startCharacter": 0,
+          "endLine": 44,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:18:43.331Z",
+      "updatedAt": "2026-01-23T11:18:43.331Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "0618cf9a-b296-4f8c-a5b1-0d639f6016b3",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:18:43.331Z",
+          "body": "% We use the LLM on basicly every step, so for the validation pipeline and also for condition checking at beginning of an action, so the bellows is outdated"
+        }
+      ]
+    },
+    {
+      "id": "0197840e-d222-4b83-a5c4-1153ec32ff36",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 5607,
+        "endOffset": 6572,
+        "selectedText": "    Consider scheduling a student for our running example. A simplified domain might define:\n\n    \\textbf{Predicates}:\n    \\begin{itemize}\n        \\item \\texttt{(enrolled ?s - student ?c - course)}: student $s$ is enrolled in course $c$.\n        \\item \\texttt{(at-location ?s - student ?l - location)}: student $s$ is at location $l$.\n        \\item \\texttt{(completed ?s - student ?a - assignment)}: student $s$ has completed assignment $a$.\n    \\end{itemize}\n\n    \\textbf{Action schema} (simplified):\n    \\begin{itemize}\n        \\item \\texttt{attend-lecture}(?s - student, ?c - course, ?t - time):\n              \\begin{itemize}\n                  \\item Preconditions: student must be enrolled in the course, the lecture must be scheduled at time $t$, the student must be at the lecture hall location.\n                  \\item Effects: the student is now at the lecture hall, the student has learned the lecture content.\n              \\end{itemize}\n    \\end{itemize}\n",
+        "prefixContext": "uling Domain in PDDL]\n    \\label{ex:student-pddl}\n",
+        "suffixContext": "\n    % Let's get formal example \n    \\textbf{Probl",
+        "originalRange": {
+          "startLine": 65,
+          "startCharacter": 0,
+          "endLine": 82,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:19:13.613Z",
+      "updatedAt": "2026-01-23T11:19:13.613Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "c4dbbb62-ebe8-4247-a14b-e16d73d69c24",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:19:13.613Z",
+          "body": "    % good example but maybe sth closser to our experiments. also we mix here formal language and natural language a bit too much"
+        }
+      ]
+    },
+    {
+      "id": "a4c295c8-49d4-46c6-87d5-e8a57f32a5c4",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 6573,
+        "endOffset": 6805,
+        "selectedText": "    \\textbf{Problem instance}: The student is initially at home, enrolled in two courses (Math and History), and has no assignments completed. The goal is for the student to attend both lectures and complete one assignment by noon.\n",
+        "prefixContext": "t.\n              \\end{itemize}\n    \\end{itemize}\n\n",
+        "suffixContext": "\n    % insted of solver let's write about the vali",
+        "originalRange": {
+          "startLine": 83,
+          "startCharacter": 0,
+          "endLine": 84,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:19:34.345Z",
+      "updatedAt": "2026-01-23T11:19:34.345Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "6a6520ad-8c68-41f9-88ad-01c2f397390c",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:19:34.345Z",
+          "body": "    % Let's get formal example "
+        }
+      ]
+    },
+    {
+      "id": "3827da4e-61d1-4826-a0a9-797e4e4ec247",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 6806,
+        "endOffset": 7146,
+        "selectedText": "    A PDDL solver (an automated planner) takes this domain and problem as input and produces a sequence of actions (a plan) that starts in the initial state and reaches the goal. The solver guarantees that all preconditions are satisfied before each action executes, and that temporal and resource constraints (if specified) are respected.\n",
+        "prefixContext": "th lectures and complete one assignment by noon.\n\n",
+        "suffixContext": "\\end{example}\n\nPDDL is valuable because it is expl",
+        "originalRange": {
+          "startLine": 85,
+          "startCharacter": 0,
+          "endLine": 86,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:19:47.390Z",
+      "updatedAt": "2026-01-23T11:19:47.390Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "7733d64d-694d-4299-9e8f-12f383f84a78",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:19:47.390Z",
+          "body": "    % insted of solver let's write about the validatior here "
+        }
+      ]
+    },
+    {
+      "id": "0609379d-44c7-425c-a955-d9c74a2e0d8c",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 7356,
+        "endOffset": 8047,
+        "selectedText": "textbf{Relevance to LLMs}: LLMs are good at understanding natural language domain descriptions (e.g., ``a student must be enrolled in a course before attending its lecture'') and can be prompted to output PDDL predicates and action schemas. % references\nHowever, LLMs may produce syntactically valid PDDL that is semantically inconsistent or incomplete. For instance, an LLM might forget to include a precondition (e.g., neglecting that the café key is required to unlock the café door), leading to invalid plans. This motivates our approach: use the LLM to generate initial PDDL schemas from natural language, then validate and refine them using automated planning tools. % It sound vouge \n",
+        "prefixContext": "ons are met and that contradictions are absent.\n\n\\",
+        "suffixContext": "\n\\subsection{Agents and Believability}\n\\label{subs",
+        "originalRange": {
+          "startLine": 90,
+          "startCharacter": 1,
+          "endLine": 92,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:20:03.510Z",
+      "updatedAt": "2026-01-23T11:20:03.510Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "0012b886-32fd-4f89-a98e-76fafe567357",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:20:03.510Z",
+          "body": "% REFERENCES "
+        }
+      ]
+    },
+    {
+      "id": "789028ff-f736-49f1-a9ab-1e717e0c8db7",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 11430,
+        "endOffset": 11482,
+        "selectedText": " temporal and resource constraints are not violated,",
+        "prefixContext": "s: preconditions are satisfied before each action,",
+        "suffixContext": " and the sequence does not contradict environmenta",
+        "originalRange": {
+          "startLine": 116,
+          "startCharacter": 173,
+          "endLine": 116,
+          "endCharacter": 225
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:20:46.648Z",
+      "updatedAt": "2026-01-23T11:20:46.648Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "857f45d9-843f-4597-a2b1-5fabb6a75b48",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:20:46.648Z",
+          "body": "    % we don't really focus on this kind of coherence in our thesis"
+        }
+      ]
+    },
+    {
+      "id": "f5929c04-4a02-41f9-8e49-00e15547d4aa",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 12281,
+        "endOffset": 12354,
+        "selectedText": "bsence of temporal overlaps, respect for resource limits, and compliance ",
+        "prefixContext": "adherence: satisfaction of action preconditions, a",
+        "suffixContext": "with environmental invariants. While believability",
+        "originalRange": {
+          "startLine": 119,
+          "startCharacter": 106,
+          "endLine": 119,
+          "endCharacter": 179
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:21:24.682Z",
+      "updatedAt": "2026-01-23T11:21:24.682Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "b7951f8a-906a-4bb8-a25d-f854981358c2",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:21:24.682Z",
+          "body": "    % we don't really focus on this kind of coherence in our thesis"
+        }
+      ]
+    },
+    {
+      "id": "e2357836-4336-4af2-aeef-9f15e3c345cd",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 12718,
+        "endOffset": 12818,
+        "selectedText": " coherent agent must not schedule overlapping commitments (e.g., attending two simultaneous classes)",
+        "prefixContext": "our running example (\\cref{ex:running-student}), a",
+        "suffixContext": " or attempt impossible actions (e.g., submitting a",
+        "originalRange": {
+          "startLine": 123,
+          "startCharacter": 57,
+          "endLine": 123,
+          "endCharacter": 157
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:21:56.564Z",
+      "updatedAt": "2026-01-23T11:21:56.564Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "b64ba6e2-7835-4928-9e7d-bdd3469a4149",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:21:56.564Z",
+          "body": "    % we don't really focus on this kind of coherence in our thesis"
+        }
+      ]
+    },
+    {
+      "id": "706a0901-61ba-4c26-ae0a-02c5fa125055",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 13070,
+        "endOffset": 13112,
+        "selectedText": "\\begin{definition}[Epistemic Plausibility]",
+        "prefixContext": " detecting the temporal conflict.\n\\end{example}\n\n\n",
+        "suffixContext": "\n    \\label{def:epistemic-plausibility}\n    \\emph{",
+        "originalRange": {
+          "startLine": 127,
+          "startCharacter": 0,
+          "endLine": 127,
+          "endCharacter": 42
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:22:13.799Z",
+      "updatedAt": "2026-01-23T11:22:13.799Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "9be44f58-923d-4962-95c1-d6b4433fd033",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:22:13.799Z",
+          "body": "% Epistemic plasuability also seems out of tuch with what we actually did in our thesis. Also it's kind of filled with asslicking to thomas don't you think so?"
+        }
+      ]
+    },
+    {
+      "id": "8261f97a-677a-4984-a74d-70f2ab80ba04",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 16381,
+        "endOffset": 16412,
+        "selectedText": "\\subsection{Symbolic Planning}\n",
+        "prefixContext": "imulations remains a direction for further work.\n\n",
+        "suffixContext": "\nSymbolic planning uses explicit, compositional re",
+        "originalRange": {
+          "startLine": 143,
+          "startCharacter": 0,
+          "endLine": 144,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:23:01.074Z",
+      "updatedAt": "2026-01-23T11:23:01.074Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "6e17c282-5c18-490a-8d96-7b1aca98f051",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:23:01.074Z",
+          "body": "% Again it would be probably better to focus on the validator "
+        }
+      ]
     }
   ]
 }
