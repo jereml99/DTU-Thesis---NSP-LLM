@@ -1392,6 +1392,93 @@
           "body": "Yeach let's maybe just delete this one "
         }
       ]
+    },
+    {
+      "id": "284ef277-cd3d-4cf1-8c01-b7757eb8a5cf",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 11661,
+        "endOffset": 11844,
+        "selectedText": "\\subsection{Ethics}\n\\label{subsec:ethics}\n\nThe study involves minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.\n",
+        "prefixContext": "gister exclusion rules prior to data collection.\n\n",
+        "suffixContext": "",
+        "originalRange": {
+          "startLine": 173,
+          "startCharacter": 0,
+          "endLine": 177,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T16:04:27.658Z",
+      "updatedAt": "2026-01-23T16:04:27.658Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "952f78cf-baed-4291-bf38-e91d5bda5e22",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T16:04:27.658Z",
+          "body": "Do we need that?"
+        }
+      ]
+    },
+    {
+      "id": "51cbfcf4-251d-421f-87a5-5991a9e9cbfb",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 4544,
+        "endOffset": 5090,
+        "selectedText": "\n[To be completed: automated evaluation comparing the hierarchical planning baseline against our validator-augmented system. The validator will automatically detect and flag constraint violations such as attempting to use items that are not available, scheduling overlapping activities, violating location constraints, or executing actions whose preconditions are not satisfied. Metrics will include violation counts at day-level and action-level, violation rates per 100 actions, and success rates after optional validator-guided repair rounds.]",
+        "prefixContext": "ion Analysis}\n\\label{sec:quantitative-evaluation}\n",
+        "suffixContext": "\n\n\\section{User Study: Believability Evaluation}\n\\",
+        "originalRange": {
+          "startLine": 72,
+          "startCharacter": 0,
+          "endLine": 73,
+          "endCharacter": 545
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T16:05:10.921Z",
+      "updatedAt": "2026-01-23T16:05:10.921Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "f39ce391-afba-4361-8792-db58de9f0146",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T16:05:10.921Z",
+          "body": "We didn't realy do this"
+        }
+      ]
+    },
+    {
+      "id": "f7022950-6f4d-425b-8f04-f383f473db9e",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 2990,
+        "endOffset": 3363,
+        "selectedText": "\\begin{figure}[H]\n\\centering\n\\includegraphics[width=\\textwidth]{Pictures/Our_improvements.png}\n\\caption{Neuro-symbolic planning pipeline showing the three-stage LLM-propose/symbolic-validate framework. The pipeline integrates task generation, action decomposition, and PDDL schema validation with iterative repair feedback.}\n\\label{fig:neuro-symbolic-pipeline}\n\\end{figure}",
+        "prefixContext": " subject to changes after final implementation]}\n\n",
+        "suffixContext": "\n\nWe implement a three-stage LLM-propose/symbolic-",
+        "originalRange": {
+          "startLine": 53,
+          "startCharacter": 0,
+          "endLine": 58,
+          "endCharacter": 12
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T16:07:57.410Z",
+      "updatedAt": "2026-01-23T16:07:57.410Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "2ce2ffce-dfb9-4ec9-8740-06b112e957a8",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T16:07:57.410Z",
+          "body": "To be replaced"
+        }
+      ]
     }
   ]
 }
