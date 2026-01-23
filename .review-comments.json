@@ -667,6 +667,238 @@
           "body": "% Again it would be probably better to focus on the validator "
         }
       ]
+    },
+    {
+      "id": "0a4d0ccc-a0c3-492a-a840-9456922210fa",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 7610,
+        "endOffset": 7770,
+        "selectedText": "However, LLMs may produce syntactically valid PDDL that is semantically inconsistent or incomplete. For instance, an LLM might forget to include a precondition ",
+        "prefixContext": " PDDL predicates and action schemas. % references\n",
+        "suffixContext": "(e.g., neglecting that the café key is required to",
+        "originalRange": {
+          "startLine": 91,
+          "startCharacter": 0,
+          "endLine": 91,
+          "endCharacter": 160
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:46:14.271Z",
+      "updatedAt": "2026-01-23T11:46:14.271Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "0ad2f705-e84a-4faf-9c20-f81e8454ab77",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:46:14.271Z",
+          "body": "% It sound vouge "
+        }
+      ]
+    },
+    {
+      "id": "401fda31-a8a6-426a-8c8e-fac184671dec",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 9807,
+        "endOffset": 9874,
+        "selectedText": "student behaviors (attending lectures, working shifts, socializing)",
+        "prefixContext": "ural alignment between believability and realism: ",
+        "suffixContext": "\n\nare grounded in observable, familiar reality. Ho",
+        "originalRange": {
+          "startLine": 108,
+          "startCharacter": 673,
+          "endLine": 108,
+          "endCharacter": 740
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:50:14.517Z",
+      "updatedAt": "2026-01-23T11:50:14.517Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "f20bbc61-2e2f-4be1-87de-49217e3ed44d",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:50:14.517Z",
+          "body": "% Again let's add a example from our experiments"
+        }
+      ]
+    },
+    {
+      "id": "3b11f681-1148-4b2c-b85b-9ac6c281bb4b",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 9876,
+        "endOffset": 10296,
+        "selectedText": "are grounded in observable, familiar reality. However, this alignment is contingent on context; the goal remains observer acceptance and perceived intentionality, not psychological accuracy. If an agent's actions respect temporal and causal constraints while being consistent with its apparent goals and knowledge, observers will find it believable, even if its internal reasoning mechanisms are simplified or heuristic.",
+        "prefixContext": "attending lectures, working shifts, socializing)\n\n",
+        "suffixContext": "\n\nConstraining agents with realistic physical and ",
+        "originalRange": {
+          "startLine": 110,
+          "startCharacter": 0,
+          "endLine": 110,
+          "endCharacter": 420
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:50:41.115Z",
+      "updatedAt": "2026-01-23T11:50:41.115Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "14a6db80-f72a-42e4-8e5a-7e9fb6a81f00",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:50:41.115Z",
+          "body": "Seems quite lenghty"
+        }
+      ]
+    },
+    {
+      "id": "ef8c61fa-30a9-43d4-a702-49eccbe8518b",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 12291,
+        "endOffset": 12315,
+        "selectedText": "environmental invariants",
+        "prefixContext": " respect for resource limits, and compliance with ",
+        "suffixContext": ". While believability literature uses ``coherence'",
+        "originalRange": {
+          "startLine": 119,
+          "startCharacter": 184,
+          "endLine": 119,
+          "endCharacter": 208
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:52:56.454Z",
+      "updatedAt": "2026-01-23T11:52:56.454Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "a4f2ee4e-b1bf-4d8f-9444-255c560f82b8",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:52:56.454Z",
+          "body": "What is actually environmental invariant?"
+        }
+      ]
+    },
+    {
+      "id": "b36b98fb-d284-439d-9cc7-61321db64b8f",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 13267,
+        "endOffset": 14020,
+        "selectedText": "\nWhile formal epistemic planning explicitly represents agents' beliefs \\cite{Bolander_2017}, such approaches typically assume a closed and fully specified domain with a finite set of actions and observability conditions \\cite{bolanderEpistemicPlanning2011}. In contrast, open-world systems with natural-language action spaces, such as LLM-driven agents, cannot feasibly maintain complete epistemic state tracking. Thus, epistemic plausibility is not tractable as a system-level enforcement objective in this work. However, improving coherence reduces certain epistemic violations: actions respecting environmental and causal constraints are less likely to presuppose unreasonable or unobserved information, indirectly supporting perceived believability.",
+        "prefixContext": "servations and prior experience.\n\\end{definition}\n",
+        "suffixContext": "\n\n\\begin{example}[Coherent but Epistemically Impla",
+        "originalRange": {
+          "startLine": 131,
+          "startCharacter": 0,
+          "endLine": 132,
+          "endCharacter": 752
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:56:38.910Z",
+      "updatedAt": "2026-01-23T11:56:38.910Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "f5911f72-4745-4df7-abae-2f8a8b8d4dc8",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:56:38.910Z",
+          "body": "We Have here a lot of statments that we don't realy back by any study "
+        }
+      ]
+    },
+    {
+      "id": "37525c77-d359-4c88-bcc8-38e7cd15d638",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 14022,
+        "endOffset": 16311,
+        "selectedText": "\\begin{example}[Coherent but Epistemically Implausible]\n    \\label{ex:epistemic-implausible}\n    A detective agent immediately accuses the correct culprit. The accusation is coherent (fits the agent's role, doesn't violate timeline or resources) but epistemically implausible: the agent never observed the key evidence, and no belief update justifies such certainty. From a narrative perspective, the action appears believable; from a knowledge-tracking perspective, it breaks plausibility because the agent acts with unearned certainty.\n\\end{example}\n\nWe adopt the NPC perspective in which believability is the primary objective. While humans remain believable despite occasional planning mistakes, we hypothesize that in LLM-driven agents, *eliminating systematic incoherence*---via symbolic validation---meaningfully improves believability by reducing violations that are immediately recognizable as incoherent to observers.\n\nFor a character portrayed as cognitively sound, coherence boundaries are defined by what is physically or logically impossible versus what is merely implausible. A character has no reasonable justification for certain errors: cooking a meal before purchasing ingredients, or unlocking a door without possessing the key are physically or logically impossible actions. In contrast, more subtle mistakes (forgetting a prior commitment, miscalculating available time, submitting work that was not fully completed) are believable because they are mistakes a person of sound mind might plausibly make. These latter errors fall into a gray zone that observers can forgive or attribute to understandable human fallibility. However, in our system design, we choose not to tolerate plans that violate constraint satisfaction, even if such violations might be forgivable in certain contexts. Since our simulations span only one day, avoiding a single reality-breaking error that violates physical or logical laws is a worthwhile trade-off for preserving immersion, even if it means erring on the side of caution compared to human behavior. This strict interpretation of coherence is thus a pragmatic choice for our scope, and exploring the optimal balance between logical correctness and forgivable mistakes across longer simulations remains a direction for further work.",
+        "prefixContext": ", indirectly supporting perceived believability.\n\n",
+        "suffixContext": "\n\n\\subsection{Symbolic Planning}\n\nSymbolic plannin",
+        "originalRange": {
+          "startLine": 134,
+          "startCharacter": 0,
+          "endLine": 141,
+          "endCharacter": 1360
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T12:00:27.286Z",
+      "updatedAt": "2026-01-23T12:00:27.286Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "c8c06899-a00e-4c39-af95-f13f53b781d0",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T12:00:27.286Z",
+          "body": "This paragraph seems to not add additional value, We should delete it if we run out of space"
+        }
+      ]
+    },
+    {
+      "id": "a52fc2f3-dac2-4d2e-a309-d6e9d425e99e",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 1201,
+        "endOffset": 1242,
+        "selectedText": "(cannot be in two places simultaneously),",
+        "prefixContext": "no overlapping commitments), location constraints ",
+        "suffixContext": "\n    and environmental rules (must be enrolled in ",
+        "originalRange": {
+          "startLine": 8,
+          "startCharacter": 420,
+          "endLine": 8,
+          "endCharacter": 461
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T12:06:57.200Z",
+      "updatedAt": "2026-01-23T12:06:57.200Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "5b47e51a-2a29-4f13-8117-475d2564b20f",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T12:06:57.200Z",
+          "body": " % We mention temporal and location constrains several times but it's not at all a part of our thesis. (in our envirment agent cannot be in two places at once of do to things becous of game enginge)"
+        }
+      ]
+    },
+    {
+      "id": "5dfd36b4-0cb8-4b12-bc58-2a873ada557a",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 7332,
+        "endOffset": 7398,
+        "selectedText": " and can be prompted to output PDDL predicates and action schemas.",
+        "prefixContext": "rolled in a course before attending its lecture'')",
+        "suffixContext": "\nHowever, LLMs may produce syntactically valid PDD",
+        "originalRange": {
+          "startLine": 90,
+          "startCharacter": 175,
+          "endLine": 90,
+          "endCharacter": 241
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T12:09:11.929Z",
+      "updatedAt": "2026-01-23T12:09:11.929Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "d7007ffa-f4c2-45ee-9b8d-555e15940cd5",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T12:09:11.929Z",
+          "body": " % references"
+        }
+      ]
     }
   ]
 }
