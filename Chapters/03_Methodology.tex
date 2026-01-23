@@ -44,19 +44,38 @@ The implementation transforms the original monolithic Generative Agents codebase
     \label{fig:code-structure-architecture-after}
 \end{figure}
 
+\subsection{Long-term planning}
 
+\subsubsection{Daily planning}
+\subsubsection{Task decomposition}
+
+\subsection{Movement}
 
 
 \subsection{Neuro-Symbolic Planning Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-\textbf{[section is subject to changes after final implementation]}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Pictures/Our_improvements.png}
-    \caption{Neuro-symbolic planning pipeline showing the three-stage LLM-propose/symbolic-validate framework. The pipeline integrates task generation, action decomposition, and PDDL schema validation with iterative repair feedback.}
-    \label{fig:neuro-symbolic-pipeline}
-\end{figure}
+
+
+\subsubsection{Domain generation}
+
+\paragraph{Natural language precondition and effect generation}
+\paragraph{Predicates generation}
+\paragraph{PDDL Action schema generation }
+\paragraph{Validation with VAL and repair}
+\subsubsection{Problem generation}
+\subsubsection{Plan generation programmatic}
+\subsubsection{VAL analysis}
+\subsubsection{LLM feedback}
+\subsubsection{Replan goal}
+\subsubsection{Replan}
+
+\section{NL Condition Validation}
+\subsection{At beginning of the action check all based on the world NL condition}
+\subsubsection{Satisfied}
+\subsubsection{Not satisfied}
+\subsection{Replan Goal}
+\subsection{Replan next 2h}
 
 
 
