@@ -91,7 +91,7 @@
   "latex-workshop.intellisense.citation.backend": "biblatex",
   "latex-workshop.intellisense.package.enabled": true,
   // Formatting
-  "latex-workshop.formatting.latex": "none",
+  "latex-workshop.formatting.latex": "latexindent",
   // SyncTeX for jumping between source and PDF
   "latex-workshop.synctex.afterBuild.enabled": true,
   // Root file detection
