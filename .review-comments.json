@@ -1394,6 +1394,35 @@
       ]
     },
     {
+      "id": "767f82ef-426a-4447-91b7-ec60c266a8ce",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 4883,
+        "endOffset": 5311,
+        "selectedText": "    \\begin{enumerate}\n        \\item \\textbf{Domain}: Defines predicates (facts that can be true or false) and action schemas (named actions with preconditions—facts required before execution—and effects—facts that change when the action runs).\n        \\item \\textbf{Problem}: Specifies objects, the initial state (which facts are true at the start), and goal conditions (which facts must be true at the end).\n    \\end{enumerate}",
+        "prefixContext": "gTheory2004}. A PDDL specification has two parts:\n",
+        "suffixContext": "\n\\end{definition}\n\n\\begin{example}[Student Schedul",
+        "originalRange": {
+          "startLine": 57,
+          "startCharacter": 0,
+          "endLine": 60,
+          "endCharacter": 19
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T16:54:58.593Z",
+      "updatedAt": "2026-01-23T16:54:58.593Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "96990853-2939-4472-b641-68af5b3bf9c7",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T16:54:58.594Z",
+          "body": "We should spend more describing this one, Genereting the domain and problem in core of our thesis, and I will be going probably quite in detail about it in the methodology"
+        }
+      ]
+    },
+    {
       "id": "284ef277-cd3d-4cf1-8c01-b7757eb8a5cf",
       "filePath": "Chapters/03_Methodology.tex",
       "anchor": {
@@ -1477,6 +1506,35 @@
           "author": "jeremi",
           "createdAt": "2026-01-23T16:13:55.460Z",
           "body": "To be replaced"
+        }
+      ]
+    },
+    {
+      "id": "bd578ac1-e831-4710-ae76-a7906e5b7b18",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 3142,
+        "endOffset": 3160,
+        "selectedText": "[TODO add example]",
+        "prefixContext": "f actions generated as part of task decomposition ",
+        "suffixContext": "\n\n\n\n\\subsubsection{Domain generation}\n\n\\paragraph{",
+        "originalRange": {
+          "startLine": 56,
+          "startCharacter": 143,
+          "endLine": 56,
+          "endCharacter": 161
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T16:47:48.509Z",
+      "updatedAt": "2026-01-23T16:48:15.513Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "b701f4b9-95be-42c1-a32a-ba1f330b02e1",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T16:47:48.509Z",
+          "body": "task decomposition example"
         }
       ]
     }

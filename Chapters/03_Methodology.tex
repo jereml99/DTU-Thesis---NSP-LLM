@@ -44,6 +44,8 @@ The implementation transforms the original monolithic Generative Agents codebase
     \label{fig:code-structure-architecture-after}
 \end{figure}
 
+\subsection{Prompt templetes}
+
 \subsection{Long-term planning}
 
 \subsubsection{Daily planning}
@@ -52,30 +54,65 @@ The implementation transforms the original monolithic Generative Agents codebase
 \subsection{Movement}
 
 
-\subsection{Neuro-Symbolic Planning Pipeline}
+\subsection{Neuro-Symbolic validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
+We implemented following neuro-symbolic validation pipeline in hopes of enhancing coherence of actions generated as part of task decomposition [TODO add example] by checking validati of precondition by external symbolic vlaidation tool VAL. The feedback about validity of plan from VAL we need to generate 3 files Domain.pddl, Problem.pddl and plan.pddl bellow we explain how did we achive this.
 
 
 
 \subsubsection{Domain generation}
+Domain generation is the most difficult part of generation [Becouse it's the biggest mental load maybe add statistic for this. I mean it's just that domain need the most attention and problems here will propaget to following step of the pipeline] and we tested couple of aproches to do it correctly, bellow steps subjectivli [We tested a lot and look with genereted more sensible result and wich genereted less validation errors] generated the best Domain. We started with trying to generate the whole PDDL file in one go based on the decomposed action, but we got 2 problems 1. the actions conditions and effect tend to be chained without real logic to it. [add example, like teeth-brushed as precondition of shower]. So after many iteration we decided to split the domain generation into following steps.
+
+    [ALso we use the structured JSON output to ensure proper naming and structure and we should write about it ]
 
 \paragraph{Natural language precondition and effect generation}
+We ask the model for nautal language condtions and effect of each action seperetly to prevent the chained condtion-effect problem that we observed when we genereting the whole domain in one go. [add example]
+
 \paragraph{Predicates generation}
+We gather all the natural language condition and effect of each action and world description and ask model to create a sensible predicate with focus on logic coherence. We do it in one go so we end up with unified set of predicate. As the domain is uniqe for specific agent and specific task decomposition we ask the model to generate zero arrity predicates as we saw that decrese amount of hallucination and malformated output from LLM's in the next stages of the pipeline [Add example]
+
+
 \paragraph{PDDL Action schema generation }
+Now for each action we generate action schema from the predicate catalog and natural language condtion and effects. We do it seperetly for each action to not encouraged the condtion and effect chaing. After that we programaticly create the domain file [Add example]
+
 \paragraph{Validation with VAL and repair}
+We check domain validation using VAL tool, The main porpus is to check out if model didn't Hallucinate new predicates or create othewise malfuntional PDDL schemas
+Then I there is an error we pass the feedback to LLM that generated repaired domain [Add example]
+
 \subsubsection{Problem generation}
+After successfully generating the domian we ask LLM to generete the problem based on the predicates catalog current state of the world and the intenet of the task. form this we get initial state of the world and the goal. After generation the domain and problem file are feeded to VAL to check for syntax problems and potentialy hallucinations, and the problem is regenerated with VAL feedback in case of errors [Add example]
+
 \subsubsection{Plan generation programmatic}
+As we use zero arrity predicates then also the actions becomes zero arrity and becouse of that we can automatically generate the problem file from the original decomposed actions. [examples]
+
 \subsubsection{VAL analysis}
+We input the domain, problem and plan files to VAL and continue based on it feedback [add example] if the plan is valid we end the pipeline. If there are any error we move to a next step in the validaiton pipeline
+
 \subsubsection{LLM feedback}
+If there is error in VAL we input context of genereted PDDL artifact and feedback from VAL and ask LLM to generate actionable responses for each found errors. model can decide in between 1.Ok -can continue (when the error is becouse of not complete problem init state [Example there was no phone in the word state])
+\texttt{pddl\_error} - There is error in pddl itself, [Add example]
+\texttt{replan\_needed}
+and based on all the error items, model decide one of 3 actions
+ok - we end the pipeline and assume the the plan is valid
+\texttt{pddl\_repair} - we repair each of the pddl artifact with feedback from VAL and then do VAL evaluation again
+Replan needed - we continue with the pipeline
+
 \subsubsection{Replan goal}
+This stage creates an natural language replaning goal based on the feedback from validation and the current schedual, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to replaner generetes poor results [examples]
 \subsubsection{Replan}
+In this stage we ask LLM to generate a new plan based on the replan goal, current schedual
+
+we Repeat the above pipeline a set amount of times
+
 
 \section{NL Condition Validation}
-\subsection{At beginning of the action check all based on the world NL condition}
-\subsubsection{Satisfied}
-\subsubsection{Not satisfied}
+After validation pipeline We store the natural language preconditions for each action, so when the action begins we can check if the preconditions still hold and if the action is valid, so we can replan in case of broken condtions.
+\subsection{Checking NL condition}
+At begging of each action (when the agent actualy is about to execute the action), for each condition we retrive object state of the world around agent as well as other memories relevant to the conditions [EXAMPLE] and ask the model to based on that and commonsense categories the condition as satisfied or not. If all the condtions are satisfy agent will start the action
 \subsection{Replan Goal}
+If at least one of the condition is not satysfied we ask LLM to generate an replanning goal based on the schedual agent goal for a day and the violeted condtions. [example]
 \subsection{Replan next 2h}
+Then we ask LLM to replan the next 2h with the replan goal in mind[example]
 
 
 
