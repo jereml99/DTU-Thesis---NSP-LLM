@@ -1,4 +1,237 @@
 {
   "schemaVersion": 1,
-  "threads": []
+  "threads": [
+    {
+      "id": "f79715f7-8323-47aa-865e-258f1d50ac1a",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 1561,
+        "endOffset": 1616,
+        "selectedText": "violate temporal constraints (simultaneous commitments)",
+        "prefixContext": "t impossible actions (opening nonexistent doors), ",
+        "suffixContext": ", or pursue conflicting goals, undermining believa",
+        "originalRange": {
+          "startLine": 8,
+          "startCharacter": 386,
+          "endLine": 8,
+          "endCharacter": 441
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:05:16.082Z",
+      "updatedAt": "2026-01-23T11:05:16.082Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "ee1e0600-9466-49f2-97e2-3d3354d3c6de",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:05:16.082Z",
+          "body": " IS that sth that we actually focus on? there is no way to do more the one thing in our simulation"
+        }
+      ]
+    },
+    {
+      "id": "77f34515-e424-469f-9224-f6b997124a22",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 2099,
+        "endOffset": 2231,
+        "selectedText": "\nNeuro-symbolic AI can address this by combining neural generation with symbolic planning \\cite{tantakounLLMsPlanningModelers2025}.\n",
+        "prefixContext": " constraints or exhibit temporal inconsistencies.\n",
+        "suffixContext": "\n\\section*{Note on the Use of AI}\n\\label{sec:ai-di",
+        "originalRange": {
+          "startLine": 11,
+          "startCharacter": 0,
+          "endLine": 13,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:05:49.558Z",
+      "updatedAt": "2026-01-23T11:05:49.558Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "0ecb313f-912d-4d0b-8822-d79954890462",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:05:49.558Z",
+          "body": " % Should we call it plannning or verification"
+        }
+      ]
+    },
+    {
+      "id": "1016783a-46bb-44ab-ac16-adcecfaccd29",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 3588,
+        "endOffset": 3909,
+        "selectedText": "\\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates a hierarchical plan, the plan actions and environment constraints are formalized in PDDL, and a symbolic validator verifies logical consistency, identifies constraint violations, and guides iterative plan refinement. ",
+        "prefixContext": " Objectives}\n\\label{sec:research-aim-objectives}\n\n",
+        "suffixContext": "\n\n\\textbf{Objectives:}\n% GREAT <3\n\n\\begin{enumerat",
+        "originalRange": {
+          "startLine": 30,
+          "startCharacter": 0,
+          "endLine": 30,
+          "endCharacter": 321
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:06:57.934Z",
+      "updatedAt": "2026-01-23T11:06:57.934Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "a347b66a-69f6-4653-8a6c-ec8dca6108bd",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:06:57.934Z",
+          "body": "% I enviroment constrains is kind of vague, let's write it diffrentlt "
+        }
+      ]
+    },
+    {
+      "id": "9d2cd616-7045-4cf9-87db-7c78b83736b4",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 3911,
+        "endOffset": 3932,
+        "selectedText": "\\textbf{Objectives:}\n",
+        "prefixContext": "olations, and guides iterative plan refinement. \n\n",
+        "suffixContext": "\n\\begin{enumerate}\n    \\item Reimplement the gener",
+        "originalRange": {
+          "startLine": 32,
+          "startCharacter": 0,
+          "endLine": 33,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:07:19.206Z",
+      "updatedAt": "2026-01-23T11:07:19.206Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "5b512433-4079-4758-93b6-71156fee2fa5",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:07:19.206Z",
+          "body": "% GREAT <3"
+        }
+      ]
+    },
+    {
+      "id": "944b18a9-ab69-4982-b822-28a0bb3e2a86",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 5013,
+        "endOffset": 5126,
+        "selectedText": "The LLM generates hierarchical plans and PDDL action schemas; a symbolic validator detects constraint violations.",
+        "prefixContext": "rchical planning with a neuro-symbolic framework. ",
+        "suffixContext": "\n Evaluation combines:\n\n\\begin{itemize}\n    \\item ",
+        "originalRange": {
+          "startLine": 45,
+          "startCharacter": 166,
+          "endLine": 45,
+          "endCharacter": 279
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:07:47.932Z",
+      "updatedAt": "2026-01-23T11:07:47.932Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "61ed02ba-cf3d-4720-9008-9d8f2a134a33",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:07:47.932Z",
+          "body": " % Constrain violation is vague, we need some examples. also we generate not only action schemas but the full domain and problem files."
+        }
+      ]
+    },
+    {
+      "id": "355dfd34-c20c-4c81-aa36-434dd7b7e984",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 5522,
+        "endOffset": 5610,
+        "selectedText": " Metrics include violations per 100 actions, plan success rates, and repair efficiency. ",
+        "prefixContext": "olic planning with validator-guided revision. \n   ",
+        "suffixContext": "\n\\end{itemize}\n\n\n\\section{Scope and Limitations}\n\\",
+        "originalRange": {
+          "startLine": 51,
+          "startCharacter": 3,
+          "endLine": 51,
+          "endCharacter": 91
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:08:13.268Z",
+      "updatedAt": "2026-01-23T11:08:13.268Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "314b8994-ec36-46e1-913f-6155440e56d0",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:08:13.268Z",
+          "body": "% Not really sure about this line "
+        }
+      ]
+    },
+    {
+      "id": "539bf5d8-c221-4755-b573-2b79e8d3f541",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 5691,
+        "endOffset": 6031,
+        "selectedText": "This project focuses on simulation environments with deterministic action effects and complete observability. Real-world robotics introduces sensing uncertainty and physical dynamics beyond our scope. Evaluation constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.",
+        "prefixContext": " and Limitations}\n\\label{sec:scope-limitations}\n\n\n",
+        "suffixContext": "\n\n\n\\section{Thesis Structure}\n\\label{sec:thesis-st",
+        "originalRange": {
+          "startLine": 59,
+          "startCharacter": 0,
+          "endLine": 59,
+          "endCharacter": 340
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:08:41.529Z",
+      "updatedAt": "2026-01-23T11:08:41.529Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "ce36f725-5370-44f5-af5c-6cf3a4187416",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:08:41.529Z",
+          "body": "% I don't like this section, it seems detached from our actuall thesis, and we don't have a deteriminnistis envirment. als o the real world robotics seems off in our context, let's focus on actuall limitaiont that we had"
+        }
+      ]
+    },
+    {
+      "id": "db62edbb-8d64-476b-8575-1a8237f3be1b",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 6144,
+        "endOffset": 7159,
+        "selectedText": "\\begin{itemize}\n    \\item \\textbf{Chapter 2: Theoretical Background} --- Establishes core concepts (LLMs, agents, planning paradigms including PDDL) and reviews relevant literature.\n    \\item \\textbf{Chapter 3: Methodology} --- Describes the system design, experimental setup, and evaluation protocols. Details the symbolic validator architecture and the within-subjects user study for assessing believability and constraint adherence.\n    \\item \\textbf{Chapter 4: Results} --- Reports quantitative constraint-violation metrics and qualitative believability findings from the user study.\n    \\item \\textbf{Chapter 5: Discussion} --- Interprets results, situates findings within the literature, and discusses limitations and implications for agent design. \n    \\item \\textbf{Chapter 6: Conclusion and Future Work} --- Summarizes contributions and suggests directions for future research.\n    \\item \\textbf{Chapter 7: Use of AI in this Thesis} --- Declaration of AI tools used in the thesis preparation.\n\\end{itemize}",
+        "prefixContext": " remainder of the thesis is organized as follows:\n",
+        "suffixContext": "\n",
+        "originalRange": {
+          "startLine": 66,
+          "startCharacter": 0,
+          "endLine": 73,
+          "endCharacter": 13
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-23T11:09:09.008Z",
+      "updatedAt": "2026-01-23T11:09:09.008Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "d27b8ebd-4796-4b82-9452-d896b550de5a",
+          "author": "jeremi",
+          "createdAt": "2026-01-23T11:09:09.009Z",
+          "body": "% seems good now but let's refin at the end"
+        }
+      ]
+    }
+  ]
 }
