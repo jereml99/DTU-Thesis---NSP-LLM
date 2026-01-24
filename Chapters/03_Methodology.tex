@@ -44,93 +44,96 @@ The implementation transforms the original monolithic Generative Agents codebase
     \label{fig:code-structure-architecture-after}
 \end{figure}
 
-\subsection{Prompt templetes}
-All call to LLM are formalized using prompt templates, that sepcifie the system prompt [Maybe add what is that], few shot examples, templates for actual prompt and expected output in format using OPENAI sturcture output that let's as put constraints on the model output. Also we get clear versioning of prompt templates.
+\subsection{Prompt Templates}
+All calls to the LLM are formalized using prompt templates, that specify the system prompt [Maybe add what is that], few-shot examples, templates for the actual prompt and expected output in a format using OpenAI structured output that allows us to put constraints on the model output. Also we get clear versioning of prompt templates.
 
-\subsection{model used}
-Most of the testing was done with OpenAI model gpt-5-nano-2025-08-07,  becouse of: 1. It's cheap model which is important considering our expected token used to generate one simulation was 1m+, 2.It's fast 3. it's ressoning model with good benchmarks 4. It still allow for "intilegence" vs speed treadoff by setting the ressonign token budget (ressoing effort between low medium and high)
+\subsection{Model Used}
+Most of the testing was done with the OpenAI model gpt-5-nano-2025-08-07, because of: 1. It's a cheap model which is important considering our expected token usage to generate one simulation was 1m+, 2. It's fast 3. It's a reasoning model with good benchmarks 4. It still allows for "intelligence" vs speed tradeoff by setting the reasoning token budget (reasoning effort between low, medium, and high)
 
-[Should we write about othere models as well?]
+[Should we write about other models as well?]
 
 We were considering open source models like gpt-oss-120b
 
-\subsection{Long-term planning}
+\subsection{Long-Term Planning}
 \label{Long-term planning}
-As part of improvments to original architecture we modfied the prompts responsible for the planning part, [of coures also the code around].
+As part of improvements to the original architecture we modified the prompts responsible for the planning part, [of course also the code around].
 \subsubsection{Movement}
-The biggest change is programmatic add of movment actions, In orginal paper the characters were moving as part of some determined actions so if agent planed to eat breakfest for 20 minutes in coffe that is 25 minutes from from his current location, he would be walking to the caffe for 20 minutes and without event reaching the caffe he would start another activity which in our opinion broke believability of the orginal paper and we decided to automaticly block a time for the movment activity. that ment that the agent will always have the time to reach destionation befor starting actions. But it also ment that when planning we need to estimate the time that agent will spend on walking in each task as we get the action location only after decomposing the task into actions.
+The biggest change is the programmatic addition of movement actions. In the original paper the characters were moving as part of some determined actions so if an agent planned to eat breakfast for 20 minutes in a coffee shop that is 25 minutes from his current location, he would be walking to the café for 20 minutes and without even reaching the café he would start another activity. In our opinion this broke the believability of the original paper and we decided to automatically block time for the movement activity. That meant that the agent will always have the time to reach the destination before starting actions. But it also meant that when planning we need to estimate the time that the agent will spend on walking in each task as we get the action location only after decomposing the task into actions.
 
 
-\subsubsection{Daily planning}
+\subsubsection{Daily Planning}
 
-In orginal paper each of the big activities like "morning rutine" was always be generated as multiplication of one hour in terms of time. It was dicteded bad relability to produc structured output of model that they used in the orginal study [GPT-3.5 turbo]. With never models and structured ouptut we were able to ask model to generate arbitarly long task for a day. Another improvments is that we asked model to generete task intent and location of intreste in the task [So the area where the agent will most probably have to move during the execution of task]
-We used task intent as context for prompts that will operate on the task[replanning, task decompostion]. The location of intrest are used for estimating the travel time during the activity
+In the original paper each of the big activities like "morning routine" was always generated as a multiple of one hour in terms of time. This was dictated by the poor reliability in producing structured output of the model that they used in the original study [GPT-3.5 Turbo]. With newer models and structured output we were able to ask the model to generate arbitrarily long tasks for a day. Another improvement is that we asked the model to generate task intent and location of interest in the task [So the area where the agent will most probably have to move during the execution of the task].
+We used task intent as context for prompts that will operate on the task [replanning, task decomposition]. The locations of interest are used for estimating the travel time during the activity.
 
-\subsubsection{Task decomposition}
-When agent aproches a task that wasn't decomposed yet the we triger task decomposition into atomic actions. In ogrinal implementation each action were multiplication of 5 minutes and that produced some unbelievable actions like washing hand for 5 minutes. In our implementation we let the model chose arbitarly the amount of minutes. Then if we allow nerualsymbolic validation we enter the validation loop. Then with the final task decomposition we ask the model for most appopirate place to do each of the action. Then we programaticly generate a movment actions if agent need to switch place in between actions. At the end we check if total amount of time is above or bellow expected amount of time for the task let's call it delta [The amount of time for task itself and amount of time expected for the movment]. if we need to fill up the time we add an "Checking phone" activity for |delta| minutes, if delta > 0 then we need to decrese time spend on actions. We do it by randomly decressing the time of activity by one minute [And we put more weight on the activities that takes more time so 20 minute activity will have ten times more chances to be picked for decrese then 2 minute activity] [make the examples more mathematicly strict]
+\subsubsection{Task Decomposition}
+When an agent approaches a task that hasn't been decomposed yet, we trigger task decomposition into atomic actions. In the original implementation each action was a multiple of 5 minutes and that produced some unbelievable actions like washing hands for 5 minutes. In our implementation we let the model choose arbitrarily the amount of minutes. Then if we allow neuro-symbolic validation we enter the validation loop. Then with the final task decomposition we ask the model for the most appropriate place to do each of the actions. Then we programmatically generate movement actions if the agent needs to switch places in between actions. At the end we check if the total amount of time is above or below the expected amount of time for the task. Let's call it delta [The amount of time for task itself and amount of time expected for the movement]. If we need to fill up the time we add a "Checking phone" activity for |delta| minutes. If delta > 0 then we need to decrease time spent on actions. We do it by randomly decreasing the time of the activity by one minute [And we put more weight on the activities that take more time so a 20 minute activity will have ten times higher chance to be picked for decrease than a 2 minute activity] [make the examples more mathematically strict].
 
 
 
-\subsection{Neuro-Symbolic validation Pipeline}
+\subsection{Neuro-Symbolic Validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-We implemented following neuro-symbolic validation pipeline in hopes of enhancing coherence of actions generated as part of task decomposition we do it after genereting actions from task, but befor adding movments.  [TODO add example] by checking validati of precondition by external symbolic vlaidation tool VAL. The feedback about validity of plan from VAL we need to generate 3 files Domain.pddl, Problem.pddl and plan.pddl bellow we explain how did we achive this.
+We implemented the following neuro-symbolic validation pipeline in hopes of enhancing the coherence of actions generated as part of task decomposition. We do it after generating actions from the task, but before adding movements. [TODO add example] We do this by checking the validity of preconditions using the external symbolic validation tool VAL. To get feedback about the validity of the plan from VAL we need to generate 3 files: Domain.pddl, Problem.pddl and plan.pddl. Below we explain how we achieved this.
+
+\subsubsection{Domain Generation}
+Domain generation is the most difficult part of generation [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline] and we tested a couple of approaches to do it correctly. The steps below subjectively [We tested a lot and looked which generated more sensible results and which generated fewer validation errors] generated the best Domain. We started with trying to generate the whole PDDL file in one go based on the decomposed actions, but we got 2 problems: 1. the action conditions and effects tend to be chained without real logic to it. [add example, like teeth-brushed as precondition of shower]. So after many iterations we decided to split the domain generation into the following steps.
+
+    [Also we use the structured JSON output to ensure proper naming and structure and we should write about it]
+
+\paragraph{Natural Language Precondition and Effect Generation}
+We ask the model for natural language conditions and effects of each action separately to prevent the chained condition-effect problem that we observed when generating the whole domain in one go. [add example]
+
+\paragraph{Predicates Generation}
+We gather all the natural language conditions and effects of each action and world description and ask the model to create a sensible predicate with focus on logical coherence. We do it in one go so we end up with a unified set of predicates. As the domain is unique for a specific agent and specific task decomposition we ask the model to generate zero-arity predicates as we saw that decreases the amount of hallucination and malformed output from LLMs in the next stages of the pipeline [Add example]
 
 
+\paragraph{PDDL Action Schema Generation}
+Now for each action we generate an action schema from the predicate catalog and natural language conditions and effects. We do it separately for each action to not encourage condition and effect chaining. After that we programmatically create the domain file [Add example]
 
-\subsubsection{Domain generation}
-Domain generation is the most difficult part of generation [Becouse it's the biggest mental load maybe add statistic for this. I mean it's just that domain need the most attention and problems here will propaget to following step of the pipeline] and we tested couple of aproches to do it correctly, bellow steps subjectivli [We tested a lot and look with genereted more sensible result and wich genereted less validation errors] generated the best Domain. We started with trying to generate the whole PDDL file in one go based on the decomposed action, but we got 2 problems 1. the actions conditions and effect tend to be chained without real logic to it. [add example, like teeth-brushed as precondition of shower]. So after many iteration we decided to split the domain generation into following steps.
+\paragraph{Validation with VAL and Repair}
+We check domain validation using the VAL tool. The main purpose is to check if the model didn't hallucinate new predicates or create otherwise malformed PDDL schemas.
+Then if there is an error we pass the feedback to the LLM that generated the repaired domain [Add example]
 
-    [ALso we use the structured JSON output to ensure proper naming and structure and we should write about it ]
+\subsubsection{Problem Generation}
+After successfully generating the domain we ask the LLM to generate the problem based on the predicates catalog, current state of the world and the intent of the task. From this we get the initial state of the world and the goal. After generation the domain and problem file are fed to VAL to check for syntax problems and potentially hallucinations, and the problem is regenerated with VAL feedback in case of errors [Add example]
 
-\paragraph{Natural language precondition and effect generation}
-We ask the model for nautal language condtions and effect of each action seperetly to prevent the chained condtion-effect problem that we observed when we genereting the whole domain in one go. [add example]
+\subsubsection{Plan Generation Programmatic}
+As we use zero-arity predicates then also the actions become zero-arity and because of that we can automatically generate the problem file from the original decomposed actions. [examples]
 
-\paragraph{Predicates generation}
-We gather all the natural language condition and effect of each action and world description and ask model to create a sensible predicate with focus on logic coherence. We do it in one go so we end up with unified set of predicate. As the domain is uniqe for specific agent and specific task decomposition we ask the model to generate zero arrity predicates as we saw that decrese amount of hallucination and malformated output from LLM's in the next stages of the pipeline [Add example]
+\subsubsection{VAL Analysis}
+We input the domain, problem and plan files to VAL and continue based on its feedback [add example]. If the plan is valid we end the pipeline. If there are any errors we move to the next step in the validation pipeline.
 
+\subsubsection{LLM Feedback}
+If there is an error in VAL we input the context of generated PDDL artifacts and feedback from VAL and ask the LLM to generate actionable responses for each found error. The model can decide between:
+\begin{itemize}
+    \item \texttt{ok} - can continue (when the error is because of a not complete problem init state [Example there was no phone in the world state])
+    \item \texttt{pddl\_error} - There is an error in PDDL itself, [Add example]
+    \item \texttt{replan\_needed}
+\end{itemize}
+Based on all the error items, the model decides one of 3 actions:
+\begin{itemize}
+    \item \texttt{ok} - we end the pipeline and assume the plan is valid
+    \item \texttt{pddl\_repair} - we repair each of the pddl artifacts with feedback from VAL and then do VAL evaluation again
+    \item \texttt{replan\_needed} - we continue with the pipeline
+\end{itemize}
 
-\paragraph{PDDL Action schema generation }
-Now for each action we generate action schema from the predicate catalog and natural language condtion and effects. We do it seperetly for each action to not encouraged the condtion and effect chaing. After that we programaticly create the domain file [Add example]
-
-\paragraph{Validation with VAL and repair}
-We check domain validation using VAL tool, The main porpus is to check out if model didn't Hallucinate new predicates or create othewise malfuntional PDDL schemas
-Then I there is an error we pass the feedback to LLM that generated repaired domain [Add example]
-
-\subsubsection{Problem generation}
-After successfully generating the domian we ask LLM to generete the problem based on the predicates catalog current state of the world and the intenet of the task. form this we get initial state of the world and the goal. After generation the domain and problem file are feeded to VAL to check for syntax problems and potentialy hallucinations, and the problem is regenerated with VAL feedback in case of errors [Add example]
-
-\subsubsection{Plan generation programmatic}
-As we use zero arrity predicates then also the actions becomes zero arrity and becouse of that we can automatically generate the problem file from the original decomposed actions. [examples]
-
-\subsubsection{VAL analysis}
-We input the domain, problem and plan files to VAL and continue based on it feedback [add example] if the plan is valid we end the pipeline. If there are any error we move to a next step in the validaiton pipeline
-
-\subsubsection{LLM feedback}
-If there is error in VAL we input context of genereted PDDL artifact and feedback from VAL and ask LLM to generate actionable responses for each found errors. model can decide in between 1.Ok -can continue (when the error is becouse of not complete problem init state [Example there was no phone in the word state])
-\texttt{pddl\_error} - There is error in pddl itself, [Add example]
-\texttt{replan\_needed}
-and based on all the error items, model decide one of 3 actions
-ok - we end the pipeline and assume the the plan is valid
-\texttt{pddl\_repair} - we repair each of the pddl artifact with feedback from VAL and then do VAL evaluation again
-Replan needed - we continue with the pipeline
-
-\subsubsection{Replan goal}
-This stage creates an natural language replaning goal based on the feedback from validation and the current schedual, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to replaner generetes poor results [examples]
+\subsubsection{Replan Goal}
+This stage creates a natural language replanning goal based on the feedback from validation and the current schedule, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to the replanner generates poor results [examples]
 \subsubsection{Replan}
-In this stage we ask LLM to generate a new plan based on the replan goal, current schedual
+In this stage we ask the LLM to generate a new plan based on the replan goal, and the current schedule.
 
-we Repeat the above pipeline a set amount of times
+We repeat the above pipeline a set amount of times.
 
 
 \section{NL Condition Validation}
 \label{subsec:NL-conditions-validations}
-After validation pipeline We store the natural language preconditions for each action, so when the action begins we can check if the preconditions still hold and if the action is valid, so we can replan in case of broken condtions.
-\subsection{Checking NL condition}
-At begging of each action (when the agent actualy is about to execute the action), for each condition we retrive object state of the world around agent as well as other memories relevant to the conditions [EXAMPLE] and ask the model to based on that and commonsense categories the condition as satisfied or not. If all the condtions are satisfy agent will start the action
+After the validation pipeline we store the natural language preconditions for each action, so when the action begins we can check if the preconditions still hold and if the action is valid, so we can replan in case of broken conditions.
+\subsection{Checking NL Condition}
+At the beginning of each action (when the agent actually is about to execute the action), for each condition we retrieve the object state of the world around the agent as well as other memories relevant to the conditions [EXAMPLE] and ask the model to, based on that and commonsense, categorize the condition as satisfied or not. If all the conditions are satisfied the agent will start the action.
 \subsection{Replan Goal}
-If at least one of the condition is not satysfied we ask LLM to generate an replanning goal based on the schedual agent goal for a day and the violeted condtions. [example]
-\subsection{Replan next 2h}
-Then we ask LLM to replan the next 2h with the replan goal in mind[example]
+If at least one of the conditions is not satisfied we ask the LLM to generate a replanning goal based on the schedule, agent goal for a day and the violated conditions. [example]
+\subsection{Replan Next 2h}
+Then we ask the LLM to replan the next 2h with the replan goal in mind [example]
 
 
 
@@ -143,24 +146,24 @@ Then we ask LLM to replan the next 2h with the replan goal in mind[example]
 
 \section{Experimental Setup}
 \label{sec:experimental-setup}
-For user study we've generate two simulations baseline and nerualsymbolic. as the focus of our study was how neural-symblolic planning can increses believability of LLM-based agents we decided to isolate as many variables as posible.
-Both simulation figured the same 3 persona with background taken from the ogrinal study, We generated exacly the same goals and task for the day [for each persona] for both simulations
-Baseline and nerualsymbolic were using the improvments that we introduces \ref{Long-term planning}.
-So the generation differed by the introduction of validations in the nerualsymbolic simulation \ref{subsec:NL-conditions-validations} \ref{subsec:neuro-symbolic-pipeline}.
+For the user study we've generated two simulations: baseline and neuro-symbolic. As the focus of our study was how neuro-symbolic planning can increase believability of LLM-based agents we decided to isolate as many variables as possible.
+Both simulations featured the same 3 personas with background taken from the original study. We generated exactly the same goals and tasks for the day [for each persona] for both simulations.
+Baseline and neuro-symbolic were using the improvements that we introduced in \ref{Long-term planning}.
+So the generation differed by the introduction of validations in the neuro-symbolic simulation \ref{subsec:NL-conditions-validations} \ref{subsec:neuro-symbolic-pipeline}.
 
-We tested generation of simulation of word with 25 characters, but the improvments in believability [our subjectiv] didn't paid the additional cost of tokens and the additional load that test subject would need to put into doing the study
+We tested generation of simulations of a world with 25 characters, but the improvements in believability [our subjective assessment] didn't pay for the additional cost of tokens and the additional load that test subjects would need to put into doing the study.
 
-For both simulation we implemented extensive logging to understed how our system bechavies. we log:
-Usage of each of the generation template, with amount of calls, amount of token spend.
-We log every broken validation with the context [The PDDL files or NL condtion that was broken]
-We log every replaning goal
-We log every modifications to the plan time [when the movment takes to much time]
+For both simulations we implemented extensive logging to understand how our system behaves. We log:
+Usage of each of the generation templates, with amount of calls, amount of tokens spent.
+We log every broken validation with the context [The PDDL files or NL condition that was broken]
+We log every replanning goal
+We log every modification to the plan time [when the movement takes too much time]
 
 
 \section{User Study: Believability Evaluation}
 \label{sec:user-study-believability}
 
-This section describes the human-subjects study testing whether symulation generated with neuralsymbolic validation approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on believability of \emph{actions} rather than only personalities or conversations.
+This section describes the human-subjects study testing whether a simulation generated with the neuro-symbolic validation approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on believability of \emph{actions} rather than only personalities or conversations.
 
 \subsection{Objectives and Hypotheses}
 \label{subsec:objectives-hypotheses}
@@ -198,7 +201,7 @@ The stimulus for each condition is a replay of a single random character's day. 
 
 \begin{itemize}
     \item time-lapse \emph{video replay} of the agent acting in the world (controllable playback speed, pause/seek);
-    \item Activity log with detals about current activity and animented time following; and
+    \item Activity log with details about current activity and animated time following; and
     \item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
 \end{itemize}
 
@@ -208,16 +211,16 @@ Replays cover the same scenario (e.g., two simulated in-game days) and use the s
 \label{subsec:procedure}
 
 Each session (approximately 30 minutes):
-The user can read paper version of user quide and the evaluater will follow the evaluator guide
+The user can read the paper version of the user guide and the evaluator will follow the evaluator guide
 \begin{enumerate}
     \item \textbf{Introduction.} Scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
     \item \textbf{Practice.} Participants complete a 2 to 3 minute tutorial on the interface using a neutral example not used in the main study.
     \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable actions. For each mark, add a short explanation (optional but encouraged).
     \item \textbf{Condition B.} Repeat with the other planner. Order varies across participants; assignment is double-blind.
-    \item \textbf{Summary.} We show user the the overview of marked actions in both condtions and ask which one felt more human like
+    \item \textbf{Summary.} We show the user the overview of marked actions in both conditions and ask which one felt more human-like
 \end{enumerate}
 
-We record and transcribe the experiment, for later qualitative study of comment about unbelievable actions.
+We record and transcribe the experiment, for later qualitative study of comments about unbelievable actions.
 \subsection{Measures}
 \label{subsec:measures}
 
