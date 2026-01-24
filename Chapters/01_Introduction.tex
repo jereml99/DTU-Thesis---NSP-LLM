@@ -28,7 +28,7 @@ Existing agent architectures face a fundamental tradeoff: purely symbolic system
 \section{Research Aim and Objectives}
 \label{sec:research-aim-objectives}
 
-\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates a hierarchical plan, the plan actions and environment constraints are formalized in PDDL, and a symbolic validator verifies logical consistency, identifies constraint violations, and guides iterative plan refinement.
+\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates a hierarchical plan, the plan actions and environment constraints are formalized in PDDL, and a symbolic validator verifies logical consistency, identifies constraint violations, and guides iterative plan refinement. 
 
 \textbf{Objectives:}
 
@@ -43,16 +43,19 @@ Existing agent architectures face a fundamental tradeoff: purely symbolic system
 \section{Methodological Overview}
 \label{sec:methodological-overview}
 
-This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and PDDL action schemas; a symbolic validator detects constraint violations. Evaluation combines:
+This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and PDDL action schemas; a symbolic validator detects constraint violations.
+ Evaluation combines:
 
 \begin{itemize}
     \item \textbf{Qualitative assessment}: Within-subjects user study comparing perceived believability of agent behaviors from both systems.
-    \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. Metrics include violations per 100 actions, plan success rates, and repair efficiency.
+    \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. 
+    Metrics include violations per 100 actions, plan success rates, and repair efficiency. 
 \end{itemize}
 
 
 \section{Scope and Limitations}
 \label{sec:scope-limitations}
+
 
 This project focuses on simulation environments with deterministic action effects and complete observability. Real-world robotics introduces sensing uncertainty and physical dynamics beyond our scope. Evaluation constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.
 
@@ -61,12 +64,11 @@ This project focuses on simulation environments with deterministic action effect
 \label{sec:thesis-structure}
 
 The remainder of the thesis is organized as follows:
-
 \begin{itemize}
     \item \textbf{Chapter 2: Theoretical Background} --- Establishes core concepts (LLMs, agents, planning paradigms including PDDL) and reviews relevant literature.
     \item \textbf{Chapter 3: Methodology} --- Describes the system design, experimental setup, and evaluation protocols. Details the symbolic validator architecture and the within-subjects user study for assessing believability and constraint adherence.
     \item \textbf{Chapter 4: Results} --- Reports quantitative constraint-violation metrics and qualitative believability findings from the user study.
-    \item \textbf{Chapter 5: Discussion} --- Interprets results, situates findings within the literature, and discusses limitations and implications for agent design.
+    \item \textbf{Chapter 5: Discussion} --- Interprets results, situates findings within the literature, and discusses limitations and implications for agent design. 
     \item \textbf{Chapter 6: Conclusion and Future Work} --- Summarizes contributions and suggests directions for future research.
     \item \textbf{Chapter 7: Use of AI in this Thesis} --- Declaration of AI tools used in the thesis preparation.
 \end{itemize}

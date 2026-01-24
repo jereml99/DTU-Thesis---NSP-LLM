@@ -36,20 +36,25 @@
   "latex-workshop.latex.recipes": [
     {
       "name": "latexmk (xelatex + biber)",
-      "tools": ["latexmk-xelatex"]
+      "tools": [
+        "latexmk-xelatex"
+      ]
     },
     {
       "name": "xelatex -> biber -> xelatex*2",
-      "tools": ["xelatex", "biber", "xelatex", "xelatex"]
+      "tools": [
+        "xelatex",
+        "biber",
+        "xelatex",
+        "xelatex"
+      ]
     }
   ],
   // PDF viewer settings
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
-  
   // Auto-build on save (like Overleaf auto-compile)
   "latex-workshop.latex.autoBuild.run": "onSave",
-  
   // Clean and build settings
   "latex-workshop.latex.clean.fileTypes": [
     "*.aux",
@@ -78,37 +83,28 @@
     "*.bcf",
     "*.run.xml"
   ],
-  
   // Message settings
   "latex-workshop.message.log.show": true,
   "latex-workshop.message.error.show": true,
   "latex-workshop.message.warning.show": false,
-  
   // Intellisense for biblatex citations (Zotero compatibility)
   "latex-workshop.intellisense.citation.backend": "biblatex",
   "latex-workshop.intellisense.package.enabled": true,
-  
   // Formatting
   "latex-workshop.formatting.latex": "latexindent",
-  
   // SyncTeX for jumping between source and PDF
   "latex-workshop.synctex.afterBuild.enabled": true,
-  
   // Root file detection
   "latex-workshop.latex.rootFile.doNotPrompt": true,
   "latex-workshop.latex.rootFile.useSubFile": false,
-  
   // Build output directory
   "latex-workshop.latex.outDir": "build",
-  
   // Output directory for auxiliary files  
   "latex-workshop.latex.auxDir": "build",
-  
   // Magic comments to help LaTeX Workshop find output files
   "latex-workshop.latex.magic.args": [
     "-output-directory=build"
   ],
-  
   // Search path for LaTeX Workshop to find PDF and aux files
   "latex-workshop.latex.search.rootFiles.include": [
     "**/*.tex"
