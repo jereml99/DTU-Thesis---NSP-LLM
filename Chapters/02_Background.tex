@@ -111,6 +111,11 @@ However, LLMs may produce syntactically valid PDDL that is semantically inconsis
     An \emph{agent} receives percepts and produces actions via sensors and actuators, implementing a mapping $f: P^{*} \to A$ from percept histories $P^{*}$ to actions $A$ \cite{russellArtificialIntelligenceModern2022}.
 \end{definition}
 
+\begin{definition}[Generative Agent]
+    \label{def:generative-agent}
+    A \emph{generative agent} is a computational software agent that simulates believable human behavior by leveraging large language models to generate action sequences, maintain memory of past experiences, reflect on accumulated observations, and plan future behavior based on goals and social context.
+\end{definition}
+
 In simulated environments and games, non-player characters (NPCs) prioritize producing behavior that human observers find plausible, consistent, and engaging rather than maximizing numerical rewards \cite{mateasOzCentricReviewInteractive1999, loyallBelievableAgentsBuilding}. As a result, the evaluation of such agents commonly emphasizes observer perception over internal optimality or correctness.
 
 \begin{definition}[Believability]
