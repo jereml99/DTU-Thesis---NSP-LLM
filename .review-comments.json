@@ -19,7 +19,7 @@
       },
       "status": "open",
       "createdAt": "2026-01-23T11:05:16.082Z",
-      "updatedAt": "2026-01-23T11:05:16.082Z",
+      "updatedAt": "2026-01-24T18:47:10.873Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -27,6 +27,12 @@
           "author": "jeremi",
           "createdAt": "2026-01-23T11:05:16.082Z",
           "body": " IS that sth that we actually focus on? there is no way to do more the one thing in our simulation"
+        },
+        {
+          "id": "5202a7f5-df10-465d-8eb1-f192e28a6ad5",
+          "author": "acoma",
+          "createdAt": "2026-01-24T18:47:10.873Z",
+          "body": "This better?"
         }
       ]
     },
