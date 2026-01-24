@@ -45,18 +45,35 @@ The implementation transforms the original monolithic Generative Agents codebase
 \end{figure}
 
 \subsection{Prompt templetes}
+All call to LLM are formalized using prompt templates, that sepcifie the system prompt [Maybe add what is that], few shot examples, templates for actual prompt and expected output in format using OPENAI sturcture output that let's as put constraints on the model output. Also we get clear versioning of prompt templates.
+
+\subsection{model used}
+Most of the testing was done with OpenAI model gpt-5-nano-2025-08-07,  becouse of: 1. It's cheap model which is important considering our expected token used to generate one simulation was 1m+, 2.It's fast 3. it's ressoning model with good benchmarks 4. It still allow for "intilegence" vs speed treadoff by setting the ressonign token budget (ressoing effort between low medium and high)
+
+[Should we write about othere models as well?]
+
+We were considering open source models like gpt-oss-120b
 
 \subsection{Long-term planning}
+\label{Long-term planning}
+As part of improvments to original architecture we modfied the prompts responsible for the planning part, [of coures also the code around].
+\subsubsection{Movement}
+The biggest change is programmatic add of movment actions, In orginal paper the characters were moving as part of some determined actions so if agent planed to eat breakfest for 20 minutes in coffe that is 25 minutes from from his current location, he would be walking to the caffe for 20 minutes and without event reaching the caffe he would start another activity which in our opinion broke believability of the orginal paper and we decided to automaticly block a time for the movment activity. that ment that the agent will always have the time to reach destionation befor starting actions. But it also ment that when planning we need to estimate the time that agent will spend on walking in each task as we get the action location only after decomposing the task into actions.
+
 
 \subsubsection{Daily planning}
-\subsubsection{Task decomposition}
 
-\subsection{Movement}
+In orginal paper each of the big activities like "morning rutine" was always be generated as multiplication of one hour in terms of time. It was dicteded bad relability to produc structured output of model that they used in the orginal study [GPT-3.5 turbo]. With never models and structured ouptut we were able to ask model to generate arbitarly long task for a day. Another improvments is that we asked model to generete task intent and location of intreste in the task [So the area where the agent will most probably have to move during the execution of task]
+We used task intent as context for prompts that will operate on the task[replanning, task decompostion]. The location of intrest are used for estimating the travel time during the activity
+
+\subsubsection{Task decomposition}
+When agent aproches a task that wasn't decomposed yet the we triger task decomposition into atomic actions. In ogrinal implementation each action were multiplication of 5 minutes and that produced some unbelievable actions like washing hand for 5 minutes. In our implementation we let the model chose arbitarly the amount of minutes. Then if we allow nerualsymbolic validation we enter the validation loop. Then with the final task decomposition we ask the model for most appopirate place to do each of the action. Then we programaticly generate a movment actions if agent need to switch place in between actions. At the end we check if total amount of time is above or bellow expected amount of time for the task let's call it delta [The amount of time for task itself and amount of time expected for the movment]. if we need to fill up the time we add an "Checking phone" activity for |delta| minutes, if delta > 0 then we need to decrese time spend on actions. We do it by randomly decressing the time of activity by one minute [And we put more weight on the activities that takes more time so 20 minute activity will have ten times more chances to be picked for decrese then 2 minute activity] [make the examples more mathematicly strict]
+
 
 
 \subsection{Neuro-Symbolic validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-We implemented following neuro-symbolic validation pipeline in hopes of enhancing coherence of actions generated as part of task decomposition [TODO add example] by checking validati of precondition by external symbolic vlaidation tool VAL. The feedback about validity of plan from VAL we need to generate 3 files Domain.pddl, Problem.pddl and plan.pddl bellow we explain how did we achive this.
+We implemented following neuro-symbolic validation pipeline in hopes of enhancing coherence of actions generated as part of task decomposition we do it after genereting actions from task, but befor adding movments.  [TODO add example] by checking validati of precondition by external symbolic vlaidation tool VAL. The feedback about validity of plan from VAL we need to generate 3 files Domain.pddl, Problem.pddl and plan.pddl bellow we explain how did we achive this.
 
 
 
@@ -106,6 +123,7 @@ we Repeat the above pipeline a set amount of times
 
 
 \section{NL Condition Validation}
+\label{subsec:NL-conditions-validations}
 After validation pipeline We store the natural language preconditions for each action, so when the action begins we can check if the preconditions still hold and if the action is valid, so we can replan in case of broken condtions.
 \subsection{Checking NL condition}
 At begging of each action (when the agent actualy is about to execute the action), for each condition we retrive object state of the world around agent as well as other memories relevant to the conditions [EXAMPLE] and ask the model to based on that and commonsense categories the condition as satisfied or not. If all the condtions are satisfy agent will start the action
@@ -125,14 +143,24 @@ Then we ask LLM to replan the next 2h with the replan goal in mind[example]
 
 \section{Experimental Setup}
 \label{sec:experimental-setup}
+For user study we've generate two simulations baseline and nerualsymbolic. as the focus of our study was how neural-symblolic planning can increses believability of LLM-based agents we decided to isolate as many variables as posible.
+Both simulation figured the same 3 persona with background taken from the ogrinal study, We generated exacly the same goals and task for the day [for each persona] for both simulations
+Baseline and nerualsymbolic were using the improvments that we introduces \ref{Long-term planning}.
+So the generation differed by the introduction of validations in the nerualsymbolic simulation \ref{subsec:NL-conditions-validations} \ref{subsec:neuro-symbolic-pipeline}.
 
-[To be completed: overview of simulation environment, agent initialization, scenario design, and logging infrastructure.]
+We tested generation of simulation of word with 25 characters, but the improvments in believability [our subjectiv] didn't paid the additional cost of tokens and the additional load that test subject would need to put into doing the study
+
+For both simulation we implemented extensive logging to understed how our system bechavies. we log:
+Usage of each of the generation template, with amount of calls, amount of token spend.
+We log every broken validation with the context [The PDDL files or NL condtion that was broken]
+We log every replaning goal
+We log every modifications to the plan time [when the movment takes to much time]
 
 
 \section{User Study: Believability Evaluation}
 \label{sec:user-study-believability}
 
-This section describes the human-subjects study testing whether our approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on believability of \emph{actions} rather than only personalities or conversations.
+This section describes the human-subjects study testing whether symulation generated with neuralsymbolic validation approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on believability of \emph{actions} rather than only personalities or conversations.
 
 \subsection{Objectives and Hypotheses}
 \label{subsec:objectives-hypotheses}
@@ -144,7 +172,7 @@ Two primary hypotheses:
     \item \textbf{H2 (action believability)}: For the same scenario, participants flag fewer actions as ``unbelievable'' in our method than in the baseline.
 \end{itemize}
 
-Secondary outcomes: (i) perceived causal coherence when the high-level plan is visible, and (ii) free-text reasons participants provide when deeming actions unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
+Secondary outcomes: (i) free-text reasons participants provide when deeming actions unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
 
 \subsection{Conditions}
 \label{subsec:conditions}
