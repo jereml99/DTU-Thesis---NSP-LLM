@@ -1769,6 +1769,64 @@
           "body": "With our improvments"
         }
       ]
+    },
+    {
+      "id": "2f51c06e-aa88-4139-a9c5-20cd5c783c9e",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 16128,
+        "endOffset": 16444,
+        "selectedText": "\n\\begin{enumerate}\n    \\item \\textbf{Baseline (GA)}: Faithful re-implementation of Generative Agents \\cite{parkGenerativeAgentsInteractive2023a}.\n    \\item \\textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.\n\\end{enumerate}",
+        "prefixContext": " on the same simulated world and character seeds:\n",
+        "suffixContext": "\n\nEach participant evaluates both conditions on th",
+        "originalRange": {
+          "startLine": 180,
+          "startCharacter": 0,
+          "endLine": 184,
+          "endCharacter": 15
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T16:52:53.716Z",
+      "updatedAt": "2026-01-24T16:52:53.716Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "f55fd414-9339-4644-8653-7ca688c4b412",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T16:52:53.716Z",
+          "body": "Just reference tthe experimental setup"
+        }
+      ]
+    },
+    {
+      "id": "3f3c8b1e-195e-4234-ad75-f5a3ac1031e0",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 17951,
+        "endOffset": 18006,
+        "selectedText": "quide and the evaluater will follow the evaluator guide",
+        "prefixContext": "minutes):\nThe user can read paper version of user ",
+        "suffixContext": "\n\\begin{enumerate}\n    \\item \\textbf{Introduction.",
+        "originalRange": {
+          "startLine": 210,
+          "startCharacter": 40,
+          "endLine": 210,
+          "endCharacter": 95
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T17:00:32.869Z",
+      "updatedAt": "2026-01-24T17:00:32.869Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "8190ec93-d6d3-4243-a40c-b7ec366fd718",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T17:00:32.869Z",
+          "body": "Add references"
+        }
+      ]
     }
   ]
 }

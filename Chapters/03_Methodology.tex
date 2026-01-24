@@ -198,64 +198,33 @@ The stimulus for each condition is a replay of a single random character's day. 
 
 \begin{itemize}
     \item time-lapse \emph{video replay} of the agent acting in the world (controllable playback speed, pause/seek);
-    \item optional overlay with \emph{high-level plan} (intentions and sub-goals) and \emph{low-level action log}; and
+    \item Activity log with detals about current activity and animented time following; and
     \item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
 \end{itemize}
 
-Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
+Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile, task for the day and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
 
 \subsection{Procedure}
 \label{subsec:procedure}
 
 Each session (approximately 30 minutes):
-
+The user can read paper version of user quide and the evaluater will follow the evaluator guide
 \begin{enumerate}
     \item \textbf{Introduction.} Scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
     \item \textbf{Practice.} Participants complete a 2 to 3 minute tutorial on the interface using a neutral example not used in the main study.
     \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable actions. For each mark, add a short explanation (optional but encouraged).
     \item \textbf{Condition B.} Repeat with the other planner. Order varies across participants; assignment is double-blind.
-    \item \textbf{Summary ratings.} For each condition: (i) overall believability rating (7-point Likert), (ii) perceived causal coherence rating (7-point Likert), and (iii) preference judgment (forced-choice which was more believable and why).
+    \item \textbf{Summary.} We show user the the overview of marked actions in both condtions and ask which one felt more human like
 \end{enumerate}
 
-We record duration until finished and whether the plan overlay was opened, to analyze how explanations affect believability judgments.
-
+We record and transcribe the experiment, for later qualitative study of comment about unbelievable actions.
 \subsection{Measures}
 \label{subsec:measures}
 
-We operationalize believability with participant-reported and behavior-linked measures. Higher values indicate higher believability unless noted.
-
-\subsubsection{Primary Outcomes}
-\label{subsubsec:primary-outcomes}
-
-\begin{enumerate}
-    \item \textbf{Overall believability (Likert).} Single item per condition on a 7-point scale: 1 ``not at all believable'', 4 ``moderately believable'', 7 ``extremely believable''. Prompt: ``How believable was the agent's behaviour overall in this replay?''
-
-    \item \textbf{Action-level unbelievable rate (event-normalized).} Participants flag any action as unbelievable. Let $F$ be flagged action events and $A$ be \emph{atomic actions} viewed (from action log restricted to watched timestamps). The rate is
-          \begin{equation}
-              r_{\mathrm{unbel}} = \frac{F}{A} \times 100\,,
-          \end{equation}
-          expressed as flags per 100 atomic actions. Multiple flags within 2 seconds around the same atomic action merge into one.
-
-    \item \textbf{Pairwise preference.} Forced-choice: ``Which replay was more believable overall?'' (Baseline vs. Ours).
-\end{enumerate}
-
-\subsubsection{Secondary Outcomes}
-\label{subsubsec:secondary-outcomes}
-
-\begin{itemize}
-    \item \textbf{Causal coherence (Likert).} 7-point rating: 1 ``not coherent'', 7 ``highly coherent''.
-    \item \textbf{Plan adherence (Likert).} 7-point rating of alignment between visible high-level plan and observed actions.
-    \item \textbf{Unbelievable-action categories (coded).} Free-text reasons are open-coded into categories: goal inconsistency, environment rule violation, temporal implausibility, social norm violation, low-level control failure. Two independent coders label a stratified sample ($\geq 30\%$ of flags); disagreements are adjudicated and inter-rater agreement (Cohen's $\kappa$) is reported.
-\end{itemize}
-
-\textbf{Logged covariates (for analysis, not outcomes):} condition order, scenario ID, participant playback time, number of overlay openings, and self-reported prior experience with simulations/games. These are used as covariates in exploratory models and to check for order effects.
+[Do we need to write anything here?]
 
 \subsection{Data Quality and Exclusion}
 \label{subsec:data-quality}
 
 Sessions are excluded if participants fail an attention check (simple comprehension question about the replay), leave more than half the session unanswered, or complete in less than one-third of median time. We pre-register exclusion rules prior to data collection.
 
-\subsection{Ethics}
-\label{subsec:ethics}
-
-The study involves minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.
