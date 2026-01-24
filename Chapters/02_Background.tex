@@ -6,8 +6,9 @@ It defines core concepts (LLMs, agents, planning paradigms including PDDL), revi
 
 \begin{example}[Running Example: Student NPC]
     \label{ex:running-student}
-    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting temporal constraints (no overlapping commitments), location constraints (cannot be in two places simultaneously),
-    and environmental rules (must be enrolled in a course to attend its lectures).
+    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting environmental rules (must be enrolled in a course to attend its lectures). 
+    
+    \textit{Note: While this example references temporal and location constraints for pedagogical completeness, this thesis focuses on validating action preconditions and environmental feasibility within a single-agent, fully observable simulation environment. The neuro-symbolic framework is designed to handle temporal and location constraints in principle; their absence from this work reflects the specific scope of the simulation.}
 \end{example}
 
 
