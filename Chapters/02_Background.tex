@@ -41,7 +41,19 @@ However, LLMs have critical limitations:
     \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory.
 \end{itemize}
 
-For this thesis, the critical use of LLMs is to generate formal planning specifications and decompose high-level goals into concrete action sequences—tasks where their fluency and commonsense are valuable, but where their lack of formal correctness must be constrained by external validation.
+To address these limitations, we adopt \emph{scaffolding}, understood as the use of external structures that support and constrain the reasoning of a large language model, rather than relying solely on its raw outputs.
+
+\begin{definition}[Scaffolding]
+    \label{def:scaffolding}
+    \emph{Scaffolding} refers to external processes or structures that support a reasoning system in accomplishing tasks beyond its unaided capabilities, by constraining, guiding, or validating its intermediate outputs, without modifying the underlying
+    model\cite{wood1976scaffolding}.
+\end{definition}
+
+In the context of LLM-based agents, scaffolding can take the form of translating natural language outputs into formal representations, validating candidate actions against explicit constraints, and iteratively refining solutions using external feedback. These mechanisms directly mitigate common failure modes of LLM planning, including logical inconsistency, hallucination, and limited context sensitivity.
+
+In this thesis, scaffolding is employed to support the generation of formal planning specifications and the decomposition of high-level goals into executable action sequences—domains where LLM fluency and commonsense reasoning are beneficial, but where
+formal correctness and consistency are required.
+
 
 \subsection{Planning and PDDL}
 
