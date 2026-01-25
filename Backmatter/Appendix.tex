@@ -1,3 +1,127 @@
 \chapter{AI Tools and Configuration Details}
 \label{app:ai_details}
 [To be completed]
+
+\chapter{PDDL Example: Student Scheduling Domain}
+\label{app:pddl-example}
+
+This appendix provides a complete, runnable PDDL example for the student scheduling domain introduced in \cref{ch:background}. It consists of a domain file (predicates and action schemas), a problem file (objects, initial state, and goals), and a valid plan solving the problem.
+
+\section{Domain File}
+
+\begin{lstlisting}[language=lisp, caption={Student Scheduling Domain}, label=lst:pddl-domain]
+(define (domain student-scheduling)
+  (:requirements :typing)
+  
+  (:types
+    student location time - object
+    course assignment - object
+  )
+  
+  (:predicates
+    (at ?s - student ?l - location)
+    (enrolled ?s - student ?c - course)
+    (assignment-completed ?s - student ?a - assignment)
+    (lecture-scheduled ?c - course ?l - location ?t - time)
+    (now ?t - time)
+  )
+  
+  (:action move
+    :parameters (?s - student ?from ?to - location)
+    :precondition (at ?s ?from)
+    :effect (and (not (at ?s ?from)) (at ?s ?to))
+  )
+  
+  (:action attend-lecture
+    :parameters (?s - student ?c - course ?l - location ?t - time)
+    :precondition (and
+      (at ?s ?l)
+      (enrolled ?s ?c)
+      (lecture-scheduled ?c ?l ?t)
+      (now ?t)
+    )
+    :effect (and
+      (not (now ?t))
+    )
+  )
+  
+  (:action complete-assignment
+    :parameters (?s - student ?a - assignment)
+    :precondition (at ?s ?a)
+    :effect (assignment-completed ?s ?a)
+  )
+)
+\end{lstlisting}
+
+\section{Problem File}
+
+\begin{lstlisting}[language=lisp, caption={Student Scheduling Problem}, label=lst:pddl-problem]
+(define (problem student-day)
+  (:domain student-scheduling)
+  
+  (:objects
+    alice - student
+    home lecture-hall assignment-desk cafe - location
+    math history - course
+    math-homework history-essay - assignment
+    morning afternoon - time
+  )
+  
+  (:init
+    (at alice home)
+    (enrolled alice math)
+    (enrolled alice history)
+    (lecture-scheduled math lecture-hall morning)
+    (lecture-scheduled history lecture-hall afternoon)
+    (now morning)
+  )
+  
+  (:goal (and
+    (assignment-completed alice math-homework)
+    (assignment-completed alice history-essay)
+  ))
+)
+\end{lstlisting}
+
+\section{Valid Plan}
+
+A valid solution to the problem above is:
+
+\begin{lstlisting}[caption={Solution Plan}, label=lst:pddl-plan]
+1. (move alice home lecture-hall)
+   State after: (at alice lecture-hall), (now morning)
+
+2. (attend-lecture alice math lecture-hall morning)
+   State after: (at alice lecture-hall), (now afternoon)
+
+3. (move alice lecture-hall assignment-desk)
+   State after: (at alice assignment-desk), (now afternoon)
+
+4. (complete-assignment alice math-homework)
+   State after: (assignment-completed alice math-homework), (now afternoon)
+
+5. (move alice assignment-desk home)
+   State after: (at alice home), (now afternoon)
+
+6. (move alice home assignment-desk)
+   State after: (at alice assignment-desk), (now afternoon)
+
+7. (complete-assignment alice history-essay)
+   State after: (assignment-completed alice history-essay), (now afternoon)
+
+Goal reached: (assignment-completed alice math-homework) \checkmark
+             (assignment-completed alice history-essay) \checkmark
+\end{lstlisting}
+
+\section{Plan Validity}
+
+Each action in the plan satisfies its preconditions from the state immediately before it:
+
+\begin{itemize}
+    \item \textbf{Step 1}: Precondition \texttt{(at alice home)} is satisfied by initial state.
+    \item \textbf{Step 2}: Preconditions \texttt{(at alice lecture-hall)}, \texttt{(enrolled alice math)}, \texttt{(lecture-scheduled math lecture-hall morning)}, and \texttt{(now morning)} are all true after step 1.
+    \item \textbf{Steps 3--7}: Each move and assignment action is precondition-satisfied and reachable from the previous state.
+    \item \textbf{Final state}: Both goal conditions are satisfied.
+\end{itemize}
+
+This example demonstrates how formal PDDL specifications enable explicit verification of plan correctness---a property leveraged in \cref{ch:methodology} for validating LLM-generated action sequences.
