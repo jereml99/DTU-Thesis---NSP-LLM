@@ -1,0 +1,72 @@
+{
+  "predicates": [
+    {
+      "name": "in_apartment",
+      "description": "Is Isabella located inside her apartment (general housing context)."
+    },
+    {
+      "name": "lying_down",
+      "description": "Is Isabella lying down in bed."
+    },
+    {
+      "name": "sitting_up",
+      "description": "Is Isabella sitting upright in bed."
+    },
+    {
+      "name": "robe_worn",
+      "description": "Is Isabella wearing a robe."
+    },
+    {
+      "name": "pillows_fluffed",
+      "description": "Pillows on the bed are fluffed and arranged."
+    },
+    {
+      "name": "bed_area_clear",
+      "description": "There is unobstructed space in the bed area."
+    },
+    {
+      "name": "water_running_in_sink",
+      "description": "Water is running at the sink."
+    },
+    {
+      "name": "sink_functional",
+      "description": "The sink has functional water supply."
+    },
+    {
+      "name": "toothbrush_available",
+      "description": "Toothbrush is available for use."
+    },
+    {
+      "name": "toothpaste_available",
+      "description": "Toothpaste is available for use."
+    },
+    {
+      "name": "coffee_maker_functional",
+      "description": "Coffee maker is functional and can brew coffee."
+    },
+    {
+      "name": "coffee_available",
+      "description": "Coffee (grounds or beans) is available to brew."
+    },
+    {
+      "name": "bread_available",
+      "description": "Bread is available to toast."
+    },
+    {
+      "name": "toaster_functional",
+      "description": "Toaster is functional for toasting bread."
+    },
+    {
+      "name": "toast_toasted",
+      "description": "Toast has been toasted and is ready to eat."
+    },
+    {
+      "name": "cup_available",
+      "description": "A cup or mug is available to drink from."
+    },
+    {
+      "name": "breakfast_completed",
+      "description": "Breakfast is completed (morning routine finished)."
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "problem_name": "isabella_rodriguez_morning_routine_and_breakfast",
+  "domain_name": "persona_world",
+  "init": [
+    {
+      "predicate": "in_apartment",
+      "is_negative": false
+    },
+    {
+      "predicate": "lying_down",
+      "is_negative": false
+    },
+    {
+      "predicate": "bed_area_clear",
+      "is_negative": false
+    },
+    {
+      "predicate": "sitting_up",
+      "is_negative": true
+    },
+    {
+      "predicate": "robe_worn",
+      "is_negative": true
+    },
+    {
+      "predicate": "water_running_in_sink",
+      "is_negative": false
+    },
+    {
+      "predicate": "sink_functional",
+      "is_negative": false
+    },
+    {
+      "predicate": "toothbrush_available",
+      "is_negative": false
+    },
+    {
+      "predicate": "toothpaste_available",
+      "is_negative": false
+    },
+    {
+      "predicate": "skincare_products_available",
+      "is_negative": false
+    },
+    {
+      "predicate": "towel_available",
+      "is_negative": false
+    },
+    {
+      "predicate": "coffee_maker_functional",
+      "is_negative": false
+    },
+    {
+      "predicate": "coffee_available",
+      "is_negative": false
+    },
+    {
+      "predicate": "toaster_functional",
+      "is_negative": false
+    },
+    {
+      "predicate": "bread_available",
+      "is_negative": false
+    },
+    {
+      "predicate": "cup_available",
+      "is_negative": false
+    }
+  ],
+  "goal": [
+    {
+      "predicate": "breakfast_completed",
+      "is_negative": false
+    },
+    {
+      "predicate": "toast_toasted",
+      "is_negative": false
+    },
+    {
+      "predicate": "cup_available",
+      "is_negative": false
+    }
+  ],
+  "notes": "Generated problem to align Isabella Rodriguez's morning routine with the provided domain. The initial state asserts preconditions for performing A1-A4 (morning routine up to brewing and toasting), enabling progress toward breakfast. The goal focuses on breakfast completion (including the toasted bread and available cup) without requiring completion of the subsequent actions which may have conflicting effects in the domain."
+}

@@ -1,0 +1,5 @@
+0: (sit_up_in_bed_and_stretch)
+1: (put_on_robe_and_adjust_pillows)
+2: (wash_face_brush_teeth_and_apply_skincare)
+3: (brew_coffee_and_toast_bread)
+4: (eat_toast_with_fruit_and_drink_coffee)
