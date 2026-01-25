@@ -2,13 +2,15 @@
 \label{ch:background}
 
 This chapter establishes conceptual foundations and reviews prior work motivating this thesis.
-It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the seminal Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We emphasize the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
+It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the seminal Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We highlight the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
 
 \begin{example}[Running Example: Student NPC]
     \label{ex:running-student}
     Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting environmental rules (must be enrolled in a course to attend its lectures). 
     
     \textit{Note: While this example references temporal and location constraints for pedagogical completeness, this thesis focuses on validating action preconditions and environmental feasibility within a single-agent, fully observable simulation environment. The neuro-symbolic framework is designed to handle temporal and location constraints in principle; their absence from this work reflects the specific scope of the simulation.}
+    
+    A complete PDDL formulation of this student scheduling domain, including domain predicates, action schemas, and a concrete problem instance with a valid plan, is provided in \cref{app:pddl-example}.
 \end{example}
 
 
@@ -37,9 +39,9 @@ Key capabilities of LLMs relevant to this work:
 
 However, LLMs have critical limitations:
 \begin{itemize}
-    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs. % any referemces 
-    \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories; older context may be lost or forgotten.
-    \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory.
+    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs\cite{bender2021dangers,valmeekam2024llms}. % any referemces 
+    \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories by design\cite{vaswani2017attention}; older context may be lost or forgotten.
+    \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory \cite{huang2025survey,ji2023survey}.
 \end{itemize}
 
 To address these limitations, we adopt \emph{scaffolding}, understood as the use of external structures that support and constrain the reasoning of a large language model, rather than relying solely on its raw outputs.
@@ -60,49 +62,94 @@ formal correctness and consistency are required.
 
 To ground our approach, we introduce the formal language used to specify planning problems: PDDL (Planning Domain Definition Language).
 
+\begin{definition}[State]
+\label{def:state}
+A \emph{state} $s \in S$ is a complete description of the environment at a given time, capturing all facts that are relevant for action execution and goal satisfaction. In classical planning, states are assumed to be fully observable and are typically represented as sets of propositional facts that are true in the world; any fact not included in the set is assumed to be false (closed-world assumption).
+\end{definition}
+
+\begin{definition}[Action]
+\label{def:action}
+An \emph{action} is a discrete event that transitions the system from one state to another. Formally, in a planning problem, an action $a \in A$ is an element of the action set. An action is characterized by:
+\begin{itemize}
+    \item \textbf{Preconditions}: facts that must be true in the current state for the action to be executable;
+    \item \textbf{Effects}: facts that become true (or false) after the action executes.
+\end{itemize}
+When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
+\end{definition}
+
 \begin{definition}[Classical Planning Problem]
-    \label{def:planning-problem}
-    A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$: $S$ is a state set, $A$ is an action set, $T: S \times A \to S$ is a transition function, $I \subseteq S$ is the initial state set, and $G \subseteq S$ is the goal state set. A \emph{plan} is a finite action sequence $\pi = \langle a_1, \ldots, a_n \rangle$ such that executing $\pi$ from any $s \in I$ via $T$ reaches some $g \in G$ \cite{ghallabAutomatedPlanningTheory2004}.
+\label{def:planning-problem}
+A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$:
+\begin{itemize}
+    \item $S$ is a finite set of states;
+    \item $A$ is a finite set of actions;
+    \item $T: S \times A \to S$ is a deterministic transition function mapping a state and action to a next state;
+    \item $I \subseteq S$ is a non-empty set of initial states;
+    \item $G \subseteq S$ is a non-empty set of goal states (any state in $G$ is an acceptable outcome).
+\end{itemize}
+
+For a plan $\pi = \langle a_1, \ldots, a_n \rangle$ (a finite sequence of actions) and an initial state $s_0 \in I$, we define the \emph{execution} of $\pi$ from $s_0$ recursively as follows: let $s_0' = s_0$, and for $i = 1, \ldots, n$, let $s_i' = T(s_{i-1}', a_i)$. The plan $\pi$ is \emph{valid} for the planning problem if, for every initial state $s_0 \in I$, the execution reaches a goal state, i.e., $s_n' \in G$. A valid plan is called a \emph{solution} to the planning problem.
 \end{definition}
 
-\begin{definition}[PDDL]
-    \label{def:pddl}
-    \emph{PDDL (Planning Domain Definition Language)} is a formal notation for specifying planning problems in a way that automated solvers can process \cite{mcdermottPDDLPlanningDomain1998, ghallabAutomatedPlanningTheory2004}. A PDDL specification has two parts:
-    \begin{enumerate}
-        \item \textbf{Domain}: Defines predicates (facts that can be true or false) and action schemas (named actions with preconditions—facts required before execution—and effects—facts that change when the action runs).
-        \item \textbf{Problem}: Specifies objects, the initial state (which facts are true at the start), and goal conditions (which facts must be true at the end).
-    \end{enumerate}
-\end{definition}
+\paragraph{Classical Planning Assumptions}
+The formulation above relies on standard assumptions commonly adopted in classical planning:
+\begin{itemize}
+    \item \textbf{Determinism}: actions have deterministic outcomes;
+    \item \textbf{Full observability}: the planner has complete knowledge of the current state;
+    \item \textbf{Instantaneous actions}: actions do not consume time;
+    \item \textbf{Single-agent setting}: interactions with other agents are not considered.
+\end{itemize}
+These assumptions enable precise reasoning about plan validity and correctness. Relaxing them leads to more expressive planning models, which are discussed later in this thesis.
 
-\begin{example}[Student Scheduling Domain in PDDL]
-    \label{ex:student-pddl}
-    Consider scheduling a student for our running example. A simplified domain might define:
+\begin{example}[Simple Classical Planning Problem]
+\label{ex:simple-planning}
+Consider a minimal instance for our student running example.
 
-    \textbf{Predicates}:
-    \begin{itemize}
-        \item \texttt{(enrolled ?s - student ?c - course)}: student $s$ is enrolled in course $c$.
-        \item \texttt{(at-location ?s - student ?l - location)}: student $s$ is at location $l$.
-        \item \texttt{(completed ?s - student ?a - assignment)}: student $s$ has completed assignment $a$.
-    \end{itemize}
+\textbf{States}: The student can be in two locations: home or café. The state set is:
+\[
+S = \{\texttt{at-home}, \texttt{at-cafe}\}.
+\]
 
-    \textbf{Action schema} (simplified):
-    \begin{itemize}
-        \item \texttt{attend-lecture}(?s - student, ?c - course, ?t - time):
-              \begin{itemize}
-                  \item Preconditions: student must be enrolled in the course, the lecture must be scheduled at time $t$, the student must be at the lecture hall location.
-                  \item Effects: the student is now at the lecture hall, the student has learned the lecture content.
-              \end{itemize}
-    \end{itemize}
+\textbf{Actions}: The student can move between locations:
+\[
+A = \{\texttt{go-to-cafe}, \texttt{go-to-home}\}.
+\]
 
-    \textbf{Problem instance}: The student is initially at home, enrolled in two courses (Math and History), and has no assignments completed. The goal is for the student to attend both lectures and complete one assignment by noon.
+\textbf{Transition function}: The transition function $T$ encodes how each action changes the state. For example:
+\begin{itemize}
+    \item $T(\texttt{at-home}, \texttt{go-to-cafe}) = \texttt{at-cafe}$;
+    \item $T(\texttt{at-cafe}, \texttt{go-to-home}) = \texttt{at-home}$;
+    \item $T(\texttt{at-home}, \texttt{go-to-home}) = \texttt{at-home}$ (no change);
+    \item $T(\texttt{at-cafe}, \texttt{go-to-cafe}) = \texttt{at-cafe}$ (no change).
+\end{itemize}
 
-    A PDDL solver (an automated planner) takes this domain and problem as input and produces a sequence of actions (a plan) that starts in the initial state and reaches the goal. The solver guarantees that all preconditions are satisfied before each action executes, and that temporal and resource constraints (if specified) are respected.
+\textbf{Initial state}: The student begins at home:
+\[
+I = \{\texttt{at-home}\}.
+\]
+
+\textbf{Goal state}: The student wants to work at the café:
+\[
+G = \{\texttt{at-cafe}\}.
+\]
+
+\textbf{Solution}: The plan $\pi = \langle \texttt{go-to-cafe} \rangle$ is valid:
+\begin{itemize}
+    \item Start at $s_0' = \texttt{at-home} \in I$.
+    \item Execute action $\texttt{go-to-cafe}$: 
+    \[
+    s_1' = T(\texttt{at-home}, \texttt{go-to-cafe}) = \texttt{at-cafe}.
+    \]
+    \item End state: $s_1' \in G$.
+\end{itemize}
+
+This minimal problem has a unique solution; extending it with time, resources, or additional constraints would yield more complex planning instances where multiple or no solutions may exist.
 \end{example}
 
-PDDL is valuable because it is explicit and verifiable: once a plan is generated, anyone (or any algorithm) can check that each step's preconditions are met and that contradictions are absent.
+\paragraph{Relevance to LLM-Driven Planning}
+PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm—including human inspection—can check that action preconditions are met, goals are reachable, and no contradictions are present. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024genplan,kwon2025neurosymbolic}. 
 
-\textbf{Relevance to LLMs}: LLMs are good at understanding natural language domain descriptions (e.g., ``a student must be enrolled in a course before attending its lecture'') and can be prompted to output PDDL predicates and action schemas.
-However, LLMs may produce syntactically valid PDDL that is semantically inconsistent or incomplete. For instance, an LLM might forget to include a precondition (e.g., neglecting that the café key is required to unlock the café door), leading to invalid plans. This motivates our approach: use the LLM to generate initial PDDL schemas from natural language, then validate and refine them using automated planning tools.
+While newer LLMs exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone. Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification. This combination preserves the flexibility and commonsense reasoning of LLMs while enforcing the consistency guarantees that formal planning requires.
 
 \subsection{Agents and Believability}
 \label{subsec:agents-believability}

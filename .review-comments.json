@@ -1655,7 +1655,7 @@
       },
       "status": "open",
       "createdAt": "2026-01-24T15:40:19.119Z",
-      "updatedAt": "2026-01-24T15:40:19.119Z",
+      "updatedAt": "2026-01-25T13:40:50.983Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -1663,6 +1663,12 @@
           "author": "jeremi",
           "createdAt": "2026-01-24T15:40:19.119Z",
           "body": "What is task"
+        },
+        {
+          "id": "58dcc07b-4d6e-4252-9d63-f9598ad63cf5",
+          "author": "acogi",
+          "createdAt": "2026-01-25T13:40:50.983Z",
+          "body": "I think we should define it in the methodology section or in the original paper section"
         }
       ]
     },
@@ -1837,6 +1843,64 @@
           "author": "jeremi",
           "createdAt": "2026-01-24T17:00:32.869Z",
           "body": "Add references"
+        }
+      ]
+    },
+    {
+      "id": "2a587ff4-4f42-49ac-a358-7ee662bb13da",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 4916,
+        "endOffset": 5045,
+        "selectedText": "This was dictated by the poor reliability of the model used in the original study [GPT-3.5 Turbo] in producing structured output.",
+        "prefixContext": "\" was always generated as a multiple of one hour. ",
+        "suffixContext": " With newer models and enforced structured output,",
+        "originalRange": {
+          "startLine": 65,
+          "startCharacter": 109,
+          "endLine": 65,
+          "endCharacter": 238
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T13:41:41.209Z",
+      "updatedAt": "2026-01-25T13:41:41.209Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "448cd58a-ab89-4cef-8892-74b28d9b7d32",
+          "author": "acogi",
+          "createdAt": "2026-01-25T13:41:41.209Z",
+          "body": "Do we know that?"
+        }
+      ]
+    },
+    {
+      "id": "a702464f-c9cd-474d-b4b6-db1e9a91fb76",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 6899,
+        "endOffset": 6946,
+        "selectedText": "\\subsection{Neuro-Symbolic Validation Pipeline}",
+        "prefixContext": " the examples more mathematically strict].\r\n\r\n\r\n\r\n",
+        "suffixContext": "\r\n\\label{subsec:neuro-symbolic-pipeline}\r\nWe imple",
+        "originalRange": {
+          "startLine": 73,
+          "startCharacter": 0,
+          "endLine": 73,
+          "endCharacter": 47
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T13:53:06.842Z",
+      "updatedAt": "2026-01-25T13:53:06.842Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "b193dd99-f392-468c-b25f-04173f10e4f7",
+          "author": "acogi",
+          "createdAt": "2026-01-25T13:53:06.842Z",
+          "body": "Comment on if we check just the coherence inside of the action decomposition, in-between tasks and if the goals have been achieved"
         }
       ]
     }
