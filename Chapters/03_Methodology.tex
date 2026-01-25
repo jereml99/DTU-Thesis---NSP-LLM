@@ -63,7 +63,7 @@ The biggest change is the programmatic addition of movement actions. In the orig
 
 \subsubsection{Daily Planning}
 
-In the original paper, each task, such as "morning routine," was always generated as a multiple of one hour. This was dictated by the poor reliability of the model used in the original study [GPT-3.5 Turbo] in producing structured output. With newer models and enforced structured output, we were able to ask the model to generate arbitrarily long tasks for a day. Another improvement is asking the model to generate task intent, what type of actions we expect to be necessary and the location of interest for the task --- the area where the agent will most likely move during task execution.
+In the original paper, each task, such as "morning routine," was always generated as a multiple of one hour. With newer models and enforced structured output, we were able to ask the model to generate arbitrarily long tasks for a day. Another improvement is asking the model to generate task intent, what type of actions we expect to be necessary and the location of interest for the task---the area where the agent will most likely move during task execution.
 We use task intent as context for prompts that will operate on the task [replanning, task decomposition]. Locations of interest are used to estimate travel time during the activity.
 
 \subsubsection{Task Decomposition}
@@ -272,7 +272,7 @@ For both simulations, we implemented extensive logging to understand system beha
 \section{User Study: Believability Evaluation}
 \label{sec:user-study-believability}
 
-This section describes the human-subjects study testing whether a simulation generated with the neuro-symbolic validation approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on the believability of \emph{actions} rather than solely on personalities or conversations.
+This section describes the human-subjects study testing whether a simulation generated with the neuro-symbolic validation approach improves perceived believability of agent behavior compared to the our baseline reimplementation of Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on the believability of \emph{actions} rather than solely on personalities or conversations.
 
 \subsection{Objectives and Hypotheses}
 \label{subsec:objectives-hypotheses}
@@ -292,7 +292,7 @@ Secondary outcomes: (i) free-text reasons participants provide when deeming acti
 Two within-subject conditions on the same simulated world and character seeds:
 
 \begin{enumerate}
-  \item \textbf{Baseline (GA)}: Faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
+  \item \textbf{Baseline (GA)}: Improved re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
   \item \textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 \end{enumerate}
 

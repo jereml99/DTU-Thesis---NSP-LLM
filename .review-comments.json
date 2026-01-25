@@ -17,9 +17,9 @@
           "endCharacter": 441
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:05:16.082Z",
-      "updatedAt": "2026-01-24T18:47:10.873Z",
+      "updatedAt": "2026-01-25T14:18:37.063Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -52,9 +52,9 @@
           "endCharacter": 0
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:05:49.558Z",
-      "updatedAt": "2026-01-23T11:05:49.558Z",
+      "updatedAt": "2026-01-25T14:28:53.425Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -110,9 +110,9 @@
           "endCharacter": 0
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:07:19.206Z",
-      "updatedAt": "2026-01-24T19:00:23.665Z",
+      "updatedAt": "2026-01-25T14:36:55.318Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -168,9 +168,9 @@
           "endCharacter": 91
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:08:13.268Z",
-      "updatedAt": "2026-01-23T11:08:13.268Z",
+      "updatedAt": "2026-01-25T14:48:36.286Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -240,6 +240,122 @@
       ]
     },
     {
+      "id": "df7de69d-84d6-405e-8098-1284907a8445",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 2591,
+        "endOffset": 2629,
+        "selectedText": "or in our case, symbolic validatation.",
+        "prefixContext": "lanning \\cite{tantakounLLMsPlanningModelers2025}, ",
+        "suffixContext": " Rather than relying solely on the LLM's inherent ",
+        "originalRange": {
+          "startLine": 12,
+          "startCharacter": 131,
+          "endLine": 12,
+          "endCharacter": 169
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T14:29:31.113Z",
+      "updatedAt": "2026-01-25T14:29:31.113Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "9fcce758-ed75-4d9c-a3da-406a57dbd230",
+          "author": "acogi",
+          "createdAt": "2026-01-25T14:29:31.113Z",
+          "body": "is this enough or is it too much to even talk about symbolic planning"
+        }
+      ]
+    },
+    {
+      "id": "6ef46f77-848a-43cf-9fb7-bc271d8882cc",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 5027,
+        "endOffset": 5031,
+        "selectedText": "PDDL",
+        "prefixContext": "on before using it---which are then formalized in ",
+        "suffixContext": ", and a symbolic validator verifies logical consis",
+        "originalRange": {
+          "startLine": 30,
+          "startCharacter": 272,
+          "endLine": 30,
+          "endCharacter": 276
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T14:35:02.106Z",
+      "updatedAt": "2026-01-25T14:35:02.106Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "8a58cc9f-f33c-4858-b014-4922ba8a7821",
+          "author": "acogi",
+          "createdAt": "2026-01-25T14:35:02.106Z",
+          "body": "add brief explanation of what PDDL is before or during"
+        }
+      ]
+    },
+    {
+      "id": "c21a62d0-1773-4e32-869f-f1af60a74a19",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 5645,
+        "endOffset": 5668,
+        "selectedText": "logical inconsistencies",
+        "prefixContext": "tion and explanation tools that make agent plans, ",
+        "suffixContext": ", and repair proposals inspectable to researchers ",
+        "originalRange": {
+          "startLine": 37,
+          "startCharacter": 77,
+          "endLine": 37,
+          "endCharacter": 100
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T14:46:50.877Z",
+      "updatedAt": "2026-01-25T14:46:50.877Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "549ccb38-e76e-42b7-993f-84703398d86b",
+          "author": "acogi",
+          "createdAt": "2026-01-25T14:46:50.877Z",
+          "body": "Make sure the rest of \"constraint violations\" are turned into \"logical inconsistencies\""
+        }
+      ]
+    },
+    {
+      "id": "e2d4eb55-56d9-4bbd-847c-01903f6b94f6",
+      "filePath": "Chapters/01_Introduction.tex",
+      "anchor": {
+        "startOffset": 6956,
+        "endOffset": 7296,
+        "selectedText": "This project focuses on simulation environments with deterministic action effects and complete observability. Real-world robotics introduces sensing uncertainty and physical dynamics beyond our scope. Evaluation constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.",
+        "prefixContext": " Limitations}\r\n\\label{sec:scope-limitations}\r\n\r\n\r\n",
+        "suffixContext": "\r\n\r\n\r\n\\section{Thesis Structure}\r\n\\label{sec:thesi",
+        "originalRange": {
+          "startLine": 60,
+          "startCharacter": 0,
+          "endLine": 60,
+          "endCharacter": 340
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T14:57:02.842Z",
+      "updatedAt": "2026-01-25T14:57:02.842Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "3ec1fa5e-3897-47e6-a399-766d25a86e63",
+          "author": "acogi",
+          "createdAt": "2026-01-25T14:57:02.842Z",
+          "body": "redo - is it normal to summarize or aknowledge style of the world"
+        }
+      ]
+    },
+    {
       "id": "5862cbbb-4d6f-4896-b7ec-b1c5faea22e0",
       "filePath": "Chapters/02_Background.tex",
       "anchor": {
@@ -255,9 +371,9 @@
           "endCharacter": 66
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:15:49.911Z",
-      "updatedAt": "2026-01-24T19:03:53.454Z",
+      "updatedAt": "2026-01-25T15:00:36.192Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -348,9 +464,9 @@
           "endCharacter": 124
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:18:06.336Z",
-      "updatedAt": "2026-01-23T11:18:06.336Z",
+      "updatedAt": "2026-01-25T15:07:21.064Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -377,9 +493,9 @@
           "endCharacter": 131
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:18:27.424Z",
-      "updatedAt": "2026-01-23T11:18:27.424Z",
+      "updatedAt": "2026-01-25T15:07:47.089Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -406,9 +522,9 @@
           "endCharacter": 0
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:18:43.331Z",
-      "updatedAt": "2026-01-23T11:18:43.331Z",
+      "updatedAt": "2026-01-25T15:11:59.194Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -464,9 +580,9 @@
           "endCharacter": 0
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:19:34.345Z",
-      "updatedAt": "2026-01-23T11:19:34.345Z",
+      "updatedAt": "2026-01-25T15:13:13.547Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -493,9 +609,9 @@
           "endCharacter": 0
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T11:19:47.390Z",
-      "updatedAt": "2026-01-23T11:19:47.390Z",
+      "updatedAt": "2026-01-25T15:15:29.726Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -768,35 +884,6 @@
       ]
     },
     {
-      "id": "ef8c61fa-30a9-43d4-a702-49eccbe8518b",
-      "filePath": "Chapters/02_Background.tex",
-      "anchor": {
-        "startOffset": 12291,
-        "endOffset": 12315,
-        "selectedText": "environmental invariants",
-        "prefixContext": " respect for resource limits, and compliance with ",
-        "suffixContext": ". While believability literature uses ``coherence'",
-        "originalRange": {
-          "startLine": 119,
-          "startCharacter": 184,
-          "endLine": 119,
-          "endCharacter": 208
-        }
-      },
-      "status": "open",
-      "createdAt": "2026-01-23T11:52:56.454Z",
-      "updatedAt": "2026-01-23T11:52:56.454Z",
-      "createdBy": "jeremi",
-      "messages": [
-        {
-          "id": "a4f2ee4e-b1bf-4d8f-9444-255c560f82b8",
-          "author": "jeremi",
-          "createdAt": "2026-01-23T11:52:56.454Z",
-          "body": "What is actually environmental invariant?"
-        }
-      ]
-    },
-    {
       "id": "b36b98fb-d284-439d-9cc7-61321db64b8f",
       "filePath": "Chapters/02_Background.tex",
       "anchor": {
@@ -957,9 +1044,9 @@
           "endCharacter": 0
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T14:43:57.988Z",
-      "updatedAt": "2026-01-23T14:43:57.988Z",
+      "updatedAt": "2026-01-25T16:00:24.038Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -1247,9 +1334,9 @@
           "endCharacter": 15
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T14:57:10.759Z",
-      "updatedAt": "2026-01-23T14:57:10.759Z",
+      "updatedAt": "2026-01-25T16:12:41.215Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -1276,9 +1363,9 @@
           "endCharacter": 404
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T14:58:28.685Z",
-      "updatedAt": "2026-01-23T14:58:28.685Z",
+      "updatedAt": "2026-01-25T16:16:08.491Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -1334,9 +1421,9 @@
           "endCharacter": 267
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-23T15:01:35.543Z",
-      "updatedAt": "2026-01-23T15:01:35.543Z",
+      "updatedAt": "2026-01-25T16:18:18.517Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -1431,6 +1518,122 @@
           "author": "jeremi",
           "createdAt": "2026-01-23T16:54:58.594Z",
           "body": "We should spend more describing this one, Genereting the domain and problem in core of our thesis, and I will be going probably quite in detail about it in the methodology"
+        }
+      ]
+    },
+    {
+      "id": "68259ac2-7a72-4e7c-ba68-744c0bbe54eb",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 3440,
+        "endOffset": 3589,
+        "selectedText": "\\item \\textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted\\cite{StructuredModelOutputs}.",
+        "prefixContext": "nce when given a few examples before a task.\r\n    ",
+        "suffixContext": "\r\n\\end{itemize}\r\n\r\nHowever, LLMs have critical lim",
+        "originalRange": {
+          "startLine": 36,
+          "startCharacter": 4,
+          "endLine": 36,
+          "endCharacter": 153
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T15:07:18.506Z",
+      "updatedAt": "2026-01-25T15:07:18.506Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "3c0327f1-a6d8-42d9-9958-8b34b63fec81",
+          "author": "acogi",
+          "createdAt": "2026-01-25T15:07:18.507Z",
+          "body": "Explain more about this but not a lot"
+        }
+      ]
+    },
+    {
+      "id": "37d6fd93-a5ed-4f4d-9d81-fb91011f3d08",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 11819,
+        "endOffset": 11856,
+        "selectedText": "\\subsection{Agents and Believability}",
+        "prefixContext": "ency guarantees that formal planning requires.\r\n\r\n",
+        "suffixContext": "\r\n\\label{subsec:agents-believability}\r\n\r\n\\begin{de",
+        "originalRange": {
+          "startLine": 151,
+          "startCharacter": 0,
+          "endLine": 151,
+          "endCharacter": 37
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T15:27:23.011Z",
+      "updatedAt": "2026-01-25T15:27:23.011Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "fde5c3c6-c36a-428b-afc6-83b310de7f1a",
+          "author": "acogi",
+          "createdAt": "2026-01-25T15:27:23.011Z",
+          "body": "go over it again and make it a bit shorter if needed"
+        }
+      ]
+    },
+    {
+      "id": "8c38a626-1438-4fba-8042-73dadecc7b0c",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 15714,
+        "endOffset": 15746,
+        "selectedText": "youngOverviewMimesisArchitecture",
+        "prefixContext": "vironmental invariants or prior commitments \\cite{",
+        "suffixContext": ", riedlNarrativePlanningBalancing2010}. Formally, ",
+        "originalRange": {
+          "startLine": 179,
+          "startCharacter": 315,
+          "endLine": 179,
+          "endCharacter": 347
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T15:33:00.111Z",
+      "updatedAt": "2026-01-25T15:33:00.111Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "27eb24a7-c058-4558-8c7a-a813af2da27a",
+          "author": "acogi",
+          "createdAt": "2026-01-25T15:33:00.111Z",
+          "body": "why is this a reference"
+        }
+      ]
+    },
+    {
+      "id": "573e552e-0a21-433e-ae0d-57a6641dfe35",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 15403,
+        "endOffset": 16298,
+        "selectedText": "In the context of agent behavior, \\emph{coherence} is the degree to which an action sequence respects domain constraints: preconditions are satisfied before each action, temporal and resource constraints are not violated, and the sequence does not contradict environmental invariants or prior commitments \\cite{youngOverviewMimesisArchitecture, riedlNarrativePlanningBalancing2010}. Formally, a sequence of actions $\\pi = \\langle a_1, \\ldots, a_n \\rangle$ is \\emph{coherent with respect to a planning problem} $\\langle S, A, T, I, G \\rangle$ (from \\cref{def:planning-problem}) if executing $\\pi$ from the initial state(s) $I$ via the transition function $T$ neither violates action preconditions nor environmental invariants. In other words, a coherent action sequence corresponds to a valid plan (though not necessarily an optimal one, and independent of whether it reaches the goal state $G$).",
+        "prefixContext": "ition}[Coherence]\r\n    \\label{def:coherence}\r\n    ",
+        "suffixContext": "\r\n\\end{definition}\r\n\r\nOperationally, coherence is ",
+        "originalRange": {
+          "startLine": 179,
+          "startCharacter": 4,
+          "endLine": 179,
+          "endCharacter": 899
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-25T15:35:32.229Z",
+      "updatedAt": "2026-01-25T15:35:32.229Z",
+      "createdBy": "acogi",
+      "messages": [
+        {
+          "id": "a5ef6c53-7b71-40e6-90c3-8a15e37bf7e8",
+          "author": "acogi",
+          "createdAt": "2026-01-25T15:35:32.229Z",
+          "body": "Rethink"
         }
       ]
     },
@@ -1746,9 +1949,9 @@
           "endCharacter": 86
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-24T16:46:10.272Z",
-      "updatedAt": "2026-01-24T16:46:10.272Z",
+      "updatedAt": "2026-01-25T16:48:42.121Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -1775,9 +1978,9 @@
           "endCharacter": 200
         }
       },
-      "status": "open",
+      "status": "resolved",
       "createdAt": "2026-01-24T16:50:55.633Z",
-      "updatedAt": "2026-01-24T16:50:55.633Z",
+      "updatedAt": "2026-01-25T16:48:27.805Z",
       "createdBy": "jeremi",
       "messages": [
         {

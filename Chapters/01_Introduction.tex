@@ -10,7 +10,7 @@ Large Language Model (LLM)-driven generative agents---computational software age
 
 Park et al.\ \cite{parkGenerativeAgentsInteractive2023a} demonstrated emergent social dynamics through memory streams, reflection, and hierarchical planning. Yet their planning component lacks mechanisms to verify logical consistency or enforce environmental constraints, producing plans that are contextually plausible but violate hard constraints or exhibit temporal inconsistencies. Throughout this thesis, we refer to the Park et al.\ work as \emph{the original paper}---the foundational architecture that we extend with symbolic planning.
 
-Neuro-symbolic AI can address this by combining neural generation with symbolic planning \cite{tantakounLLMsPlanningModelers2025}. Rather than relying solely on the LLM's inherent reasoning, this hybrid approach builds structured \textit{scaffolding}---formal constraints, validators, and iterative refinement mechanisms---around the core intelligence of the model. As recently as December 2025, research continues to demonstrate that such scaffolding still has substantial room to grow as a key direction for improving LLM-driven systems \cite{zhang2025recursive}. By embedding symbolic validation and constraint enforcement alongside neural generation, we create an architecture in which both components complement each other: the LLM provides flexibility and commonsense reasoning, while symbolic planning ensures logical consistency and adherence to environmental constraints.
+Neuro-symbolic AI can address this by combining neural generation with symbolic planning \cite{tantakounLLMsPlanningModelers2025}, or in our case, symbolic validatation. Rather than relying solely on the LLM's inherent reasoning, this hybrid approach builds structured \textit{scaffolding}---formal constraints, validators, and iterative refinement mechanisms---around the core intelligence of the model. As recently as December 2025, research continues to demonstrate that such scaffolding still has substantial room to grow as a key direction for improving LLM-driven systems \cite{zhang2025recursive}. By embedding symbolic validation and constraint enforcement alongside neural generation, we create an architecture in which both components complement each other: the LLM provides flexibility and commonsense reasoning, while symbolic planning ensures logical consistency and adherence to environmental constraints.
 
 \section*{Note on the Use of AI}
 \label{sec:ai-disclaimer}
@@ -28,14 +28,14 @@ Existing agent architectures face a fundamental tradeoff: purely symbolic system
 \section{Research Aim and Objectives}
 \label{sec:research-aim-objectives}
 
-\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates a hierarchical plan, the plan actions and environment constraints are formalized in PDDL, and a symbolic validator verifies logical consistency, identifies constraint violations, and guides iterative plan refinement. 
+\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system in which an LLM generates a hierarchical plan and also the plan actions and environment constraints---like making sure that a coffee machine is on before using it---which are then formalized in PDDL, and a symbolic validator verifies logical consistency, identifies where it fails, and guides iterative plan refinement. 
 
 \textbf{Objectives:}
 
 \begin{enumerate}
     \item Reimplement the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} with a modular, extensible codebase that supports integration of symbolic planning components.
     \item Design and implement a PDDL-based validator that formalizes environmental constraints, detects planning violations, and outputs actionable diagnostic feedback.
-    \item Develop visualization and explanation tools that make agent plans, constraint violations, and repair proposals inspectable to researchers and evaluators.
+    \item Develop visualization and explanation tools that make agent plans, logical inconsistencies, and repair proposals inspectable to researchers and evaluators.
     \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) qualitative human evaluation of perceived believability.
 \end{enumerate}
 
@@ -43,19 +43,21 @@ Existing agent architectures face a fundamental tradeoff: purely symbolic system
 \section{Methodological Overview}
 \label{sec:methodological-overview}
 
-This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and PDDL action schemas; a symbolic validator detects constraint violations.
- Evaluation combines:
+This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and formalize them using PDDL (\ref{subsec:plann-pddl}); a symbolic validator detects logical inconsistencies.
+
+Evaluation combines:
 
 \begin{itemize}
     \item \textbf{Qualitative assessment}: Within-subjects user study comparing perceived believability of agent behaviors from both systems.
     \item \textbf{Quantitative metrics}: Constraint violation counts and rates on matched scenarios comparing (i) baseline hierarchical planning and (ii) neuro-symbolic planning with validator-guided revision. 
-    Metrics include violations per 100 actions, plan success rates, and repair efficiency. 
+    Plan success rates and repair efficiency. 
 \end{itemize}
 
 
 \section{Scope and Limitations}
 \label{sec:scope-limitations}
 
+% We don't really think about environmental invariants or resource constraints in this thesis, so we are not going to focus on them in the thesis. THey exist, but they are enforced by the simulation engine, which we didn't make. Same for temporal constraints, we don't have overlapping actions in our domain and location constrains.
 
 This project focuses on simulation environments with deterministic action effects and complete observability. Real-world robotics introduces sensing uncertainty and physical dynamics beyond our scope. Evaluation constraint adherence, and perceived believability rather than real-time performance or scalability to large multi-agent systems.
 
