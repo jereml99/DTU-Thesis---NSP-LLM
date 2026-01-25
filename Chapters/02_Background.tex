@@ -2,7 +2,7 @@
 \label{ch:background}
 
 This chapter establishes conceptual foundations and reviews prior work motivating this thesis.
-It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the seminal Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We emphasize the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
+It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the seminal Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We highlight the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
 
 \begin{example}[Running Example: Student NPC]
     \label{ex:running-student}
@@ -39,9 +39,9 @@ Key capabilities of LLMs relevant to this work:
 
 However, LLMs have critical limitations:
 \begin{itemize}
-    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs. % any referemces 
-    \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories; older context may be lost or forgotten.
-    \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory.
+    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs\cite{bender2021dangers,valmeekam2024llms}. % any referemces 
+    \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories by design\cite{vaswani2017attention}; older context may be lost or forgotten.
+    \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory \cite{huang2025survey,ji2023survey}.
 \end{itemize}
 
 To address these limitations, we adopt \emph{scaffolding}, understood as the use of external structures that support and constrain the reasoning of a large language model, rather than relying solely on its raw outputs.
