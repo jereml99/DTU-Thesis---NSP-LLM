@@ -19,7 +19,7 @@
       },
       "status": "open",
       "createdAt": "2026-01-23T11:05:16.082Z",
-      "updatedAt": "2026-01-23T11:05:16.082Z",
+      "updatedAt": "2026-01-24T18:47:10.873Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -27,6 +27,12 @@
           "author": "jeremi",
           "createdAt": "2026-01-23T11:05:16.082Z",
           "body": " IS that sth that we actually focus on? there is no way to do more the one thing in our simulation"
+        },
+        {
+          "id": "5202a7f5-df10-465d-8eb1-f192e28a6ad5",
+          "author": "acoma",
+          "createdAt": "2026-01-24T18:47:10.873Z",
+          "body": "This better?"
         }
       ]
     },
@@ -106,7 +112,7 @@
       },
       "status": "open",
       "createdAt": "2026-01-23T11:07:19.206Z",
-      "updatedAt": "2026-01-23T11:07:19.206Z",
+      "updatedAt": "2026-01-24T19:00:23.665Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -251,7 +257,7 @@
       },
       "status": "open",
       "createdAt": "2026-01-23T11:15:49.911Z",
-      "updatedAt": "2026-01-23T11:15:49.911Z",
+      "updatedAt": "2026-01-24T19:03:53.454Z",
       "createdBy": "jeremi",
       "messages": [
         {
@@ -259,6 +265,12 @@
           "author": "jeremi",
           "createdAt": "2026-01-23T11:15:49.911Z",
           "body": "%would anybody ever use this word? "
+        },
+        {
+          "id": "6f9d7df7-4e42-4922-80d3-826371b32609",
+          "author": "acoma",
+          "createdAt": "2026-01-24T19:03:53.454Z",
+          "body": "it's not very rare, but we could use foundational or influential instead"
         }
       ]
     },

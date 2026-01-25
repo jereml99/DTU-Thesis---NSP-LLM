@@ -6,8 +6,9 @@ It defines core concepts (LLMs, agents, planning paradigms including PDDL), revi
 
 \begin{example}[Running Example: Student NPC]
     \label{ex:running-student}
-    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting temporal constraints (no overlapping commitments), location constraints (cannot be in two places simultaneously),
-    and environmental rules (must be enrolled in a course to attend its lectures).
+    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting environmental rules (must be enrolled in a course to attend its lectures). 
+    
+    \textit{Note: While this example references temporal and location constraints for pedagogical completeness, this thesis focuses on validating action preconditions and environmental feasibility within a single-agent, fully observable simulation environment. The neuro-symbolic framework is designed to handle temporal and location constraints in principle; their absence from this work reflects the specific scope of the simulation.}
 \end{example}
 
 
@@ -41,7 +42,19 @@ However, LLMs have critical limitations:
     \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory.
 \end{itemize}
 
-For this thesis, the critical use of LLMs is to generate formal planning specifications and decompose high-level goals into concrete action sequences—tasks where their fluency and commonsense are valuable, but where their lack of formal correctness must be constrained by external validation.
+To address these limitations, we adopt \emph{scaffolding}, understood as the use of external structures that support and constrain the reasoning of a large language model, rather than relying solely on its raw outputs.
+
+\begin{definition}[Scaffolding]
+    \label{def:scaffolding}
+    \emph{Scaffolding} refers to external processes or structures that support a reasoning system in accomplishing tasks beyond its unaided capabilities, by constraining, guiding, or validating its intermediate outputs, without modifying the underlying
+    model\cite{wood1976scaffolding}.
+\end{definition}
+
+In the context of LLM-based agents, scaffolding can take the form of translating natural language outputs into formal representations, validating candidate actions against explicit constraints, and iteratively refining solutions using external feedback. These mechanisms directly mitigate common failure modes of LLM planning, including logical inconsistency, hallucination, and limited context sensitivity.
+
+In this thesis, scaffolding is employed to support the generation of formal planning specifications and the decomposition of high-level goals into executable action sequences—domains where LLM fluency and commonsense reasoning are beneficial, but where
+formal correctness and consistency are required.
+
 
 \subsection{Planning and PDDL}
 
@@ -97,6 +110,11 @@ However, LLMs may produce syntactically valid PDDL that is semantically inconsis
 \begin{definition}[Agent]
     \label{def:agent}
     An \emph{agent} receives percepts and produces actions via sensors and actuators, implementing a mapping $f: P^{*} \to A$ from percept histories $P^{*}$ to actions $A$ \cite{russellArtificialIntelligenceModern2022}.
+\end{definition}
+
+\begin{definition}[Generative Agent]
+    \label{def:generative-agent}
+    A \emph{generative agent} is a computational software agent that simulates believable human behavior by leveraging large language models to generate action sequences, maintain memory of past experiences, reflect on accumulated observations, and plan future behavior based on goals and social context.
 \end{definition}
 
 In simulated environments and games, non-player characters (NPCs) prioritize producing behavior that human observers find plausible, consistent, and engaging rather than maximizing numerical rewards \cite{mateasOzCentricReviewInteractive1999, loyallBelievableAgentsBuilding}. As a result, the evaluation of such agents commonly emphasizes observer perception over internal optimality or correctness.
