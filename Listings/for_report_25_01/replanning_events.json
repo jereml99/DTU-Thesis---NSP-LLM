@@ -1,0 +1,8 @@
+[
+  {
+    "goal": "Insert 'Restock bread, fruit, and coffee' before 'Eat toast with fruit and drink coffee'",
+    "trigger": "pddl_validation_failure",
+    "context": "Validation summary:  VAL indicates the final step cannot execute due to unsatisfied preconditions, but the breakfast goal is achievable with the earlier steps. Replanning to end at the 'Brew coffee and toast bread' step (or adding a replenishment path) is recommended. No domain syntax errors detected; this is a planning-sequence issue requiring a revised plan.",
+    "timestamp": "2026-01-25T12:53:51.148504+00:00"
+  }
+]
