@@ -236,9 +236,38 @@ We repeat the pipeline above a set number of times.
 \label{subsec:NL-conditions-validations}
 After the validation pipeline, we store the natural language preconditions for each action. When the action begins, we check if the preconditions still hold; if not, we replan.
 \subsection{Checking NL Condition}
-At the beginning of each action (when the agent is about to execute the action), we retrieve the state of objects in the world around the agent, as well as other memories relevant to the conditions [EXAMPLE], for each condition. We then ask the model to categorize the condition as satisfied or not, based on this information and common sense. If all conditions are satisfied, the agent will start the action.
+At the beginning of each action (when the agent is about to execute the action), we retrieve the state of objects in the world around the agent, as well as other memories relevant to the conditions, for each condition. We then ask the model to categorize the condition as satisfied or not, based on this information and common sense.
+\begin{verbatim}
+Action: Head to Hobbs Cafe and open for the day (Greet the first 
+guests as they arrive)
+Condition: At least one guest has arrived at the cafe entrance.
+Result: {
+  "is_satisfied": false,
+  "probability": 0.35,
+  "reasoning": "As of 08:00 on Feb 13, 2023, World State shows the cafe 
+  behind the counter idle with no indication of guests at the entrance. 
+  Therefore, condition 'at least one guest has arrived' is not satisfied."
+}
+\end{verbatim}
+If all conditions are satisfied, the agent will start the action.
 \subsection{Replan Goal}
-If at least one condition is not satisfied, we ask the LLM to generate a replanning goal based on the schedule, the agent's daily goal, and the violated conditions. [example]
+If at least one condition is not satisfied, we ask the LLM to generate a replanning goal based on the schedule, the agent's daily goal, and the violated conditions.
+\begin{verbatim}
+Action: Head to Hobbs Cafe and open for the day (Greet the first 
+guests as they arrive)
+Failed Conditions: [
+  {
+    "condition": "At least one guest has arrived at the cafe entrance.",
+    "reasoning": "As of 08:00... no indication of guests..."
+  }
+]
+Result: {
+  "modification_goal": "Replace 'Greet the first guests as they arrive' 
+  with 'Wait for the first guest at Hobbs Cafe entrance'",
+  "reasoning": "The condition ... is not satisfied ... corrective 
+  action is to wait..."
+}
+\end{verbatim}
 \subsection{Replan Next 2h}
 We then ask the LLM to replan the next 2 hours with the replanning goal in mind. [example]
 
