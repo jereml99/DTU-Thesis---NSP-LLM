@@ -14,34 +14,34 @@ Our neuro-symbolic planning system extends a re-implementation of the Generative
 The implementation transforms the original monolithic Generative Agents codebase into a modular, service-oriented architecture:
 
 \begin{enumerate}
-    \item \textbf{Repository Layer}: Abstracts external dependencies (LLM APIs, file storage) behind interfaces. \texttt{LLMRepository} supports both OpenAI (production) and mock providers (testing). \texttt{EnvironmentRepository} abstracts world state persistence.
+  \item \textbf{Repository Layer}: Abstracts external dependencies (LLM APIs, file storage) behind interfaces. \texttt{LLMRepository} supports both OpenAI (production) and mock providers (testing). \texttt{EnvironmentRepository} abstracts world state persistence.
 
-    \item \textbf{Service Layer}: Encapsulates cognitive capabilities in swappable interfaces:
-          \begin{itemize}
-              \item \texttt{PlanningService}: Daily planning and task decomposition
-              \item \texttt{DialogueService}: Conversation generation
-              \item \texttt{PerceptionService}: Environment observation and memory retrieval
-              \item \texttt{ReflectionService}: Memory summarization
-              \item \texttt{EnvironmentService}: Spatial navigation and object interaction
-          \end{itemize}
+  \item \textbf{Service Layer}: Encapsulates cognitive capabilities in swappable interfaces:
+        \begin{itemize}
+          \item \texttt{PlanningService}: Daily planning and task decomposition
+          \item \texttt{DialogueService}: Conversation generation
+          \item \texttt{PerceptionService}: Environment observation and memory retrieval
+          \item \texttt{ReflectionService}: Memory summarization
+          \item \texttt{EnvironmentService}: Spatial navigation and object interaction
+        \end{itemize}
 
-    \item \textbf{Orchestration Layer}: The simulation loop consumes services through interfaces, configured via environment variables (\texttt{LLM\_PROVIDER}, \texttt{PLAN\_MODULE}) controlling which implementations run.
+  \item \textbf{Orchestration Layer}: The simulation loop consumes services through interfaces, configured via environment variables (\texttt{LLM\_PROVIDER}, \texttt{PLAN\_MODULE}) controlling which implementations run.
 \end{enumerate}
 
 \textbf{Key Design Principle}: The \texttt{PlanningService} abstraction enables side-by-side comparison of baseline (LLM-only hierarchical planning) and neuro-symbolic planning by ensuring both share identical environment state, memory retrieval, and LLM infrastructure. Only the planning logic differs, isolating the independent variable.
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Pictures/Code Structure - before.png}
-    \caption{Original monolithic architecture from the Generative Agents codebase \cite{parkGenerativeAgentsInteractive2023a}, showing tightly coupled components without clear separation of concerns.}
-    \label{fig:code-structure-architecture-before}
+  \centering
+  \includegraphics[width=\textwidth]{Pictures/Code Structure - before.png}
+  \caption{Original monolithic architecture from the Generative Agents codebase \cite{parkGenerativeAgentsInteractive2023a}, showing tightly coupled components without clear separation of concerns.}
+  \label{fig:code-structure-architecture-before}
 \end{figure}
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Pictures/Code Structure - after.png}
-    \caption{Refactored service-oriented architecture with Repository, Service, and Orchestration layers. The \texttt{PlanningService} abstraction enables controlled comparison between baseline and neuro-symbolic planning implementations.}
-    \label{fig:code-structure-architecture-after}
+  \centering
+  \includegraphics[width=\textwidth]{Pictures/Code Structure - after.png}
+  \caption{Refactored service-oriented architecture with Repository, Service, and Orchestration layers. The \texttt{PlanningService} abstraction enables controlled comparison between baseline and neuro-symbolic planning implementations.}
+  \label{fig:code-structure-architecture-after}
 \end{figure}
 
 \subsection{Prompt Templates}
@@ -50,7 +50,7 @@ All calls to the LLM are formalized using prompt templates that specify the syst
 \subsection{Model Used}
 Most testing was conducted with the OpenAI model gpt-5-nano-2025-08-07, due to: 1. Cost-effectiveness, which is important considering our expected token usage to generate one simulation was 1m+; 2. Speed; 3. Reasoning capabilities with good benchmarks; 4. The ability to trade off "intelligence" versus speed by setting the reasoning token budget (reasoning effort between low, medium, and high).
 
-    [Should we write about other models as well?]
+  [Should we write about other models as well?]
 
 We also considered open-source models like gpt-oss-120b.
 
@@ -78,7 +78,7 @@ We implemented the following neuro-symbolic validation pipeline to enhance the c
 \subsubsection{Domain Generation}
 Domain generation is the most challenging part of the process [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline], and we tested a couple of approaches to do it correctly. The steps below generated the best Domain, based on our subjective assessment [We tested a lot and looked which generated more sensible results and which generated fewer validation errors]. We initially attempted to generate the entire PDDL file in one step, but encountered two problems: 1. Action conditions and effects tended to be chained without real logic. [add example, like teeth-brushed as precondition of shower]. After many iterations, we decided to split domain generation into the following steps.
 
-    [Also we use structured JSON output to ensure proper naming and structure, and we should write about it we also tested temporal domain, but decided to focus on non-temporal one becouse it reduced the output token by [x] percent and was simple for model to generate]
+  [Also we use structured JSON output to ensure proper naming and structure, and we should write about it we also tested temporal domain, but decided to focus on non-temporal one becouse it reduced the output token by [x] percent and was simple for model to generate]
 
 \paragraph{Natural Language Precondition and Effect Generation}
 We ask the model for natural language conditions and effects for each action separately to prevent the chained condition-effect problem.
@@ -195,15 +195,15 @@ If the plan is valid, we end the pipeline. If there are any errors, we move to t
 \subsubsection{LLM Feedback}
 If VAL reports an error, we input the context of the generated PDDL artifacts and feedback from VAL, then ask the LLM to generate actionable responses for each error found. The model can choose between:
 \begin{itemize}
-    \item \texttt{ok} - can continue (when the error is due to an incomplete problem init state [Example: no phone in the world state])
-    \item \texttt{pddl\_error} - There is an error in PDDL itself
-    \item \texttt{need\_replan}
+  \item \texttt{ok} - can continue (when the error is due to an incomplete problem init state [Example: no phone in the world state])
+  \item \texttt{pddl\_error} - There is an error in PDDL itself
+  \item \texttt{need\_replan}
 \end{itemize}
 Based on all error items, the model decides on one of three actions:
 \begin{itemize}
-    \item \texttt{ok} - we end the pipeline and assume the plan is valid
-    \item \texttt{pddl\_repair\_required} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
-    \item \texttt{replan\_required} - we continue with the pipeline
+  \item \texttt{ok} - we end the pipeline and assume the plan is valid
+  \item \texttt{pddl\_repair\_required} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
+  \item \texttt{replan\_required} - we continue with the pipeline
 \end{itemize}
 \begin{verbatim}
 {
@@ -221,7 +221,11 @@ Based on all error items, the model decides on one of three actions:
 \end{verbatim}
 
 \subsubsection{Replan Goal}
-This stage creates a natural language replanning goal based on the feedback from validation and the current schedule, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to the replanner generates poor results [examples].
+This stage creates a natural language replanning goal based on the feedback from validation and the current schedule, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to the replanner generates poor results.
+\begin{verbatim}
+Insert 'Restock bread, fruit, and coffee' before 'Eat toast with 
+fruit and drink coffee'
+\end{verbatim}
 \subsubsection{Replanning}
 In this stage, we ask the LLM to generate a new plan based on the replanning goal and the current schedule.
 
@@ -258,10 +262,10 @@ We tested generating simulations of a world with 25 characters, but the improvem
 
 For both simulations, we implemented extensive logging to understand system behavior. We log:
 \begin{itemize}
-    \item Usage of each generation template, including the number of calls and tokens spent.
-    \item Every broken validation with context [The PDDL files or NL condition that was broken].
-    \item Every replanning goal.
-    \item Every modification to the plan time [when the movement takes too much time].
+  \item Usage of each generation template, including the number of calls and tokens spent.
+  \item Every broken validation with context [The PDDL files or NL condition that was broken].
+  \item Every replanning goal.
+  \item Every modification to the plan time [when the movement takes too much time].
 \end{itemize}
 
 
@@ -276,8 +280,8 @@ This section describes the human-subjects study testing whether a simulation gen
 Two primary hypotheses:
 
 \begin{itemize}
-    \item \textbf{H1 (overall believability)}: Participants judge agents powered by our method as more believable overall than the baseline in matched scenarios.
-    \item \textbf{H2 (action believability)}: For the same scenario, participants flag fewer actions as ``unbelievable'' in our method than in the baseline.
+  \item \textbf{H1 (overall believability)}: Participants judge agents powered by our method as more believable overall than the baseline in matched scenarios.
+  \item \textbf{H2 (action believability)}: For the same scenario, participants flag fewer actions as ``unbelievable'' in our method than in the baseline.
 \end{itemize}
 
 Secondary outcomes: (i) free-text reasons participants provide when deeming actions unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
@@ -288,8 +292,8 @@ Secondary outcomes: (i) free-text reasons participants provide when deeming acti
 Two within-subject conditions on the same simulated world and character seeds:
 
 \begin{enumerate}
-    \item \textbf{Baseline (GA)}: Faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
-    \item \textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
+  \item \textbf{Baseline (GA)}: Faithful re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
+  \item \textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
 \end{enumerate}
 
 Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced to reduce presentation effects.
@@ -307,9 +311,9 @@ Due to recruitment constraints, our participant pool is limited, which precludes
 The stimulus for each condition is a replay of a single random character's day. To focus on action believability, we present:
 
 \begin{itemize}
-    \item time-lapse \emph{video replay} of the agent acting in the world (controllable playback speed, pause/seek);
-    \item Activity log with details about the current activity and animated time tracking; and
-    \item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
+  \item time-lapse \emph{video replay} of the agent acting in the world (controllable playback speed, pause/seek);
+  \item Activity log with details about the current activity and animated time tracking; and
+  \item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
 \end{itemize}
 
 Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile, task for the day and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
@@ -320,21 +324,21 @@ Replays cover the same scenario (e.g., two simulated in-game days) and use the s
 Each session (approximately 30 minutes):
 The user reads the paper version of the user guide, while the evaluator follows the evaluator guide.
 \begin{enumerate}
-    \item \textbf{Introduction.} A scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
-    \item \textbf{Practice.} Participants complete a 2 to 3 minute tutorial on the interface using a neutral example not used in the main study.
-    \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable actions. For each mark, add a short explanation (optional but encouraged).
-    \item \textbf{Condition B.} Repeat with the other planner. Order varies across participants; assignment is double-blind.
-    \item \textbf{Summary.} We show the user an overview of marked actions in both conditions and ask which one felt more human-like.
+  \item \textbf{Introduction.} A scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
+  \item \textbf{Practice.} Participants complete a 2 to 3 minute tutorial on the interface using a neutral example not used in the main study.
+  \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable actions. For each mark, add a short explanation (optional but encouraged).
+  \item \textbf{Condition B.} Repeat with the other planner. Order varies across participants; assignment is double-blind.
+  \item \textbf{Summary.} We show the user an overview of marked actions in both conditions and ask which one felt more human-like.
 \end{enumerate}
 
 We record and transcribe the experiment for a later qualitative study of unbelievable actions.
 The experiment was conducted using a custom-developed website (Figure \ref{fig:study-interface}).
 
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{Pictures/methodology/Study_interface.png}
-    \caption{User interface for the study, showing the replay view and mechanism for flagging unbelievable actions.}
-    \label{fig:study-interface}
+  \centering
+  \includegraphics[width=\textwidth]{Pictures/methodology/Study_interface.png}
+  \caption{User interface for the study, showing the replay view and mechanism for flagging unbelievable actions.}
+  \label{fig:study-interface}
 \end{figure}
 
 \subsection{Measures}
