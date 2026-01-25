@@ -6,7 +6,7 @@
 \section{System Design}
 \label{sec:system-design}
 
-Our neuro-symbolic planning system extends a re-implementation of the Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a} with modifications enabling controlled comparison between purely neural planning (baseline) and neuro-symbolic planning (our approach).
+Our neuro-symbolic planning system extends a re-implementation of the Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a} with modifications enabling a controlled comparison between purely neural planning (baseline) and neuro-symbolic planning (our approach).
 
 \subsection{System Architecture}
 \label{subsec:system-architecture}
@@ -44,75 +44,96 @@ The implementation transforms the original monolithic Generative Agents codebase
     \label{fig:code-structure-architecture-after}
 \end{figure}
 
-\subsection{Prompt templetes}
+\subsection{Prompt Templates}
+All calls to the LLM are formalized using prompt templates that specify the system prompt [Maybe add what is that], few-shot examples, and templates for the actual prompt and expected output using OpenAI structured output, which allows us to constrain the model output. This also provides clear versioning of prompt templates.
 
-\subsection{Long-term planning}
+\subsection{Model Used}
+Most testing was conducted with the OpenAI model gpt-5-nano-2025-08-07, due to: 1. Cost-effectiveness, which is important considering our expected token usage to generate one simulation was 1m+; 2. Speed; 3. Reasoning capabilities with good benchmarks; 4. The ability to trade off "intelligence" versus speed by setting the reasoning token budget (reasoning effort between low, medium, and high).
 
-\subsubsection{Daily planning}
-\subsubsection{Task decomposition}
+    [Should we write about other models as well?]
 
-\subsection{Movement}
+We also considered open-source models like gpt-oss-120b.
+
+\subsection{Long-Term Planning}
+\label{Long-term planning}
+As part of the improvements to the original architecture, we modified the prompts responsible for planning, as well as the surrounding code.
+\subsubsection{Movement}
+The biggest change is the programmatic addition of movement actions. In the original paper, characters moved as part of determined actions; for example, if an agent planned to eat breakfast for 20 minutes in a coffee shop that is 25 minutes from their current location, they would walk to the café for 20 minutes and, without even reaching the café, would start another activity. In our opinion, this reduced the believability of the original approach, so we decided to automatically block time for the movement activity. This ensures that the agent always has time to reach the destination before starting actions. However, it also requires estimating the time the agent will spend moving for each task during planning, as the action location is determined only after decomposing the task into actions.
 
 
-\subsection{Neuro-Symbolic validation Pipeline}
+\subsubsection{Daily Planning}
+
+In the original paper, each task, such as "morning routine," was always generated as a multiple of one hour. This was dictated by the poor reliability of the model used in the original study [GPT-3.5 Turbo] in producing structured output. With newer models and enforced structured output, we were able to ask the model to generate arbitrarily long tasks for a day. Another improvement is asking the model to generate task intent and the location of interest for the task [the area where the agent will most likely move during task execution].
+We use task intent as context for prompts that will operate on the task [replanning, task decomposition]. Locations of interest are used to estimate travel time during the activity.
+
+\subsubsection{Task Decomposition}
+When an agent approaches a task that has not yet been decomposed, we trigger task decomposition into atomic actions. In the original implementation, each action was a multiple of 5 minutes, which produced some unbelievable actions, such as washing hands for 5 minutes. In our implementation, we allow the model to arbitrarily choose the duration in minutes. If neuro-symbolic validation is enabled, we enter the validation loop. Then, with the final task decomposition, we ask the model for the most appropriate place to perform each action. We then programmatically generate movement actions if the agent needs to switch locations between actions. Finally, we check if the total time is above or below the expected time for the task. We define the difference as delta [the time for the task itself vs. the expected time for the movement]. If we need to fill time, we add a "Checking phone" activity for |delta| minutes. If delta > 0, we need to decrease the time spent on actions. We achieve this by randomly decreasing the duration of activities by one minute, weighting activities that take longer so that a 20-minute activity has a ten times higher chance of being selected for decrease than a 2-minute activity [make the examples more mathematically strict].
+
+
+
+\subsection{Neuro-Symbolic Validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-We implemented following neuro-symbolic validation pipeline in hopes of enhancing coherence of actions generated as part of task decomposition [TODO add example] by checking validati of precondition by external symbolic vlaidation tool VAL. The feedback about validity of plan from VAL we need to generate 3 files Domain.pddl, Problem.pddl and plan.pddl bellow we explain how did we achive this.
+We implemented the following neuro-symbolic validation pipeline to enhance the coherence of actions generated during task decomposition. This is performed after generating actions from the task, but before adding movements. [TODO add example] We check the validity of preconditions using the external symbolic validation tool, VAL. To receive feedback from VAL, we must generate three files: Domain.pddl, Problem.pddl, and plan.pddl. Below, we explain how we achieved this.
+
+\subsubsection{Domain Generation}
+Domain generation is the most challenging part of the process [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline], and we tested a couple of approaches to do it correctly. The steps below generated the best Domain, based on our subjective assessment [We tested a lot and looked which generated more sensible results and which generated fewer validation errors]. We initially attempted to generate the entire PDDL file in one step, but encountered two problems: 1. Action conditions and effects tended to be chained without real logic. [add example, like teeth-brushed as precondition of shower]. After many iterations, we decided to split domain generation into the following steps.
+
+    [Also we use structured JSON output to ensure proper naming and structure, and we should write about it we also tested temporal domain, but decided to focus on non-temporal one becouse it reduced the output token by [x] percent and was simple for model to generate]
+
+\paragraph{Natural Language Precondition and Effect Generation}
+We ask the model for natural language conditions and effects for each action separately to prevent the chained condition-effect problem observed when generating the whole domain at once. [add example]
+
+\paragraph{Predicates Generation}
+We gather all natural language conditions and effects for each action, along with the world description, and ask the model to create a sensible predicate catalog with a focus on logical coherence. We do this in one step to ensure a unified set of predicates. As the domain is unique for a specific agent and specific task decomposition, we ask the model to generate zero-arity predicates, as we observed that this decreases hallucinations and malformed output from LLMs in subsequent stages of the pipeline. [Add example]
 
 
+\paragraph{PDDL Action Schema Generation}
+Now, for each action, we generate an action schema from the predicate catalog and natural language conditions and effects. We do this separately for each action to avoid encouraging condition and effect chaining. Afterward, we programmatically create the domain file. [Add example]
 
-\subsubsection{Domain generation}
-Domain generation is the most difficult part of generation [Becouse it's the biggest mental load maybe add statistic for this. I mean it's just that domain need the most attention and problems here will propaget to following step of the pipeline] and we tested couple of aproches to do it correctly, bellow steps subjectivli [We tested a lot and look with genereted more sensible result and wich genereted less validation errors] generated the best Domain. We started with trying to generate the whole PDDL file in one go based on the decomposed action, but we got 2 problems 1. the actions conditions and effect tend to be chained without real logic to it. [add example, like teeth-brushed as precondition of shower]. So after many iteration we decided to split the domain generation into following steps.
+\paragraph{Validation with VAL and Repair}
+We check domain validation using the VAL tool. The main purpose is to ensure the model did not hallucinate new predicates or create malformed PDDL schemas.
+If there is an error, we pass the feedback to the LLM to generate the repaired domain. [Add example]
 
-    [ALso we use the structured JSON output to ensure proper naming and structure and we should write about it ]
+\subsubsection{Problem Generation}
+After successfully generating the domain, we ask the LLM to generate the problem based on the predicate catalog, the current state of the world, and the task intent. From this, we obtain the initial state of the world and the goal. After generation, the domain and problem files are fed to VAL to check for syntax problems and potential hallucinations; the problem is regenerated with VAL feedback in case of errors. [Add example]
 
-\paragraph{Natural language precondition and effect generation}
-We ask the model for nautal language condtions and effect of each action seperetly to prevent the chained condtion-effect problem that we observed when we genereting the whole domain in one go. [add example]
+\subsubsection{Plan Generation Programmatic}
+As we use zero-arity predicates, the actions also become zero-arity, allowing us to automatically generate the problem file from the original decomposed actions. [examples]
 
-\paragraph{Predicates generation}
-We gather all the natural language condition and effect of each action and world description and ask model to create a sensible predicate with focus on logic coherence. We do it in one go so we end up with unified set of predicate. As the domain is uniqe for specific agent and specific task decomposition we ask the model to generate zero arrity predicates as we saw that decrese amount of hallucination and malformated output from LLM's in the next stages of the pipeline [Add example]
+\subsubsection{VAL Analysis}
+We input the domain, problem, and plan files into VAL and continue based on its feedback [add example]. If the plan is valid, we end the pipeline. If there are any errors, we move to the next step in the validation pipeline.
 
+\subsubsection{LLM Feedback}
+If VAL reports an error, we input the context of the generated PDDL artifacts and feedback from VAL, then ask the LLM to generate actionable responses for each error found. The model can choose between:
+\begin{itemize}
+    \item \texttt{ok} - can continue (when the error is due to an incomplete problem init state [Example: no phone in the world state])
+    \item \texttt{pddl\_error} - There is an error in PDDL itself, [Add example]
+    \item \texttt{replan\_needed}
+\end{itemize}
+Based on all error items, the model decides on one of three actions:
+\begin{itemize}
+    \item \texttt{ok} - we end the pipeline and assume the plan is valid
+    \item \texttt{pddl\_repair} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
+    \item \texttt{replan\_needed} - we continue with the pipeline
+\end{itemize}
 
-\paragraph{PDDL Action schema generation }
-Now for each action we generate action schema from the predicate catalog and natural language condtion and effects. We do it seperetly for each action to not encouraged the condtion and effect chaing. After that we programaticly create the domain file [Add example]
+\subsubsection{Replan Goal}
+This stage creates a natural language replanning goal based on the feedback from validation and the current schedule, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to the replanner generates poor results [examples].
+\subsubsection{Replanning}
+In this stage, we ask the LLM to generate a new plan based on the replanning goal and the current schedule.
 
-\paragraph{Validation with VAL and repair}
-We check domain validation using VAL tool, The main porpus is to check out if model didn't Hallucinate new predicates or create othewise malfuntional PDDL schemas
-Then I there is an error we pass the feedback to LLM that generated repaired domain [Add example]
-
-\subsubsection{Problem generation}
-After successfully generating the domian we ask LLM to generete the problem based on the predicates catalog current state of the world and the intenet of the task. form this we get initial state of the world and the goal. After generation the domain and problem file are feeded to VAL to check for syntax problems and potentialy hallucinations, and the problem is regenerated with VAL feedback in case of errors [Add example]
-
-\subsubsection{Plan generation programmatic}
-As we use zero arrity predicates then also the actions becomes zero arrity and becouse of that we can automatically generate the problem file from the original decomposed actions. [examples]
-
-\subsubsection{VAL analysis}
-We input the domain, problem and plan files to VAL and continue based on it feedback [add example] if the plan is valid we end the pipeline. If there are any error we move to a next step in the validaiton pipeline
-
-\subsubsection{LLM feedback}
-If there is error in VAL we input context of genereted PDDL artifact and feedback from VAL and ask LLM to generate actionable responses for each found errors. model can decide in between 1.Ok -can continue (when the error is becouse of not complete problem init state [Example there was no phone in the word state])
-\texttt{pddl\_error} - There is error in pddl itself, [Add example]
-\texttt{replan\_needed}
-and based on all the error items, model decide one of 3 actions
-ok - we end the pipeline and assume the the plan is valid
-\texttt{pddl\_repair} - we repair each of the pddl artifact with feedback from VAL and then do VAL evaluation again
-Replan needed - we continue with the pipeline
-
-\subsubsection{Replan goal}
-This stage creates an natural language replaning goal based on the feedback from validation and the current schedual, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to replaner generetes poor results [examples]
-\subsubsection{Replan}
-In this stage we ask LLM to generate a new plan based on the replan goal, current schedual
-
-we Repeat the above pipeline a set amount of times
+We repeat the pipeline above a set number of times.
 
 
 \section{NL Condition Validation}
-After validation pipeline We store the natural language preconditions for each action, so when the action begins we can check if the preconditions still hold and if the action is valid, so we can replan in case of broken condtions.
-\subsection{Checking NL condition}
-At begging of each action (when the agent actualy is about to execute the action), for each condition we retrive object state of the world around agent as well as other memories relevant to the conditions [EXAMPLE] and ask the model to based on that and commonsense categories the condition as satisfied or not. If all the condtions are satisfy agent will start the action
+\label{subsec:NL-conditions-validations}
+After the validation pipeline, we store the natural language preconditions for each action. When the action begins, we check if the preconditions still hold; if not, we replan.
+\subsection{Checking NL Condition}
+At the beginning of each action (when the agent is about to execute the action), we retrieve the state of objects in the world around the agent, as well as other memories relevant to the conditions [EXAMPLE], for each condition. We then ask the model to categorize the condition as satisfied or not, based on this information and common sense. If all conditions are satisfied, the agent will start the action.
 \subsection{Replan Goal}
-If at least one of the condition is not satysfied we ask LLM to generate an replanning goal based on the schedual agent goal for a day and the violeted condtions. [example]
-\subsection{Replan next 2h}
-Then we ask LLM to replan the next 2h with the replan goal in mind[example]
+If at least one condition is not satisfied, we ask the LLM to generate a replanning goal based on the schedule, the agent's daily goal, and the violated conditions. [example]
+\subsection{Replan Next 2h}
+We then ask the LLM to replan the next 2 hours with the replanning goal in mind. [example]
 
 
 
@@ -125,14 +146,26 @@ Then we ask LLM to replan the next 2h with the replan goal in mind[example]
 
 \section{Experimental Setup}
 \label{sec:experimental-setup}
+For the user study, we generated two simulations: baseline and neuro-symbolic. Since the focus of our study was how neuro-symbolic planning can increase the believability of LLM-based agents, we decided to isolate as many variables as possible.
+Both simulations featured the same three personas with backgrounds taken from the original study. We generated exactly the same goals and tasks for the day [for each persona] for both simulations.
+Both the baseline and neuro-symbolic models used the improvements introduced in \ref{Long-term planning}.
+Thus, the generation differed only by the introduction of validations in the neuro-symbolic simulation \ref{subsec:NL-conditions-validations} \ref{subsec:neuro-symbolic-pipeline}.
 
-[To be completed: overview of simulation environment, agent initialization, scenario design, and logging infrastructure.]
+We tested generating simulations of a world with 25 characters, but the improvements in believability [our subjective assessment] did not justify the additional cost in tokens and the increased effort required for test subjects to complete the study.
+
+For both simulations, we implemented extensive logging to understand system behavior. We log:
+\begin{itemize}
+    \item Usage of each generation template, including the number of calls and tokens spent.
+    \item Every broken validation with context [The PDDL files or NL condition that was broken].
+    \item Every replanning goal.
+    \item Every modification to the plan time [when the movement takes too much time].
+\end{itemize}
 
 
 \section{User Study: Believability Evaluation}
 \label{sec:user-study-believability}
 
-This section describes the human-subjects study testing whether our approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on believability of \emph{actions} rather than only personalities or conversations.
+This section describes the human-subjects study testing whether a simulation generated with the neuro-symbolic validation approach improves perceived believability of agent behavior compared to the baseline Generative Agents architecture \cite{parkGenerativeAgentsInteractive2023a}. We focus on the believability of \emph{actions} rather than solely on personalities or conversations.
 
 \subsection{Objectives and Hypotheses}
 \label{subsec:objectives-hypotheses}
@@ -144,7 +177,7 @@ Two primary hypotheses:
     \item \textbf{H2 (action believability)}: For the same scenario, participants flag fewer actions as ``unbelievable'' in our method than in the baseline.
 \end{itemize}
 
-Secondary outcomes: (i) perceived causal coherence when the high-level plan is visible, and (ii) free-text reasons participants provide when deeming actions unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
+Secondary outcomes: (i) free-text reasons participants provide when deeming actions unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
 
 \subsection{Conditions}
 \label{subsec:conditions}
@@ -161,7 +194,7 @@ Each participant evaluates both conditions on the same character and scenario to
 \subsection{Participants}
 \label{subsec:participants}
 
-Target 10 to 15 adult participants recruited from the university community and online platforms. Inclusion criteria: English proficiency. We run an initial pilot (3 to 4 participants) to validate timing and interface, then proceed to the main study. All participants provide informed consent and can withdraw anytime without penalty.
+We targeted 10 to 15 adult participants recruited from the university community and online platforms. Inclusion criteria: English proficiency. We conducted an initial pilot (3 to 4 participants) to validate timing and interface, then proceeded to the main study. All participants provide informed consent and can withdraw anytime without penalty.
 
 Due to recruitment constraints, our participant pool is limited, which precludes a rigorous ablation study\footnote{An ablation study systematically removes or disables individual components of a system to measure their independent contributions to overall performance.} isolating the contribution of individual components (e.g., symbolic validation versus NL condition checking). This approach mirrors that of the original Generative Agents work \cite{parkGenerativeAgentsInteractive2023a}, which also evaluated the system holistically through user studies. Instead, we evaluate the neuro-symbolic system as an integrated whole through the believability study and constraint violation analysis described in Sections \ref{sec:quantitative-evaluation} and \ref{sec:user-study-believability}.
 
@@ -172,64 +205,42 @@ The stimulus for each condition is a replay of a single random character's day. 
 
 \begin{itemize}
     \item time-lapse \emph{video replay} of the agent acting in the world (controllable playback speed, pause/seek);
-    \item optional overlay with \emph{high-level plan} (intentions and sub-goals) and \emph{low-level action log}; and
+    \item Activity log with details about the current activity and animated time tracking; and
     \item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
 \end{itemize}
 
-Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
+Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile, task for the day and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
 
 \subsection{Procedure}
 \label{subsec:procedure}
 
 Each session (approximately 30 minutes):
-
+The user reads the paper version of the user guide, while the evaluator follows the evaluator guide.
 \begin{enumerate}
-    \item \textbf{Introduction.} Scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
+    \item \textbf{Introduction.} A scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
     \item \textbf{Practice.} Participants complete a 2 to 3 minute tutorial on the interface using a neutral example not used in the main study.
     \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable actions. For each mark, add a short explanation (optional but encouraged).
     \item \textbf{Condition B.} Repeat with the other planner. Order varies across participants; assignment is double-blind.
-    \item \textbf{Summary ratings.} For each condition: (i) overall believability rating (7-point Likert), (ii) perceived causal coherence rating (7-point Likert), and (iii) preference judgment (forced-choice which was more believable and why).
+    \item \textbf{Summary.} We show the user an overview of marked actions in both conditions and ask which one felt more human-like.
 \end{enumerate}
 
-We record duration until finished and whether the plan overlay was opened, to analyze how explanations affect believability judgments.
+We record and transcribe the experiment for a later qualitative study of unbelievable actions.
+The experiment was conducted using a custom-developed website (Figure \ref{fig:study-interface}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/methodology/Study_interface.png}
+    \caption{User interface for the study, showing the replay view and mechanism for flagging unbelievable actions.}
+    \label{fig:study-interface}
+\end{figure}
 
 \subsection{Measures}
 \label{subsec:measures}
 
-We operationalize believability with participant-reported and behavior-linked measures. Higher values indicate higher believability unless noted.
-
-\subsubsection{Primary Outcomes}
-\label{subsubsec:primary-outcomes}
-
-\begin{enumerate}
-    \item \textbf{Overall believability (Likert).} Single item per condition on a 7-point scale: 1 ``not at all believable'', 4 ``moderately believable'', 7 ``extremely believable''. Prompt: ``How believable was the agent's behaviour overall in this replay?''
-
-    \item \textbf{Action-level unbelievable rate (event-normalized).} Participants flag any action as unbelievable. Let $F$ be flagged action events and $A$ be \emph{atomic actions} viewed (from action log restricted to watched timestamps). The rate is
-          \begin{equation}
-              r_{\mathrm{unbel}} = \frac{F}{A} \times 100\,,
-          \end{equation}
-          expressed as flags per 100 atomic actions. Multiple flags within 2 seconds around the same atomic action merge into one.
-
-    \item \textbf{Pairwise preference.} Forced-choice: ``Which replay was more believable overall?'' (Baseline vs. Ours).
-\end{enumerate}
-
-\subsubsection{Secondary Outcomes}
-\label{subsubsec:secondary-outcomes}
-
-\begin{itemize}
-    \item \textbf{Causal coherence (Likert).} 7-point rating: 1 ``not coherent'', 7 ``highly coherent''.
-    \item \textbf{Plan adherence (Likert).} 7-point rating of alignment between visible high-level plan and observed actions.
-    \item \textbf{Unbelievable-action categories (coded).} Free-text reasons are open-coded into categories: goal inconsistency, environment rule violation, temporal implausibility, social norm violation, low-level control failure. Two independent coders label a stratified sample ($\geq 30\%$ of flags); disagreements are adjudicated and inter-rater agreement (Cohen's $\kappa$) is reported.
-\end{itemize}
-
-\textbf{Logged covariates (for analysis, not outcomes):} condition order, scenario ID, participant playback time, number of overlay openings, and self-reported prior experience with simulations/games. These are used as covariates in exploratory models and to check for order effects.
+[Do we need to write anything here?]
 
 \subsection{Data Quality and Exclusion}
 \label{subsec:data-quality}
 
 Sessions are excluded if participants fail an attention check (simple comprehension question about the replay), leave more than half the session unanswered, or complete in less than one-third of median time. We pre-register exclusion rules prior to data collection.
 
-\subsection{Ethics}
-\label{subsec:ethics}
-
-The study involves minimal risk. No personal data beyond demographics is collected; all logs are anonymized and stored on encrypted drives.

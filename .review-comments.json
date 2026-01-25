@@ -1549,6 +1549,296 @@
           "body": "task decomposition example"
         }
       ]
+    },
+    {
+      "id": "0040424a-7899-4ec0-b194-30506222c8fe",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 987,
+        "endOffset": 1071,
+        "selectedText": "              \\item \\texttt{PlanningService}: Daily planning and task decomposition\n",
+        "prefixContext": "n swappable interfaces:\n          \\begin{itemize}\n",
+        "suffixContext": "              \\item \\texttt{DialogueService}: Conv",
+        "originalRange": {
+          "startLine": 20,
+          "startCharacter": 0,
+          "endLine": 21,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T14:42:51.886Z",
+      "updatedAt": "2026-01-24T14:42:51.887Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "1fba6540-3e68-4921-b503-a6968ad0ebc9",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T14:42:51.887Z",
+          "body": "We only use this one tbh"
+        }
+      ]
+    },
+    {
+      "id": "c13daf28-6a5a-473f-88fe-b6135da453c8",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 3554,
+        "endOffset": 3613,
+        "selectedText": "We were considering open source models like gpt-oss-120b  \n",
+        "prefixContext": "et (ressoing effort between low medium and high)\n\n",
+        "suffixContext": "\n\\subsection{Long-term planning}\n\n\\subsubsection{D",
+        "originalRange": {
+          "startLine": 52,
+          "startCharacter": 0,
+          "endLine": 53,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T15:12:29.289Z",
+      "updatedAt": "2026-01-24T15:12:29.289Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "66d19dac-c27b-4b19-97a5-312c5b444328",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T15:12:29.289Z",
+          "body": "Should we write about it? should we?"
+        }
+      ]
+    },
+    {
+      "id": "389f9fa2-8c84-4e00-ae44-23d9efd9773f",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 4442,
+        "endOffset": 4449,
+        "selectedText": "actions",
+        "prefixContext": "ave the time to reach destionation befor starting ",
+        "suffixContext": "\n\n\n\\subsubsection{Daily planning}\n\nIn orginal pape",
+        "originalRange": {
+          "startLine": 59,
+          "startCharacter": 585,
+          "endLine": 59,
+          "endCharacter": 592
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T15:36:17.814Z",
+      "updatedAt": "2026-01-24T15:36:44.213Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "21dac71a-bba5-47de-a5b7-a49320d2c568",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T15:36:17.814Z",
+          "body": "let's explan what is action in 2 section"
+        }
+      ]
+    },
+    {
+      "id": "fe37d694-9e07-4a36-a51d-00caa26944b5",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 4619,
+        "endOffset": 4623,
+        "selectedText": "task",
+        "prefixContext": "et the action location only after decomposing the ",
+        "suffixContext": " into actions\n\n\n\\subsubsection{Daily planning}\n\nIn",
+        "originalRange": {
+          "startLine": 59,
+          "startCharacter": 762,
+          "endLine": 59,
+          "endCharacter": 766
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T15:40:19.119Z",
+      "updatedAt": "2026-01-24T15:40:19.119Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "410a34a7-0c5b-4583-8021-1c462e44fda9",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T15:40:19.119Z",
+          "body": "What is task"
+        }
+      ]
+    },
+    {
+      "id": "39d52804-49fb-43d5-b220-d2bbfdd5d77f",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 74,
+        "endOffset": 100,
+        "selectedText": "\\label{sec:system-design}\n",
+        "prefixContext": "abel{chap:methodology}\n\n\n\n\\section{System Design}\n",
+        "suffixContext": "\nOur neuro-symbolic planning system extends a re-i",
+        "originalRange": {
+          "startLine": 6,
+          "startCharacter": 0,
+          "endLine": 7,
+          "endCharacter": 0
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T16:40:12.896Z",
+      "updatedAt": "2026-01-24T16:40:12.897Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "f2f0f161-a98f-4669-9a2e-46b669e732f1",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T16:40:12.897Z",
+          "body": "We should add links somewhere like link to the github repository"
+        }
+      ]
+    },
+    {
+      "id": "b60f5526-89a4-48dc-a3eb-e0ade91e78ce",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 13768,
+        "endOffset": 13822,
+        "selectedText": "3 persona with background taken from the ogrinal study",
+        "prefixContext": "bles as posible.\nBoth simulation figured the same ",
+        "suffixContext": ", We generated exacly the same goals and task for ",
+        "originalRange": {
+          "startLine": 146,
+          "startCharacter": 33,
+          "endLine": 146,
+          "endCharacter": 87
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T16:42:05.888Z",
+      "updatedAt": "2026-01-24T16:42:05.888Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "a91a6ddf-d12f-4475-a09e-e2c07620df6d",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T16:42:05.888Z",
+          "body": "Do we need any more context"
+        }
+      ]
+    },
+    {
+      "id": "562469e5-14e8-481a-87e6-6eb4f8fc2a10",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 15362,
+        "endOffset": 15428,
+        "selectedText": "(i) perceived causal coherence when the high-level plan is visible",
+        "prefixContext": " the baseline.\n\\end{itemize}\n\nSecondary outcomes: ",
+        "suffixContext": ", and (ii) free-text reasons participants provide ",
+        "originalRange": {
+          "startLine": 168,
+          "startCharacter": 20,
+          "endLine": 168,
+          "endCharacter": 86
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T16:46:10.272Z",
+      "updatedAt": "2026-01-24T16:46:10.272Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "1a655203-698b-44e1-936c-a152825fdde1",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T16:46:10.272Z",
+          "body": "We don't do it anymore"
+        }
+      ]
+    },
+    {
+      "id": "3bbe8c13-62c4-4548-afca-8e8bfb76c39f",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 15105,
+        "endOffset": 15113,
+        "selectedText": "baseline",
+        "prefixContext": "d believability of agent behavior compared to the ",
+        "suffixContext": " Generative Agents architecture \\cite{parkGenerati",
+        "originalRange": {
+          "startLine": 162,
+          "startCharacter": 192,
+          "endLine": 162,
+          "endCharacter": 200
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T16:50:55.633Z",
+      "updatedAt": "2026-01-24T16:50:55.633Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "376ad212-b674-4408-961a-52675a8554b2",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T16:50:55.633Z",
+          "body": "With our improvments"
+        }
+      ]
+    },
+    {
+      "id": "2f51c06e-aa88-4139-a9c5-20cd5c783c9e",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 16128,
+        "endOffset": 16444,
+        "selectedText": "\n\\begin{enumerate}\n    \\item \\textbf{Baseline (GA)}: Faithful re-implementation of Generative Agents \\cite{parkGenerativeAgentsInteractive2023a}.\n    \\item \\textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.\n\\end{enumerate}",
+        "prefixContext": " on the same simulated world and character seeds:\n",
+        "suffixContext": "\n\nEach participant evaluates both conditions on th",
+        "originalRange": {
+          "startLine": 180,
+          "startCharacter": 0,
+          "endLine": 184,
+          "endCharacter": 15
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T16:52:53.716Z",
+      "updatedAt": "2026-01-24T16:52:53.716Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "f55fd414-9339-4644-8653-7ca688c4b412",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T16:52:53.716Z",
+          "body": "Just reference tthe experimental setup"
+        }
+      ]
+    },
+    {
+      "id": "3f3c8b1e-195e-4234-ad75-f5a3ac1031e0",
+      "filePath": "Chapters/03_Methodology.tex",
+      "anchor": {
+        "startOffset": 17951,
+        "endOffset": 18006,
+        "selectedText": "quide and the evaluater will follow the evaluator guide",
+        "prefixContext": "minutes):\nThe user can read paper version of user ",
+        "suffixContext": "\n\\begin{enumerate}\n    \\item \\textbf{Introduction.",
+        "originalRange": {
+          "startLine": 210,
+          "startCharacter": 40,
+          "endLine": 210,
+          "endCharacter": 95
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-24T17:00:32.869Z",
+      "updatedAt": "2026-01-24T17:00:32.869Z",
+      "createdBy": "jeremi",
+      "messages": [
+        {
+          "id": "8190ec93-d6d3-4243-a40c-b7ec366fd718",
+          "author": "jeremi",
+          "createdAt": "2026-01-24T17:00:32.869Z",
+          "body": "Add references"
+        }
+      ]
     }
   ]
 }
