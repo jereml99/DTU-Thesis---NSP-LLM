@@ -1,0 +1,254 @@
+System: You are a common-sense verification engine. Your task is to check if a specific condition required for an action is satisfied, based on the provided world state, the agent's memories, and recent events AND COMMON SENSE.
+
+Context Provided:
+1. Persona: The agent performing the action.
+2. Action: The intended activity.
+3. Condition: The specific requirement to check (e.g., 'coffee machine is working', 'user is present').
+4. World State: Known state of relevant objects.
+5. Memories: Relevant memories retrieved for this context.
+6. Event: The triggering event (if any).
+
+Rules:
+- Evaluate if the 'Condition' is true.
+- Use 'World State' as the primary source of truth for physical objects, but allow Common Sense to fill gaps for implied personal items.
+- Use 'Memories' and 'Event' for social or historical context.
+- **Apply COMMON SENSE aggressively**:
+    - **Utilities**: Assume standard facilities (sinks, showers, toilets) have running water/functioning plumbing unless explicitly stated as 'broken' or 'no water' in the World State. 'Idle' status implies they are working.
+    - **Contents**: Assume standard storage (fridges, pantries) contain typical items (milk, food, ingredients) unless explicitly stated as 'empty' in the World State.
+    - **Functionality**: If an object exists and is not 'broken', assume it works. 'Idle' means available.
+    - **Inference**: If a person is interacting with an object (e.g., 'moving to refrigerator'), they are present at that object's location provided they were in the vicinity.
+    - **Implied Personal Items**: If the action implies the use of a common personal item (e.g., alarm clock, phone, keys, wallet) and it is not explicitly listed in the World State, assume the agent possesses it and it is available/functioning, especially if the action is routine (e.g., 'turn off alarm').
+    - **Activity Switching**: Assume the agent can do only one thing at a time and will switch full focus to the current 'Action'. If a condition requires the agent to be 'not engaged in another activity' or similar, consider it SATISFIED even if memories show a prior ongoing activity, as the agent stops the previous activity to start the new one.
+- If a required object is missing from World State/Memories, and it's something a reasonable person would expect to have (e.g., a bed in a bedroom), assume it is available unless stated otherwise. If there is a condition that person has to be sleeping or ocuping bed in other way, assume it is true unless stated otherwise.
+- **Plan-grounded assumptions**: If the current plan or action implies use of routine job artifacts, personal items, or workspace resources, assume they exist and are usable unless there is explicit evidence to the contrary. Only fail such conditions when the World State/Memories/Event indicate the resource is missing, broken, or unavailable, or when the requirement is highly implausible for the location/context.
+- **Operational readiness (NON-NEGOTIABLE RULE)**: If the condition explicitly concerns readiness/availability of standard workplace equipment that the action must use immediately, you MUST treat it as SATISFIED by default (even without explicit mention). Only mark it unsatisfied when World State/Memories/Event explicitly indicate the equipment is off, cold, broken, unavailable, or when the equipment is highly implausible for the location/context.
+- Output a JSON object with:
+  - `is_satisfied` (boolean): True if the condition is met.
+  - `probability` (float): 0.0 to 1.0 confidence.
+  - `reasoning` (string): Brief explanation.
+
+Examples:
+1. Action: 'make coffee'
+   Condition: 'coffee machine is working'
+   World State: 'kitchen:coffee machine is idle'
+   Result: {"is_satisfied": true, "probability": 0.9, "reasoning": "Machine exists and is idle; no breakdown reported."}
+
+2. Action: 'sit at dining table'
+   Condition: 'not currently engaged in another activity'
+   Memories: 'Isabella is currently making coffee'
+   Result: {"is_satisfied": true, "probability": 1.0, "reasoning": "Agent switches focus from making coffee to sitting at the table (Activity Switching rule)."}
+
+3. Action: 'turn off alarm'
+   Condition: 'alarm is ringing'
+   World State: 'bedroom:bed is occupied'
+   Result: {"is_satisfied": true, "probability": 0.95, "reasoning": "Alarm usage is implied by the action and morning routine context, even if not in World State (Implied Personal Items rule)."}
+
+User: Persona: Isabella Rodriguez
+Persona Context: Name: Isabella Rodriguez
+Age: 34
+Innate traits: friendly, outgoing, hospitable
+Learned traits: Isabella Rodriguez is a cafe owner of Hobbs Cafe who loves to make people feel welcome. She is always looking for ways to make the cafe a place where people can come to relax and enjoy themselves.
+Currently: Isabella Rodriguez is planning on having a Valentine's Day party at Hobbs Cafe with her customers on February 14th, 2023 at 5pm. She is gathering party material, and is telling everyone to join the party at Hobbs Cafe on February 14th, 2023, from 5pm to 7pm.
+Lifestyle: Isabella Rodriguez goes to bed around 11pm, awakes up around 6am.
+Daily plan requirement: Isabella Rodriguez opens Hobbs Cafe at 8am everyday, and works at the counter until 8pm, at which point she closes the cafe.
+Current Date: Monday February 13
+
+Action: Head to Hobbs Cafe and open for the day (Greet the first guests as they arrive)
+Condition: At least one guest has arrived at the cafe entrance.
+
+Current time: February 13, 2023, 08:00:00
+
+World State:
+Current Location: behind the cafe counter in cafe, Hobbs Cafe (Tile: [79, 19]). Objects:
+- the Ville:Isabella Rodriguez's apartment:main room:bed is idle
+- the Ville:Isabella Rodriguez's apartment:main room:desk is idle
+- the Ville:Isabella Rodriguez's apartment:main room:refrigerator is idle
+- the Ville:Isabella Rodriguez's apartment:main room:closet is idle
+- the Ville:Isabella Rodriguez's apartment:main room:shelf is idle
+- the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink is idle
+- the Ville:Isabella Rodriguez's apartment:bathroom:shower is idle
+- the Ville:Isabella Rodriguez's apartment:bathroom:toilet is idle
+- the Ville:Hobbs Cafe:cafe:behind the cafe counter is idle
+- the Ville:Hobbs Cafe:cafe:kitchen sink is idle
+- the Ville:Hobbs Cafe:cafe:cooking area is idle
+- the Ville:Hobbs Cafe:cafe:refrigerator is idle
+- the Ville:Hobbs Cafe:cafe:cafe customer seating is idle
+- the Ville:Hobbs Cafe:cafe:piano is idle
+
+Memories:
+- A central focus of the day is Valentine’s Day party prep at Hobbs Cafe, including setup, decor, and guest welcome planning.
+- This is Isabella Rodriguez's plan for Monday February 13: 1) Wake up at 6:00am and complete the morning routine in the apartment (bathroom, quick wash, getting dressed, light tidy). (early morning), 2) Light breakfast in the main room (yogurt, fruit, and coffee) while reviewing today’s plan and Valentine’s Day party prep for Hobbs Cafe. (morning), 3) Head to Hobbs Cafe to open at 8:00am: unlock doors, turn on lights, prep the counter, greet the first guests, and display the Valentine’s decor. (late morning), 4) Lunch break at the cafe: enjoy a quick salad or sandwich and check in with Maria Lopez if she stops by to study. (midday), 5) Valentine’s Day party prep at Hobbs Cafe: set up tables, hang signage, arrange treats, and finalize a warm playlist; confirm guest welcome plan with staff. (afternoon), 6) Run errands for party supplies: stop by Harvey Oak Supply Store for decorations and then The Willows Market and Pharmacy for snacks and small favors. (afternoon), 7) Valentine’s Day party at Hobbs Cafe from 5:00pm to 7:00pm: greet guests, make everyone feel welcome, and host a cozy, inclusive vibe. (evening), 8) Post-event cleanup at Hobbs Cafe, restock essentials, close the cafe at 8:00pm, then head to The Rose and Crown Pub for a relaxed dinner. (evening), 9) Wind down at home with a cup of tea, review notes from the day, confirm any last-minute party details for tomorrow, and head to bed around 11:00pm. (night).
+- The day is centered on a highly structured plan for a Valentine’s Day event at Hobbs Cafe, detailing a step-by-step schedule from morning routines to evening party activities.
+- Valentine's Day planning at Hobbs Cafe is highly structured and spans from morning routines to evening party activities.
+- Isabella Rodriguez has a highly structured, day-long plan centered on preparing and executing a Valentine’s Day event at Hobbs Cafe.
+
+Event:
+No specific triggering event
+
+Is the condition satisfied?
+
+
+
+{
+  "is_satisfied": false,
+  "probability": 0.35,
+  "reasoning": "As of 08:00 on Feb 13, 2023, World State shows the cafe behind the counter idle with no indication of guests at the entrance. Memories describe future plan to greet first guests, but no actual arrival event is recorded. Therefore, condition 'at least one guest has arrived' is not satisfied."
+}
+
+
+
+
+
+
+System: You are the internal planning module of an intelligent agent. You attempted an action but it failed verification. Your task is to decide on a corrective course of action for the schedule management system.
+
+Inputs:
+1. Action: The action you tried to perform.
+2. Failed Conditions: Why it failed.
+3. Context: Current world state.
+4. Schedule: Your current plan.
+
+Rules:
+- Identify the corrective action YOU must take (e.g., 'Wait for Isabella', 'Buy milk').
+- Output a `modification_goal` that instructs the scheduler on HOW to apply this action.
+- USE meta-instructions like:
+  - "Insert '[Corrective Action]' before '[Original Action]'"
+  - "Replace '[Original Action]' with '[Corrective Action]'"
+  - "Remove '[Action]'"
+- CRITICAL: The '[Corrective Action]' part MUST be a direct, grounded intent from your perspective (e.g., 'Wait for Isabella at the cafe', not 'waiting task').
+- Output a JSON object with:
+  - `modification_goal` (string): The instruction string.
+  - `reasoning` (string): Explanation.
+
+Example:
+Action: 'make coffee'
+Failed Conditions: [{'condition': 'has coffee beans', 'reasoning': 'Inventory is empty'}]
+Result: {"modification_goal": "Insert 'Buy coffee beans at the grocery store' before 'make coffee'", "reasoning": "I need beans first, so I will go buy them."}
+
+User: Persona: Isabella Rodriguez
+Persona Context: Name: Isabella Rodriguez
+Age: 34
+Innate traits: friendly, outgoing, hospitable
+Learned traits: Isabella Rodriguez is a cafe owner of Hobbs Cafe who loves to make people feel welcome. She is always looking for ways to make the cafe a place where people can come to relax and enjoy themselves.
+Currently: Isabella Rodriguez is planning on having a Valentine's Day party at Hobbs Cafe with her customers on February 14th, 2023 at 5pm. She is gathering party material, and is telling everyone to join the party at Hobbs Cafe on February 14th, 2023, from 5pm to 7pm.
+Lifestyle: Isabella Rodriguez goes to bed around 11pm, awakes up around 6am.
+Daily plan requirement: Isabella Rodriguez opens Hobbs Cafe at 8am everyday, and works at the counter until 8pm, at which point she closes the cafe.
+Current Date: Monday February 13
+
+Action: Head to Hobbs Cafe and open for the day (Greet the first guests as they arrive)
+Failed Conditions:
+[
+  {
+    "condition": "At least one guest has arrived at the cafe entrance.",
+    "reasoning": "As of 08:00 on Feb 13, 2023, World State shows the cafe behind the counter idle with no indication of guests at the entrance. Memories describe future plan to greet first guests, but no actual arrival event is recorded. Therefore, condition 'at least one guest has arrived' is not satisfied.",
+    "probability": 0.35,
+    "is_satisfied": false,
+    "prompt_log": [
+      {
+        "role": "system",
+        "content": "You are a common-sense verification engine. Your task is to check if a specific condition required for an action is satisfied, based on the provided world state, the agent's memories, and recent events AND COMMON SENSE.\n\nContext Provided:\n1. Persona: The agent performing the action.\n2. Action: The intended activity.\n3. Condition: The specific requirement to check (e.g., 'coffee machine is working', 'user is present').\n4. World State: Known state of relevant objects.\n5. Memories: Relevant memories retrieved for this context.\n6. Event: The triggering event (if any).\n\nRules:\n- Evaluate if the 'Condition' is true.\n- Use 'World State' as the primary source of truth for physical objects, but allow Common Sense to fill gaps for implied personal items.\n- Use 'Memories' and 'Event' for social or historical context.\n- **Apply COMMON SENSE aggressively**:\n    - **Utilities**: Assume standard facilities (sinks, showers, toilets) have running water/functioning plumbing unless explicitly stated as 'broken' or 'no water' in the World State. 'Idle' status implies they are working.\n    - **Contents**: Assume standard storage (fridges, pantries) contain typical items (milk, food, ingredients) unless explicitly stated as 'empty' in the World State.\n    - **Functionality**: If an object exists and is not 'broken', assume it works. 'Idle' means available.\n    - **Inference**: If a person is interacting with an object (e.g., 'moving to refrigerator'), they are present at that object's location provided they were in the vicinity.\n    - **Implied Personal Items**: If the action implies the use of a common personal item (e.g., alarm clock, phone, keys, wallet) and it is not explicitly listed in the World State, assume the agent possesses it and it is available/functioning, especially if the action is routine (e.g., 'turn off alarm').\n    - **Activity Switching**: Assume the agent can do only one thing at a time and will switch full focus to the current 'Action'. If a condition requires the agent to be 'not engaged in another activity' or similar, consider it SATISFIED even if memories show a prior ongoing activity, as the agent stops the previous activity to start the new one.\n- If a required object is missing from World State/Memories, and it's something a reasonable person would expect to have (e.g., a bed in a bedroom), assume it is available unless stated otherwise. If there is a condition that person has to be sleeping or ocuping bed in other way, assume it is true unless stated otherwise.\n- **Plan-grounded assumptions**: If the current plan or action implies use of routine job artifacts, personal items, or workspace resources, assume they exist and are usable unless there is explicit evidence to the contrary. Only fail such conditions when the World State/Memories/Event indicate the resource is missing, broken, or unavailable, or when the requirement is highly implausible for the location/context.\n- **Operational readiness (NON-NEGOTIABLE RULE)**: If the condition explicitly concerns readiness/availability of standard workplace equipment that the action must use immediately, you MUST treat it as SATISFIED by default (even without explicit mention). Only mark it unsatisfied when World State/Memories/Event explicitly indicate the equipment is off, cold, broken, unavailable, or when the equipment is highly implausible for the location/context.\n- Output a JSON object with:\n  - `is_satisfied` (boolean): True if the condition is met.\n  - `probability` (float): 0.0 to 1.0 confidence.\n  - `reasoning` (string): Brief explanation.\n\nExamples:\n1. Action: 'make coffee'\n   Condition: 'coffee machine is working'\n   World State: 'kitchen:coffee machine is idle'\n   Result: {\"is_satisfied\": true, \"probability\": 0.9, \"reasoning\": \"Machine exists and is idle; no breakdown reported.\"}\n\n2. Action: 'sit at dining table'\n   Condition: 'not currently engaged in another activity'\n   Memories: 'Isabella is currently making coffee'\n   Result: {\"is_satisfied\": true, \"probability\": 1.0, \"reasoning\": \"Agent switches focus from making coffee to sitting at the table (Activity Switching rule).\"}\n\n3. Action: 'turn off alarm'\n   Condition: 'alarm is ringing'\n   World State: 'bedroom:bed is occupied'\n   Result: {\"is_satisfied\": true, \"probability\": 0.95, \"reasoning\": \"Alarm usage is implied by the action and morning routine context, even if not in World State (Implied Personal Items rule).\"}"
+      },
+      {
+        "role": "user",
+        "content": "Persona: Isabella Rodriguez\nPersona Context: Name: Isabella Rodriguez\nAge: 34\nInnate traits: friendly, outgoing, hospitable\nLearned traits: Isabella Rodriguez is a cafe owner of Hobbs Cafe who loves to make people feel welcome. She is always looking for ways to make the cafe a place where people can come to relax and enjoy themselves.\nCurrently: Isabella Rodriguez is planning on having a Valentine's Day party at Hobbs Cafe with her customers on February 14th, 2023 at 5pm. She is gathering party material, and is telling everyone to join the party at Hobbs Cafe on February 14th, 2023, from 5pm to 7pm.\nLifestyle: Isabella Rodriguez goes to bed around 11pm, awakes up around 6am.\nDaily plan requirement: Isabella Rodriguez opens Hobbs Cafe at 8am everyday, and works at the counter until 8pm, at which point she closes the cafe.\nCurrent Date: Monday February 13\n\nAction: Head to Hobbs Cafe and open for the day (Greet the first guests as they arrive)\nCondition: At least one guest has arrived at the cafe entrance.\n\nCurrent time: February 13, 2023, 08:00:00\n\nWorld State:\nCurrent Location: behind the cafe counter in cafe, Hobbs Cafe (Tile: [79, 19]). Objects:\n- the Ville:Isabella Rodriguez's apartment:main room:bed is idle\n- the Ville:Isabella Rodriguez's apartment:main room:desk is idle\n- the Ville:Isabella Rodriguez's apartment:main room:refrigerator is idle\n- the Ville:Isabella Rodriguez's apartment:main room:closet is idle\n- the Ville:Isabella Rodriguez's apartment:main room:shelf is idle\n- the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink is idle\n- the Ville:Isabella Rodriguez's apartment:bathroom:shower is idle\n- the Ville:Isabella Rodriguez's apartment:bathroom:toilet is idle\n- the Ville:Hobbs Cafe:cafe:behind the cafe counter is idle\n- the Ville:Hobbs Cafe:cafe:kitchen sink is idle\n- the Ville:Hobbs Cafe:cafe:cooking area is idle\n- the Ville:Hobbs Cafe:cafe:refrigerator is idle\n- the Ville:Hobbs Cafe:cafe:cafe customer seating is idle\n- the Ville:Hobbs Cafe:cafe:piano is idle\n\nMemories:\n- A central focus of the day is Valentine\u2019s Day party prep at Hobbs Cafe, including setup, decor, and guest welcome planning.\n- This is Isabella Rodriguez's plan for Monday February 13: 1) Wake up at 6:00am and complete the morning routine in the apartment (bathroom, quick wash, getting dressed, light tidy). (early morning), 2) Light breakfast in the main room (yogurt, fruit, and coffee) while reviewing today\u2019s plan and Valentine\u2019s Day party prep for Hobbs Cafe. (morning), 3) Head to Hobbs Cafe to open at 8:00am: unlock doors, turn on lights, prep the counter, greet the first guests, and display the Valentine\u2019s decor. (late morning), 4) Lunch break at the cafe: enjoy a quick salad or sandwich and check in with Maria Lopez if she stops by to study. (midday), 5) Valentine\u2019s Day party prep at Hobbs Cafe: set up tables, hang signage, arrange treats, and finalize a warm playlist; confirm guest welcome plan with staff. (afternoon), 6) Run errands for party supplies: stop by Harvey Oak Supply Store for decorations and then The Willows Market and Pharmacy for snacks and small favors. (afternoon), 7) Valentine\u2019s Day party at Hobbs Cafe from 5:00pm to 7:00pm: greet guests, make everyone feel welcome, and host a cozy, inclusive vibe. (evening), 8) Post-event cleanup at Hobbs Cafe, restock essentials, close the cafe at 8:00pm, then head to The Rose and Crown Pub for a relaxed dinner. (evening), 9) Wind down at home with a cup of tea, review notes from the day, confirm any last-minute party details for tomorrow, and head to bed around 11:00pm. (night).\n- The day is centered on a highly structured plan for a Valentine\u2019s Day event at Hobbs Cafe, detailing a step-by-step schedule from morning routines to evening party activities.\n- Valentine's Day planning at Hobbs Cafe is highly structured and spans from morning routines to evening party activities.\n- Isabella Rodriguez has a highly structured, day-long plan centered on preparing and executing a Valentine\u2019s Day event at Hobbs Cafe.\n\nEvent:\nNo specific triggering event\n\nIs the condition satisfied?"
+      }
+    ],
+    "response_log": {
+      "is_satisfied": false,
+      "probability": 0.35,
+      "reasoning": "As of 08:00 on Feb 13, 2023, World State shows the cafe behind the counter idle with no indication of guests at the entrance. Memories describe future plan to greet first guests, but no actual arrival event is recorded. Therefore, condition 'at least one guest has arrived' is not satisfied."
+    }
+  }
+]
+
+Context:
+World State:
+Current Location: behind the cafe counter in cafe, Hobbs Cafe (Tile: [79, 19]). Objects:
+- the Ville:Isabella Rodriguez's apartment:main room:bed is idle
+- the Ville:Isabella Rodriguez's apartment:main room:desk is idle
+- the Ville:Isabella Rodriguez's apartment:main room:refrigerator is idle
+- the Ville:Isabella Rodriguez's apartment:main room:closet is idle
+- the Ville:Isabella Rodriguez's apartment:main room:shelf is idle
+- the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink is idle
+- the Ville:Isabella Rodriguez's apartment:bathroom:shower is idle
+- the Ville:Isabella Rodriguez's apartment:bathroom:toilet is idle
+- the Ville:Hobbs Cafe:cafe:behind the cafe counter is idle
+- the Ville:Hobbs Cafe:cafe:kitchen sink is idle
+- the Ville:Hobbs Cafe:cafe:cooking area is idle
+- the Ville:Hobbs Cafe:cafe:refrigerator is idle
+- the Ville:Hobbs Cafe:cafe:cafe customer seating is idle
+- the Ville:Hobbs Cafe:cafe:piano is idle
+
+Memories:
+- A central focus of the day is Valentine’s Day party prep at Hobbs Cafe, including setup, decor, and guest welcome planning.
+- This is Isabella Rodriguez's plan for Monday February 13: 1) Wake up at 6:00am and complete the morning routine in the apartment (bathroom, quick wash, getting dressed, light tidy). (early morning), 2) Light breakfast in the main room (yogurt, fruit, and coffee) while reviewing today’s plan and Valentine’s Day party prep for Hobbs Cafe. (morning), 3) Head to Hobbs Cafe to open at 8:00am: unlock doors, turn on lights, prep the counter, greet the first guests, and display the Valentine’s decor. (late morning), 4) Lunch break at the cafe: enjoy a quick salad or sandwich and check in with Maria Lopez if she stops by to study. (midday), 5) Valentine’s Day party prep at Hobbs Cafe: set up tables, hang signage, arrange treats, and finalize a warm playlist; confirm guest welcome plan with staff. (afternoon), 6) Run errands for party supplies: stop by Harvey Oak Supply Store for decorations and then The Willows Market and Pharmacy for snacks and small favors. (afternoon), 7) Valentine’s Day party at Hobbs Cafe from 5:00pm to 7:00pm: greet guests, make everyone feel welcome, and host a cozy, inclusive vibe. (evening), 8) Post-event cleanup at Hobbs Cafe, restock essentials, close the cafe at 8:00pm, then head to The Rose and Crown Pub for a relaxed dinner. (evening), 9) Wind down at home with a cup of tea, review notes from the day, confirm any last-minute party details for tomorrow, and head to bed around 11:00pm. (night).
+- The day is centered on a highly structured plan for a Valentine’s Day event at Hobbs Cafe, detailing a step-by-step schedule from morning routines to evening party activities.
+- Valentine's Day planning at Hobbs Cafe is highly structured and spans from morning routines to evening party activities.
+- Isabella Rodriguez has a highly structured, day-long plan centered on preparing and executing a Valentine’s Day event at Hobbs Cafe.
+
+Schedule:
+                   12:00 AM - 06:00 AM: Task: Sleeping | Action: null (360 min) [Intent: Get rest and prepare for the day.; In-scope: Stay in bed until wake up time.; Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:bed]
+                   06:00 AM - 06:03 AM: Task: complete morning routine | Action: Sit up in bed and stretch (3 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:bed]
+                   06:03 AM - 06:05 AM: Task: complete morning routine | Action: moving to bathroom sink (2 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink]
+                   06:05 AM - 06:11 AM: Task: complete morning routine | Action: Wash face in the bathroom and rinse mouth (6 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink]
+                   06:11 AM - 06:15 AM: Task: complete morning routine | Action: Brush teeth (4 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink]
+                   06:15 AM - 06:16 AM: Task: complete morning routine | Action: moving to shower (1 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:bathroom:shower]
+                   06:16 AM - 06:22 AM: Task: complete morning routine | Action: Take a quick sponge shower (6 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:bathroom:shower]
+                   06:22 AM - 06:24 AM: Task: complete morning routine | Action: moving to closet (2 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:closet]
+                   06:24 AM - 06:32 AM: Task: complete morning routine | Action: Get dressed in an outfit for the day (8 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:closet]
+                   06:32 AM - 06:33 AM: Task: complete morning routine | Action: moving to bed (1 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:bed]
+                   06:33 AM - 06:45 AM: Task: complete morning routine | Action: Light tidy the living areas and straighten the bed (12 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:bed]
+                   06:45 AM - 06:46 AM: Task: breakfast and plan review | Action: moving to refrigerator (1 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:refrigerator]
+                   06:46 AM - 06:49 AM: Task: breakfast and plan review | Action: Scoop yogurt into a bowl (3 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:refrigerator]
+                   06:49 AM - 06:51 AM: Task: breakfast and plan review | Action: Slice fresh fruit (2 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:refrigerator]
+                   06:51 AM - 06:52 AM: Task: breakfast and plan review | Action: moving to shelf (1 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:shelf]
+                   06:52 AM - 06:54 AM: Task: breakfast and plan review | Action: Pour coffee into a mug (2 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:shelf]
+                   06:54 AM - 06:56 AM: Task: breakfast and plan review | Action: moving to refrigerator (2 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   06:56 AM - 06:57 AM: Task: breakfast and plan review | Action: Add milk to coffee (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   06:57 AM - 07:00 AM: Task: breakfast and plan review | Action: moving to refrigerator (3 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:refrigerator]
+                   07:00 AM - 07:02 AM: Task: breakfast and plan review | Action: Place breakfast on the dining table (2 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:refrigerator]
+                   07:02 AM - 07:03 AM: Task: breakfast and plan review | Action: moving to desk (1 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:desk]
+                   07:03 AM - 07:12 AM: Task: breakfast and plan review | Action: Review today's plan and Valentine’s Day prep notes (9 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:desk]
+                   07:12 AM - 07:20 AM: Task: breakfast and plan review | Action: Update to-do list for party prep (8 min) [Already_decomposed: Yes; Location: the Ville:Isabella Rodriguez's apartment:main room:desk]
+                   07:20 AM - 07:22 AM: Task: Head to Hobbs Cafe and open for the day | Action: moving to behind the cafe counter (2 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:22 AM - 07:24 AM: Task: Head to Hobbs Cafe and open for the day | Action: Unlock the cafe doors (2 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:24 AM - 07:26 AM: Task: Head to Hobbs Cafe and open for the day | Action: Turn on the main lights (2 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:26 AM - 07:28 AM: Task: Head to Hobbs Cafe and open for the day | Action: Power up the coffee machine (2 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:28 AM - 07:33 AM: Task: Head to Hobbs Cafe and open for the day | Action: Wipe the counter and prep it for service (5 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:33 AM - 07:36 AM: Task: Head to Hobbs Cafe and open for the day | Action: Align pastries and set up cups (3 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:36 AM - 07:39 AM: Task: Head to Hobbs Cafe and open for the day | Action: Acquire Valentine banners (3 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:39 AM - 07:42 AM: Task: Head to Hobbs Cafe and open for the day | Action: Hang Valentine banners (3 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:42 AM - 07:54 AM: Task: Wait until 08:00 | Action: Wait until 08:00 (12 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:54 AM - 07:55 AM: Task: moving | Action: moving to cooking area (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:cooking area]
+                   07:55 AM - 07:58 AM: Task: Wait until 08:00 | Action: converse about coordinating Valentine’s Day prep with Klaus Mueller; discuss signage, banners, and treats (3 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:cooking area]
+                   07:58 AM - 07:59 AM: Task: moving | Action: moving to behind the cafe counter (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   07:59 AM - 08:00 AM: Task: Head to Hobbs Cafe and open for the day | Action: Wait until 08:00 (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+               ==> 08:00 AM - 08:03 AM: Task: Head to Hobbs Cafe and open for the day | Action: Greet the first guests as they arrive (3 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter] [CURRENT TASK]
+                   08:03 AM - 08:04 AM: Task: moving | Action: moving to refrigerator (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   08:04 AM - 08:08 AM: Task: Head to Hobbs Cafe and open for the day | Action: Check inventory of pastries and condiments (4 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   08:08 AM - 08:09 AM: Task: moving | Action: moving to behind the cafe counter (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   08:09 AM - 08:13 AM: Task: Head to Hobbs Cafe and open for the day | Action: Restock napkins and straws at the counter (4 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   08:13 AM - 08:15 AM: Task: Head to Hobbs Cafe and open for the day | Action: Tidy the cash register area (2 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:behind the cafe counter]
+                   08:15 AM - 08:16 AM: Task: moving | Action: moving to refrigerator (1 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   08:16 AM - 08:32 AM: Task: Lunch break at Hobbs Cafe | Action: null (16 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   08:32 AM - 09:34 AM: Task: Begin Valentine's Day party prep at Hobbs Cafe | Action: null (62 min) [Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   09:34 AM - 09:40 AM: Task: Checking phone | Action: null (6 min) [Already_decomposed: Yes; Location: the Ville:Hobbs Cafe:cafe:refrigerator]
+                   09:40 AM - 10:45 AM: Task: Continue Valentine’s Day party prep at Hobbs Cafe | Action: null (65 min) [Intent: Finish decorating, signage, treats, and playlist; confirm guest welcome plan with staff.; In-scope: complete decor setup, signage, arranging treats, finalizing warm playlist, and confirming guest welcome protocol with staff; Location: the Ville:Hobbs Cafe:cafe:cafe customer seating]
+                   10:45 AM - 11:55 AM: Task: Continue Valentine’s Day party prep at Hobbs Cafe | Action: null (70 min) [Intent: Finish decorating, signage, treats, and playlist; confirm guest welcome plan with staff.; In-scope: complete decor setup, signage, arranging treats, finalizing warm playlist, and confirming guest welcome protocol with staff; Location: the Ville:Hobbs Cafe:cafe:cafe customer seating]
+                   11:55 AM - 01:00 PM: Task: Finish Valentine’s Day party prep | Action: null (65 min) [Intent: Complete remaining preparations for the Valentine's Day party at Hobbs Cafe, including decor, signage, treats, and playlist, and confirm guest welcome flow with staff.; In-scope: Finalize decorations placement, signage, arrange treats, finish warm playlist, confirm guest welcome protocol with staff, ensure seating and flow for guests; Location: the Ville:Hobbs Cafe:cafe:cafe customer seating]
+                   01:00 PM - 02:10 PM: Task: Run errands for party supplies | Action: null (70 min) [Intent: Acquire decorations and snacks for the Valentine's Day party at Hobbs Cafe; In-scope: Visit Harvey Oak Supply Store for decorations; visit The Willows Market and Pharmacy for snacks and small favors; handle purchases and keep receipts; update party checklist; Location: the Ville:Harvey Oak Supply Store:supply store:supply store product shelf]
+                   02:10 PM - 04:50 PM: Task: Finalize Valentine’s Day party prep at Hobbs Cafe | Action: null (160 min) [Intent: Complete the remaining setup for the Valentine’s Day party, including decor, signage, treats, and playlist, and brief staff on guest welcome plan.; In-scope: decor placement, signage, treats arrangement, playlist finalization, guest welcome protocol, staff briefing; Location: the Ville:Hobbs Cafe:cafe:cafe customer seating]
+                   04:50 PM - 06:40 PM: Task: Pre-party briefing and last-minute prep | Action: null (110 min) [Intent: Brief staff on guest welcome flow and confirm final party setup for the 5:00 PM start; In-scope: brief staff on guest welcome plan, finalize last-minute decor placement, verify playlist and snacks are ready, ensure doors will open on time; Location: the Ville:Isabella Rodriguez's apartment:main room:desk]
+                   06:40 PM - 07:10 PM: Task: Continue Valentine's Day party hosting | Action: null (30 min) [Intent: Greet guests, maintain a welcoming vibe, and oversee the remaining portion of the party; In-scope: continue welcoming guests, monitor staff, manage guest flow, maintain cozy atmosphere, respond to quick guest needs; Location: the Ville:Hobbs Cafe:cafe:cafe customer seating]
+                   07:10 PM - 08:05 PM: Task: Post-event cleanup at Hobbs Cafe | Action: null (55 min) [Intent: Tidy up after the party, restock essentials, and prepare the cafe for closing.; In-scope: clear tables and reset decor, collect garbage, wipe surfaces, restock cups and supplies, store leftover items, secure doors; Location: the Ville:Hobbs Cafe:cafe:kitchen sink]
+                   08:05 PM - 11:10 PM: Task: Evening wind-down and tomorrow's prep | Action: null (185 min) [Intent: Unwind for the evening while reviewing and finalizing plans for tomorrow at Hobbs Cafe; In-scope: Tea, light reflection on the day, review notes, confirm tomorrow's cafe prep and staff tasks; Location: the Ville:Isabella Rodriguez's apartment:main room:desk]
+                   11:10 PM - 12:00 AM: Task: Sleep and bedtime wind-down | Action: null (50 min) [Intent: Wind down the day with a calming routine and fall asleep for restorative rest; In-scope: brush teeth, change into nightwear, dim lights, turn off electronics, set alarm, and lie down to fall asleep; Location: the Ville:Isabella Rodriguez's apartment:main room:bed]
+
+What is the replanning goal?
+
+
+
+{
+  "modification_goal": "Replace 'Greet the first guests as they arrive' with 'Wait for the first guest at Hobbs Cafe entrance'",
+  "reasoning": "The condition 'at least one guest has arrived' is not satisfied as of 08:00. Since no guests have arrived yet, the correct corrective action is to wait at the entrance for the first guest rather than attempting to greet non-existent arrivals. This aligns the action with the actual world state and preserves readiness for when guests begin arriving."
+}
