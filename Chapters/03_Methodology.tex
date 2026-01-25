@@ -196,15 +196,29 @@ If the plan is valid, we end the pipeline. If there are any errors, we move to t
 If VAL reports an error, we input the context of the generated PDDL artifacts and feedback from VAL, then ask the LLM to generate actionable responses for each error found. The model can choose between:
 \begin{itemize}
     \item \texttt{ok} - can continue (when the error is due to an incomplete problem init state [Example: no phone in the world state])
-    \item \texttt{pddl\_error} - There is an error in PDDL itself, [Add example]
-    \item \texttt{replan\_needed}
+    \item \texttt{pddl\_error} - There is an error in PDDL itself
+    \item \texttt{need\_replan}
 \end{itemize}
 Based on all error items, the model decides on one of three actions:
 \begin{itemize}
     \item \texttt{ok} - we end the pipeline and assume the plan is valid
-    \item \texttt{pddl\_repair} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
-    \item \texttt{replan\_needed} - we continue with the pipeline
+    \item \texttt{pddl\_repair\_required} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
+    \item \texttt{replan\_required} - we continue with the pipeline
 \end{itemize}
+\begin{verbatim}
+{
+  "feedback_items": [
+    {
+      "error_description": "Final action 'Eat toast...' cannot be executed 
+      because its preconditions are not satisfied: bread_available, 
+      fruit_available, and coffee_available are not true...",
+      "category": "need_replan",
+      "recommendation": "Replan to remove the final eating step..."
+    }
+  ],
+  "overall_next_action": "replan_required"
+}
+\end{verbatim}
 
 \subsubsection{Replan Goal}
 This stage creates a natural language replanning goal based on the feedback from validation and the current schedule, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to the replanner generates poor results [examples].
