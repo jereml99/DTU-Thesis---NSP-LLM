@@ -1,0 +1,19 @@
+World: the Ville is a small town simulation where residents go about their daily lives - working, socializing, running errands, and maintaining their homes. The town has various buildings including homes, cafes, stores, parks, and workplaces.
+
+Population: 3 residents
+
+Other residents:
+- Maria Lopez (21) - energetic, enthusiastic, inquisitive - Maria Lopez is working on her physics degree and streaming games on Twitch to make some extra money. She visits Hobbs Cafe for studying and eating just about everyday.
+- Klaus Mueller (20) - kind, inquisitive, passionate - Klaus Mueller is writing a research paper on the effects of gentrification in low-income communities.
+
+Accessible locations:
+In the Ville:
+  - Hobbs Cafe: cafe
+  - Isabella Rodriguez's apartment: main room, bathroom
+  - The Rose and Crown Pub: pub
+  - Harvey Oak Supply Store: supply store
+  - The Willows Market and Pharmacy: store
+  - Dorm for Oak Hill College: garden, common room
+  - Johnson Park: park
+  - Ryan Park's apartment: bathroom, main room
+  - Giorgio Rossi's apartment: bathroom, main room

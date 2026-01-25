@@ -1,0 +1,81 @@
+[
+  {
+    "action": "completing morning routine and breakfast at home (Sit up in bed and stretch)",
+    "analysis": {
+      "preconditions": [
+        "Isabella Rodriguez is in her bed within her apartment (Isabella Rodriguez's apartment).",
+        "She is currently lying down in the bed.",
+        "There is enough unobstructed space in the bed area to sit up without obstruction."
+      ],
+      "effects": [
+        "Isabella's posture changes from lying down to sitting upright in bed.",
+        "Isabella performs a stretch, with arms extended/upward and upper body elongated."
+      ]
+    }
+  },
+  {
+    "action": "completing morning routine and breakfast at home (Put on robe and adjust pillows)",
+    "analysis": {
+      "preconditions": [
+        "Isabella is in her apartment (likely bedroom or living area) where a robe is accessible.",
+        "A robe is available to wear (in wardrobe or on a robe rack).",
+        "There are pillows on a bed or sofa that can be adjusted (not obstructed or tied up in a way that prevents adjustment)."
+      ],
+      "effects": [
+        "Isabella is wearing a robe.",
+        "Pillows on the bed or sofa are fluffed and arranged neatly."
+      ]
+    }
+  },
+  {
+    "action": "completing morning routine and breakfast at home (Wash face brush teeth and apply skincare)",
+    "analysis": {
+      "preconditions": [
+        "Isabella is in her apartment (bathroom or vicinity of sink) to perform hygiene tasks",
+        "Running water is available at sink",
+        "A toothbrush and toothpaste are available",
+        "Skincare products (at least cleanser and moisturizer) are available",
+        "A clean towel or washcloth is available for drying face and hands"
+      ],
+      "effects": [
+        "Face has been washed and is clean",
+        "Teeth have been brushed and mouth feels fresh",
+        "Skincare products have been applied (e.g., cleanser and moisturizer) resulting in moisturized skin",
+        "Any initial dampness on face is reduced as towel used or products applied"
+      ]
+    }
+  },
+  {
+    "action": "completing morning routine and breakfast at home (Brew coffee and toast bread)",
+    "analysis": {
+      "preconditions": [
+        "Isabella Rodriguez has access to a coffee maker and a toaster in the apartment, and electricity is available.",
+        "There is coffee (grounds or beans) available to brew.",
+        "There is bread available to toast (loaf or pre-sliced)."
+      ],
+      "effects": [
+        "A cup of coffee is brewed and ready to drink.",
+        "Two slices of bread are toasted and ready (optionally buttered)."
+      ]
+    }
+  },
+  {
+    "action": "completing morning routine and breakfast at home (Eat toast with fruit and drink coffee)",
+    "analysis": {
+      "preconditions": [
+        "Isabella is at home in the kitchen.",
+        "Bread for toast is available.",
+        "Fruit is available for breakfast.",
+        "Coffee is available and a means to drink it (cup/mug) is available.",
+        "A means to prepare toast (toaster or similar) is available."
+      ],
+      "effects": [
+        "Toast is prepared and eaten (toast consumed).",
+        "Fruit is eaten (fruit consumed).",
+        "Coffee is drunk (coffee consumed).",
+        "Isabella\u2019s breakfast is completed/consumed, providing sustenance for the morning.",
+        "Inventory/availability updated: toast and fruit quantities reduced; coffee cup emptied."
+      ]
+    }
+  }
+]

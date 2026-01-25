@@ -81,41 +81,144 @@ Domain generation is the most challenging part of the process [Because it's the 
     [Also we use structured JSON output to ensure proper naming and structure, and we should write about it we also tested temporal domain, but decided to focus on non-temporal one becouse it reduced the output token by [x] percent and was simple for model to generate]
 
 \paragraph{Natural Language Precondition and Effect Generation}
-We ask the model for natural language conditions and effects for each action separately to prevent the chained condition-effect problem observed when generating the whole domain at once. [add example]
+We ask the model for natural language conditions and effects for each action separately to prevent the chained condition-effect problem.
+\begin{verbatim}
+Action: completing morning routine (Eat toast with fruit and drink coffee)
+Preconditions:
+  - Isabella is at home in the kitchen.
+  - Bread for toast is available.
+  - Fruit is available for breakfast.
+  - Coffee is available and a means to drink it (cup/mug) is available.
+  - A means to prepare toast (toaster or similar) is available.
+Effects:
+  - Toast is prepared and eaten (toast consumed).
+  - Fruit is eaten (fruit consumed).
+  - Coffee is drunk (coffee consumed).
+  - Isabella's breakfast is completed/consumed.
+\end{verbatim}
 
 \paragraph{Predicates Generation}
-We gather all natural language conditions and effects for each action, along with the world description, and ask the model to create a sensible predicate catalog with a focus on logical coherence. We do this in one step to ensure a unified set of predicates. As the domain is unique for a specific agent and specific task decomposition, we ask the model to generate zero-arity predicates, as we observed that this decreases hallucinations and malformed output from LLMs in subsequent stages of the pipeline. [Add example]
+We gather all natural language conditions and effects for each action, along with the world description, and ask the model to create a sensible predicate catalog with a focus on logical coherence. We do this in one step to ensure a unified set of predicates. As the domain is unique for a specific agent and specific task decomposition, we ask the model to generate zero-arity predicates, as we observed that this decreases hallucinations and malformed output from LLMs in subsequent stages of the pipeline.
+\begin{verbatim}
+- in_apartment: Is Isabella located inside her apartment.
+- lying_down: Is Isabella lying down in bed.
+- coffee_available: Coffee (grounds or beans) is available to brew.
+- bread_available: Bread is available to toast.
+- toaster_functional: Toaster is functional for toasting bread.
+- toast_toasted: Toast has been toasted and is ready to eat.
+- breakfast_completed: Breakfast is completed.
+...
+\end{verbatim}
 
 
 \paragraph{PDDL Action Schema Generation}
-Now, for each action, we generate an action schema from the predicate catalog and natural language conditions and effects. We do this separately for each action to avoid encouraging condition and effect chaining. Afterward, we programmatically create the domain file. [Add example]
+Now, for each action, we generate an action schema from the predicate catalog and natural language conditions and effects. We do this separately for each action to avoid encouraging condition and effect chaining. Afterward, we programmatically create the domain file.
+\begin{verbatim}
+(:action eat_toast_with_fruit_and_drink_coffee
+    :parameters ()
+    :precondition (and
+      (bread_available)
+      (toaster_functional)
+      (toast_toasted)
+      (fruit_available)
+      (coffee_available)
+      (cup_available)
+      (coffee_maker_functional)
+    )
+    :effect (and
+      (toast_consumed)
+      (fruit_consumed)
+      (coffee_consumed)
+      (breakfast_completed)
+      (cup_empty)
+      (not (bread_available))
+      (not (toast_toasted))
+      (not (coffee_available))
+      (not (fruit_available))
+    )
+)
+\end{verbatim}
 
 \paragraph{Validation with VAL and Repair}
 We check domain validation using the VAL tool. The main purpose is to ensure the model did not hallucinate new predicates or create malformed PDDL schemas.
-If there is an error, we pass the feedback to the LLM to generate the repaired domain. [Add example]
+If there is an error, we pass the feedback to the LLM to generate the repaired domain. For instance, if VAL reports \texttt{Use of undeclared predicate: (feeling\_good)}, the LLM will add \texttt{(feeling\_good)} to the predicates list and regenerate the domain.
 
 \subsubsection{Problem Generation}
-After successfully generating the domain, we ask the LLM to generate the problem based on the predicate catalog, the current state of the world, and the task intent. From this, we obtain the initial state of the world and the goal. After generation, the domain and problem files are fed to VAL to check for syntax problems and potential hallucinations; the problem is regenerated with VAL feedback in case of errors. [Add example]
+After successfully generating the domain, we ask the LLM to generate the problem based on the predicate catalog, the current state of the world, and the task intent. From this, we obtain the initial state of the world and the goal. After generation, the domain and problem files are fed to VAL to check for syntax problems and potential hallucinations; the problem is regenerated with VAL feedback in case of errors.
+\begin{verbatim}
+(define (problem isabella_morning_routine)
+  (:domain persona_world)
+  (:init
+    (in_apartment) (lying_down) (bed_area_clear)
+    (water_running_in_sink) (sink_functional)
+    (toothbrush_available) ...
+  )
+  (:goal (and
+    (breakfast_completed)
+    (toast_toasted)
+    (cup_available)
+  ))
+)
+\end{verbatim}
 
 \subsubsection{Plan Generation Programmatic}
-As we use zero-arity predicates, the actions also become zero-arity, allowing us to automatically generate the problem file from the original decomposed actions. [examples]
+As we use zero-arity predicates, the actions also become zero-arity, allowing us to automatically generate the problem file from the original decomposed actions.
+\begin{verbatim}
+0: (sit_up_in_bed_and_stretch) 
+1: (put_on_robe_and_adjust_pillows) 
+2: (wash_face_brush_teeth_and_apply_skincare) 
+3: (brew_coffee_and_toast_bread) 
+4: (eat_toast_with_fruit_and_drink_coffee) 
+\end{verbatim}
 
 \subsubsection{VAL Analysis}
-We input the domain, problem, and plan files into VAL and continue based on its feedback [add example]. If the plan is valid, we end the pipeline. If there are any errors, we move to the next step in the validation pipeline.
+We input the domain, problem, and plan files into VAL and continue based on its feedback.
+\begin{verbatim}
+Checking next happening (time 4)
+Plan failed because of unsatisfied precondition in:
+(eat_toast_with_fruit_and_drink_coffee)
+Deleting (bread_available)
+...
+Goal not satisfied
+
+Plan Repair Advice:
+(eat_toast_with_fruit_and_drink_coffee) has an unsatisfied 
+precondition at time 4
+(Follow each of:
+    (Set (bread_available) to true)
+    and (Set (fruit_available) to true)
+    and (Set (coffee_available) to true)
+)
+\end{verbatim}
+If the plan is valid, we end the pipeline. If there are any errors, we move to the next step in the validation pipeline.
 
 \subsubsection{LLM Feedback}
 If VAL reports an error, we input the context of the generated PDDL artifacts and feedback from VAL, then ask the LLM to generate actionable responses for each error found. The model can choose between:
 \begin{itemize}
     \item \texttt{ok} - can continue (when the error is due to an incomplete problem init state [Example: no phone in the world state])
-    \item \texttt{pddl\_error} - There is an error in PDDL itself, [Add example]
-    \item \texttt{replan\_needed}
+    \item \texttt{pddl\_error} - There is an error in PDDL itself
+    \item \texttt{need\_replan}
 \end{itemize}
 Based on all error items, the model decides on one of three actions:
 \begin{itemize}
     \item \texttt{ok} - we end the pipeline and assume the plan is valid
-    \item \texttt{pddl\_repair} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
-    \item \texttt{replan\_needed} - we continue with the pipeline
+    \item \texttt{pddl\_repair\_required} - we repair each of the PDDL artifacts with feedback from VAL and then perform VAL evaluation again
+    \item \texttt{replan\_required} - we continue with the pipeline
 \end{itemize}
+\begin{verbatim}
+{
+  "feedback_items": [
+    {
+      "error_description": "Final action 'Eat toast...' cannot be executed 
+      because its preconditions are not satisfied: bread_available, 
+      fruit_available, and coffee_available are not true...",
+      "category": "need_replan",
+      "recommendation": "Replan to remove the final eating step..."
+    }
+  ],
+  "overall_next_action": "replan_required"
+}
+\end{verbatim}
 
 \subsubsection{Replan Goal}
 This stage creates a natural language replanning goal based on the feedback from validation and the current schedule, as well as task intent. We added this stage as we noticed that feeding PDDL feedback to the replanner generates poor results [examples].

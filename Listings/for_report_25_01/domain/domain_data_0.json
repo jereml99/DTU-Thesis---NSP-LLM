@@ -1,0 +1,518 @@
+{
+  "domain_name": "persona_world",
+  "requirements": [
+    ":strips",
+    ":typing",
+    ":durative-actions"
+  ],
+  "types": [
+    "agent",
+    "object",
+    "activity",
+    "event"
+  ],
+  "constants": [],
+  "predicates": [
+    {
+      "name": "in_apartment",
+      "parameters": [],
+      "description": "Is Isabella located inside her apartment (general housing context)."
+    },
+    {
+      "name": "lying_down",
+      "parameters": [],
+      "description": "Is Isabella lying down in bed."
+    },
+    {
+      "name": "sitting_up",
+      "parameters": [],
+      "description": "Is Isabella sitting upright in bed."
+    },
+    {
+      "name": "robe_worn",
+      "parameters": [],
+      "description": "Is Isabella wearing a robe."
+    },
+    {
+      "name": "pillows_fluffed",
+      "parameters": [],
+      "description": "Pillows on the bed are fluffed and arranged."
+    },
+    {
+      "name": "bed_area_clear",
+      "parameters": [],
+      "description": "There is unobstructed space in the bed area."
+    },
+    {
+      "name": "water_running_in_sink",
+      "parameters": [],
+      "description": "Water is running at the sink."
+    },
+    {
+      "name": "sink_functional",
+      "parameters": [],
+      "description": "The sink has functional water supply."
+    },
+    {
+      "name": "toothbrush_available",
+      "parameters": [],
+      "description": "Toothbrush is available for use."
+    },
+    {
+      "name": "toothpaste_available",
+      "parameters": [],
+      "description": "Toothpaste is available for use."
+    },
+    {
+      "name": "coffee_maker_functional",
+      "parameters": [],
+      "description": "Coffee maker is functional and can brew coffee."
+    },
+    {
+      "name": "coffee_available",
+      "parameters": [],
+      "description": "Coffee (grounds or beans) is available to brew."
+    },
+    {
+      "name": "bread_available",
+      "parameters": [],
+      "description": "Bread is available to toast."
+    },
+    {
+      "name": "toaster_functional",
+      "parameters": [],
+      "description": "Toaster is functional for toasting bread."
+    },
+    {
+      "name": "toast_toasted",
+      "parameters": [],
+      "description": "Toast has been toasted and is ready to eat."
+    },
+    {
+      "name": "cup_available",
+      "parameters": [],
+      "description": "A cup or mug is available to drink from."
+    },
+    {
+      "name": "breakfast_completed",
+      "parameters": [],
+      "description": "Breakfast is completed (morning routine finished)."
+    },
+    {
+      "name": "skincare_products_available",
+      "description": "Skincare products (e.g., cleanser and moisturizer) are available"
+    },
+    {
+      "name": "towel_available",
+      "description": "A clean towel or washcloth is available for drying face and hands"
+    },
+    {
+      "name": "face_clean",
+      "description": "Face has been washed and is clean"
+    },
+    {
+      "name": "teeth_brushed",
+      "description": "Teeth have been brushed and mouth feels fresh"
+    },
+    {
+      "name": "skin_moisturized",
+      "description": "Skin has moisturizer applied and is moisturized"
+    },
+    {
+      "name": "skincare_applied",
+      "description": "Skincare products have been applied"
+    },
+    {
+      "name": "face_dried",
+      "description": "Face has been dried after washing/skincare application"
+    },
+    {
+      "name": "toast_consumed",
+      "description": "Toast has been eaten"
+    },
+    {
+      "name": "fruit_consumed",
+      "description": "Fruit has been eaten"
+    },
+    {
+      "name": "coffee_consumed",
+      "description": "Coffee has been drunk"
+    },
+    {
+      "name": "cup_empty",
+      "description": "Cup is empty after drinking"
+    }
+  ],
+  "actions": [
+    {
+      "name": "sit_up_in_bed_and_stretch",
+      "kind": "durative",
+      "duration": "5",
+      "parameters": [],
+      "conditions": [
+        {
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "is_negative": true
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "type": "delete"
+        }
+      ],
+      "explanation": "Generated from Sit up in bed and stretch"
+    },
+    {
+      "name": "put_on_robe_and_adjust_pillows",
+      "kind": "durative",
+      "duration": "5",
+      "parameters": [],
+      "conditions": [
+        {
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "is_negative": true
+        },
+        {
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "pillows_fluffed",
+            "arguments": []
+          },
+          "type": "add"
+        }
+      ],
+      "explanation": "Generated from Put on robe and adjust pillows"
+    },
+    {
+      "name": "wash_face_brush_teeth_and_apply_skincare",
+      "kind": "durative",
+      "duration": "8",
+      "parameters": [],
+      "conditions": [
+        {
+          "predicate": {
+            "name": "water_running_in_sink",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "sink_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toothbrush_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toothpaste_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "skincare_products_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "towel_available",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "face_clean",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "teeth_brushed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "skin_moisturized",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "skincare_applied",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "face_dried",
+            "arguments": []
+          },
+          "type": "add"
+        }
+      ],
+      "explanation": "Generated from Wash face brush teeth and apply skincare"
+    },
+    {
+      "name": "brew_coffee_and_toast_bread",
+      "kind": "durative",
+      "duration": "12",
+      "parameters": [],
+      "conditions": [
+        {
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete"
+        }
+      ],
+      "explanation": "Generated from Brew coffee and toast bread"
+    },
+    {
+      "name": "eat_toast_with_fruit_and_drink_coffee",
+      "kind": "durative",
+      "duration": "10",
+      "parameters": [],
+      "conditions": [
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "toast_consumed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "fruit_consumed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "coffee_consumed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "cup_empty",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "type": "delete"
+        }
+      ],
+      "explanation": "Generated from Eat toast with fruit and drink coffee"
+    }
+  ]
+}

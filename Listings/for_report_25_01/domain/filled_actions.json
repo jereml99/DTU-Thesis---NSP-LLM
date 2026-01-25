@@ -1,0 +1,406 @@
+{
+  "filled_actions": [
+    {
+      "name": "sit_up_in_bed_and_stretch",
+      "preconditions": [
+        {
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "is_negative": true
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "type": "delete"
+        }
+      ],
+      "new_predicates": []
+    },
+    {
+      "name": "put_on_robe_and_adjust_pillows",
+      "preconditions": [
+        {
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "is_negative": true
+        },
+        {
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "pillows_fluffed",
+            "arguments": []
+          },
+          "type": "add"
+        }
+      ],
+      "new_predicates": []
+    },
+    {
+      "name": "wash_face_brush_teeth_and_apply_skincare",
+      "preconditions": [
+        {
+          "predicate": {
+            "name": "water_running_in_sink",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "sink_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toothbrush_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toothpaste_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "skincare_products_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "towel_available",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "face_clean",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "teeth_brushed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "skin_moisturized",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "skincare_applied",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "face_dried",
+            "arguments": []
+          },
+          "type": "add"
+        }
+      ],
+      "new_predicates": [
+        {
+          "name": "skincare_products_available",
+          "description": "Skincare products (e.g., cleanser and moisturizer) are available"
+        },
+        {
+          "name": "towel_available",
+          "description": "A clean towel or washcloth is available for drying face and hands"
+        },
+        {
+          "name": "face_clean",
+          "description": "Face has been washed and is clean"
+        },
+        {
+          "name": "teeth_brushed",
+          "description": "Teeth have been brushed and mouth feels fresh"
+        },
+        {
+          "name": "skin_moisturized",
+          "description": "Skin has moisturizer applied and is moisturized"
+        },
+        {
+          "name": "skincare_applied",
+          "description": "Skincare products have been applied"
+        },
+        {
+          "name": "face_dried",
+          "description": "Face has been dried after washing/skincare application"
+        }
+      ]
+    },
+    {
+      "name": "brew_coffee_and_toast_bread",
+      "preconditions": [
+        {
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete"
+        }
+      ],
+      "new_predicates": []
+    },
+    {
+      "name": "eat_toast_with_fruit_and_drink_coffee",
+      "preconditions": [
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "is_negative": false
+        },
+        {
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false
+        }
+      ],
+      "effects": [
+        {
+          "predicate": {
+            "name": "toast_consumed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "fruit_consumed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "coffee_consumed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "cup_empty",
+            "arguments": []
+          },
+          "type": "add"
+        },
+        {
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete"
+        },
+        {
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "type": "delete"
+        }
+      ],
+      "new_predicates": [
+        {
+          "name": "toast_consumed",
+          "description": "Toast has been eaten"
+        },
+        {
+          "name": "fruit_consumed",
+          "description": "Fruit has been eaten"
+        },
+        {
+          "name": "coffee_consumed",
+          "description": "Coffee has been drunk"
+        },
+        {
+          "name": "cup_empty",
+          "description": "Cup is empty after drinking"
+        }
+      ]
+    }
+  ],
+  "domain_constants": []
+}

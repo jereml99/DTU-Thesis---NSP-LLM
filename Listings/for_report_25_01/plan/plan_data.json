@@ -1,0 +1,29 @@
+{
+  "plan_steps": [
+    {
+      "action": "sit_up_in_bed_and_stretch",
+      "parameters": [],
+      "explanation": "Mapped from task: completing morning routine and breakfast at home (Sit up in bed and stretch)"
+    },
+    {
+      "action": "put_on_robe_and_adjust_pillows",
+      "parameters": [],
+      "explanation": "Mapped from task: completing morning routine and breakfast at home (Put on robe and adjust pillows)"
+    },
+    {
+      "action": "wash_face_brush_teeth_and_apply_skincare",
+      "parameters": [],
+      "explanation": "Mapped from task: completing morning routine and breakfast at home (Wash face brush teeth and apply skincare)"
+    },
+    {
+      "action": "brew_coffee_and_toast_bread",
+      "parameters": [],
+      "explanation": "Mapped from task: completing morning routine and breakfast at home (Brew coffee and toast bread)"
+    },
+    {
+      "action": "eat_toast_with_fruit_and_drink_coffee",
+      "parameters": [],
+      "explanation": "Mapped from task: completing morning routine and breakfast at home (Eat toast with fruit and drink coffee)"
+    }
+  ]
+}

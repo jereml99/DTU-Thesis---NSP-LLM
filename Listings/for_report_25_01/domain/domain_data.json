@@ -1,0 +1,626 @@
+{
+  "domain_name": "persona_world",
+  "requirements": [
+    ":strips",
+    ":typing",
+    ":durative-actions"
+  ],
+  "types": [
+    "agent",
+    "object",
+    "activity",
+    "event"
+  ],
+  "constants": [],
+  "predicates": [
+    {
+      "name": "in_apartment",
+      "parameters": [],
+      "description": "Is Isabella located inside her apartment (general housing context)."
+    },
+    {
+      "name": "lying_down",
+      "parameters": [],
+      "description": "Is Isabella lying down in bed."
+    },
+    {
+      "name": "sitting_up",
+      "parameters": [],
+      "description": "Is Isabella sitting upright in bed."
+    },
+    {
+      "name": "robe_worn",
+      "parameters": [],
+      "description": "Is Isabella wearing a robe."
+    },
+    {
+      "name": "pillows_fluffed",
+      "parameters": [],
+      "description": "Pillows on the bed are fluffed and arranged."
+    },
+    {
+      "name": "bed_area_clear",
+      "parameters": [],
+      "description": "There is unobstructed space in the bed area."
+    },
+    {
+      "name": "water_running_in_sink",
+      "parameters": [],
+      "description": "Water is running at the sink."
+    },
+    {
+      "name": "sink_functional",
+      "parameters": [],
+      "description": "The sink has functional water supply."
+    },
+    {
+      "name": "toothbrush_available",
+      "parameters": [],
+      "description": "Toothbrush is available for use."
+    },
+    {
+      "name": "toothpaste_available",
+      "parameters": [],
+      "description": "Toothpaste is available for use."
+    },
+    {
+      "name": "coffee_maker_functional",
+      "parameters": [],
+      "description": "Coffee maker is functional and can brew coffee."
+    },
+    {
+      "name": "coffee_available",
+      "parameters": [],
+      "description": "Coffee (grounds or beans) is available to brew."
+    },
+    {
+      "name": "bread_available",
+      "parameters": [],
+      "description": "Bread is available to toast."
+    },
+    {
+      "name": "toaster_functional",
+      "parameters": [],
+      "description": "Toaster is functional for toasting bread."
+    },
+    {
+      "name": "toast_toasted",
+      "parameters": [],
+      "description": "Toast has been toasted and is ready to eat."
+    },
+    {
+      "name": "cup_available",
+      "parameters": [],
+      "description": "A cup or mug is available to drink from."
+    },
+    {
+      "name": "breakfast_completed",
+      "parameters": [],
+      "description": "Breakfast is completed (morning routine finished)."
+    },
+    {
+      "name": "fruit_available",
+      "parameters": [],
+      "description": "Fruit is available to eat."
+    },
+    {
+      "name": "fruit_consumed",
+      "parameters": [],
+      "description": "Fruit has been consumed."
+    },
+    {
+      "name": "coffee_consumed",
+      "parameters": [],
+      "description": "Coffee has been consumed."
+    },
+    {
+      "name": "cup_empty",
+      "parameters": [],
+      "description": "Cup is empty after drinking."
+    },
+    {
+      "name": "toast_consumed",
+      "parameters": [],
+      "description": "Toast has been consumed."
+    },
+    {
+      "name": "face_clean",
+      "parameters": [],
+      "description": "Face has been washed and is clean."
+    },
+    {
+      "name": "teeth_brushed",
+      "parameters": [],
+      "description": "Teeth have been brushed."
+    },
+    {
+      "name": "skin_moisturized",
+      "parameters": [],
+      "description": "Skin has moisturizer applied."
+    },
+    {
+      "name": "skincare_applied",
+      "parameters": [],
+      "description": "Skincare products have been applied."
+    },
+    {
+      "name": "skincare_products_available",
+      "parameters": [],
+      "description": "Skincare products are available."
+    },
+    {
+      "name": "towel_available",
+      "parameters": [],
+      "description": "A clean towel is available."
+    },
+    {
+      "name": "face_dried",
+      "parameters": [],
+      "description": "Face has been dried after washing/skincare application"
+    }
+  ],
+  "functions": [],
+  "actions": [
+    {
+      "name": "sit_up_in_bed_and_stretch",
+      "kind": "durative",
+      "duration": "5",
+      "parameters": [],
+      "conditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Is Isabella lying down at the start?"
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bed area is clear at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "is_negative": true,
+          "description": "Isabella is not already sitting up at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Isabella sits up in bed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Isabella is no longer lying down."
+        }
+      ],
+      "explanation": "Generated from Sit up in bed and stretch"
+    },
+    {
+      "name": "put_on_robe_and_adjust_pillows",
+      "kind": "durative",
+      "duration": "5",
+      "parameters": [],
+      "conditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "is_negative": true,
+          "description": "Isabella is not wearing a robe at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bed area is clear at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Isabella wears a robe."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "pillows_fluffed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Pillows are fluffed."
+        }
+      ],
+      "explanation": "Generated from Put on robe and adjust pillows"
+    },
+    {
+      "name": "wash_face_brush_teeth_and_apply_skincare",
+      "kind": "durative",
+      "duration": "8",
+      "parameters": [],
+      "conditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "water_running_in_sink",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Water must be running at the sink at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "sink_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Sink must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toothbrush_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toothbrush must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toothpaste_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toothpaste must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "skincare_products_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Skincare products must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "towel_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "A towel must be available at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "face_clean",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Face is clean."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "teeth_brushed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Teeth are brushed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "skin_moisturized",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Skin is moisturized."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "skincare_applied",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Skincare products have been applied."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "face_dried",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Face is dried."
+        }
+      ],
+      "explanation": "Generated from Wash face brush teeth and apply skincare"
+    },
+    {
+      "name": "brew_coffee_and_toast_bread",
+      "kind": "durative",
+      "duration": "12",
+      "parameters": [],
+      "conditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee maker must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toaster must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bread must be available at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Cup becomes available to drink from."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Toast is toasted."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Breakfast is completed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Coffee is used and no longer available for brewing."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Bread is used and no longer available."
+        }
+      ],
+      "explanation": "Generated from Brew coffee and toast bread"
+    },
+    {
+      "name": "eat_toast_with_fruit_and_drink_coffee",
+      "kind": "durative",
+      "duration": "10",
+      "parameters": [],
+      "conditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bread must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toaster must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toast must be toasted at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Fruit must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Cup must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee maker must be functional at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "toast_consumed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Toast has been consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "fruit_consumed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Fruit has been consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "coffee_consumed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Coffee has been consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Breakfast is completed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "cup_empty",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Cup is empty after drinking."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Bread is consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Toast is consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Coffee is consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Fruit is consumed."
+        }
+      ],
+      "explanation": "Generated from Eat toast with fruit and drink coffee"
+    }
+  ],
+  "additional_notes": "Corrections implemented to fix type-checking errors from the previous schema. Added missing predicates (fruit_available, fruit_consumed, coffee_consumed, cup_empty, toast_consumed, and supporting skincare-related predicates and face state predicates) to align with the eat_toast_with_fruit_and_drink_coffee action. All actions remain durative and maintain the original logic, while ensuring no location predicates are introduced."
+}

@@ -1,0 +1,529 @@
+{
+  "valid": false,
+  "next_action": "replan_required",
+  "summary": " VAL indicates the final step cannot execute due to unsatisfied preconditions, but the breakfast goal is achievable with the earlier steps. Replanning to end at the 'Brew coffee and toast bread' step (or adding a replenishment path) is recommended. No domain syntax errors detected; this is a planning-sequence issue requiring a revised plan.",
+  "feedback_items": [
+    {
+      "error_description": "Final action 'Eat toast with fruit and drink coffee' cannot be executed because its preconditions are not satisfied: bread_available, fruit_available, and coffee_available are not true in the current world state after the preceding steps. This prevents completing the planned breakfast sequence, and the overall goal may already be achieved by the earlier step.",
+      "related_action_id": "A5",
+      "category": "need_replan",
+      "category_explanation": "The plan reaches an illogical state where the last action cannot occur due to missing required items; the top-level goal can be satisfied without this final step, so the plan should be restructured.",
+      "recommendation": "Replan to remove the final eating step (stop after 'Brew coffee and toast bread'), or insert a replenishment/restock step for bread, fruit, and coffee so the final step can proceed. Ensure the revised plan achieves breakfast_completed, toast_toasted, and cup_available."
+    }
+  ],
+  "action_signatures": {
+    "A1": {
+      "action_id": "A1",
+      "canonical_name": "sit_up_in_bed_and_stretch",
+      "preconditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Is Isabella lying down at the start?"
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bed area is clear at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "is_negative": true,
+          "description": "Isabella is not already sitting up at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "sitting_up",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Isabella sits up in bed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "lying_down",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Isabella is no longer lying down."
+        }
+      ]
+    },
+    "A2": {
+      "action_id": "A2",
+      "canonical_name": "put_on_robe_and_adjust_pillows",
+      "preconditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "is_negative": true,
+          "description": "Isabella is not wearing a robe at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bed_area_clear",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bed area is clear at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "robe_worn",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Isabella wears a robe."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "pillows_fluffed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Pillows are fluffed."
+        }
+      ]
+    },
+    "A3": {
+      "action_id": "A3",
+      "canonical_name": "wash_face_brush_teeth_and_apply_skincare",
+      "preconditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "water_running_in_sink",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Water must be running at the sink at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "sink_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Sink must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toothbrush_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toothbrush must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toothpaste_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toothpaste must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "skincare_products_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Skincare products must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "towel_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "A towel must be available at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "face_clean",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Face is clean."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "teeth_brushed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Teeth are brushed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "skin_moisturized",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Skin is moisturized."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "skincare_applied",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Skincare products have been applied."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "face_dried",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Face is dried."
+        }
+      ]
+    },
+    "A4": {
+      "action_id": "A4",
+      "canonical_name": "brew_coffee_and_toast_bread",
+      "preconditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee maker must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toaster must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bread must be available at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Cup becomes available to drink from."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Toast is toasted."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Breakfast is completed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Coffee is used and no longer available for brewing."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Bread is used and no longer available."
+        }
+      ]
+    },
+    "A5": {
+      "action_id": "A5",
+      "canonical_name": "eat_toast_with_fruit_and_drink_coffee",
+      "preconditions": [
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Bread must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toaster_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toaster must be functional at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Toast must be toasted at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Fruit must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "cup_available",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Cup must be available at the start."
+        },
+        {
+          "timing": "at start",
+          "predicate": {
+            "name": "coffee_maker_functional",
+            "arguments": []
+          },
+          "is_negative": false,
+          "description": "Coffee maker must be functional at the start."
+        }
+      ],
+      "effects": [
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "toast_consumed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Toast has been consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "fruit_consumed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Fruit has been consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "coffee_consumed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Coffee has been consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "breakfast_completed",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Breakfast is completed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "cup_empty",
+            "arguments": []
+          },
+          "type": "add",
+          "description": "Cup is empty after drinking."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "bread_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Bread is consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "toast_toasted",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Toast is consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "coffee_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Coffee is consumed."
+        },
+        {
+          "timing": "at end",
+          "predicate": {
+            "name": "fruit_available",
+            "arguments": []
+          },
+          "type": "delete",
+          "description": "Fruit is consumed."
+        }
+      ]
+    }
+  },
+  "action_analyses": {
+    "completing morning routine and breakfast at home (Sit up in bed and stretch)": {
+      "preconditions": [
+        "Isabella Rodriguez is in her bed within her apartment (Isabella Rodriguez's apartment).",
+        "She is currently lying down in the bed.",
+        "There is enough unobstructed space in the bed area to sit up without obstruction."
+      ],
+      "effects": [
+        "Isabella's posture changes from lying down to sitting upright in bed.",
+        "Isabella performs a stretch, with arms extended/upward and upper body elongated."
+      ]
+    },
+    "completing morning routine and breakfast at home (Put on robe and adjust pillows)": {
+      "preconditions": [
+        "Isabella is in her apartment (likely bedroom or living area) where a robe is accessible.",
+        "A robe is available to wear (in wardrobe or on a robe rack).",
+        "There are pillows on a bed or sofa that can be adjusted (not obstructed or tied up in a way that prevents adjustment)."
+      ],
+      "effects": [
+        "Isabella is wearing a robe.",
+        "Pillows on the bed or sofa are fluffed and arranged neatly."
+      ]
+    },
+    "completing morning routine and breakfast at home (Wash face brush teeth and apply skincare)": {
+      "preconditions": [
+        "Isabella is in her apartment (bathroom or vicinity of sink) to perform hygiene tasks",
+        "Running water is available at sink",
+        "A toothbrush and toothpaste are available",
+        "Skincare products (at least cleanser and moisturizer) are available",
+        "A clean towel or washcloth is available for drying face and hands"
+      ],
+      "effects": [
+        "Face has been washed and is clean",
+        "Teeth have been brushed and mouth feels fresh",
+        "Skincare products have been applied (e.g., cleanser and moisturizer) resulting in moisturized skin",
+        "Any initial dampness on face is reduced as towel used or products applied"
+      ]
+    },
+    "completing morning routine and breakfast at home (Brew coffee and toast bread)": {
+      "preconditions": [
+        "Isabella Rodriguez has access to a coffee maker and a toaster in the apartment, and electricity is available.",
+        "There is coffee (grounds or beans) available to brew.",
+        "There is bread available to toast (loaf or pre-sliced)."
+      ],
+      "effects": [
+        "A cup of coffee is brewed and ready to drink.",
+        "Two slices of bread are toasted and ready (optionally buttered)."
+      ]
+    },
+    "completing morning routine and breakfast at home (Eat toast with fruit and drink coffee)": {
+      "preconditions": [
+        "Isabella is at home in the kitchen.",
+        "Bread for toast is available.",
+        "Fruit is available for breakfast.",
+        "Coffee is available and a means to drink it (cup/mug) is available.",
+        "A means to prepare toast (toaster or similar) is available."
+      ],
+      "effects": [
+        "Toast is prepared and eaten (toast consumed).",
+        "Fruit is eaten (fruit consumed).",
+        "Coffee is drunk (coffee consumed).",
+        "Isabella\u2019s breakfast is completed/consumed, providing sustenance for the morning.",
+        "Inventory/availability updated: toast and fruit quantities reduced; coffee cup emptied."
+      ]
+    }
+  },
+  "pddl_artifacts": null,
+  "timestamp": "2026-01-25T12:50:19.991440+00:00Z"
+}

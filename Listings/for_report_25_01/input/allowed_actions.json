@@ -1,0 +1,37 @@
+[
+  {
+    "id": "sit_up_in_bed_and_stretch",
+    "canonical_name": "sit_up_in_bed_and_stretch",
+    "description": "Sit up in bed and stretch",
+    "full_description": "completing morning routine and breakfast at home (Sit up in bed and stretch)",
+    "duration_minutes": 5
+  },
+  {
+    "id": "put_on_robe_and_adjust_pillows",
+    "canonical_name": "put_on_robe_and_adjust_pillows",
+    "description": "Put on robe and adjust pillows",
+    "full_description": "completing morning routine and breakfast at home (Put on robe and adjust pillows)",
+    "duration_minutes": 5
+  },
+  {
+    "id": "wash_face_brush_teeth_and_apply_skincare",
+    "canonical_name": "wash_face_brush_teeth_and_apply_skincare",
+    "description": "Wash face brush teeth and apply skincare",
+    "full_description": "completing morning routine and breakfast at home (Wash face brush teeth and apply skincare)",
+    "duration_minutes": 8
+  },
+  {
+    "id": "brew_coffee_and_toast_bread",
+    "canonical_name": "brew_coffee_and_toast_bread",
+    "description": "Brew coffee and toast bread",
+    "full_description": "completing morning routine and breakfast at home (Brew coffee and toast bread)",
+    "duration_minutes": 12
+  },
+  {
+    "id": "eat_toast_with_fruit_and_drink_coffee",
+    "canonical_name": "eat_toast_with_fruit_and_drink_coffee",
+    "description": "Eat toast with fruit and drink coffee",
+    "full_description": "completing morning routine and breakfast at home (Eat toast with fruit and drink coffee)",
+    "duration_minutes": 10
+  }
+]

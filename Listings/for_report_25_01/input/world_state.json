@@ -1,0 +1,383 @@
+{
+  "persona_name": "Isabella Rodriguez",
+  "persona_location": [
+    72,
+    14
+  ],
+  "persona_location_name": "the Ville:Isabella Rodriguez's apartment:main room:bed",
+  "inventory": [],
+  "commitments": [
+    [
+      "Sleeping",
+      360,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 360,
+        "planned_travel_minutes": 0,
+        "planned_total_minutes": 360,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [],
+        "in_scope": "Stay in bed until wake up time.",
+        "task_intent": "Get rest and prepare for the day.",
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule (pre-sleep)"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home",
+      45,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "planned_work_minutes": 40,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 45,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom"
+        ],
+        "in_scope": "hygiene, grooming, dressing, and a quick breakfast (coffee and toast or fruit) at home",
+        "task_intent": "Finish personal morning routine and have a quick breakfast before leaving for Hobbs Cafe",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening",
+      60,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "planned_work_minutes": 50,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 60,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "unlock doors, start coffee station, stock cups/napkins, arrange pastries, set up Valentine\u2019s decor",
+        "task_intent": "Get the cafe ready for 8am opening by starting coffee service setup, turning on equipment, and placing Valentine\u2019s d\u00e9cor.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Unlock cafe doors and begin coffee service",
+      155,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "planned_work_minutes": 150,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 155,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "unlock doors, start coffee machine, verify pastry display, ensure greeting area is tidy for customers",
+        "task_intent": "Prepare the cafe for opening by unlocking doors and starting the coffee station for the morning rush.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations",
+      35,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "planned_work_minutes": 30,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 35,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "talk about decor concepts, preferences, and requirements; note ideas and create a preliminary decoration checklist",
+        "task_intent": "Discuss and collect decoration ideas for tomorrow's Valentine\u2019s event with Maria Lopez.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus",
+      60,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "planned_work_minutes": 50,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 60,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:The Willows Market and Pharmacy:store"
+        ],
+        "in_scope": "Visit The Willows Market and Harvey Oak Supply Store to buy heart-themed decor, napkins, candles, and other party supplies; text Maria Lopez and Klaus Mueller with tomorrow's plans; update decor checklist",
+        "task_intent": "Acquire heart-themed decorations and supplies and inform Maria Lopez and Klaus Mueller about tomorrow's plans",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Lunch service and quick inventory review",
+      70,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 70,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "Lunch service, short lunch break, and inventory check/update for party supplies",
+        "task_intent": "Serve customers at lunch, take a short break, and review remaining party-supply needs for the afternoon setup.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus",
+      80,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "planned_work_minutes": 70,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 80,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:The Willows Market and Pharmacy:store"
+        ],
+        "in_scope": "Visit The Willows Market and Harvey Oak Supply Store to buy heart-themed decor, napkins, candles, etc.; text Maria Lopez and Klaus Mueller with tomorrow's plans; update decor checklist",
+        "task_intent": "Acquire heart-themed decorations and supplies and inform Maria Lopez and Klaus Mueller about tomorrow's plans.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Finalize Valentine\u2019s Day party setup",
+      75,
+      "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 15,
+        "planned_total_minutes": 75,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "Finalize seating plan for 5-7pm, prepare a welcome sign, assemble a simple playlist, and note any last-minute decor tweaks; confirm changes with Maria and Klaus if needed",
+        "task_intent": "Complete seating, signage, and music prep for the event.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow",
+      65,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 65,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "Lock doors, turn off equipment, tally cash, update inventory, tidy dining area, restock as needed, leave notes for tomorrow, and brief Maria/Klaus if needed",
+        "task_intent": "Secure the cafe and finalize end-of-day tasks to be ready for tomorrow's operations",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez",
+      100,
+      "the Ville:The Rose and Crown Pub:pub:microphone",
+      {
+        "planned_work_minutes": 90,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 100,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:The Rose and Crown Pub:pub"
+        ],
+        "in_scope": "dinner at pub, casual debrief, and finalizing tomorrow's party logistics with Maria Lopez",
+        "task_intent": "Enjoy dinner at The Rose and Crown Pub and confirm any last-minute Valentine\u2019s Day party details with Maria.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Wind down at home",
+      75,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 15,
+        "planned_total_minutes": 75,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "Travel home from pub, review tomorrow's schedule, set reminders, prepare belongings for tomorrow, and complete a light bedtime routine (wash face, brush teeth) before bed.",
+        "task_intent": "Review tomorrow's Valentine\u2019s Day agenda, set reminders, and begin the bedtime routine to prepare for a restful night.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Evening wind-down and reminders",
+      25,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 20,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 25,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "Review tomorrow's agenda, set reminders/alarms, and start bedtime routine",
+        "task_intent": "Confirm tomorrow's schedule, set reminders, and complete bedtime prep.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "start bedtime routine",
+      35,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:shower",
+      {
+        "planned_work_minutes": 30,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 35,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "wash face, brush teeth, skincare, change into pajamas, set tomorrow's alarm",
+        "task_intent": "Begin the final personal care and prep for sleep to promote a restful night.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Go to bed and sleep",
+      200,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 200,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 200,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "sleep through the night without leaving bed or performing tasks; no errands or conversations; lights off and phone silenced",
+        "task_intent": "Fall asleep and rest through the night until wake time.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ]
+  ],
+  "time_cursor": "2023-02-13T06:00:00",
+  "accessible_object_addresses": [
+    "the Ville:Dorm for Oak Hill College:common room:common room sofa",
+    "the Ville:Dorm for Oak Hill College:common room:common room table",
+    "the Ville:Dorm for Oak Hill College:common room:pool table",
+    "the Ville:Dorm for Oak Hill College:garden:dorm garden",
+    "the Ville:Giorgio Rossi's apartment:bathroom:bathroom sink",
+    "the Ville:Giorgio Rossi's apartment:bathroom:shower",
+    "the Ville:Giorgio Rossi's apartment:bathroom:toilet",
+    "the Ville:Giorgio Rossi's apartment:main room:bed",
+    "the Ville:Giorgio Rossi's apartment:main room:blackboard",
+    "the Ville:Giorgio Rossi's apartment:main room:closet",
+    "the Ville:Giorgio Rossi's apartment:main room:cooking area",
+    "the Ville:Giorgio Rossi's apartment:main room:desk",
+    "the Ville:Giorgio Rossi's apartment:main room:kitchen sink",
+    "the Ville:Giorgio Rossi's apartment:main room:refrigerator",
+    "the Ville:Harvey Oak Supply Store:supply store:behind the supply store counter",
+    "the Ville:Harvey Oak Supply Store:supply store:supply store counter",
+    "the Ville:Harvey Oak Supply Store:supply store:supply store product shelf",
+    "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+    "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+    "the Ville:Hobbs Cafe:cafe:cooking area",
+    "the Ville:Hobbs Cafe:cafe:kitchen sink",
+    "the Ville:Hobbs Cafe:cafe:piano",
+    "the Ville:Hobbs Cafe:cafe:refrigerator",
+    "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+    "the Ville:Isabella Rodriguez's apartment:bathroom:shower",
+    "the Ville:Isabella Rodriguez's apartment:bathroom:toilet",
+    "the Ville:Isabella Rodriguez's apartment:main room:bed",
+    "the Ville:Isabella Rodriguez's apartment:main room:closet",
+    "the Ville:Isabella Rodriguez's apartment:main room:desk",
+    "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+    "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+    "the Ville:Johnson Park:park:park garden",
+    "the Ville:Ryan Park's apartment:bathroom:bathroom sink",
+    "the Ville:Ryan Park's apartment:bathroom:shower",
+    "the Ville:Ryan Park's apartment:bathroom:toilet",
+    "the Ville:Ryan Park's apartment:main room:bed",
+    "the Ville:Ryan Park's apartment:main room:closet",
+    "the Ville:Ryan Park's apartment:main room:computer desk",
+    "the Ville:Ryan Park's apartment:main room:cooking area",
+    "the Ville:Ryan Park's apartment:main room:kitchen sink",
+    "the Ville:Ryan Park's apartment:main room:refrigerator",
+    "the Ville:The Rose and Crown Pub:pub:bar customer seating",
+    "the Ville:The Rose and Crown Pub:pub:behind the bar counter",
+    "the Ville:The Rose and Crown Pub:pub:cooking area",
+    "the Ville:The Rose and Crown Pub:pub:kitchen sink",
+    "the Ville:The Rose and Crown Pub:pub:microphone",
+    "the Ville:The Rose and Crown Pub:pub:refrigerator",
+    "the Ville:The Rose and Crown Pub:pub:shelf",
+    "the Ville:The Willows Market and Pharmacy:store:behind the grocery counter",
+    "the Ville:The Willows Market and Pharmacy:store:behind the pharmacy counter",
+    "the Ville:The Willows Market and Pharmacy:store:grocery store counter",
+    "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+    "the Ville:The Willows Market and Pharmacy:store:pharmacy store counter",
+    "the Ville:The Willows Market and Pharmacy:store:pharmacy store shelf"
+  ],
+  "object_states": [
+    {
+      "subject": "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      "predicate": "is",
+      "object": "idle",
+      "description": "bed is idle",
+      "last_observed": "2023-02-13T06:00:00"
+    },
+    {
+      "subject": "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      "predicate": "is",
+      "object": "idle",
+      "description": "desk is idle",
+      "last_observed": "2023-02-13T06:00:00"
+    },
+    {
+      "subject": "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      "predicate": "is",
+      "object": "idle",
+      "description": "refrigerator is idle",
+      "last_observed": "2023-02-13T06:00:00"
+    },
+    {
+      "subject": "the Ville:Isabella Rodriguez's apartment:main room:closet",
+      "predicate": "is",
+      "object": "idle",
+      "description": "closet is idle",
+      "last_observed": "2023-02-13T06:00:00"
+    },
+    {
+      "subject": "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+      "predicate": "is",
+      "object": "idle",
+      "description": "shelf is idle",
+      "last_observed": "2023-02-13T06:00:00"
+    }
+  ]
+}
