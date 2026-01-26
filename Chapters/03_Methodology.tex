@@ -50,9 +50,9 @@ All calls to the LLM are formalized using prompt templates that specify the syst
 \subsection{Model Used}
 Most testing was conducted with the OpenAI model gpt-5-nano-2025-08-07, due to: 1. Cost-effectiveness, which is important considering our expected token usage to generate one simulation was 1m+; 2. Speed; 3. Reasoning capabilities with good benchmarks; 4. The ability to trade off "intelligence" versus speed by setting the reasoning token budget (reasoning effort between low, medium, and high).
 
-  [Should we write about other models as well?]
+  [Should we write about other models as well? like wht didn't we use mini normal gpt-5  - becouse of the price]
 
-We also considered open-source models like gpt-oss-120b.
+We also tested opensource models Qwen3:7b and gpt-oss:20b using Ollama as LLM engine on DGX spark [it's easy to setup and support structured output] The quality was similar to gpt5 nano but the infrence speed what about 10 time slower which stoped us from exploring this posobilities futher
 
 \subsection{Long-Term Planning}
 \label{Long-term planning}
