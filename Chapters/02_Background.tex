@@ -243,6 +243,39 @@ LLMs approximate hierarchical planning by proposing outlines, subgoals, and step
 
 Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive \emph{actions}. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
 
+\subsection{Plan Validation and the VAL Tool}
+
+Across hierarchical and LLM-based planning, a critical challenge emerges: how do we verify that a proposed plan is logically correct before execution? Symbolic planners guarantee correctness by construction (plans are valid by design), but LLM-generated and manually authored plans require post-hoc verification.
+
+\textbf{VAL} (the Plan Validator) is a domain-independent tool that checks whether a plan is valid with respect to a PDDL domain and problem specification \cite{howey2004val}. Given a domain, problem, and candidate plan, VAL simulates the plan's execution and verifies:
+
+\begin{itemize}
+    \item \textbf{Action applicability}: each action's preconditions are satisfied before execution;
+    \item \textbf{State transitions}: effects are correctly applied, yielding well-defined successor states;
+    \item \textbf{Goal achievement}: the final state satisfies the problem goal.
+\end{itemize}
+
+If any check fails, VAL reports the plan as invalid with diagnostic details, such as which precondition was unsatisfied or at what step the plan diverged from expectations.
+
+VAL is widely used in automated planning research and competitions as the standard for validating planner outputs. Operationally, it follows the formal semantics of PDDL, making it a trusted oracle for correctness.
+
+\begin{example}[VAL Validation in the Student Domain]
+    \label{ex:val-student}
+    Consider the student task ``work café shift 09:00 to 12:00,'' decomposed by the LLM into: \texttt{(walk-to-cafe)}, \texttt{(unlock-cafe-door)}, \texttt{(work-shift 3-hours)}. 
+
+    VAL checks preconditions in sequence:
+    \begin{itemize}
+        \item \texttt{(walk-to-cafe)}: precondition \texttt{(at student home)} is true in the initial state. Action succeeds; agent is now at café.
+        \item \texttt{(unlock-cafe-door)}: precondition \texttt{(has-key student cafe-key)} is checked. If the agent does not possess the key in the initial state, VAL reports: ``precondition unsatisfied; plan invalid.''
+    \end{itemize}
+
+    The LLM's decomposition is rejected, and feedback is provided so the LLM can refine the plan (e.g., retrieve the key before attempting to unlock).
+\end{example}
+
+For LLM-driven agents, VAL serves as an external symbolic oracle that enforces formal correctness. Unlike generic language understanding (which may miss subtle logical errors), VAL provides guarantee: a valid plan (in VAL's judgment) respects all domain constraints. This enforcement directly operationalizes the concept of \emph{coherence} defined earlier (\cref{def:coherence}): a plan that passes VAL validation is coherent with respect to the domain.
+
+\textbf{Limitations}: VAL only validates against the given PDDL model. If the model is incomplete or misspecified, a plan may pass validation despite being problematic in practice. Additionally, VAL does not measure plan quality, plausibility, or believability—it enforces logical correctness only.
+
 \subsection{Neuro-Symbolic Systems for Planning}
 \label{subsec:neuro-symbolic}
 
