@@ -75,6 +75,11 @@ An \emph{action} is a discrete event that transitions the system from one state 
 When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
 \end{definition}
 
+\begin{remark}[Task and Action Terminology]
+\label{rem:task-action-terminology}
+Throughout this thesis, we distinguish between two hierarchical levels of planning behavior. A \emph{task} is a high-level, daily-planned schedule unit (e.g., ``work café shift 09:00--12:00''), as synthesized in the Generative Agents architecture. An \emph{action}, in the formal planning sense above, is a primitive discrete event characterized by preconditions and effects. In the context of neuro-symbolic scaffolding, a task is decomposed into a sequence of fine-grained actions that, when executed, fulfill the task's objective. The action definition here (Definition \ref{def:action}) corresponds to the primitive action units into which tasks are decomposed in our framework.
+\end{remark}
+
 \begin{definition}[Classical Planning Problem]
 \label{def:planning-problem}
 A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$:
