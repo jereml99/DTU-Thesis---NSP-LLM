@@ -241,7 +241,7 @@ Hierarchical task networks (HTN) decompose high-level tasks into ordered or part
 
 LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}. Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023a}.
 
-Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive actions. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
+Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive \emph{actions}. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
 
 \subsection{Neuro-Symbolic Systems for Planning}
 \label{subsec:neuro-symbolic}
@@ -258,7 +258,7 @@ Recent work explores these patterns for PDDL generation. Tantakoun et al. survey
 
 \begin{example}[Neuro-Symbolic Validation of Action Decomposition]
     \label{ex:neurosymbolic-validation}
-    The LLM receives a daily task ``work café shift (09:00 to 12:00)'' and decomposes it into fine-grained actions: ``walk to café,'' ``unlock door,'' ``turn on lights,'' ``serve customers,'' ``clean tables.'' The PDDL validator checks each action:
+    The LLM receives a daily \emph{task} ``work café shift (09:00 to 12:00)'' and decomposes it into fine-grained \emph{actions}: ``walk to café,'' ``unlock door,'' ``turn on lights,'' ``serve customers,'' ``clean tables.'' The PDDL validator checks each \emph{action}:
     \begin{itemize}
         \item Preconditions (door must exist and agent must have key before unlocking; lights require door to be unlocked and agent inside),
         \item Location constraints (agent must be at café to unlock door; cannot serve customers while at storage room),
@@ -288,7 +288,7 @@ The architecture comprises:
     \item \textbf{Planning}:
           \begin{enumerate}
               \item Daily objectives are synthesized from the agent's personality profile (innate traits, occupation, background), current situational goals (e.g., organizing a party, meeting deadlines), and established lifestyle patterns (sleep schedule, work hours, meal times, exercise routines).
-              \item These objectives are then decomposed hierarchically: day-level objectives are refined into hour-level plan segments, which are further decomposed into concrete 5-to-15 minute action sequences at execution time as each hour-level task becomes due.
+              \item These objectives are then decomposed hierarchically: day-level objectives are refined into hour-level plan segments, which are further decomposed into concrete 5-to-15 minute \emph{action} sequences at execution time as each hour-level \emph{task} becomes due.
               \item Agents dynamically re-plan when circumstances change, with the LLM deciding whether to continue the current plan or react to new observations.
           \end{enumerate}
 \end{enumerate}
