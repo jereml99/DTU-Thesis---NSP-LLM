@@ -18,7 +18,7 @@ The implementation transforms the original monolithic Generative Agents codebase
 
   \item \textbf{Service Layer}: Encapsulates cognitive capabilities in swappable interfaces:
         \begin{itemize}
-          \item \texttt{PlanningService}: Daily planning and task decomposition
+          \item \texttt{PlanningService}: Daily planning and \emph{task} decomposition
           \item \texttt{DialogueService}: Conversation generation
           \item \texttt{PerceptionService}: Environment observation and memory retrieval
           \item \texttt{ReflectionService}: Memory summarization
@@ -58,22 +58,22 @@ We also tested opensource models Qwen3:7b and gpt-oss:20b using Ollama as LLM en
 \label{Long-term planning}
 As part of the improvements to the original architecture, we modified the prompts responsible for planning, as well as the surrounding code.
 \subsubsection{Movement}
-The biggest change is the programmatic addition of movement actions. In the original paper, characters moved as part of determined actions; for example, if an agent planned to eat breakfast for 20 minutes in a coffee shop that is 25 minutes from their current location, they would walk to the café for 20 minutes and, without even reaching the café, would start another activity. In our opinion, this reduced the believability of the original approach, so we decided to automatically block time for the movement activity. This ensures that the agent always has time to reach the destination before starting actions. However, it also requires estimating the time the agent will spend moving for each task during planning, as the action location is determined only after decomposing the task into actions.
+The biggest change is the programmatic addition of movement \emph{actions}. In the original paper, characters moved as part of determined \emph{actions}; for example, if an agent planned to eat breakfast for 20 minutes in a coffee shop that is 25 minutes from their current location, they would walk to the café for 20 minutes and, without even reaching the café, would start another activity. In our opinion, this reduced the believability of the original approach, so we decided to automatically block time for the movement activity. This ensures that the agent always has time to reach the destination before starting \emph{actions}. However, it also requires estimating the time the agent will spend moving for each \emph{task} during planning, as the \emph{action} location is determined only after decomposing the \emph{task} into \emph{actions}.
 
 
 \subsubsection{Daily Planning}
 
-In the original paper, each task, such as "morning routine," was always generated as a multiple of one hour. With newer models and enforced structured output, we were able to ask the model to generate arbitrarily long tasks for a day. Another improvement is asking the model to generate task intent, what type of actions we expect to be necessary and the location of interest for the task---the area where the agent will most likely move during task execution.
-We use task intent as context for prompts that will operate on the task [replanning, task decomposition]. Locations of interest are used to estimate travel time during the activity.
+In the original paper, each \emph{task}, such as "morning routine," was always generated as a multiple of one hour. With newer models and enforced structured output, we were able to ask the model to generate arbitrarily long \emph{tasks} for a day. Another improvement is asking the model to generate \emph{task} intent, what type of \emph{actions} we expect to be necessary and the location of interest for the \emph{task}---the area where the agent will most likely move during \emph{task} execution.
+We use \emph{task} intent as context for prompts that will operate on the \emph{task} [replanning, \emph{task} decomposition]. Locations of interest are used to estimate travel time during the activity.
 
 \subsubsection{Task Decomposition}
-When an agent approaches a task that has not yet been decomposed, we trigger the task's decomposition into atomic actions. In the original implementation, each action was a multiple of 5 minutes, which produced some unbelievable actions, such as washing hands for 5 minutes. In our implementation, we allow the model to arbitrarily choose the duration in minutes. If neuro-symbolic validation is enabled, we enter the validation loop. Then, with the final task decomposition, we ask the model for the most appropriate place to perform each action. We then programmatically generate movement actions if the agent needs to switch locations between actions. Finally, we check if the total time is above or below the expected time for the task. We define the difference as delta [the time for the task itself vs. the expected time for the movement]. If we need to fill time, we add a "Checking phone" activity for |delta| minutes. If delta > 0, we need to decrease the time spent on actions. We achieve this by randomly decreasing the duration of activities by one minute, weighting activities that take longer so that a 20-minute activity has a ten times higher chance of being selected for decrease than a 2-minute activity [make the examples more mathematically strict].
+When an agent approaches a \emph{task} that has not yet been decomposed, we trigger the \emph{task}'s decomposition into atomic \emph{actions}. In the original implementation, each \emph{action} was a multiple of 5 minutes, which produced some unbelievable \emph{actions}, such as washing hands for 5 minutes. In our implementation, we allow the model to arbitrarily choose the duration in minutes. If neuro-symbolic validation is enabled, we enter the validation loop. Then, with the final \emph{task} decomposition, we ask the model for the most appropriate place to perform each \emph{action}. We then programmatically generate movement \emph{actions} if the agent needs to switch locations between \emph{actions}. Finally, we check if the total time is above or below the expected time for the \emph{task}. We define the difference as delta [the time for the \emph{task} itself vs. the expected time for the movement]. If we need to fill time, we add a "Checking phone" activity for |delta| minutes. If delta > 0, we need to decrease the time spent on \emph{actions}. We achieve this by randomly decreasing the duration of activities by one minute, weighting activities that take longer so that a 20-minute activity has a ten times higher chance of being selected for decrease than a 2-minute activity [make the examples more mathematically strict].
 
 
 
 \subsection{Neuro-Symbolic Validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-We implemented the following neuro-symbolic validation pipeline to enhance the coherence of actions generated during task decomposition. This is performed after generating actions from the task, but before adding movements.
+We implemented the following neuro-symbolic validation pipeline to enhance the coherence of \emph{actions} generated during \emph{task} decomposition. This is performed after generating \emph{actions} from the \emph{task}, but before adding movements.
 
 \begin{figure}[H]
   \centering
@@ -85,12 +85,12 @@ We implemented the following neuro-symbolic validation pipeline to enhance the c
 [TODO add example] We check the validity of preconditions using the external symbolic validation tool, VAL\cite{howey2004val}. To receive feedback from VAL, we must generate three files: Domain.pddl, Problem.pddl, and plan.pddl. Below, we explain how we achieved this.
 
 \subsubsection{Domain Generation}
-Domain generation is the most challenging part of the process [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline], and we tested a couple of approaches to do it correctly. The steps below generated the best Domain, based on our subjective assessment [We tested a lot and looked which generated more sensible results and which generated fewer validation errors]. We initially attempted to generate the entire PDDL file in one step, but encountered two problems: 1. Action conditions and effects tended to be chained without real logic. [add example, like teeth-brushed as precondition of shower]. After many iterations, we decided to split domain generation into the following steps.
+Domain generation is the most challenging part of the process [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline], and we tested a couple of approaches to do it correctly. The steps below generated the best Domain, based on our subjective assessment [We tested a lot and looked which generated more sensible results and which generated fewer validation errors]. We initially attempted to generate the entire PDDL file in one step, but encountered two problems: 1. \emph{Action} conditions and effects tended to be chained without real logic. [add example, like teeth-brushed as precondition of shower]. After many iterations, we decided to split domain generation into the following steps.
 
   [Also we use structured JSON output to ensure proper naming and structure, and we should write about it we also tested temporal domain, but decided to focus on non-temporal one becouse it reduced the output token by [x] percent and was simple for model to generate]
 
 \paragraph{Natural Language Precondition and Effect Generation}
-We ask the model for natural language conditions and effects for each action separately to prevent the chained condition-effect problem.
+We ask the model for natural language conditions and effects for each \emph{action} separately to prevent the chained condition-effect problem.
 \begin{verbatim}
 Action: completing morning routine (Eat toast with fruit and drink coffee)
 Preconditions:
@@ -107,7 +107,7 @@ Effects:
 \end{verbatim}
 
 \paragraph{Predicates Generation}
-We gather all natural language conditions and effects for each action, along with the world description, and ask the model to create a sensible predicate catalog with a focus on logical coherence. We do this in one step to ensure a unified set of predicates. As the domain is unique for a specific agent and specific task decomposition, we ask the model to generate zero-arity predicates, as we observed that this decreases hallucinations and malformed output from LLMs in subsequent stages of the pipeline.
+We gather all natural language conditions and effects for each \emph{action}, along with the world description, and ask the model to create a sensible predicate catalog with a focus on logical coherence. We do this in one step to ensure a unified set of predicates. As the domain is unique for a specific agent and specific \emph{task} decomposition, we ask the model to generate zero-arity predicates, as we observed that this decreases hallucinations and malformed output from LLMs in subsequent stages of the pipeline.
 \begin{verbatim}
 - in_apartment: Is Isabella located inside her apartment.
 - lying_down: Is Isabella lying down in bed.
@@ -121,7 +121,7 @@ We gather all natural language conditions and effects for each action, along wit
 
 
 \paragraph{PDDL Action Schema Generation}
-Now, for each action, we generate an action schema from the predicate catalog and natural language conditions and effects. We do this separately for each action to avoid encouraging condition and effect chaining. Afterward, we programmatically create the domain file.
+Now, for each \emph{action}, we generate an \emph{action} schema from the predicate catalog and natural language conditions and effects. We do this separately for each \emph{action} to avoid encouraging condition and effect chaining. Afterward, we programmatically create the domain file.
 \begin{verbatim}
 (:action eat_toast_with_fruit_and_drink_coffee
     :parameters ()
@@ -258,7 +258,7 @@ Result: {
   Therefore, condition 'at least one guest has arrived' is not satisfied."
 }
 \end{verbatim}
-If all conditions are satisfied, the agent will start the action.
+If all conditions are satisfied, the agent will start the \emph{action}.
 \subsection{Replan Goal}
 If at least one condition is not satisfied, we ask the LLM to generate a replanning goal based on the schedule, the agent's daily goal, and the violated conditions.
 \begin{verbatim}
@@ -285,14 +285,14 @@ We then ask the LLM to replan the next 2 hours with the replanning goal in mind.
 \section{Quantitative Evaluation: Constraint Violation Analysis}
 \label{sec:quantitative-evaluation}
 
-[To be completed: automated evaluation comparing the hierarchical planning baseline against our validator-augmented system. The validator will automatically detect and flag constraint violations such as attempting to use items that are not available, scheduling overlapping activities, violating location constraints, or executing actions whose preconditions are not satisfied. Metrics will include violation counts at day-level and action-level, violation rates per 100 actions, and success rates after optional validator-guided repair rounds.]
+[To be completed: automated evaluation comparing the hierarchical planning baseline against our validator-augmented system. The validator will automatically detect and flag constraint violations such as attempting to use items that are not available, scheduling overlapping activities, violating location constraints, or executing \emph{actions} whose preconditions are not satisfied. Metrics will include violation counts at day-level and \emph{action}-level, violation rates per 100 \emph{actions}, and success rates after optional validator-guided repair rounds.]
 
 
 
 \section{Experimental Setup}
 \label{sec:experimental-setup}
 For the user study, we generated two simulations: baseline and neuro-symbolic. Since the focus of our study was how neuro-symbolic planning can increase the believability of LLM-based agents, we decided to isolate as many variables as possible.
-Both simulations featured the same three personas with backgrounds taken from the original study. We generated exactly the same goals and tasks for the day [for each persona] for both simulations.
+Both simulations featured the same three personas with backgrounds taken from the original study. We generated exactly the same goals and \emph{tasks} for the day [for each persona] for both simulations.
 Both the baseline and neuro-symbolic models used the improvements introduced in \ref{Long-term planning}.
 Thus, the generation differed only by the introduction of validations in the neuro-symbolic simulation \ref{subsec:NL-conditions-validations} \ref{subsec:neuro-symbolic-pipeline}.
 
@@ -321,7 +321,7 @@ Two primary hypotheses:
 
 \begin{itemize}
   \item \textbf{H1 (overall believability)}: Participants judge agents powered by our method as more believable overall than the baseline in matched scenarios.
-  \item \textbf{H2 (action believability)}: For the same scenario, participants flag fewer actions as ``unbelievable'' in our method than in the baseline.
+  \item \textbf{H2 (action believability)}: For the same scenario, participants flag fewer \emph{actions} as ``unbelievable'' in our method than in the baseline.
 \end{itemize}
 
 Secondary outcomes: (i) free-text reasons participants provide when deeming actions unbelievable (used for qualitative error analysis) \cite{batesRoleEmotionBelievable1994,bogdanovychWhatMakesVirtual2016,tenceAutomatableEvaluationMethod2010,xiaoHowFarAre2024}.
@@ -333,7 +333,7 @@ Two within-subject conditions on the same simulated world and character seeds:
 
 \begin{enumerate}
   \item \textbf{Baseline (GA)}: Improved re-implementation of Generative Agents \cite{parkGenerativeAgentsInteractive2023a}.
-  \item \textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and action selection.
+  \item \textbf{Ours (Neuro-symbolic)}: Proposed system with symbolic planning and consistency checks integrated into deliberation and \emph{action} selection.
 \end{enumerate}
 
 Each participant evaluates both conditions on the same character and scenario to enable within-subject comparison. Order is counterbalanced to reduce presentation effects.
@@ -348,15 +348,15 @@ Due to recruitment constraints, our participant pool is limited, which precludes
 \subsection{Materials and Stimuli}
 \label{subsec:materials-stimuli}
 
-The stimulus for each condition is a replay of a single random character's day. To focus on action believability, we present:
+The stimulus for each condition is a replay of a single random character's day. To focus on \emph{action} believability, we present:
 
 \begin{itemize}
   \item time-lapse \emph{video replay} of the agent acting in the world (controllable playback speed, pause/seek);
   \item Activity log with details about the current activity and animated time tracking; and
-  \item UI controls to mark an action as unbelievable (``thumbs down''), provide a short reason, and continue.
+  \item UI controls to mark an \emph{action} as unbelievable (``thumbs down''), provide a short reason, and continue.
 \end{itemize}
 
-Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile, task for the day and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
+Replays cover the same scenario (e.g., two simulated in-game days) and use the same character profile, \emph{task} for the day and randomness seed across conditions, so any variation is attributable to agent architecture (baseline vs. ours) rather than scenario noise.
 
 \subsection{Procedure}
 \label{subsec:procedure}
@@ -366,9 +366,9 @@ The user reads the paper version of the user guide, while the evaluator follows 
 \begin{enumerate}
   \item \textbf{Introduction.} A scripted briefing introduces the task and believability as coherence, plausibility, and consistency within world rules \cite{bogdanovychWhatMakesVirtual2016}.
   \item \textbf{Practice.} Participants complete a 2 to 3 minute tutorial on the interface using a neutral example not used in the main study.
-  \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable actions. For each mark, add a short explanation (optional but encouraged).
+  \item \textbf{Condition A.} Watch the replay, freely scrub, and mark unbelievable \emph{actions}. For each mark, add a short explanation (optional but encouraged).
   \item \textbf{Condition B.} Repeat with the other planner. Order varies across participants; assignment is double-blind.
-  \item \textbf{Summary.} We show the user an overview of marked actions in both conditions and ask which one felt more human-like.
+  \item \textbf{Summary.} We show the user an overview of marked \emph{actions} in both conditions and ask which one felt more human-like.
 \end{enumerate}
 
 We record and transcribe the experiment for a later qualitative study of unbelievable actions.
@@ -377,7 +377,7 @@ The experiment was conducted using a custom-developed website (Figure \ref{fig:s
 \begin{figure}[H]
   \centering
   \includegraphics[width=\textwidth]{Pictures/methodology/Study_interface.png}
-  \caption{User interface for the study, showing the replay view and mechanism for flagging unbelievable actions.}
+  \caption{User interface for the study, showing the replay view and mechanism for flagging unbelievable \emph{actions}.}
   \label{fig:study-interface}
 \end{figure}
 
