@@ -176,7 +176,7 @@ A PDDL \emph{problem} specifies:
     \item \textbf{Goal specification}: predicates that must be true in the final state.
 \end{itemize}
 
-Together, a domain and problem define a planning problem in the sense of Definition \ref{def:planning-problem}.
+Together, a domain and problem define a planning problem in the sense of Definition \ref{def:planning-problem}, which can then be solved by a planner (Definition \ref{def:planner}), such as Fast Downward, GraphPlan, or STRIPS.
 \end{definition}
 
 PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm can check that action preconditions are met, goals are reachable, and no contradictions are present. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized, kwonFastAccurateTask}. 
