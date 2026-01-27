@@ -56,9 +56,10 @@ In the context of LLM-based agents, scaffolding can take the form of translating
 In this thesis, scaffolding is employed to support the generation of formal planning specifications and the decomposition of high-level goals into executable action sequences—domains where LLM fluency and commonsense reasoning are beneficial, but where formal correctness and consistency are required.
 
 
-\subsection{Planning and PDDL}
-\label{subsec:plann-pddl}
-To ground our approach, we introduce the formal language used to specify planning problems: PDDL (Planning Domain Definition Language).
+\subsection{Planning}
+\label{subsec:planning}
+
+To ground our approach, we introduce the formal concepts underlying planning.
 
 \begin{definition}[State]
 \label{def:state}
@@ -102,7 +103,14 @@ The formulation above relies on standard assumptions commonly adopted in classic
     \item \textbf{Instantaneous actions}: actions do not consume time;
     \item \textbf{Single-agent setting}: interactions with other agents are not considered.
 \end{itemize}
-These assumptions enable precise reasoning about plan validity and correctness. Relaxing them leads to more expressive planning models, which are discussed later in this thesis.
+These assumptions enable precise reasoning about plan validity and correctness. Relaxing them leads to more expressive planning models but can lead to fewer logical guarantees; some of these are discussed later in this thesis.
+
+\begin{definition}[Planner]
+\label{def:planner}
+A \emph{planner} is an algorithm that, given a classical planning problem $\langle S, A, T, I, G \rangle$, searches for a valid plan $\pi$ (if one exists) that transforms an initial state $I$ into a state satisfying the goal condition $G$ by applying actions whose preconditions are satisfied and whose effects induce state transitions \cite{russell2010aima,ghallab2004automated}.
+
+Planners explore the induced state space using different search strategies, including breadth-first search, depth-first search, and heuristic-guided search, and may optimize for criteria such as plan length, action cost, or makespan \cite{ghallab2004automated}. Classical planning systems include STRIPS \cite{fikes1971strips}, GraphPlan \cite{blum1997graphplan}, and modern heuristic planners such as Fast Downward \cite{helmert2006fast}.
+\end{definition}
 
 \begin{example}[Simple Classical Planning Problem]
 \label{ex:simple-planning}
@@ -149,10 +157,86 @@ G = \{\texttt{at-cafe}\}.
 This minimal problem has a unique solution; extending it with time, resources, or additional constraints would yield more complex planning instances where multiple or no solutions may exist.
 \end{example}
 
-\paragraph{Relevance to LLM-Driven Planning}
-PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm can check that action preconditions are met, goals are reachable, and no contradictions are present. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized} \cite{kwonFastAccurateTask}. 
+\subsubsection{Hierarchical Planning}
+
+Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods encoding admissible refinements and constraints \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. Hierarchy supports abstraction, reuse, and tractable search.
+
+LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}. Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023a}.
+
+Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive \emph{actions}. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
+
+\subsection{Symbolic Planning}
+\label{subsec:symbolic-planning}
+
+Symbolic planning uses explicit, compositional representations to algorithmically search for valid plans \cite{fikesStripsNewApproach1971, mcdermottPDDLPlanningDomain1998}. Key strengths:
+
+\begin{enumerate}
+    \item \textbf{Explainability}: Plans are sequences of named actions with explicit preconditions and effects, enabling causal trace inspection.
+    \item \textbf{Constraint enforcement}: Planners guarantee that plans satisfy all preconditions, avoid violated invariants, and respect temporal and resource bounds.
+    \item \textbf{Optimality}: Many planners find optimal or bounded-suboptimal solutions under well-defined cost models.
+\end{enumerate}
+
+These properties directly address coherence: if behavior is synthesized via a symbolic planner, environmental constraints are satisfied by construction.
+
+The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless explicitly encoded \cite{haslumIntroductionPlanningDomain2019}.
+
+\subsubsection{PDDL: Planning Domain Definition Language}
+
+To enable symbolic planning, domains and problems must be specified formally. The Planning Domain Definition Language (PDDL) is the standard representation used by most automated planners.
+
+\begin{definition}[PDDL Domain and Problem]
+\label{def:pddl}
+A PDDL \emph{domain} specifies:
+\begin{itemize}
+    \item \textbf{Predicates}: atomic facts about the world (e.g., \texttt{(at agent location)}, \texttt{(has-key agent key)});
+    \item \textbf{Action schemas}: parameterized templates specifying action preconditions and effects, which ground to concrete actions when parameters are instantiated.
+\end{itemize}
+
+A PDDL \emph{problem} specifies:
+\begin{itemize}
+    \item \textbf{Initial state}: propositions that are true at the start;
+    \item \textbf{Goal specification}: predicates that must be true in the final state.
+\end{itemize}
+
+Together, a domain and problem define a planning problem in the sense of Definition \ref{def:planning-problem}.
+\end{definition}
+
+PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm can check that action preconditions are met, goals are reachable, and no contradictions are present. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized, kwonFastAccurateTask}. 
 
 While newer LLMs exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone. Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification. This combination preserves the flexibility and commonsense reasoning of LLMs while enforcing the consistency guarantees that formal planning requires.
+
+\subsubsection{Plan Validation and the VAL Tool}
+
+A critical challenge across all planning approaches is verification: how do we confirm that a proposed plan is logically correct before execution? While symbolic planners guarantee correctness by construction (valid plans are synthesized directly), plans from other sources—whether hierarchically decomposed, manually authored, or generated by other means—require post-hoc verification against the formal domain specification.
+
+\textbf{VAL} (the Plan Validator) is a domain-independent tool that checks whether a plan is valid with respect to a PDDL domain and problem specification \cite{howey2004val}. Given a domain, problem, and candidate plan, VAL simulates the plan's execution and verifies:
+
+\begin{itemize}
+    \item \textbf{Action applicability}: each action's preconditions are satisfied before execution;
+    \item \textbf{State transitions}: effects are correctly applied, yielding well-defined successor states;
+    \item \textbf{Goal achievement}: the final state satisfies the problem goal.
+\end{itemize}
+
+If any check fails, VAL reports the plan as invalid with diagnostic details, such as which precondition was unsatisfied or at what step the plan diverged from expectations.
+
+VAL is widely used in automated planning research and competitions as the standard for validating planner outputs. Operationally, it follows the formal semantics of PDDL, making it a trusted oracle for correctness.
+
+\begin{example}[VAL Validation in the Student Domain]
+    \label{ex:val-student}
+    Consider the student task ``work café shift 09:00 to 12:00,'' decomposed by the LLM into: \texttt{(walk-to-cafe)}, \texttt{(unlock-cafe-door)}, \texttt{(work-shift 3-hours)}. 
+
+    VAL checks preconditions in sequence:
+    \begin{itemize}
+        \item \texttt{(walk-to-cafe)}: precondition \texttt{(at student home)} is true in the initial state. Action succeeds; agent is now at café.
+        \item \texttt{(unlock-cafe-door)}: precondition \texttt{(has-key student cafe-key)} is checked. If the agent does not possess the key in the initial state, VAL reports: ``precondition unsatisfied; plan invalid.''
+    \end{itemize}
+
+    The LLM's decomposition is rejected, and feedback is provided so the LLM can refine the plan (e.g., retrieve the key before attempting to unlock).
+\end{example}
+
+For LLM-driven agents, VAL serves as an external symbolic oracle that enforces formal correctness. Unlike generic language understanding (which may miss subtle logical errors), VAL provides a guarantee: a valid plan (in VAL's judgment) respects all domain constraints. This enforcement directly operationalizes the concept of \emph{coherence} defined in Section \ref{subsec:agents-believability}: a plan that passes VAL validation is coherent with respect to the domain.
+
+\textbf{Limitations}: VAL only validates against the given PDDL model. If the model is incomplete or misspecified, a plan may pass validation despite being problematic in practice. Additionally, VAL does not measure plan quality, plausibility, or believability—it enforces logical correctness only.
 
 \subsection{Agents and Believability}
 \label{subsec:agents-believability}
@@ -174,9 +258,7 @@ In simulated environments and games, non-player characters (NPCs) prioritize pro
     \emph{Believability}---the ``illusion of life''---is the human-perceived realism of agent behavior: whether actions align with character goals, personality, knowledge, and social norms \cite{batesRoleEmotionBelievable1994, loyallBelievableAgentsBuilding}.
 \end{definition}
 
-Importantly, believability differs from psychological (emotional and mental states) or cognitive (thinking and reasoning) realism. Following Bates' analysis of character animation, believability permits suspension of disbelief—the observer accepts the character as having intentions and coherence—rather than requiring fidelity to actual human cognition (how people really think) or motivation (why they act) \cite{batesRoleEmotionBelievable1994}. An animated character can be believable despite vastly simplified internal mechanisms. In the case of NPC agents simulating university students in daily routines, there is natural alignment between believability and realism: student behaviors (attending lectures, working shifts, socializing)
-
-are grounded in observable, familiar reality. However, this alignment is contingent on context; the goal remains observer acceptance and perceived intentionality, not psychological accuracy. If an agent's actions respect temporal and causal constraints while being consistent with its apparent goals and knowledge, observers will find it believable, even if its internal reasoning mechanisms are simplified or heuristic.
+Importantly, believability differs from psychological (emotional and mental states) or cognitive (thinking and reasoning) realism. Following Bates' analysis of character animation, believability permits suspension of disbelief—the observer accepts the character as having intentions and coherence—rather than requiring fidelity to actual human cognition (how people really think) or motivation (why they act) \cite{batesRoleEmotionBelievable1994}. An animated character can be believable despite vastly simplified internal mechanisms. In the case of NPC agents simulating university students in daily routines, there is natural alignment between believability and realism: student behaviors (attending lectures, working shifts, socializing) are grounded in observable, familiar reality. However, this alignment is contingent on context; the goal remains observer acceptance and perceived intentionality, not psychological accuracy. If an agent's actions respect temporal and causal constraints while being consistent with its apparent goals and knowledge, observers will find it believable, even if its internal reasoning mechanisms are simplified or heuristic.
 
 Constraining agents with realistic physical and environmental limits increases perceived believability by reducing violations known to break immersion, such as impossible actions or logically inconsistent plans \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Park et al.\ showed that LLM-driven agents with memory, reflection, and planning were rated more believable than human crowdworkers role-playing agents in controlled evaluations. The crowdworker baseline was given access to each agent's full memory stream and simulated behavior, yet LLM-driven agents still significantly outperformed this human-authored comparison \cite{parkGenerativeAgentsInteractive2023a}. Xiao et al.\ propose metrics such as Consistency and Robustness for agent simulations based on character profiles \cite{xiaoHowFarAre2024}.
 
@@ -209,19 +291,6 @@ We adopt the NPC perspective in which believability is the primary objective. Wh
 
 For a character portrayed as cognitively sound, coherence boundaries are defined by what is physically or logically impossible versus what is merely implausible. A character has no reasonable justification for certain errors: cooking a meal before purchasing ingredients, or unlocking a door without possessing the key are physically or logically impossible actions. In contrast, more subtle mistakes (forgetting a prior commitment, miscalculating available time, submitting work that was not fully completed) are believable because they are mistakes a person of sound mind might plausibly make. These latter errors fall into a gray zone that observers can forgive or attribute to understandable human fallibility. However, in our system design, we choose not to tolerate plans that violate constraint satisfaction, even if such violations might be forgivable in certain contexts. Since our simulations span only one day, avoiding a single reality-breaking error that violates physical or logical laws is a worthwhile trade-off for preserving immersion, even if it means erring on the side of caution compared to human behavior. This strict interpretation of coherence is thus a pragmatic choice for our scope, and exploring the optimal balance between logical correctness and forgivable mistakes across longer simulations remains a direction for further work.
 
-\subsection{Symbolic Planning}
-
-Symbolic planning uses explicit, compositional representations to algorithmically search for valid plans \cite{fikesStripsNewApproach1971, mcdermottPDDLPlanningDomain1998}. Key strengths:
-
-\begin{enumerate}
-    \item \textbf{Explainability}: Plans are sequences of named actions with explicit preconditions and effects, enabling causal trace inspection.
-    \item \textbf{Constraint enforcement}: Planners guarantee that plans satisfy all preconditions, avoid violated invariants, and respect temporal and resource bounds.
-    \item \textbf{Optimality}: Many planners find optimal or bounded-suboptimal solutions under well-defined cost models.
-\end{enumerate}
-
-These properties directly address coherence: if behavior is synthesized via a symbolic planner, environmental constraints are satisfied by construction.
-
-The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless explicitly encoded \cite{haslumIntroductionPlanningDomain2019}.
 
 \subsection{LLM-Based Planning}
 
@@ -235,46 +304,6 @@ However, LLM-generated plans lack correctness guarantees and can:
 
 Park et al.'s Generative Agents exhibited emergent social behaviors but lacked constraint enforcement, relying on LLM prompt engineering to maintain temporal coherence heuristically \cite{parkGenerativeAgentsInteractive2023a}.
 
-\subsection{Hierarchical Planning}
-
-Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods encoding admissible refinements and constraints \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. Hierarchy supports abstraction, reuse, and tractable search.
-
-LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}. Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023a}.
-
-Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive \emph{actions}. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
-
-\subsection{Plan Validation and the VAL Tool}
-
-Across hierarchical and LLM-based planning, a critical challenge emerges: how do we verify that a proposed plan is logically correct before execution? Symbolic planners guarantee correctness by construction (plans are valid by design), but LLM-generated and manually authored plans require post-hoc verification.
-
-\textbf{VAL} (the Plan Validator) is a domain-independent tool that checks whether a plan is valid with respect to a PDDL domain and problem specification \cite{howey2004val}. Given a domain, problem, and candidate plan, VAL simulates the plan's execution and verifies:
-
-\begin{itemize}
-    \item \textbf{Action applicability}: each action's preconditions are satisfied before execution;
-    \item \textbf{State transitions}: effects are correctly applied, yielding well-defined successor states;
-    \item \textbf{Goal achievement}: the final state satisfies the problem goal.
-\end{itemize}
-
-If any check fails, VAL reports the plan as invalid with diagnostic details, such as which precondition was unsatisfied or at what step the plan diverged from expectations.
-
-VAL is widely used in automated planning research and competitions as the standard for validating planner outputs. Operationally, it follows the formal semantics of PDDL, making it a trusted oracle for correctness.
-
-\begin{example}[VAL Validation in the Student Domain]
-    \label{ex:val-student}
-    Consider the student task ``work café shift 09:00 to 12:00,'' decomposed by the LLM into: \texttt{(walk-to-cafe)}, \texttt{(unlock-cafe-door)}, \texttt{(work-shift 3-hours)}. 
-
-    VAL checks preconditions in sequence:
-    \begin{itemize}
-        \item \texttt{(walk-to-cafe)}: precondition \texttt{(at student home)} is true in the initial state. Action succeeds; agent is now at café.
-        \item \texttt{(unlock-cafe-door)}: precondition \texttt{(has-key student cafe-key)} is checked. If the agent does not possess the key in the initial state, VAL reports: ``precondition unsatisfied; plan invalid.''
-    \end{itemize}
-
-    The LLM's decomposition is rejected, and feedback is provided so the LLM can refine the plan (e.g., retrieve the key before attempting to unlock).
-\end{example}
-
-For LLM-driven agents, VAL serves as an external symbolic oracle that enforces formal correctness. Unlike generic language understanding (which may miss subtle logical errors), VAL provides guarantee: a valid plan (in VAL's judgment) respects all domain constraints. This enforcement directly operationalizes the concept of \emph{coherence} defined earlier (\cref{def:coherence}): a plan that passes VAL validation is coherent with respect to the domain.
-
-\textbf{Limitations}: VAL only validates against the given PDDL model. If the model is incomplete or misspecified, a plan may pass validation despite being problematic in practice. Additionally, VAL does not measure plan quality, plausibility, or believability—it enforces logical correctness only.
 
 \subsection{Neuro-Symbolic Systems for Planning}
 \label{subsec:neuro-symbolic}
