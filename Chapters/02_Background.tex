@@ -143,7 +143,7 @@ Throughout this thesis, we distinguish between two hierarchical levels of planni
 
 Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023a}.
 
-Informally, we envision generating high-level tasks from high-level goals and then decomposing them into sequences of primitive actions. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam.'' 
+Informally, we envision generating high-level tasks from high-level goals and then decomposing them into sequences of primitive actions. In our running example, the task ``prepare café for 09:00 opening'' might decompose into a sequence of dependent actions: ``unlock café door,'' ``disarm alarm system,'' ``turn on lights,'' ``unlock and prepare register,'' and ``count opening cash float.'' Each action must be executed in order, as later actions depend on earlier ones (e.g., the register cannot be prepared before the door is unlocked). 
 
 \subsection{Symbolic Planning}
 \label{subsec:symbolic-planning}
