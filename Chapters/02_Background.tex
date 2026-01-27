@@ -183,6 +183,7 @@ PDDL is valuable because it is explicit and verifiable: once a domain and proble
 
 While newer LLMs exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone. Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification. This combination preserves the flexibility and commonsense reasoning of LLMs while enforcing the consistency guarantees that formal planning requires.
 
+\paragraph{Limitations} 
 The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless explicitly encoded \cite{haslumIntroductionPlanningDomain2019}.
 
 \subsubsection{Plan Validation and the VAL Tool}
@@ -407,7 +408,7 @@ Tantakoun et al.\ survey how LLMs construct and refine automated planning models
 
 Within LLMs-as-Modelers:
 
-\textbf{Task Modeling} (approximately 30 papers): LLMs generate PDDL problem files from goal specifications, using few-shot prompting \cite{collinsGroundingLanguageGeneralized2022} to chain-of-thought techniques \cite{lyuFaithfulChainofThoughtReasoning2023}. Well-explored but relies on detailed predicate specification.
+\textbf{Task Modeling} (approximately 30 papers): LLMs generate PDDL problem files from goal specifications, using few-shot prompting \cite{collinsGroundingLanguageGeneralized2022} to chain-of-thought techniques \cite{lyuFaithfulChainofThoughtReasoning2023}, which encourage the LLM to decompose reasoning into intermediate steps before generating output. Well-explored but relies on detailed predicate specification.
 
 \textbf{Domain Modeling} (approximately 15 papers): LLMs generate PDDL domain files (predicates and action schemas), more challenging than task specification. Approaches include generate-test-critique loops incrementally building components \cite{guanLeveragingPretrainedLarge2023}. Single-domain generation risks misalignment with human expectations due to natural language ambiguity.
 
