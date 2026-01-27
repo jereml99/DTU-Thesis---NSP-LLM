@@ -61,8 +61,13 @@ A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$:
     \item $I \subseteq S$ is a non-empty set of initial states;
     \item $G \subseteq S$ is a non-empty set of goal states (any state in $G$ is an acceptable outcome).
 \end{itemize}
+\end{definition}
 
-For a plan $\pi = \langle a_1, \ldots, a_n \rangle$ (a finite sequence of actions) and an initial state $s_0 \in I$, we define the \emph{execution} of $\pi$ from $s_0$ recursively as follows: let $s_0' = s_0$, and for $i = 1, \ldots, n$, let $s_i' = T(s_{i-1}', a_i)$. The plan $\pi$ is \emph{valid} for the planning problem if, for every initial state $s_0 \in I$, the execution reaches a goal state, i.e., $s_n' \in G$. A valid plan is called a \emph{solution} to the planning problem.
+\begin{definition}[Plan, Validity, and Solution]
+\label{def:plan}
+A \emph{plan} is a finite sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$. For an initial state $s_0 \in I$, the \emph{execution} of $\pi$ from $s_0$ is defined recursively: let $s_0' = s_0$, and for $i = 1, \ldots, n$, let $s_i' = T(s_{i-1}', a_i)$. 
+
+The plan $\pi$ is \emph{valid} for a planning problem $\langle S, A, T, I, G \rangle$ (from Definition \ref{def:planning-problem}) if, for every initial state $s_0 \in I$, the execution of $\pi$ reaches a goal state, i.e., $s_n' \in G$. A valid plan is called a \emph{solution} to the planning problem.
 \end{definition}
 
 \paragraph{Classical Planning Assumptions}
