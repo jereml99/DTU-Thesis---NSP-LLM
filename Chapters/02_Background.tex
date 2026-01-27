@@ -134,7 +134,7 @@ This minimal problem has a unique solution; extending it with time, resources, o
 
 \subsubsection{Hierarchical Planning}
 
-Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods encoding admissible refinements and constraints \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. Hierarchy supports abstraction, reuse, and tractable search.\footnote{This thesis does not develop a formal HTN model, as neither the Generative Agents architecture nor our neuro-symbolic approach employs HTN's formal decomposition semantics. Instead, we leverage the intuition of hierarchical task refinement informally to motivate and structure our discussion of how LLM-proposed tasks are decomposed into validated actions.}
+Hierarchical task networks (HTN) represent an extension of classical planning that organizes planning as a multi-level process. Rather than finding a sequence of primitive actions directly from a goal (as classical planners do), HTN planning starts with high-level tasks and repeatedly decomposes them into simpler subtasks using predefined decomposition methods, until primitive actions are reached \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. This hierarchical structure enables abstraction (breaking complex goals into manageable pieces), reuse (sharing decomposition strategies across problems), and more efficient search through the planning space.
 
 \begin{remark}[Task and Action Terminology]
 \label{rem:task-action-terminology}
