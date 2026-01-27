@@ -73,7 +73,16 @@ When an agent approaches a task that has not yet been decomposed, we trigger the
 
 \subsection{Neuro-Symbolic Validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-We implemented the following neuro-symbolic validation pipeline to enhance the coherence of actions generated during task decomposition. This is performed after generating actions from the task, but before adding movements. [TODO add example] We check the validity of preconditions using the external symbolic validation tool, VAL\cite{howey2004val}. To receive feedback from VAL, we must generate three files: Domain.pddl, Problem.pddl, and plan.pddl. Below, we explain how we achieved this.
+We implemented the following neuro-symbolic validation pipeline to enhance the coherence of actions generated during task decomposition. This is performed after generating actions from the task, but before adding movements.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{Pictures/methodology/NS_pipeline.svg}
+  \caption{Neuro-Symbolic Pipeline. Blocks with red outlines indicate LLM calls.}
+  \label{fig:ns-pipeline}
+\end{figure}
+
+[TODO add example] We check the validity of preconditions using the external symbolic validation tool, VAL\cite{howey2004val}. To receive feedback from VAL, we must generate three files: Domain.pddl, Problem.pddl, and plan.pddl. Below, we explain how we achieved this.
 
 \subsubsection{Domain Generation}
 Domain generation is the most challenging part of the process [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline], and we tested a couple of approaches to do it correctly. The steps below generated the best Domain, based on our subjective assessment [We tested a lot and looked which generated more sensible results and which generated fewer validation errors]. We initially attempted to generate the entire PDDL file in one step, but encountered two problems: 1. Action conditions and effects tended to be chained without real logic. [add example, like teeth-brushed as precondition of shower]. After many iterations, we decided to split domain generation into the following steps.
