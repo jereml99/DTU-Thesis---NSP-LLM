@@ -16,46 +16,6 @@ It defines core concepts (LLMs, agents, planning paradigms including PDDL), revi
 
 \section{Core Concepts and Definitions}
 
-\subsection{Large Language Models (LLMs)}
-\label{subsec:llm}
-
-Large language models are neural networks trained on vast text corpora to generate text one word (or token) at a time. Given a prompt, an LLM predicts the most likely next word based on patterns learned during training. It repeats this process iteratively to produce multi-sentence responses, adapting its output to the context of the prompt and any specified instructions.
-
-\begin{example}[LLM Input and Output]
-    \label{ex:llm-example}
-    \textbf{Input prompt}: ``The student woke up late and missed the morning lecture. How might they feel?''
-
-    \textbf{LLM output}: ``The student likely feels frustrated and disappointed. They might worry about missing important content and falling behind in the course. Depending on the course policies, they may also feel anxious about whether they can catch up or access lecture notes.''
-
-    The LLM generates this response through learned statistical associations in its training data. It produces plausible, fluent text by predicting probable next tokens based on context, rather than following explicit rules or reasoning steps.
-\end{example}
-
-Key capabilities of LLMs relevant to this work:
-\begin{itemize}
-    \item \textbf{Instruction following}: Responding appropriately to natural language directives (e.g., ``format this as a list'', ``explain in simple terms'').
-    \item \textbf{Few-shot learning}: Improving performance when given a few examples before a task.
-    \item \textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted\cite{StructuredModelOutputs}.
-\end{itemize}
-
-However, LLMs have critical limitations:
-\begin{itemize}
-    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs\cite{bender2021dangers,valmeekam2024llms}. 
-    \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories by design\cite{vaswani2017attention}; older context may be lost or forgotten.
-    \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory \cite{huang2025survey,ji2023survey}.
-\end{itemize}
-
-To address these limitations, we adopt \emph{scaffolding}:
-
-\begin{definition}[Scaffolding]
-    \label{def:scaffolding}
-    \emph{Scaffolding} refers to external processes or structures that support a reasoning system in accomplishing tasks beyond its unaided capabilities, by constraining, guiding, or validating its intermediate outputs, without modifying the underlying model \cite{wood1976scaffolding}.
-\end{definition}
-
-In the context of LLM-based agents, scaffolding can take the form of translating natural language outputs into formal representations, validating candidate actions against explicit constraints, and iteratively refining solutions using external feedback. These mechanisms directly mitigate common failure modes of LLM planning, including logical inconsistency, hallucination, and limited context sensitivity.
-
-In this thesis, scaffolding is employed to support the generation of formal planning specifications and the decomposition of high-level goals into executable action sequences—domains where LLM fluency and commonsense reasoning are beneficial, but where formal correctness and consistency are required.
-
-
 \subsection{Planning}
 \label{subsec:planning}
 
@@ -73,13 +33,23 @@ An \emph{action} is a discrete event that transitions the system from one state 
     \item \textbf{Preconditions}: facts that must be true in the current state for the action to be executable;
     \item \textbf{Effects}: facts that become true (or false) after the action executes.
 \end{itemize}
-When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
+
+More precisely, an action $a$ can be represented as a tuple $a = (\text{pre}(a), \text{eff}^{+}(a), \text{eff}^{-}(a))$, where:
+\begin{itemize}
+    \item $\text{pre}(a) \subseteq S$ is the set of precondition facts; an action is applicable in state $s$ if $\text{pre}(a) \subseteq s$ (under the closed-world assumption);
+    \item $\text{eff}^{+}(a) \subseteq S$ are the \emph{positive effects}—facts that become true after execution;
+    \item $\text{eff}^{-}(a) \subseteq S$ are the \emph{negative effects}—facts that become false after execution.
+\end{itemize}
+
+\begin{definition}[Transition Function]
+\label{def:transition}
+A \emph{transition function} $T: S \times A \to S$ maps a current state and an action to a resulting state. For an action $a$ and state $s$, $T(s, a) = s'$ describes how the environment evolves when action $a$ is executed in state $s$.
 \end{definition}
 
-\begin{remark}[Task and Action Terminology]
-\label{rem:task-action-terminology}
-Throughout this thesis, we distinguish between two hierarchical levels of planning behavior. A \emph{task} is a high-level, daily-planned schedule unit (e.g., ``work café shift 09:00--12:00''), as synthesized in the Generative Agents architecture. An \emph{action}, in the formal planning sense above, is a primitive discrete event characterized by preconditions and effects. In the context of neuro-symbolic scaffolding, a task is decomposed into a sequence of fine-grained actions that, when executed, fulfill the task's objective. The action definition here (Definition \ref{def:action}) corresponds to the primitive action units into which tasks are decomposed in our framework.
-\end{remark}
+The transition function for an action is thus: if $\text{pre}(a) \subseteq s$, then $T(s, a) = (s \setminus \text{eff}^{-}(a)) \cup \text{eff}^{+}(a)$, producing a new state $s'$ that reflects the additions and deletions induced by the action.
+
+When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
+\end{definition}
 
 \begin{definition}[Classical Planning Problem]
 \label{def:planning-problem}
@@ -159,11 +129,16 @@ This minimal problem has a unique solution; extending it with time, resources, o
 
 \subsubsection{Hierarchical Planning}
 
-Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods encoding admissible refinements and constraints \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. Hierarchy supports abstraction, reuse, and tractable search.
+Hierarchical task networks (HTN) decompose high-level tasks into ordered or partially ordered subtasks until primitive actions are reached, using methods encoding admissible refinements and constraints \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. Hierarchy supports abstraction, reuse, and tractable search.\footnote{This thesis does not develop a formal HTN model, as neither the Generative Agents architecture nor our neuro-symbolic approach employs HTN's formal decomposition semantics. Instead, we leverage the intuition of hierarchical task refinement informally to motivate and structure our discussion of how LLM-proposed tasks are decomposed into validated actions.}
+
+\begin{remark}[Task and Action Terminology]
+\label{rem:task-action-terminology}
+Throughout this thesis, we distinguish between two hierarchical levels of planning behavior. A \emph{task} is a high-level, daily-planned schedule unit (e.g., ``work café shift 09:00--12:00''), as synthesized in the Generative Agents architecture. An \emph{action}, in the formal planning sense above, is a primitive discrete event characterized by preconditions and effects. In the context of neuro-symbolic scaffolding, a task is decomposed into a sequence of fine-grained actions that, when executed, fulfill the task's objective. The action definition here (Definition \ref{def:action}) corresponds to the primitive action units into which tasks are decomposed in our framework.
+\end{remark}
 
 LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}. Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023a}.
 
-Formal HTN or temporal PDDL planners can validate such decompositions, ensuring high-level commitments refine into feasible, non-overlapping primitive \emph{actions}. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam,'' with temporal constraints preventing overlaps and ensuring deadlines are met.
+Informally, we envision high-level tasks being decomposed into sequences of primitive actions. In our running example, ``complete coursework this week'' might decompose into ``attend lectures,'' ``complete assignments,'' and ``study for exam.'' Our neuro-symbolic approach operationalizes this decomposition through LLM generation and constraint validation, rather than formal task network semantics.
 
 \subsection{Symbolic Planning}
 \label{subsec:symbolic-planning}
@@ -293,16 +268,50 @@ For a character portrayed as cognitively sound, coherence boundaries are defined
 
 
 \subsection{LLM-Based Planning}
+\label{subsec:llm-planning}
 
-LLM-based planning uses language models to generate action sequences or subgoal decompositions directly from text \cite{ahnCanNotSay2022, huang2022zeroshotplanning}. LLMs can draft plausible multi-step procedures via chain-of-thought prompting \cite{weiChainofThoughtPromptingElicits2023}, propose alternatives, and adapt plans to soft preferences without formal domain models.
+To understand how LLMs can be applied to planning, we first establish what Large Language Models are, their capabilities, and their limitations.
 
-However, LLM-generated plans lack correctness guarantees and can:
+\subsubsection{Large Language Models (LLMs)}
+\label{subsubsec:llm}
+
+Large language models are neural networks trained on vast text corpora to generate text one word (or token) at a time. Given a prompt, an LLM predicts the most likely next word based on patterns learned during training. It repeats this process iteratively to produce multi-sentence responses, adapting its output to the context of the prompt and any specified instructions.
+
+\begin{example}[LLM Input and Output]
+    \label{ex:llm-example}
+    \textbf{Input prompt}: ``The student woke up late and missed the morning lecture. How might they feel?''
+
+    \textbf{LLM output}: ``The student likely feels frustrated and disappointed. They might worry about missing important content and falling behind in the course. Depending on the course policies, they may also feel anxious about whether they can catch up or access lecture notes.''
+
+    The LLM generates this response through learned statistical associations in its training data. It produces plausible, fluent text by predicting probable next tokens based on context, rather than following explicit rules or reasoning steps.
+\end{example}
+
+Key capabilities of LLMs relevant to this work:
 \begin{itemize}
-    \item Omit necessary preconditions (e.g. talking to a person that is not there),
-    \item Hallucinate actions or states not grounded in the environment \cite{xiaoHowFarAre2024}.
+    \item \textbf{Instruction following}: Responding appropriately to natural language directives (e.g., ``format this as a list'', ``explain in simple terms'').
+    \item \textbf{Few-shot learning}: Improving performance when given a few examples before a task.
+    \item \textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted\cite{StructuredModelOutputs}.
 \end{itemize}
 
-Park et al.'s Generative Agents exhibited emergent social behaviors but lacked constraint enforcement, relying on LLM prompt engineering to maintain temporal coherence heuristically \cite{parkGenerativeAgentsInteractive2023a}.
+However, LLMs have critical limitations:
+\begin{itemize}
+    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs\cite{bender2021dangers,valmeekam2024llms}. 
+    \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories by design\cite{vaswani2017attention}; older context may be lost or forgotten.
+    \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory \cite{huang2025survey,ji2023survey}.
+\end{itemize}
+
+To address these limitations, we adopt \emph{scaffolding}:
+
+\begin{definition}[Scaffolding]
+    \label{def:scaffolding}
+    \emph{Scaffolding} refers to external processes or structures that support a reasoning system in accomplishing tasks beyond its unaided capabilities, by constraining, guiding, or validating its intermediate outputs, without modifying the underlying model \cite{wood1976scaffolding}.
+\end{definition}
+
+In the context of LLM-based agents, scaffolding can take the form of translating natural language outputs into formal representations, validating candidate actions against explicit constraints, and iteratively refining solutions using external feedback. These mechanisms directly mitigate common failure modes of LLM planning, including logical inconsistency, hallucination, and limited context sensitivity.
+
+In this thesis, scaffolding is employed to support the generation of formal planning specifications and the decomposition of high-level goals into executable action sequences—domains where LLM fluency and commonsense reasoning are beneficial, but where formal correctness and consistency are required.
+
+\subsubsection{Planning with LLMs}
 
 
 \subsection{Neuro-Symbolic Systems for Planning}

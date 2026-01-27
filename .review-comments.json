@@ -1638,6 +1638,35 @@
       ]
     },
     {
+      "id": "c4de7285-b99f-40c2-8889-e94afce46c87",
+      "filePath": "Chapters/02_Background.tex",
+      "anchor": {
+        "startOffset": 2435,
+        "endOffset": 2516,
+        "selectedText": "any fact not included in the set is assumed to be false (closed-world assumption)",
+        "prefixContext": "f propositional facts that are true in the world; ",
+        "suffixContext": ".\r\n\\end{definition}\r\n\r\n\\begin{definition}[Action]",
+        "originalRange": {
+          "startLine": 25,
+          "startCharacter": 323,
+          "endLine": 25,
+          "endCharacter": 404
+        }
+      },
+      "status": "open",
+      "createdAt": "2026-01-27T10:12:07.768Z",
+      "updatedAt": "2026-01-27T10:12:07.768Z",
+      "createdBy": "acoma",
+      "messages": [
+        {
+          "id": "6aa46203-3e5b-45d0-81ee-d79f0cb929ad",
+          "author": "acoma",
+          "createdAt": "2026-01-27T10:12:07.768Z",
+          "body": "Remember to make it clear that in our method we don't do this"
+        }
+      ]
+    },
+    {
       "id": "284ef277-cd3d-4cf1-8c01-b7757eb8a5cf",
       "filePath": "Chapters/03_Methodology.tex",
       "anchor": {
