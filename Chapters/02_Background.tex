@@ -260,20 +260,6 @@ Operationally, coherence is enforced through constraint adherence which for us w
 \end{example}
 
 
-[LET"S just delete the bellow]
-\begin{definition}[Epistemic Plausibility]
-    \label{def:epistemic-plausibility}
-    \emph{Epistemic plausibility} is the consistency of an agent's actions with what it could reasonably know or believe given its observations and prior experience.
-\end{definition}
-
-While formal epistemic planning explicitly represents agents' beliefs \cite{Bolander_2017}, such approaches typically assume a closed and fully specified domain with a finite set of actions and observability conditions \cite{bolanderEpistemicPlanning2011}. In contrast, open-world systems with natural-language action spaces, such as LLM-driven agents, cannot feasibly maintain complete epistemic state tracking. Thus, epistemic plausibility is not tractable as a system-level enforcement objective in this work. However, improving coherence reduces certain epistemic violations: actions respecting environmental and causal constraints are less likely to presuppose unreasonable or unobserved information, indirectly supporting perceived believability.
-
-    [Here I've ended the review]
-
-\begin{example}[Coherent but Epistemically Implausible]
-    \label{ex:epistemic-implausible}
-    Isabella greets a new customer by name and asks if they want ``the usual'' (a double espresso), despite never having met them before. The action is coherent (fits her role as a hospitable cafe owner, doesn't violate timeline or resources) but epistemically implausible: she has no prior interaction record to justify knowing this information. From a narrative perspective, it appears believable as a ``friendly host''; from a knowledge-tracking perspective, it breaks plausibility because the agent acts with unearned certainty.
-\end{example}
 
 We adopt the NPC perspective in which believability is the primary objective. While humans remain believable despite occasional planning mistakes, we hypothesize that in LLM-driven agents, *eliminating systematic incoherence*---via symbolic validation---meaningfully improves believability by reducing violations that are immediately recognizable as incoherent to observers.
 
