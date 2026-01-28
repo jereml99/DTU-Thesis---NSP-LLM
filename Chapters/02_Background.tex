@@ -5,11 +5,12 @@ This chapter establishes conceptual foundations and reviews prior work motivatin
 It defines core concepts (LLMs, agents, planning paradigms including PDDL), reviews LLM-driven generative agents with emphasis on the foundational Generative Agents paper \cite{parkGenerativeAgentsInteractive2023a}, and examines hybrid neuro-symbolic approaches combining LLM flexibility with symbolic planning guarantees \cite{huangPlanningDarkLLMSymbolic2024, tantakounLLMsPlanningModelers2025}. We highlight the challenge of maintaining coherence (adherence to environmental constraints) and believability (human-perceived realism) in LLM-driven agents.
 
 \begin{example}[Running Example: Student NPC]
+    [CHANGE running example]
     \label{ex:running-student}
-    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting environmental rules (must be enrolled in a course to attend its lectures). 
-    
+    Throughout this chapter, we illustrate concepts using a running example: an NPC simulating a university student managing academic and social commitments. The student must coordinate coursework (attending lectures, completing assignments), part-time work (café shifts), and social activities (meeting friends, attending events) while respecting environmental rules (must be enrolled in a course to attend its lectures).
+
     \textit{Note: While this example references temporal and location constraints for pedagogical completeness, this thesis focuses on validating action preconditions and environmental feasibility within a single-agent, fully observable simulation environment. The neuro-symbolic framework is designed to handle temporal and location constraints in principle; their absence from this work reflects the specific scope of the simulation.}
-    
+
     A complete PDDL formulation of this student scheduling domain, including domain predicates, action schemas, and a concrete problem instance with a valid plan, is provided in \cref{app:pddl-example}.
 \end{example}
 
@@ -22,52 +23,53 @@ It defines core concepts (LLMs, agents, planning paradigms including PDDL), revi
 To ground our approach, we introduce the formal concepts underlying planning.
 
 \begin{definition}[State]
-\label{def:state}
-A \emph{state} $s \in S$ is a complete description of the environment at a given time, capturing all facts that are relevant for action execution and goal satisfaction. In classical planning, states are assumed to be fully observable and are typically represented as sets of propositional facts that are true in the world; any fact not included in the set is assumed to be false (closed-world assumption).
+    \label{def:state}
+    A \emph{state} $s \in S$ is a complete description of the environment at a given time, capturing all facts that are relevant for action execution and goal satisfaction. In classical planning, states are assumed to be fully observable and are typically represented as sets of propositional facts that are true in the world; any fact not included in the set is assumed to be false (closed-world assumption).
 \end{definition}
 
 \begin{definition}[Action]
-\label{def:action}
-An \emph{action} is a discrete event that transitions the system from one state to another. Formally, in a planning problem, an action $a \in A$ is an element of the action set. An action is characterized by:
-\begin{itemize}
-    \item \textbf{Preconditions}: facts that must be true in the current state for the action to be executable;
-    \item \textbf{Effects}: facts that become true (or false) after the action executes.
-\end{itemize}
+    \label{def:action}
+    An \emph{action} is a discrete event that transitions the system from one state to another. Formally, in a planning problem, an action $a \in A$ is an element of the action set. An action is characterized by:
+    \begin{itemize}
+        \item \textbf{Preconditions}: facts that must be true in the current state for the action to be executable;
+        \item \textbf{Effects}: facts that become true (or false) after the action executes.
+    \end{itemize}
 
-More precisely, an action $a$ can be represented as a tuple $a = (\text{pre}(a), \text{eff}^{+}(a), \text{eff}^{-}(a))$, where:
-\begin{itemize}
-    \item $\text{pre}(a) \subseteq S$ is the set of precondition facts; an action is applicable in state $s$ if $\text{pre}(a) \subseteq s$ (under the closed-world assumption);
-    \item $\text{eff}^{+}(a) \subseteq S$ are the \emph{positive effects}—facts that become true after execution;
-    \item $\text{eff}^{-}(a) \subseteq S$ are the \emph{negative effects}—facts that become false after execution.
-\end{itemize}
+    More precisely, an action $a$ can be represented as a tuple $a = (\text{pre}(a), \text{eff}^{+}(a), \text{eff}^{-}(a))$, where:
+    \begin{itemize}
+        \item $\text{pre}(a) \subseteq S$ is the set of precondition facts; an action is applicable in state $s$ if $\text{pre}(a) \subseteq s$ (under the closed-world assumption);
+        \item $\text{eff}^{+}(a) \subseteq S$ are the \emph{positive effects}—facts that become true after execution;
+        \item $\text{eff}^{-}(a) \subseteq S$ are the \emph{negative effects}—facts that become false after execution.
+    \end{itemize}
+    [Check math and maybe some references]
 
-\begin{definition}[Transition Function]
-\label{def:transition}
-A \emph{transition function} $T: S \times A \to S$ maps a current state and an action to a resulting state. For an action $a$ and state $s$, $T(s, a) = s'$ describes how the environment evolves when action $a$ is executed in state $s$.
-\end{definition}
+    \begin{definition}[Transition Function]
+        \label{def:transition}
+        A \emph{transition function} $T: S \times A \to S$ maps a current state and an action to a resulting state. For an action $a$ and state $s$, $T(s, a) = s'$ describes how the environment evolves when action $a$ is executed in state $s$.
+    \end{definition}
 
-The transition function for an action is thus: if $\text{pre}(a) \subseteq s$, then $T(s, a) = (s \setminus \text{eff}^{-}(a)) \cup \text{eff}^{+}(a)$, producing a new state $s'$ that reflects the additions and deletions induced by the action.
+    The transition function for an action is thus: if $\text{pre}(a) \subseteq s$, then $T(s, a) = (s \setminus \text{eff}^{-}(a)) \cup \text{eff}^{+}(a)$, producing a new state $s'$ that reflects the additions and deletions induced by the action.
 
-When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
+    When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
 \end{definition}
 
 \begin{definition}[Classical Planning Problem]
-\label{def:planning-problem}
-A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$:
-\begin{itemize}
-    \item $S$ is a finite set of states;
-    \item $A$ is a finite set of actions;
-    \item $T: S \times A \to S$ is a deterministic transition function mapping a state and action to a next state;
-    \item $I \subseteq S$ is a non-empty set of initial states;
-    \item $G \subseteq S$ is a non-empty set of goal states (any state in $G$ is an acceptable outcome).
-\end{itemize}
+    \label{def:planning-problem}
+    A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$:
+    \begin{itemize}
+        \item $S$ is a finite set of states;
+        \item $A$ is a finite set of actions;
+        \item $T: S \times A \to S$ is a deterministic transition function mapping a state and action to a next state;
+        \item $I \subseteq S$ is a non-empty set of initial states;
+        \item $G \subseteq S$ is a non-empty set of goal states (any state in $G$ is an acceptable outcome).
+    \end{itemize}
 \end{definition}
 
 \begin{definition}[Plan, Validity, and Solution]
-\label{def:plan}
-A \emph{plan} is a finite sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$. For an initial state $s_0 \in I$, the \emph{execution} of $\pi$ from $s_0$ is defined recursively: let $s_0' = s_0$, and for $i = 1, \ldots, n$, let $s_i' = T(s_{i-1}', a_i)$. 
+    \label{def:plan}
+    A \emph{plan} is a finite sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$. For an initial state $s_0 \in I$, the \emph{execution} of $\pi$ from $s_0$ is defined recursively: let $s_0' = s_0$, and for $i = 1, \ldots, n$, let $s_i' = T(s_{i-1}', a_i)$.
 
-The plan $\pi$ is \emph{valid} for a planning problem $\langle S, A, T, I, G \rangle$ (from Definition \ref{def:planning-problem}) if, for every initial state $s_0 \in I$, the execution of $\pi$ reaches a goal state, i.e., $s_n' \in G$. A valid plan is called a \emph{solution} to the planning problem.
+    The plan $\pi$ is \emph{valid} for a planning problem $\langle S, A, T, I, G \rangle$ (from Definition \ref{def:planning-problem}) if, for every initial state $s_0 \in I$, the execution of $\pi$ reaches a goal state, i.e., $s_n' \in G$. A valid plan is called a \emph{solution} to the planning problem.
 \end{definition}
 
 \paragraph{Classical Planning Assumptions}
@@ -81,55 +83,57 @@ The formulation above relies on standard assumptions commonly adopted in classic
 These assumptions enable precise reasoning about plan validity and correctness. Relaxing them leads to more expressive planning models but can lead to fewer logical guarantees; some of these are discussed later in this thesis.
 
 \begin{definition}[Planner]
-\label{def:planner}
-A \emph{planner} is an algorithm that, given a classical planning problem $\langle S, A, T, I, G \rangle$, searches for a valid plan $\pi$ (if one exists) that transforms an initial state $I$ into a state satisfying the goal condition $G$ by applying actions whose preconditions are satisfied and whose effects induce state transitions \cite{russell2010aima,ghallab2004automated}.
+    \label{def:planner}
+    A \emph{planner} is an algorithm that, given a classical planning problem $\langle S, A, T, I, G \rangle$, searches for a valid plan $\pi$ (if one exists) that transforms an initial state $I$ into a state satisfying the goal condition $G$ by applying actions whose preconditions are satisfied and whose effects induce state transitions \cite{russell2010aima,ghallab2004automated}.
 
-Planners explore the induced state space using different search strategies, including breadth-first search, depth-first search, and heuristic-guided search, and may optimize for criteria such as plan length, action cost, or makespan \cite{ghallab2004automated}. Classical planning systems include STRIPS \cite{fikes1971strips}, GraphPlan \cite{blum1997graphplan}, and modern heuristic planners such as Fast Downward \cite{helmert2006fast}.
+    Planners explore the induced state space using different search strategies, including breadth-first search, depth-first search, and heuristic-guided search, and may optimize for criteria such as plan length, action cost, or makespan \cite{ghallab2004automated}. Classical planning systems include STRIPS \cite{fikes1971strips}, GraphPlan \cite{blum1997graphplan}, and modern heuristic planners such as Fast Downward \cite{helmert2006fast}.
 \end{definition}
 
 \begin{example}[Simple Classical Planning Problem]
-\label{ex:simple-planning}
-Consider a minimal instance for our student running example.
+    [CHANGE running example]
 
-\textbf{States}: The student can be in two locations: home or café. The state set is:
-\[
-S = \{\texttt{at-home}, \texttt{at-cafe}\}.
-\]
+    \label{ex:simple-planning}
+    Consider a minimal instance for our student running example.
 
-\textbf{Actions}: The student can move between locations:
-\[
-A = \{\texttt{go-to-cafe}, \texttt{go-to-home}\}.
-\]
-
-\textbf{Transition function}: The transition function $T$ encodes how each action changes the state. For example:
-\begin{itemize}
-    \item $T(\texttt{at-home}, \texttt{go-to-cafe}) = \texttt{at-cafe}$;
-    \item $T(\texttt{at-cafe}, \texttt{go-to-home}) = \texttt{at-home}$;
-    \item $T(\texttt{at-home}, \texttt{go-to-home}) = \texttt{at-home}$ (no change);
-    \item $T(\texttt{at-cafe}, \texttt{go-to-cafe}) = \texttt{at-cafe}$ (no change).
-\end{itemize}
-
-\textbf{Initial state}: The student begins at home:
-\[
-I = \{\texttt{at-home}\}.
-\]
-
-\textbf{Goal state}: The student wants to work at the café:
-\[
-G = \{\texttt{at-cafe}\}.
-\]
-
-\textbf{Solution}: The plan $\pi = \langle \texttt{go-to-cafe} \rangle$ is valid:
-\begin{itemize}
-    \item Start at $s_0' = \texttt{at-home} \in I$.
-    \item Execute action $\texttt{go-to-cafe}$: 
+    \textbf{States}: The student can be in two locations: home or café. The state set is:
     \[
-    s_1' = T(\texttt{at-home}, \texttt{go-to-cafe}) = \texttt{at-cafe}.
+        S = \{\texttt{at-home}, \texttt{at-cafe}\}.
     \]
-    \item End state: $s_1' \in G$.
-\end{itemize}
 
-This minimal problem has a unique solution; extending it with time, resources, or additional constraints would yield more complex planning instances where multiple or no solutions may exist.
+    \textbf{Actions}: The student can move between locations:
+    \[
+        A = \{\texttt{go-to-cafe}, \texttt{go-to-home}\}.
+    \]
+
+    \textbf{Transition function}: The transition function $T$ encodes how each action changes the state. For example:
+    \begin{itemize}
+        \item $T(\texttt{at-home}, \texttt{go-to-cafe}) = \texttt{at-cafe}$;
+        \item $T(\texttt{at-cafe}, \texttt{go-to-home}) = \texttt{at-home}$;
+        \item $T(\texttt{at-home}, \texttt{go-to-home}) = \texttt{at-home}$ (no change);
+        \item $T(\texttt{at-cafe}, \texttt{go-to-cafe}) = \texttt{at-cafe}$ (no change).
+    \end{itemize}
+
+    \textbf{Initial state}: The student begins at home:
+    \[
+        I = \{\texttt{at-home}\}.
+    \]
+
+    \textbf{Goal state}: The student wants to work at the café:
+    \[
+        G = \{\texttt{at-cafe}\}.
+    \]
+
+    \textbf{Solution}: The plan $\pi = \langle \texttt{go-to-cafe} \rangle$ is valid:
+    \begin{itemize}
+        \item Start at $s_0' = \texttt{at-home} \in I$.
+        \item Execute action $\texttt{go-to-cafe}$:
+              \[
+                  s_1' = T(\texttt{at-home}, \texttt{go-to-cafe}) = \texttt{at-cafe}.
+              \]
+        \item End state: $s_1' \in G$.
+    \end{itemize}
+
+    This minimal problem has a unique solution; extending it with time, resources, or additional constraints would yield more complex planning instances where multiple or no solutions may exist.
 \end{example}
 
 \subsubsection{Hierarchical Planning}
@@ -137,17 +141,19 @@ This minimal problem has a unique solution; extending it with time, resources, o
 Hierarchical task networks (HTN) represent an extension of classical planning that organizes planning as a multi-level process. Rather than finding a sequence of primitive actions directly from a goal (as classical planners do), HTN planning starts with high-level tasks and repeatedly decomposes them into simpler subtasks using predefined decomposition methods, until primitive actions are reached \cite{erolUMCPSoundComplete, nauSHOP2HTNPlanning2003}. This hierarchical structure enables abstraction (breaking complex goals into manageable pieces), reuse (sharing decomposition strategies across problems), and more efficient search through the planning space.
 
 \begin{remark}[Task and Action Terminology]
-\label{rem:task-action-terminology}
-Throughout this thesis, we distinguish between two hierarchical levels of planning behavior. A \emph{task} is a high-level, daily-planned schedule unit (e.g., ``work café shift 09:00--12:00''), as synthesized in the Generative Agents architecture. An \emph{action}, in the formal planning sense above, is a primitive discrete event characterized by preconditions and effects. In the context of neuro-symbolic scaffolding, a task is decomposed into a sequence of fine-grained actions that, when executed, fulfill the task's objective. The action definition here (Definition \ref{def:action}) corresponds to the primitive action units into which tasks are decomposed in our framework.
+    \label{rem:task-action-terminology}
+    Throughout this thesis, we distinguish between two hierarchical levels of planning behavior. A \emph{task} is a high-level, daily-planned schedule unit (e.g., ``work café shift 09:00--12:00''), as synthesized in the Generative Agents architecture. An \emph{action}, in the formal planning sense above, is a primitive discrete event characterized by preconditions and effects. In the context of neuro-symbolic scaffolding, a task is decomposed into a sequence of fine-grained actions that, when executed, fulfill the task's objective. The action definition here (Definition \ref{def:action}) corresponds to the primitive action units into which tasks are decomposed in our framework.
 \end{remark}
 
 Park et al.'s agents generate daily plans with morning, afternoon, and evening blocks containing embedded tasks, resembling HTN decomposition without explicit HTN semantics or validation \cite{parkGenerativeAgentsInteractive2023a}.
 
-Informally, we envision generating high-level tasks from high-level goals and then decomposing them into sequences of primitive actions. In our running example, the task ``prepare café for 09:00 opening'' might decompose into a sequence of dependent actions: ``unlock café door,'' ``disarm alarm system,'' ``turn on lights,'' ``unlock and prepare register,'' and ``count opening cash float.'' Each action must be executed in order, as later actions depend on earlier ones (e.g., the register cannot be prepared before the door is unlocked). 
+Informally, we envision generating high-level tasks from high-level goals and then decomposing them into sequences of primitive actions.     [CHANGE running example]
+In our running example, the task ``prepare café for 09:00 opening'' might decompose into a sequence of dependent actions: ``unlock café door,'' ``disarm alarm system,'' ``turn on lights,'' ``unlock and prepare register,'' and ``count opening cash float.'' Each action must be executed in order, as later actions depend on earlier ones (e.g., the register cannot be prepared before the door is unlocked).
 
 \subsection{Symbolic Planning}
 \label{subsec:symbolic-planning}
 
+[Maybe other introduction more focus on the PDDL]
 Symbolic planning uses explicit, compositional representations to algorithmically search for valid plans \cite{fikesStripsNewApproach1971, mcdermottPDDLPlanningDomain1998}. Key strengths:
 
 \begin{enumerate}
@@ -160,30 +166,31 @@ These properties directly address coherence: if behavior is synthesized via a sy
 
 \subsubsection{PDDL: Planning Domain Definition Language}
 
-To enable symbolic planning, domains and problems must be specified formally. The Planning Domain Definition Language (PDDL) is the standard representation used by most automated planners.
+To enable symbolic planning, domains and problems must be specified formally. The Planning Domain Definition Language (PDDL) is the standard representation used by most automated planners. [any sources to back it up?]
 
 \begin{definition}[PDDL Domain and Problem]
-\label{def:pddl}
-A PDDL \emph{domain} specifies:
-\begin{itemize}
-    \item \textbf{Predicates}: atomic facts about the world (e.g., \texttt{(at agent location)}, \texttt{(has-key agent key)});
-    \item \textbf{Action schemas}: parameterized templates specifying action preconditions and effects, which ground to concrete actions when parameters are instantiated.
-\end{itemize}
+    \label{def:pddl}
+    [More about the predicate, like what dose the examples actually means, and on zero arity]
+    A PDDL \emph{domain} specifies:
+    \begin{itemize}
+        \item \textbf{Predicates}: atomic facts about the world (e.g., \texttt{(at agent location)}, \texttt{(has-key agent key)});
+        \item \textbf{Action schemas}: parameterized templates specifying action preconditions and effects, which ground to concrete actions when parameters are instantiated.
+    \end{itemize}
 
-A PDDL \emph{problem} specifies:
-\begin{itemize}
-    \item \textbf{Initial state}: predicates that are true at the start;
-    \item \textbf{Goal specification}: predicates that must be true in the final state.
-\end{itemize}
+    A PDDL \emph{problem} specifies:
+    \begin{itemize}
+        \item \textbf{Initial state}: predicates that are true at the start;
+        \item \textbf{Goal specification}: predicates that must be true in the final state.
+    \end{itemize}
 
-Together, a domain and problem define a planning problem in the sense of Definition \ref{def:planning-problem}, which can then be solved by a planner (Definition \ref{def:planner}), such as Fast Downward, GraphPlan, or STRIPS.
+    Together, a domain and problem define a planning problem in the sense of Definition \ref{def:planning-problem}, which can then be solved by a planner (Definition \ref{def:planner}), such as Fast Downward, GraphPlan, or STRIPS.
 \end{definition}
 
-PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm can check that action preconditions are met, goals are reachable, and no contradictions are present. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized, kwonFastAccurateTask}. 
+PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm [Come on not any] can check that action preconditions are met, goals are reachable, and no contradictions are present [We probably should add that we mean that in terms of the plan]. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, [just call it domain ] and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized, kwonFastAccurateTask}.
 
-While newer LLMs exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone. Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification. This combination preserves the flexibility and commonsense reasoning of LLMs while enforcing the consistency guarantees that formal planning requires.
+While newer LLMs [Do we say what is LLM] exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone. Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification. This combination preserves the flexibility and commonsense reasoning of LLMs while enforcing the consistency guarantees that formal planning requires [Let's just delete this kind of filler actions].
 
-\paragraph{Limitations} 
+\paragraph{Limitations}
 The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless explicitly encoded \cite{haslumIntroductionPlanningDomain2019}.
 
 \subsubsection{Plan Validation and the VAL Tool}
@@ -203,8 +210,9 @@ If any check fails, VAL reports the plan as invalid with diagnostic details, suc
 VAL is widely used in automated planning research and competitions as the standard for validating planner outputs. Operationally, it follows the formal semantics of PDDL, making it a trusted oracle for correctness.
 
 \begin{example}[VAL Validation in the Student Domain]
+    [Change the example]
     \label{ex:val-student}
-    Consider the student task ``work café shift 09:00 to 12:00,'' decomposed by the LLM into: \texttt{(walk-to-cafe)}, \texttt{(unlock-cafe-door)}, \texttt{(work-shift 3-hours)}. 
+    Consider the student task ``work café shift 09:00 to 12:00,'' decomposed by the LLM into: \texttt{(walk-to-cafe)}, \texttt{(unlock-cafe-door)}, \texttt{(work-shift 3-hours)}.
 
     VAL checks preconditions in sequence:
     \begin{itemize}
@@ -215,18 +223,21 @@ VAL is widely used in automated planning research and competitions as the standa
     The LLM's decomposition is rejected, and feedback is provided so the LLM can refine the plan (e.g., retrieve the key before attempting to unlock).
 \end{example}
 
-\paragraph{Limitations} 
+\paragraph{Limitations}
 VAL only validates against the given PDDL model. If the model is incomplete or misspecified, a plan may pass validation despite being problematic in practice. Additionally, VAL does not measure plan quality, plausibility, or believability—it enforces logical correctness only.
 
 \subsection{Agents and Believability}
 \label{subsec:agents-believability}
 
 \begin{definition}[Agent]
+    [consider if we ever use this, if not delete]
     \label{def:agent}
     An \emph{agent} receives percepts and produces actions via sensors and actuators, implementing a mapping $f: P^{*} \to A$ from percept histories $P^{*}$ to actions $A$ \cite{russellArtificialIntelligenceModern2022}.
 \end{definition}
 
 \begin{definition}[Generative Agent]
+    [consider if we ever use this, if not delete]
+
     \label{def:generative-agent}
     A \emph{generative agent} is a computational software agent that simulates believable human behavior by leveraging large language models to generate action sequences, maintain memory of past experiences, reflect on accumulated observations, and plan future behavior based on goals and social context.
 \end{definition}
@@ -238,7 +249,8 @@ In simulated environments and games, non-player characters (NPCs) prioritize pro
     \emph{Believability}---the ``illusion of life''---is the human-perceived realism of agent behavior: whether actions align with character goals, personality, knowledge, and social norms \cite{batesRoleEmotionBelievable1994, loyallBelievableAgentsBuilding}.
 \end{definition}
 
-Importantly, believability differs from psychological (emotional and mental states) or cognitive (thinking and reasoning) realism. Following Bates' analysis of character animation, believability permits suspension of disbelief—the observer accepts the character as having intentions and coherence—rather than requiring fidelity to actual human cognition (how people really think) or motivation (why they act) \cite{batesRoleEmotionBelievable1994}. An animated character can be believable despite vastly simplified internal mechanisms. In the case of NPC agents simulating university students in daily routines, there is natural alignment between believability and realism: student behaviors (attending lectures, working shifts, socializing) are grounded in observable, familiar reality. However, this alignment is contingent on context; the goal remains observer acceptance and perceived intentionality, not psychological accuracy. If an agent's actions respect temporal and causal constraints while being consistent with its apparent goals and knowledge, observers will find it believable, even if its internal reasoning mechanisms are simplified or heuristic.
+Importantly, believability differs from psychological (emotional and mental states) or cognitive (thinking and reasoning) realism. Following Bates' analysis of character animation, believability permits suspension of disbelief—the observer accepts the character as having intentions and coherence—rather than requiring fidelity to actual human cognition (how people really think) or motivation (why they act) \cite{batesRoleEmotionBelievable1994}. An animated character can be believable despite vastly simplified internal mechanisms.     [Change the example]
+In the case of NPC agents simulating university students in daily routines, there is natural alignment between believability and realism: student behaviors (attending lectures, working shifts, socializing) are grounded in observable, familiar reality. However, this alignment is contingent on context; the goal remains observer acceptance and perceived intentionality, not psychological accuracy. If an agent's actions respect temporal and causal constraints while being consistent with its apparent goals and knowledge, observers will find it believable, even if its internal reasoning mechanisms are simplified or heuristic.
 
 Constraining agents with realistic physical and environmental limits increases perceived believability by reducing violations known to break immersion, such as impossible actions or logically inconsistent plans \cite{batesRoleEmotionBelievable1994, bogdanovychWhatMakesVirtual2016}. Park et al.\ showed that LLM-driven agents with memory, reflection, and planning were rated more believable than human crowdworkers role-playing agents in controlled evaluations. The crowdworker baseline was given access to each agent's full memory stream and simulated behavior, yet LLM-driven agents still significantly outperformed this human-authored comparison \cite{parkGenerativeAgentsInteractive2023a}. Xiao et al.\ propose metrics such as Consistency and Robustness for agent simulations based on character profiles \cite{xiaoHowFarAre2024}.
 
@@ -255,12 +267,15 @@ Operationally, coherence is enforced through constraint adherence which for us w
 \end{example}
 
 
+[LET"S just delete the bellow]
 \begin{definition}[Epistemic Plausibility]
     \label{def:epistemic-plausibility}
     \emph{Epistemic plausibility} is the consistency of an agent's actions with what it could reasonably know or believe given its observations and prior experience.
 \end{definition}
 
 While formal epistemic planning explicitly represents agents' beliefs \cite{Bolander_2017}, such approaches typically assume a closed and fully specified domain with a finite set of actions and observability conditions \cite{bolanderEpistemicPlanning2011}. In contrast, open-world systems with natural-language action spaces, such as LLM-driven agents, cannot feasibly maintain complete epistemic state tracking. Thus, epistemic plausibility is not tractable as a system-level enforcement objective in this work. However, improving coherence reduces certain epistemic violations: actions respecting environmental and causal constraints are less likely to presuppose unreasonable or unobserved information, indirectly supporting perceived believability.
+
+    [Here I've ended the review]
 
 \begin{example}[Coherent but Epistemically Implausible]
     \label{ex:epistemic-implausible}
@@ -300,7 +315,7 @@ Key capabilities of LLMs relevant to this work:
 
 However, LLMs have critical limitations:
 \begin{itemize}
-    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs\cite{bender2021dangers,valmeekam2024llms}. 
+    \item \textbf{No logical guarantees}: They perform statistical inference, not deductive reasoning. An LLM can produce plausible-sounding but logically inconsistent outputs\cite{bender2021dangers,valmeekam2024llms}.
     \item \textbf{Context window limits}: They cannot retain information from arbitrarily long histories by design\cite{vaswani2017attention}; older context may be lost or forgotten.
     \item \textbf{Hallucination}: They may invent facts, actions, or constraints not grounded in the actual domain or agent memory \cite{huang2025survey,ji2023survey}.
 \end{itemize}
@@ -324,7 +339,7 @@ In this thesis, scaffolding is employed to support the generation of formal plan
 
 Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic representations and reasoning to achieve both flexibility and guarantees \cite{garcezNeuralSymbolicComputingEffective2019, garcezNeurosymbolicAI3rd2020}. The central idea is to leverage the strengths of each paradigm: LLMs excel at natural-language understanding, commonsense reasoning, and flexible task decomposition, while symbolic systems enforce logical consistency and provide formal guarantees.
 
-LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}. 
+LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}.
 
 Some integration patterns include:
 

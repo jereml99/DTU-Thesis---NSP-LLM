@@ -1,9 +1,26 @@
 \chapter{Results}
 
-\section{Experimental Results}
 
-Presentation of experimental findings.
+1. Token usage statistics
+comperision between baseline and neuro-symbolic
+[]
+2. Neural symbolic pipeline results
 
-\section{Analysis}
+    [add the pie diagram]
+- Catches for replan
+    [What here]
+- Catches for repair
+    [What here]
+- catches for falls positive
+The common theme here is that LLM feedback module is puting VAL errors into this category when there is gap in the world model that can be resonabli assumed to be true, like "The failure is due to a missing or unobserved world state (bathroom water not running). It is reasonable to assume the bathroom sink could be turned on when needed. To proceed, either set \texttt{water\_running\_in\_bathroom\_sink} to true in the initial state or add a prep step that starts water in the bathroom before brushing teeth.", [make the example better formated and smaller]
 
-Analysis of the results.
+
+
+
+\section{experiment Results}
+
+1. How many people
+We did 10 experiment with people in age 22-28. We gathered ~8 hours of transcriptions
+
+2. General statistics of the number of the preferences and number of flagged actions
+3. qualitative results of the preferences and flagged actions and the transcriptions

@@ -50,9 +50,9 @@ All calls to the LLM are formalized using prompt templates that specify the syst
 \subsection{Model Used}
 Most testing was conducted with the OpenAI model gpt-5-nano-2025-08-07, due to: 1. Cost-effectiveness, which is important considering our expected token usage to generate one simulation was 1m+; 2. Speed; 3. Reasoning capabilities with good benchmarks; 4. The ability to trade off "intelligence" versus speed by setting the reasoning token budget (reasoning effort between low, medium, and high).
 
-  [Should we write about other models as well?]
+  [Should we write about other models as well? like wht didn't we use mini normal gpt-5  - becouse of the price]
 
-We also considered open-source models like gpt-oss-120b.
+We also tested opensource models Qwen3:7b and gpt-oss:20b using Ollama as LLM engine on DGX spark [it's easy to setup and support structured output] The quality was similar to gpt5 nano but the infrence speed what about 10 time slower which stoped us from exploring this posobilities futher
 
 \subsection{Long-Term Planning}
 \label{Long-term planning}
@@ -73,7 +73,16 @@ When an agent approaches a \emph{task} that has not yet been decomposed, we trig
 
 \subsection{Neuro-Symbolic Validation Pipeline}
 \label{subsec:neuro-symbolic-pipeline}
-We implemented the following neuro-symbolic validation pipeline to enhance the coherence of \emph{actions} generated during \emph{task} decomposition. This is performed after generating \emph{actions} from the \emph{task}, but before adding movements. [TODO add example] We check the validity of preconditions using the external symbolic validation tool, VAL\cite{howey2004val}. To receive feedback from VAL, we must generate three files: Domain.pddl, Problem.pddl, and plan.pddl. Below, we explain how we achieved this.
+We implemented the following neuro-symbolic validation pipeline to enhance the coherence of \emph{actions} generated during \emph{task} decomposition. This is performed after generating \emph{actions} from the \emph{task}, but before adding movements.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{Pictures/methodology/NS_pipeline.png}
+  \caption{Neuro-Symbolic Pipeline. Blocks with red outlines indicate LLM calls.}
+  \label{fig:ns-pipeline}
+\end{figure}
+
+[TODO add example] We check the validity of preconditions using the external symbolic validation tool, VAL\cite{howey2004val}. To receive feedback from VAL, we must generate three files: Domain.pddl, Problem.pddl, and plan.pddl. Below, we explain how we achieved this.
 
 \subsubsection{Domain Generation}
 Domain generation is the most challenging part of the process [Because it's the biggest mental load, maybe add statistics for this. I mean it's just that the domain needs the most attention and problems here will propagate to following steps of the pipeline], and we tested a couple of approaches to do it correctly. The steps below generated the best Domain, based on our subjective assessment [We tested a lot and looked which generated more sensible results and which generated fewer validation errors]. We initially attempted to generate the entire PDDL file in one step, but encountered two problems: 1. \emph{Action} conditions and effects tended to be chained without real logic. [add example, like teeth-brushed as precondition of shower]. After many iterations, we decided to split domain generation into the following steps.
@@ -286,6 +295,8 @@ For the user study, we generated two simulations: baseline and neuro-symbolic. S
 Both simulations featured the same three personas with backgrounds taken from the original study. We generated exactly the same goals and \emph{tasks} for the day [for each persona] for both simulations.
 Both the baseline and neuro-symbolic models used the improvements introduced in \ref{Long-term planning}.
 Thus, the generation differed only by the introduction of validations in the neuro-symbolic simulation \ref{subsec:NL-conditions-validations} \ref{subsec:neuro-symbolic-pipeline}.
+
+Both the baseline and neuro-symbolic simulation were run for 6400 steps, which is equivalent to ~18 hours of simulation time.
 
 We tested generating simulations of a world with 25 characters, but the improvements in believability [our subjective assessment] did not justify the additional cost in tokens and the increased effort required for test subjects to complete the study.
 
