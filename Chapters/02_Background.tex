@@ -8,8 +8,6 @@ It defines core concepts (LLMs, agents, planning paradigms including PDDL), revi
     \label{ex:running-student}
     Throughout this chapter, we illustrate concepts using a running example based on \textbf{Isabella Rodriguez}, a persona from our simulation. Isabella is the owner of Hobbs Cafe and is currently planning a Valentine's Day party. She must coordinate cafe operations (opening the cafe, serving customers, managing inventory), social interactions (planning with friends like Maria Lopez), and personal errands (shopping for party supplies), while respecting environmental rules (must be at the cafe to unlock it).
 
-    % This below seems not needed
-    A complete PDDL formulation of Isabella's domain, including predicates, action schemas, and a concrete problem instance, is provided in \cref{app:pddl-example}.
 \end{example}
 
 
@@ -164,7 +162,7 @@ These properties directly address coherence: if behavior is synthesized via a sy
 
 \subsubsection{PDDL: Planning Domain Definition Language}
 
-To enable symbolic planning, domains and problems must be specified formally. The Planning Domain Definition Language (PDDL) is the standard representation used by most automated planners. [any sources to back it up?]
+To enable symbolic planning, domains and problems must be specified formally. The Planning Domain Definition Language (PDDL) is the standard representation used by most automated planners \cite{mcdermottPDDLPlanningDomain1998}.
 
 \begin{definition}[PDDL Domain and Problem]
     \label{def:pddl}
@@ -184,10 +182,10 @@ To enable symbolic planning, domains and problems must be specified formally. Th
     Together, a domain and problem define a planning problem in the sense of Definition \ref{def:planning-problem}, which can then be solved by a planner (Definition \ref{def:planner}), such as Fast Downward, GraphPlan, or STRIPS.
 \end{definition}
 
-PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, any algorithm [Come on not any] can check that action preconditions are met, goals are reachable, and no contradictions are present [We probably should add that we mean that in terms of the plan]. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into PDDL predicates, action schemas, [just call it domain ] and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized, kwonFastAccurateTask}.
+PDDL is valuable because it is explicit and verifiable: once a domain and problem are specified, standard planning algorithms can check that action preconditions are met, goals are reachable, and no contradictions are present in the plan. Prior work demonstrates that large language models can translate natural-language task and domain descriptions into a PDDL domain and problem instances, which can be solved reliably when embedded within neuro-symbolic pipelines that enforce syntactic and semantic validity through external planners and validators \cite{silver2024generalized, kwonFastAccurateTask}.
 
-While newer LLMs [Do we say what is LLM] exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone. % reference here to the same papaer as we talka about in the introduction (we talk about this there as well)
-Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification. This combination preserves the flexibility and commonsense reasoning of LLMs while enforcing the consistency guarantees that formal planning requires [Let's just delete this kind of filler sentences].
+While newer LLMs exhibit improved reasoning and code generation capabilities, existing evidence suggests that reliability in symbolic planning arises primarily from scaffolding mechanisms—such as validation, decomposition, and repair—rather than from model scale alone \cite{zhang2025recursive}.
+Consequently, improvements in underlying LLMs are best viewed as enhancing the effectiveness of such pipelines, rather than eliminating the need for formal correctness guarantees. This motivation directly underlies the neuro-symbolic approach: leverage the LLM's language understanding to generate initial PDDL schemas from natural language descriptions, then validate and refine those schemas using automated planning tools or constraint verification.
 
 \paragraph{Limitations}
 The primary limitation is \textbf{authoring cost}: PDDL domains require manual specification of predicates, actions, preconditions, and effects, which is brittle and labor-intensive for open-ended environments. Symbolic planning also struggles with commonsense reasoning and social nuance unless explicitly encoded \cite{haslumIntroductionPlanningDomain2019}.
@@ -299,7 +297,7 @@ Key capabilities of LLMs relevant to this work:
 \begin{itemize}
     \item \textbf{Instruction following}: Responding appropriately to natural language directives (e.g., ``format this as a list'', ``explain in simple terms'').
     \item \textbf{Few-shot learning}: Improving performance when given a few examples before a task.
-    \item \textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted\cite{StructuredModelOutputs}. % this is quite crucial for our method, would be nice to get a bit more into details with this one. maybe explaining https://github.com/mlc-ai/xgrammar  constrained decoding or whatever openAI use for that.
+    \item \textbf{Structured output generation}: Producing formal notations (code, logical rules, task lists) when prompted. Mechanisms such as OpenAI's Structured Outputs \cite{StructuredModelOutputs} or open-source libraries like XGrammar enforce schema adherence during token generation (constrained decoding), guaranteeing that the output matches a predefined JSON schema or grammar.
 \end{itemize}
 
 However, LLMs have critical limitations:
@@ -331,7 +329,8 @@ Neuro-symbolic systems combine learned (sub-symbolic) components with symbolic r
 
 LLMs approximate hierarchical planning by proposing outlines, subgoals, and steps in natural language \cite{weiChainofThoughtPromptingElicits2023}.
 
-% This seems like it should be part of literature review right?
+% The below is to review, seems quite repetitive
+LLMs can be integrated with planning systems in several ways.
 Some integration patterns include:
 
 \begin{enumerate}
@@ -342,8 +341,7 @@ Some integration patterns include:
 
 Recent work explores these patterns for PDDL generation. Tantakoun et al. survey approaches where LLMs construct PDDL domain and problem files from natural language, with symbolic planners validating and executing \cite{tantakounLLMsPlanningModelers2025}. Huang et al. propose a pipeline in which multiple LLM instances generate diverse candidate PDDL action schemas, which are filtered for semantic coherence and validated by a symbolic planner to ensure domain solvability \cite{huangPlanningDarkLLMSymbolic2024}. \footnote{Unlike the present work, Huang et al.\ use the symbolic planner not only for validation but also to generate complete plans once a consistent domain schema has been identified.}
 
-Our approach combines multiple integration patterns: an LLM proposes a decomposition of a high-level task into primitive actions; a symbolic validator (such as VAL) then checks whether those actions respect domain constraints, enforcing the concept of \emph{coherence} defined in Section \ref{subsec:agents-believability}. This validation-as-feedback loop enables iterative refinement: violations are reported with diagnostics, allowing the LLM to improve its proposals until a coherent plan emerges.
-
+Our approach combines multiple integration patterns: an LLM proposes a decomposition of a high-level task into primitive actions; a symbolic validator (such as VAL) then checks whether those actions respect domain constraints, enforcing the concept of \emph{coherence} defined in Section \ref{subsec:agents-believability}.
 % think about this example
 \begin{example}[Neuro-Symbolic Validation of Action Decomposition]
     \label{ex:neurosymbolic-validation}
@@ -387,10 +385,10 @@ The architecture comprises:
     \caption{Generative agent architecture (adapted from Park et al.\ \cite{parkGenerativeAgentsInteractive2023a}). Agents perceive their environment, and all perceptions are saved in a comprehensive record of the agent's experiences called the memory stream. Based on their perceptions, the architecture retrieves relevant memories and uses those retrieved actions to determine an action. These retrieved memories are also used to form longer-term plans and create higher-level reflections, both of which are entered into the memory stream for future use.}\label{fig:generative-agents-architecture}
 \end{figure}
 
-\textbf{Emergent behaviors} emerged in a 25-agent, two-day simulation where agents maintained coherent behavior. Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. For example, information about an event started by one of the agents spread to 13 other agents (52\%), and notably, 5 of the 12 explicitly invited agents attended at the correct time and location.
+\textbf{Emergent behaviors} were observed in a 25-agent, two-day simulation where agents maintained coherent behavior. Park et al.\ demonstrated that LLM agents with memory, reflection, and planning achieve high believability. For example, information about an event started by one of the agents spread to 13 other agents (52\%), and notably, 5 of the 12 explicitly invited agents attended at the correct time and location.
 
 \textbf{Evaluation} comprised a controlled study with 100 human participants recruited via an online crowdsourcing platform, who ranked agent responses using a TrueSkill-based aggregation. A human-authored baseline was constructed by recruiting 25 crowdworkers, each assigned to a single agent; these workers were given access to the agent's full memory stream and a replay of its simulated behavior, and were instructed to role-play the agent when answering interview questions. Baseline responses were manually inspected by the authors for coherence and consistency with the assigned persona, with low-quality or out-of-character submissions discarded and replaced. Evaluators were blind to condition and ranked responses from the full architecture, multiple ablations, and the human baseline. The full architecture (memory + reflection + planning) achieved $\mu = 29.89, \sigma = 0.72$, significantly outperforming both ablations and the human-authored baseline ($\mu = 22.95, \sigma = 0.69$), with effect size $d = 8.16$ ($p < 0.001$).
-Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections. % of the agent
+Interview questions assessed self-knowledge, memory recall, future plans, reactive decisions, and reflections of the agent.
 
 \begin{figure}[H]\centering
     \includegraphics[width=0.8\linewidth]{Pictures/GenerativeAgents-Results.jpg}
