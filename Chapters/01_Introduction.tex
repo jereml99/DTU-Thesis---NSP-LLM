@@ -30,7 +30,7 @@ Existing agent architectures face a fundamental tradeoff between the logical con
 \textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system where an LLM generates hierarchical plans and formal PDDL \cite{mcdermottPDDLPlanningDomain1998} specifications (actions and constraints), while a symbolic validator enforces logical consistency and guides iterative refinement.
 
 \textbf{Objectives:}
-
+% Maybe to refine on the end
 \begin{enumerate}
     \item Reimplement the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} with a modular, extensible codebase that supports integration of symbolic planning components.
     \item Design and implement a PDDL-based validator that formalizes environmental constraints, detects planning violations, and outputs actionable diagnostic feedback.
@@ -38,8 +38,6 @@ Existing agent architectures face a fundamental tradeoff between the logical con
     \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) a within-subjects user study to qualitatively assess the perceived believability of agent behaviors.
 \end{enumerate}
 
-
-% Section removed as it was repetitive with the Objectives section.
 
 
 \section{Scope and Limitations}
