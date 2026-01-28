@@ -22,13 +22,12 @@ AI-assisted tools, including large language models, were used during the prepara
 
 Existing agent architectures face a fundamental tradeoff between the logical consistency of symbolic systems and the flexibility and commonsense reasoning of LLM-driven agents.
 
-\textbf{Research question:} How can a neuro-symbolic planning framework improve the coherence and believability of LLM-driven generative agents?\footnote{Formal definitions are provided in \cref{ch:background}: \emph{Large Language Models} (\cref{subsec:llm}), \emph{Agents} (\cref{def:agent}), \emph{Planning} (\cref{def:planning-problem}), \emph{Coherence} (\cref{def:coherence}), \emph{Believability} (\cref{def:believability}), and \emph{Neuro-Symbolic Systems for Planning} (\cref{subsec:neuro-symbolic}).}
-
+\textbf{Research question:} How can a neuro-symbolic planning framework improve the believability of LLM-driven generative agents?\footnote{Formal definitions are provided in \cref{ch:background}: \emph{Large Language Models} (\cref{subsubsec:llm}), \emph{Agents} (\cref{def:agent}), \emph{Planning} (\cref{def:planning-problem}), \emph{Believability} (\cref{def:believability}), and \emph{Neuro-Symbolic Systems for Planning} (\cref{subsec:neuro-symbolic}).}
 
 \section{Research Aim and Objectives}
 \label{sec:research-aim-objectives}
 
-\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system where an LLM generates hierarchical plans and formal PDDL specifications (actions and constraints), while a symbolic validator enforces logical consistency and guides iterative refinement.
+\textbf{Aim:} To develop and evaluate a hybrid neuro-symbolic planning system where an LLM generates hierarchical plans and formal PDDL \cite{mcdermottPDDLPlanningDomain1998} specifications (actions and constraints), while a symbolic validator enforces logical consistency and guides iterative refinement.
 
 \textbf{Objectives:}
 
@@ -36,21 +35,11 @@ Existing agent architectures face a fundamental tradeoff between the logical con
     \item Reimplement the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} with a modular, extensible codebase that supports integration of symbolic planning components.
     \item Design and implement a PDDL-based validator that formalizes environmental constraints, detects planning violations, and outputs actionable diagnostic feedback.
     \item Develop and deploy a replay-based evaluation interface that allows human evaluators to assess agent believability by flagging specific actions.
-    \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) qualitative human evaluation of perceived believability.
+    \item Evaluate the system using (a) quantitative metrics (constraint violation rates, plan success rates, and repair efficiency) comparing a baseline hierarchical planner against the neuro-symbolic approach, and (b) a within-subjects user study to qualitatively assess the perceived believability of agent behaviors.
 \end{enumerate}
 
 
-\section{Methodological Overview}
-\label{sec:methodological-overview}
-
-This study extends the generative agents architecture \cite{parkGenerativeAgentsInteractive2023a} by replacing hierarchical planning with a neuro-symbolic framework. The LLM generates hierarchical plans and formalizes them using PDDL (\cref{subsec:neuro-symbolic-pipeline}); a symbolic validator detects logical inconsistencies.
-
-Evaluation combines:
-
-\begin{itemize}
-    \item \textbf{Qualitative assessment}: A within-subjects user study comparing the perceived believability of agent behaviors from both systems.
-    \item \textbf{Quantitative metrics}: Analysis of the neuro-symbolic pipeline's performance (e.g., error detection, repair efficiency) and quantitative findings from the user study.
-\end{itemize}
+% Section removed as it was repetitive with the Objectives section.
 
 
 \section{Scope and Limitations}
@@ -59,7 +48,7 @@ Evaluation combines:
 
 This project focuses on simulation environments with deterministic action effects and complete observability. Evaluation focuses on constraint adherence and perceived believability rather than real-time performance or scalability to large multi-agent systems.
 
-% To rewrtine at the end.
+% To rewrite at the end.
 \section{Thesis Structure}
 \label{sec:thesis-structure}
 The remainder of the thesis is organized as follows:
