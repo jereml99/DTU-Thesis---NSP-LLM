@@ -1,0 +1,3366 @@
+{
+  "vision_r": 8,
+  "att_bandwidth": 8,
+  "retention": 8,
+  "curr_time": "February 13, 2023, 23:46:30",
+  "curr_tile": [
+    73,
+    14
+  ],
+  "daily_plan_req": "Isabella Rodriguez opens Hobbs Cafe at 8am everyday, and works at the counter until 8pm, at which point she closes the cafe.",
+  "name": "Isabella Rodriguez",
+  "first_name": "Isabella",
+  "last_name": "Rodriguez",
+  "age": 34,
+  "innate": "friendly, outgoing, hospitable",
+  "learned": "Isabella Rodriguez is a cafe owner of Hobbs Cafe who loves to make people feel welcome. She is always looking for ways to make the cafe a place where people can come to relax and enjoy themselves.",
+  "currently": "Isabella Rodriguez is planning on having a Valentine's Day party at Hobbs Cafe with her customers on February 14th, 2023 at 5pm. She is gathering party material, and is telling everyone to join the party at Hobbs Cafe on February 14th, 2023, from 5pm to 7pm.",
+  "lifestyle": "Isabella Rodriguez goes to bed around 11pm, awakes up around 6am.",
+  "living_area": "the Ville:Isabella Rodriguez's apartment:main room",
+  "concept_forget": 100,
+  "daily_reflection_time": 180,
+  "daily_reflection_size": 5,
+  "overlap_reflect_th": 4,
+  "kw_strg_event_reflect_th": 10,
+  "kw_strg_thought_reflect_th": 9,
+  "recency_w": 1,
+  "relevance_w": 1,
+  "importance_w": 1,
+  "recency_decay": 0.995,
+  "importance_trigger_max": 150,
+  "importance_trigger_curr": 124,
+  "importance_ele_n": 18,
+  "thought_count": 5,
+  "daily_req": [
+    "1) Wake up and complete the morning routine at home, including a quick breakfast (coffee and toast or fruit) before heading to Hobbs Cafe. (early morning)",
+    "2) Open Hobbs Cafe at 8am, start the coffee service, greet customers, and place Valentine\u2019s Day d\u00e9cor to prep for tomorrow's party. (morning)",
+    "3) Maria Lopez visits Hobbs Cafe to study; Isabella welcomes her warmly and chats about tomorrow's Valentine\u2019s event, collecting ideas for decorations. (late morning)",
+    "4) Lunch service at the cafe; take a short break for a light lunch; review remaining party-supply needs and inventory. (midday)",
+    "5) Head to The Willows Market and Harvey Oak Supply Store to pick up heart-themed decor, napkins, candles, and other party supplies; text Klaus and Maria about tomorrow's plans. (afternoon)",
+    "6) Finalize Valentine\u2019s Day party setup: seating arrangement for 5-7pm guests, prepare a welcome sign, and assemble a simple playlist. (late afternoon)",
+    "7) Close the cafe at 8pm; enjoy dinner at The Rose and Crown Pub with a friend or Maria Lopez; debrief and confirm any last-minute party details. (evening)",
+    "8) Wind down at home: review tomorrow\u2019s agenda, set reminders, and head to bed around 11pm. (night)"
+  ],
+  "f_daily_schedule": [
+    [
+      "Sleeping",
+      360,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 360,
+        "planned_travel_minutes": 0,
+        "planned_total_minutes": 360,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [],
+        "in_scope": "Stay in bed until wake up time.",
+        "task_intent": "Get rest and prepare for the day.",
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule (pre-sleep)"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Sit up in bed)",
+      6,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is currently lying down in bed inside her home (Isabella Rodriguez's apartment).",
+            "The bed is present and usable (not removed or folded away)."
+          ],
+          "effects": [
+            "Isabella transitions from lying down to sitting upright on the edge of the bed, with torso upright and feet positioned to stand."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Stretch)",
+      2,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is in a private or open space at home with enough room to stretch.",
+            "Isabella is awake and not currently focused on another urgent activity.",
+            "Isabella is dressed in comfortable clothing suitable for stretching."
+          ],
+          "effects": [
+            "Muscles become looser and more flexible after stretching.",
+            "Breathing becomes deeper and more relaxed.",
+            "Heart rate increases mildly due to physical activity, indicating a light warm-up.",
+            "Mental state shifts toward wakefulness and readiness for breakfast and the morning routine."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (moving to refrigerator)",
+      1,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Drink water)",
+      3,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is at her apartment (with access to a sink or water source) or has a water bottle/glass available.",
+            "A drinking vessel (glass, cup, or bottle) is available for use.",
+            "Water is accessible without obstacles (no closed container or blocked faucet)."
+          ],
+          "effects": [
+            "A portion of water is consumed by Isabella, satisfying thirst.",
+            "Isabella's hydration state improves (thirst decreases).",
+            "The drinking vessel\u2019s water content decreases (e.g., glass reduced or bottle partially/fully emptied) as a direct result of drinking."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (moving to bathroom sink)",
+      2,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Wash face)",
+      6,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "wash_face has an unsatisfied precondition: water_running_in_bathroom_sink is not true in the current world state (bathroom water not running).",
+            "category": "can_continue",
+            "recommendation": "Add a preparatory step to ensure bathroom water is running before washing the face, or adjust the initial state to reflect water_running_in_bathroom_sink as true."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is at home and can access the bathroom sink (with running water).",
+            "Soap or facial cleanser is available for washing the face.",
+            "A clean towel is available for drying the face."
+          ],
+          "effects": [
+            "Face becomes clean and refreshed after washing.",
+            "Water and soap residues are removed from the face via rinsing and drying with a towel."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Brush teeth)",
+      4,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "brush_teeth has an unsatisfied precondition: water_running_in_bathroom_sink is not true in the current world state (bathroom water not running).",
+            "category": "can_continue",
+            "recommendation": "Ensure bathroom water is running before brushing teeth, or adjust the initial world to reflect water_running_in_bathroom_sink = true; alternatively insert a preparatory step to start water."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is in the bathroom of her apartment (Isabella Rodriguez's apartment: bathroom)",
+            "A toothbrush is available",
+            "Toothpaste is available",
+            "The sink faucet can provide running water (water is accessible for brushing)"
+          ],
+          "effects": [
+            "Teeth become clean after brushing",
+            "Breath becomes fresh",
+            "Toothbrush is used (wet/soiled from brushing)",
+            "Toothpaste is used during brushing"
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Apply moisturizer)",
+      3,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Moisturizer product is available at home (e.g., on bathroom counter)",
+            "Face is clean or has been washed/wiped to remove dirt",
+            "Hands are clean to avoid transferring germs or dirt to the face"
+          ],
+          "effects": [
+            "Moisturizer is applied to the skin (face/neck)",
+            "Skin becomes hydrated and softened in the treated area"
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Put on outfit)",
+      7,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is at her apartment (home) and has access to her wardrobe/closet.",
+            "An outfit/clothes are available in the wardrobe and are clean and wearable.",
+            "Isabella is not already wearing that outfit or fully clothed in it."
+          ],
+          "effects": [
+            "Isabella Rodriguez is wearing the outfit (dressed).",
+            "The specific outfit is now considered worn and not available in the wardrobe until it is changed or removed."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (moving to shelf)",
+      1,
+      "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Brew coffee)",
+      3,
+      "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has access to a coffee brewing device (coffee maker, French press, or kettle) in her home.",
+            "There is water available for brewing.",
+            "There are coffee grounds or whole coffee beans available.",
+            "There is a mug or cup available to drink from.",
+            "If using an electric coffee maker, there is a working power outlet or power source nearby."
+          ],
+          "effects": [
+            "A cup of coffee is brewed and ready to drink.",
+            "The mug is filled with coffee.",
+            "The coffee supplies (grounds/beans) are reduced by the amount used.",
+            "The aroma of coffee fills the area where the brew takes place.",
+            "The coffee maker completes its cycle and is ready to be turned off or cleaned."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (moving to refrigerator)",
+      1,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Toast bread)",
+      3,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is at home in the apartment (kitchen area)",
+            "Bread slices are available to toast",
+            "Toaster is present and functional",
+            "Electrical power is available (outlet powered) and toaster can be plugged in or plugged in",
+            "Toaster can access electricity (no blown fuse or outlet issue)"
+          ],
+          "effects": [
+            "Bread slices are toasted (browned) and ready to eat",
+            "Bread inventory decreases by the number of slices toasted",
+            "Toaster is used and now has warm coils (ready to be unplugged)"
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home (Eat breakfast)",
+      3,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is at her home (Isabella Rodriguez's apartment) or has immediate access to her morning kitchen for breakfast.",
+            "Breakfast items (e.g., cereal, fruit, bread, coffee/tea) are available or present in the apartment.",
+            "Utensils, dishes, and a means to prepare or serve breakfast (e.g., a plate, cup, toaster, stove/coffee maker) are available.",
+            "A place to eat (table or surface) is available in the apartment."
+          ],
+          "effects": [
+            "Isabella has eaten breakfast (breakfast consumed).",
+            "Isabella's hunger or fullness level decreases (Isabella becomes nourished/less hungry).",
+            "If breakfast items were prepared using appliances, those appliances are now in use or cleaned up after eating (e.g., dishes become dirty or are cleaned up)."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (moving to refrigerator)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Retrieve cafe keys from apartment.)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is able to travel to and enter her apartment (Giorgio Rodriguez's apartment context not needed; use Isabella Rodriguez's own apartment)",
+            "The Hobbs Cafe keys are located in Isabella Rodriguez's apartment",
+            "The apartment door can be opened (Isabella has access to the key or the door is unlocked)"
+          ],
+          "effects": [
+            "Isabella Rodriguez possesses the Hobbs Cafe keys",
+            "The Hobbs Cafe keys are no longer in the apartment after retrieval (they are on Isabella's person or stored with her)"
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Check door status and unlock Hobbs Cafe doors if locked using cafe keys before opening)",
+      8,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New atomic step added at the start per modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Grab coffee beans from the refrigerator)",
+      8,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe has a refrigerator accessible to Isabella Rodriguez.",
+            "The refrigerator contains a bag/container of coffee beans.",
+            "The refrigerator door is open or easily accessible to reach inside.",
+            "Isabella Rodriguez is currently at Hobbs Cafe and able to operate the kitchen appliances/containers."
+          ],
+          "effects": [
+            "Coffee beans are removed from the refrigerator.",
+            "Isabella Rodriguez gains possession of the coffee beans (held in hand or stored in a container in her possession).",
+            "The refrigerator's contents reflect that coffee beans have been taken (beans count or bag status updated)."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Start the coffee machine)",
+      11,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "The action takes place at Hobbs Cafe where the coffee machine is located.",
+            "The coffee machine is present and available to use in Hobbs Cafe.",
+            "The coffee machine is plugged in and powered (receiving electricity).",
+            "The water reservoir of the coffee machine has sufficient water for brewing.",
+            "The coffee machine is currently not brewing (it is idle/off)."
+          ],
+          "effects": [
+            "The coffee machine switches to an on/brewing state and begins brewing a batch of coffee.",
+            "A batch of coffee is being produced and will be ready to dispense once brewing completes."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Buy Valentine decor from The Willows Market and Harvey Oak Supply Store)",
+      5,
+      "the Ville:The Willows Market and Pharmacy:The Willows Market",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New prerequisite task added to acquire decor before using it.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Place Valentine decor around the counter)",
+      18,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Valentine decor items are available in Hobbs Cafe inventory or already owned by Isabella",
+            "The counter area exists and is accessible to place decorations",
+            "The counter area is clear enough to place decorations without obstructing essential equipment (cash register, payment terminals, menus)",
+            "Isabella has authority to decorate Hobbs Cafe for events or is allowed to modify the cafe setup"
+          ],
+          "effects": [
+            "Valentine decor is placed around the counter (e.g., hearts, banners, or ribbons)",
+            "The counter area features a festive Valentine\u2019s Day appearance",
+            "The cafe ambience around the counter shifts to a more festive mood suitable for Valentine\u2019s Day, without obstructing normal operation of the counter equipment"
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Perform inventory check and confirm pastry and decor readiness)",
+      7,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted before the inventory check to ensure pastry and decor readiness is verified ahead of supplies.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to cooking area)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Converse about Klaus Mueller coordinating pastry counts and heart decor for the Valentine's setup)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New coordination conversation added per modification goal and to set up Valentine\u2019s planning before other prep tasks.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Perform inventory check and confirm pastry and decor readiness)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted before the inventory check to ensure pastry and decor readiness is verified ahead of supplies.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to kitchen sink)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:kitchen sink",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Skip wiping down counter and sanitize surfaces)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:kitchen sink",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Replaced wipe down with a skip while preserving schedule duration to maintain total time.",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Refill milk and creamer supply)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A1 (Refill milk and creamer supply) cannot start due to unsatisfied preconditions at time 0: the plan requires milk_creamer_inventory_available, storage_space_available and staff_access_granted to be true, and not milk_stock_full and not creamer_stock_full. The symbolic validator indicates these prerequisites are not satisfied in the current world snapshot.",
+            "category": "can_continue",
+            "recommendation": "Update the initial world to set milk_creamer_inventory_available, storage_space_available, and staff_access_granted to true, and ensure milk_stock_full and creamer_stock_full are false; then re-run planning or insert preparatory steps to establish these resources before refilling."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Milk and creamer inventory exist in Hobbs Cafe storage and are not spoiled or damaged.",
+            "There is accessible storage/fridge space to add more milk and creamer.",
+            "Isabella Rodriguez or staff have physical access to the storage area to perform the refill."
+          ],
+          "effects": [
+            "Milk stock level becomes full/adequate after refill.",
+            "Creamer stock level becomes full/adequate after refill.",
+            "Inventory records reflect restocked quantities (if an inventory system exists)."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Refill cups lids and sleeves)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A2 (Refill cups lids and sleeves) cannot start due to unsatisfied precondition at time 1: inventory_checked is not yet true.",
+            "category": "can_continue",
+            "recommendation": "Set inventory_checked to true in the initial world or perform the inventory check before this step, then re-run planning."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Sufficient stock of cups is available in storage or on-hand.",
+            "Sufficient stock of cup lids is available in storage or on-hand.",
+            "Sufficient stock of cup sleeves is available in storage or on-hand.",
+            "Access to the storage area or shelf containing cups, lids, and sleeves is available (not blocked)."
+          ],
+          "effects": [
+            "Cup dispenser at the counter is refilled with cups to full capacity.",
+            "Cup lids dispenser is refilled to full capacity.",
+            "Cup sleeves dispenser is refilled to full capacity.",
+            "Storage inventory decreases by the amount refilled (cups, lids, and sleeves)."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Prepare sugar stirrers and napkins for counter)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A3 (Prepare sugar stirrers and napkins for counter) cannot start due to unsatisfied preconditions at time 2: sugar_stirrers_stocked_in_back, napkins_stocked_in_back, and counter_space_available are not yet true.",
+            "category": "can_continue",
+            "recommendation": "Update the initial world to set sugar_stirrers_stocked_in_back and napkins_stocked_in_back to true, and counter_space_available to true; alternatively add a preparatory step to verify and prepare back-stock and workspace before this action."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Sugar stirrers are stocked in Hobbs Cafe storage/back area and can be retrieved.",
+            "Napkins are stocked in Hobbs Cafe storage/back area and can be retrieved.",
+            "Counter area has available space to place sugar stirrers and napkins for customer access."
+          ],
+          "effects": [
+            "Sugar stirrers are placed on the counter for customers to use.",
+            "Napkins are placed on the counter for customers to use."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Brew fresh coffee batch or ensure coffee flow)",
+      14,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A4 (Brew fresh coffee batch or ensure coffee flow) cannot start due to unsatisfied preconditions at time 3: coffee_beans_available, coffee_machine_functional, water_reservoir_filled, and cups_stock_full must be true.",
+            "category": "can_continue",
+            "recommendation": "Update the initial world to set coffee_beans_available, coffee_machine_functional, water_reservoir_filled, and cups_stock_full to true; or insert a preparatory check to confirm and prepare these resources before this action."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Coffee beans or ground coffee available for brewing",
+            "Espresso/coffee machine is powered on and functional",
+            "Water reservoir is filled to an adequate level",
+            "Grinder is loaded with beans or ready to grind",
+            "Portafilter and filter baskets are available and clean",
+            "Brewing system (espresso machine or coffee brewer) is clean and ready for operation",
+            "Cups or mugs are available for serving the brewed coffee"
+          ],
+          "effects": [
+            "A fresh batch of coffee is brewed and ready to serve at Hobbs Cafe",
+            "Coffee flow is established, allowing hot coffee to pour into cups or carafes as needed",
+            "Repository of brewed coffee increases (coffee stock/in-metal pot) for serving customers",
+            "Espresso machine enters a brewing state and will continue to produce coffee as long as resumed requests occur"
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Arrange display and Valentine decor near the counter)",
+      14,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A5 (Arrange display and Valentine decor near the counter) cannot start due to unsatisfied precondition at time 4: valentine_decor_available is not confirmed.",
+            "category": "can_continue",
+            "recommendation": "Update the initial world to set valentine_decor_available to true, then re-run planning; or perform a quick prep to retrieve decor before this step."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is at Hobbs Cafe or has immediate access to the counter area.",
+            "Valentine decor and display materials are available and accessible to use.",
+            "Counter area is clear of clutter and surfaces are clean for arranging items.",
+            "Adequate lighting is available to place and view the decorations."
+          ],
+          "effects": [
+            "Valentine-themed display and decor are arranged near the counter.",
+            "Counter area now features festive decorations (banners, hearts, etc.).",
+            "Surfaces used for display are now occupied by decor items and are considered arranged."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Check inventory of supplies for the day)",
+      11,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A6 (Check inventory of supplies for the day) cannot start due to unsatisfied precondition at time 5: inventory_checked is not yet true (contrary to the plan\u2019s repair guidance).",
+            "category": "can_continue",
+            "recommendation": "Update the initial world to set inventory_checked to true (and restocking_plan_updated to true as indicated by the proposed repair), then re-run planning."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is physically present at Hobbs Cafe with access to the storage/stock area.",
+            "An inventory ledger (paper or digital) for supplies is available and readable.",
+            "A known list of daily required supplies or a method to determine them is available."
+          ],
+          "effects": [
+            "Current stock levels for all relevant supplies are read or recorded.",
+            "Any items that are low or below threshold are flagged for restocking.",
+            "A restocking plan or shopping list is updated to ensure adequate supplies for the day and upcoming shift."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Open POS and test cash register)",
+      11,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "POS hardware present on the counter and powered on",
+            "Cash register connected to the cash drawer and receipt printer with paper loaded",
+            "Access to the POS interface granted (Isabella is at the counter and can operate it)",
+            "Cafe is in the opening state or about to open (it's before or at opening time)",
+            "Sufficient network or offline mode available for the POS to function (if applicable)",
+            "No ongoing transaction or customer line that would block testing"
+          ],
+          "effects": [
+            "POS system is powered on and accessible at the counter",
+            "Cash register is ready to process transactions (drawer can be opened, receipt printer can print)",
+            "A test transaction is completed and a test receipt is produced",
+            "System status updated to 'ready for opening' for sales at 8am"
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Set up playlist and ensure ambient lighting)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe is accessible and open to prep (in operation or opening soon).",
+            "A functioning audio playback system (music player, speakers, or streaming device) is available and powered on.",
+            "Electrical power is available and circuits for the audio system and lighting are active.",
+            "A music playlist (curated or accessible) is available or can be created for use.",
+            "Ambient lighting controls (dimmers or switches) are accessible and functioning.",
+            "A safe area free of obstructions exists for placing or adjusting audio equipment and lighting."
+          ],
+          "effects": [
+            "Playlist is loaded/queued on the music system and ready to play at opening time.",
+            "Ambient lighting is set to a welcoming level (e.g., warm, dimmed lighting) in preparation for opening.",
+            "Audio system and lighting have been configured, ready to start when customers arrive.",
+            "System state reflects that the cafe is prepared for opening with music and lighting ready to engage customers."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Adjust seating and tidy dining area near counter)",
+      13,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is present in Hobbs Cafe or has control over the dining area near the counter.",
+            "The dining area near the counter exists and is accessible for tidying and seating adjustments.",
+            "Cleaning supplies (broom, dustpan, cleaning spray or wipe, and cloths) are available for tidying.",
+            "There are seats (chairs/stools) and tables in the dining area that can be adjusted or rearranged if needed."
+          ],
+          "effects": [
+            "Dining area near the counter is free of litter and clutter.",
+            "Tables and chairs in the dining area near the counter are tidied and aligned for customers.",
+            "Seating arrangement is adjusted to improve flow and seating capacity for opening prep (e.g., chairs aligned, cushions in place).",
+            "Counter-area surfaces (end of counter, edge of tables) are wiped clean and ready for service."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Open Hobbs Cafe for the day (Perform quick safety check and door status immediately)",
+      7,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Modified to satisfy the 'immediately' cue while preserving overall timing and task structure.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Prepare sign inviting customers to event)",
+      9,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A11 (Prepare sign inviting customers to event) cannot start due to unsatisfied precondition at time 10: sign_materials_available is not confirmed (inventory_checked also not guaranteed).",
+            "category": "can_continue",
+            "recommendation": "Update initial world to set sign_materials_available to true (and ensure inventory_checked is true), then replan."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has access to Hobbs Cafe (location is open and she is present there).",
+            "Materials available to create a sign (paper or board, marker or pen, optionally tape or staples).",
+            "Clear knowledge of event details to include on the sign (date, time, venue, brief invitation).",
+            "Space to place the sign where customers will see it (e.g., near entrance or counter)."
+          ],
+          "effects": [
+            "A sign inviting customers to the Valentine's Day event is created.",
+            "The sign is placed in Hobbs Cafe where customers can see it (e.g., by entrance or counter).",
+            "Customers become aware of the upcoming event and its date/time through the sign (readiness to attend)."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Restock pastry display case)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A12 (Restock pastry display case) cannot start due to unsatisfied preconditions at time 11: pastry_display_case_accessible, pastry_stock_available, and pastry_display_space_available are not true.",
+            "category": "can_continue",
+            "recommendation": "Update initial world to set pastry_display_case_accessible, pastry_stock_available and pastry_display_space_available to true; or perform the necessary checks and prep steps before this action."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Pastry display case exists in Hobbs Cafe and is accessible (unlocked/open).",
+            "There is at least one pastry item available in storage or kitchen to restock (inventory > 0).",
+            "There is available display space in the pastry display case (not full)."
+          ],
+          "effects": [
+            "Pastry display case stock increases with the restocked pastries.",
+            "Inventory of pastries in storage/kitchen decreases by the restocked amount.",
+            "Pastry display case now shows stocked pastries and is ready for customers."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Clean glass display and mirror area)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Glass cleaner or cleaning solution is available, accessible, and not expired.",
+            "A cleaning cloth, microfiber, or paper towels are available.",
+            "Glass display area and mirror area are present in Hobbs Cafe and accessible (not blocked or locked).",
+            "The surfaces to be cleaned are reachable without obstruction (e.g., not behind equipment or crowded by merchandise)."
+          ],
+          "effects": [
+            "Glass display surfaces and mirrors in the designated area are clean and streak-free.",
+            "Dust and smudges are removed from the glass surfaces."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening (Finalize prep checklist and note any remaining needs)",
+      10,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Extended duration from 4 to 11 to meet total duration requirement.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A14 (Finalize prep checklist and note remaining needs) cannot start due to unsatisfied preconditions at time 13: checklist_draft_exists, inventory_checked, inventory_records_accessible, editing_capabilities_available, and checklist_tasks_identified are not all true.",
+            "category": "can_continue",
+            "recommendation": "Update initial world to set checklist_draft_exists, inventory_checked, inventory_records_accessible, editing_capabilities_available, and checklist_tasks_identified to true; then replan."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is physically present at Hobbs Cafe or has immediate access to the cafe prep area.",
+            "A current or draft opening prep checklist exists for Hobbs Cafe.",
+            "Isabella has a means to edit or finalize the checklist (pen and paper or digital device).",
+            "Inventory and supply records are available to review during checklist finalization.",
+            "There are identifiable tasks or items on the checklist that require confirmation or updating (e.g., ingredients, cups, napkins, decorations, equipment)."
+          ],
+          "effects": [
+            "The Hobbs Cafe opening prep checklist is finalized or updated to reflect current status.",
+            "Any remaining needs or shortages identified during finalization are documented for action.",
+            "A list of required next steps (e.g., orders, restocking, decoration setup) is clarified for completion before opening."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (moving and coordinating pastry counts and seating layout with heart decor placement)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Per modification goal: insert a 5-minute moving/conversation step before other planning tasks.",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Welcome Maria Lopez and brainstorm Valentine's decorations, discuss decor theme, mood board, and pastry coordination for Hobbs Cafe)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted at the start per modification goal; new leaf task.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Wait for Maria Lopez at Hobbs Cafe)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted wait before greeting as per modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Wait for Maria Lopez at Hobbs Cafe)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Insertion per modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Greet Maria Lopez warmly)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Maria Lopez is in Hobbs Cafe or within greeting distance of Isabella Rodriguez.",
+            "Isabella Rodriguez is awake and at Hobbs Cafe ( cafe open for business )."
+          ],
+          "effects": [
+            "Maria Lopez feels welcomed by the warm greeting.",
+            "Isabella Rodriguez fosters a positive social interaction with Maria Lopez, strengthening rapport.",
+            "Conversation begins about Valentine decorations and party planning, laying groundwork for brainstorming session."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Wait for Maria Lopez at Hobbs Cafe (Wait for Maria Lopez at Hobbs Cafe)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted wait as per modification goal before the planned discussion with Maria.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Wait for Maria Lopez at Hobbs Cafe)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted waiting step per modification goal; new atomic action within the parent task",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Sketch a rough layout of the party space on a napkin)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is at Hobbs Cafe or has access to Hobbs Cafe space during its open hours",
+            "Napkin is available for use",
+            "Pen or pencil (writing instrument) is available to sketch with",
+            "Sufficient space at a table or counter to sketch a layout on the napkin",
+            "There is no ongoing prohibition preventing Isabella from sketching party layouts (owner permission is implicit)"
+          ],
+          "effects": [
+            "A napkin contains a rough layout sketch of the party space (locations for tables, seating, stage/food area, decorations)",
+            "The napkin is in use and associated with the party planning activity",
+            "The sketch reflects the planned Valentine\u2019s Day party setup for Hobbs Cafe (5pm\u20137pm window)",
+            "The action creates a tangible artifact (napkin sketch) that can be referenced for future decoration decisions"
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations (Discuss color palette options with Maria)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original task preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Maria Lopez is physically present at Hobbs Cafe with Isabella Rodriguez or they are both able to meet there for discussion.",
+            "Hobbs Cafe is accessible and open so they can meet (within cafe operating hours).",
+            "They have writing materials or a whiteboard/notebook to record color palette options during the discussion."
+          ],
+          "effects": [
+            "A set of color palette options for Valentine's decorations is identified or compiled.",
+            "A plan for Valentine's Day decorations is updated to reflect the chosen palette (notes recorded for future execution)."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (moving to grocery store shelf)",
+      7,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Complete stock check)",
+      3,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted stock check before basket addition per modification goal",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (moving to pharmacy store counter)",
+      2,
+      "the Ville:The Willows Market and Pharmacy:store:pharmacy store counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Review the Valentine decor checklist with Maria and Klaus via text chat)",
+      4,
+      "the Ville:The Willows Market and Pharmacy:store:pharmacy store counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original first step preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has access to a text chat platform (phone or computer) and can send messages to Maria and Klaus",
+            "The Valentine decor checklist exists and is accessible to Isabella, Maria, and Klaus",
+            "Maria and Klaus are reachable and available to participate in a text chat",
+            "There is enough lead time before February 14 for reviewing and assigning tasks (context implies ongoing planning)"
+          ],
+          "effects": [
+            "The Valentine decor checklist is reviewed during the chat",
+            "Any ambiguities in the checklist are clarified and resolved",
+            "Decor tasks or responsibilities are assigned or agreed upon for Maria, Klaus, or other participants",
+            "Updated/confirmed list of decor items, quantities, and needed supplies is produced",
+            "A follow-up action or next steps (e.g., shopping or additional coordination) is scheduled or noted in the chat"
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (moving to grocery store shelf)",
+      1,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Search the Willows Market decor aisle for heart themed napkins and candles)",
+      8,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original second step preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is at or can travel to The Willows Market and Pharmacy in the Ville.",
+            "The Willows Market is open and accessible at the current time.",
+            "Heart-themed napkins are stocked in the decor aisle of The Willows Market.",
+            "Heart-themed candles are stocked in the decor aisle of The Willows Market.",
+            "Isabella has the intention to coordinate with Maria and Klaus for the Valentine event and is actively planning purchases for the decor."
+          ],
+          "effects": [
+            "Heart-themed napkins and candles are located within the decor aisle and can be retrieved or purchased.",
+            "Isabella records or notes the location of napkins and candles for the Valentine party planning.",
+            "Maria and Klaus are aware of the plan to source decor and can be coordinated for pickup or delivery if needed."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Coordinate final item choices with Maria and Klaus via text chat)",
+      7,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Original third step preserved",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has access to a text chat with Maria Lopez and Klaus Mueller.",
+            "Isabella has a draft list of Valentine decor options to discuss.",
+            "Maria Lopez and Klaus Mueller are reachable and responsive via text chat.",
+            "There is a shared context about the Hobbs Cafe Valentine party (date/time, theme) that the chat references."
+          ],
+          "effects": [
+            "A final decor item list is agreed upon by Isabella, Maria, and Klaus.",
+            "A chat thread records the discussion and the agreed final item choices.",
+            "A shopping list or procurement plan for the chosen decor items is updated or created.",
+            "Next steps are defined (e.g., place orders, confirm delivery/pick-up) for decorating the Hobbs Cafe for the Valentine party."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (moving to pharmacy store shelf)",
+      2,
+      "the Ville:The Willows Market and Pharmacy:store:pharmacy store shelf",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Add selected heart decor items to the shopping basket and note quantities)",
+      4,
+      "the Ville:The Willows Market and Pharmacy:store:pharmacy store shelf",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Durations adjusted to accommodate inserted stock check",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Selected heart decor items are in stock at the chosen store (e.g., Harvey Oak Supply Store or The Willows Market and Pharmacy).",
+            "Isabella has access to her shopping basket system and can add or modify items in the basket.",
+            "Quantities for each selected item are positive integers.",
+            "The store is accessible/available for shopping (i.e., not restricted) and Isabella can complete the addition of items to the basket."
+          ],
+          "effects": [
+            "Selected heart decor items are added to the shopping basket with the specified quantities.",
+            "The shopping basket reflects the updated quantities for those heart decor items.",
+            "If multiple items are chosen, each item\u2019s quantity is recorded in the basket."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Check stock availability and select substitutes if needed)",
+      4,
+      "the Ville:The Willows Market and Pharmacy:The Willows Market and Pharmacy",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Durations adjusted to fit total time",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has a shopping list of Valentine decor items to check.",
+            "Access to the stores that sell Valentine decor (e.g., Harvey Oak Supply Store, The Willows Market and Pharmacy) and permission to check their stock.",
+            "The stores are reachable and inventory can be checked (e.g., during open hours).",
+            "Know criteria for acceptable substitutes (style, price, quantity) and have a plan to choose them."
+          ],
+          "effects": [
+            "Stock statuses for the requested decor items are known (in stock or out of stock).",
+            "Substitute items are identified and selected for any unavailable decor items according to predefined criteria.",
+            "Shopping list or plan is updated to include chosen substitutes and any items to reserve or purchase.",
+            "Isabella communicates the stock results and substitutes to Maria and Klaus and adjusts coordination plan for the Valentine decor group event."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to grocery store counter)",
+      2,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Wait for the final shopping list costs to be calculated and approved)",
+      4,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New atomic task inserted to satisfy the modification goal before finalizing costs.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus (Text Maria and Klaus with the final shopping list and estimated costs)",
+      12,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Durations adjusted to fit total time",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has a device capable of sending text messages (phone or messaging app) and can compose and send messages.",
+            "The final Valentine's Day shopping list is prepared and written down.",
+            "The estimated costs for the shopping list are calculated and ready to share.",
+            "Maria Lopez can receive texts and has a reachable contact for Isabella.",
+            "Klaus Mueller can receive texts and has a reachable contact for Isabella.",
+            "There is functioning network/messaging service available to send the texts."
+          ],
+          "effects": [
+            "Maria Lopez receives the final shopping list and estimated costs via text.",
+            "Klaus Mueller receives the final shopping list and estimated costs via text.",
+            "A text thread from Isabella to Maria and Klaus is created or updated confirming the shared list and costs."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (moving to cooking area)",
+      7,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Replan the entire lunch service sequence from scratch)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted planning step before lunch service to satisfy modification goal and ensure a smoother lunch flow.",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Retrieve lunch items from the refrigerator for service)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Adjusted duration to reflect new planning phase and redistributed remaining time.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe refrigerator contains lunch items",
+            "Refrigerator is accessible (not locked)",
+            "Isabella Rodriguez is present in Hobbs Cafe or the kitchen to retrieve items",
+            "It is during cafe operating hours (lunch service period)",
+            "Lunch items in the fridge are not expired or spoiled"
+          ],
+          "effects": [
+            "Lunch items are removed from the refrigerator and moved to the prep/serving area",
+            "Inventory counts for lunch items in the fridge are decreased accordingly",
+            "Lunch items are marked as ready-to-serve for the current service"
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Plate and arrange lunch items on the counter for display)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Adjusted duration after replan.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "A2: The action 'Plate and arrange lunch items on the counter for display' has an unsatisfied precondition: lunch_items_in_fridge must be true, but the preceding action retrieved lunch items and set lunch_items_in_fridge to false.",
+            "category": "need_replan",
+            "recommendation": "Reconsider the plating step to rely on items that are ready_to_serve (rather than requiring them to remain in the fridge), or reorder/adjust so items are still considered available for plating after retrieval (e.g., add a bridging step to preserve fridge state or modify the precondition to reflect readiness rather than location)."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe is open for lunch service (between 11:00 and 14:00 or during lunch hours).",
+            "There are lunch items available in stock suitable for plating (not spoiled).",
+            "Clean plates, bowls, or other serving dishes are available for use.",
+            "A clean, unobstructed counter or display area is available for arranging items."
+          ],
+          "effects": [
+            "Lunch items are plated onto plates/bowls and placed on the counter for display.",
+            "Displayed lunch items become visibly accessible to customers at the counter.",
+            "Quantity of plated lunch items is deducted from overall inventory stock to reflect they are on display."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Refill beverages and glasses for lunch service)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Adjusted duration after replan.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "A3: The action 'Refill beverages and glasses for lunch service' has an unsatisfied precondition: lunch_items_in_fridge must be true, but the previous action removed the items from the fridge.",
+            "category": "need_replan",
+            "recommendation": "Modify the beverage refill step to rely on items being available on the counter or in a ready_to_serve state, or adjust the sequence so beverages are replenished while items are still in the correct state."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe is open (currently during lunch service hours).",
+            "Isabella Rodriguez is present at the cafe to perform refilling tasks.",
+            "There is enough beverage stock (coffee, tea, juices, water, or other drinks) to refill for lunch service.",
+            "There are enough clean glasses or a functioning dishwasher to reuse/refill glasses.",
+            "Access to beverage dispensing equipment and cold storage (dispenser, fridge, or bar taps) is available and functioning."
+          ],
+          "effects": [
+            "Beverage levels in serving containers are replenished for lunch service.",
+            "Glasses are refilled or refilled glasses are made available for customers (increase in ready-to-serve glassware).",
+            "Number of empty/dirty glasses decreases as they are collected and cleaned.",
+            "Post-refill, the cafe has more ready-to-serve beverages and glassware for customers during lunch."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Conduct quick inventory of lunch supplies in fridge and pantry)",
+      8,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Adjusted duration after replan.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is physically present at Hobbs Cafe or has access to its fridge and pantry.",
+            "Fridge and pantry are accessible (not locked, not sealed) and not undergoing maintenance.",
+            "She has a means to record inventory (paper, clipboard, or digital device)."
+          ],
+          "effects": [
+            "A quick count of lunch items in the fridge and pantry is performed and documented.",
+            "Inventory records for lunch supplies are updated with observed quantities.",
+            "Any missing or low-stock items are identified and flagged for restocking."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Define explicit lunch menu items and dietary considerations for Hobbs Cafe)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted per modification goal to define lunch menu and dietary notes before updating lunch-related tasks.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Converse about Valentine\u2019s Day prep with Maria Lopez and Klaus Mueller; coordinate decor, pastry coordination, and mood-board)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted per modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to cooking area)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Define explicit lunch menu items and dietary considerations for Hobbs Cafe)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New explicit lunch menu task inserted per modification goal.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to cooking area)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Prepare lunch service update message for Maria and Klaus)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New, concrete action added at the start to fulfill the modification goal.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Wait for lunch rush to begin) (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Wait for lunch rush to begin) (moving to cooking area)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Wait for lunch rush to begin) (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Wait for lunch rush to begin) (moving to cooking area)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (Wait for lunch rush to begin) (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Lunch service and quick inventory review (wait_for_lunch_rush_to_begin)",
+      10,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New leaf action representing waiting for lunch rush; aligns with modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Checking phone",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._normalize_decomposition_durations"
+      }
+    ],
+    [
+      "Finalize Valentine\u2019s Day party setup (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine\u2019s Day party setup (Review the current seating layout and identify space for 5 to 7 pm guests)",
+      8,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Preserves the critical initial review step in the minimal viable sequence.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is at Hobbs Cafe or has access to Hobbs Cafe seating layout and furniture.",
+            "Hobbs Cafe has a seating area with tables and chairs to review.",
+            "There is at least one seating area that could host 5 to 7 guests in a block or grouped seating.",
+            "The current seating layout plan is available (physical or digital).",
+            "There is no prohibitive restriction (e.g., ongoing event) preventing review of seating layout at that time."
+          ],
+          "effects": [
+            "A reviewed seating layout identifying space for 5 to 7 pm guests is created or updated.",
+            "Notes on suitable seating areas (tables, chairs, and arrangement) are added to the plan.",
+            "Potential constraints or considerations (e.g., aisle clearance, accessibility) are recorded.",
+            "The seating plan now reflects designated space for the Valentine\u2019s Day party guests from 5pm to 7pm."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Finalize Valentine\u2019s Day party setup (Finalize seating chart and table assignments on the napkin layout)",
+      11,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Keeps the core seating finalization intact.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe is accessible and the Valentine\u2019s Day party is active on the calendar (5pm-7pm)",
+            "A napkin layout or seating plan is available and can be written on",
+            "Guest list with names and party sizes is available for seating assignment",
+            "There are enough tables and chairs available at Hobbs Cafe to accommodate all attendees without overlap",
+            "Table numbers or identifiers are known and can be marked on the napkin layout",
+            "The staff knows to reference the napkin layout for seating during the event",
+            "There are no current seating conflicts or reservations that would prevent finalizing the seating plan"
+          ],
+          "effects": [
+            "Napkin layout is updated to show final seating chart with each guest assigned to a table/seat",
+            "Tables and seats are reserved/marked as occupied on the napkin layout for the event duration",
+            "Staff can reference the finalized seating plan to direct guests upon arrival"
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Finalize Valentine\u2019s Day party setup (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Confirm all party materials including decorations, playlist, menu, and guest list are gathered and confirmed)",
+      10,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New pre-check added before finalizing to ensure all materials are ready for the event.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to piano)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to cooking area)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Converse and coordinate post-stream mood board, decor, and pastry tasks with Maria Lopez)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:cooking area",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted per goal to coordinate follow-up discussion",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Confirm decorations, playlist, menu, and guest list are gathered and confirmed)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New pre-check step added before finalization to ensure all components are ready.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Confirm all party materials decorations playlist menu guest list are gathered and confirmed with Maria Lopez and Klaus Mueller)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted pre-check per modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "moving (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Confirm all party materials decorations, playlist, menu, guest list with Maria and Klaus)",
+      9,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Insertion per modification goal; provides a concrete step before continuing with other setup tasks.",
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Create a welcome sign draft)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Keep sign drafting as part of the event setup.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez has writing materials (paper and pen or a computer) available for drafting a sign.",
+            "Isabella knows the event details: Valentine\u2019s Day party at Hobbs Cafe on February 14, 2023 from 5pm to 7pm.",
+            "Isabella has access to a drafting surface or space (table, wall, or digital canvas) in Hobbs Cafe or a nearby workspace where the sign can be created.",
+            "Isabella has permission to create promotional materials for the party and to display a welcome sign in Hobbs Cafe."
+          ],
+          "effects": [
+            "A welcome sign draft is created with preliminary text inviting guests to Hobbs Cafe for the Valentine\u2019s Day party on February 14, 2023 from 5pm to 7pm.",
+            "The draft sign exists in a tangible (paper/board) or digital form ready for review, editing, and later display at Hobbs Cafe."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Assemble a simple playlist)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Playlist preparation preserved.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "A device capable of playing music (e.g., smartphone, computer) is available to the organizer.",
+            "The cafe's sound system or speakers are accessible and functional, and can be connected to the music device.",
+            "A set of songs suitable for Valentine's Day (romantic or soft, non-offensive) exists in the music library or streaming service accessible from the device.",
+            "Power is available to the sound system and volume can be controlled."
+          ],
+          "effects": [
+            "A simple playlist of songs for the Valentine\u2019s Day event is created and saved.",
+            "The cafe's sound system is configured to play the playlist when the party starts (5:00 pm) and continues through the planned duration (7:00 pm)."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Skip decor tweaks)",
+      5,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Skip last-minute decor tweaks to satisfy minimal viability.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Converse with Klaus Mueller to coordinate seating, heart decor placements, and pastry counts for the Valentine's Day party)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted per modification goal",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Finalize Valentine's Day party setup (Skip decor tweaks)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "reaction_helpers._create_react:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Skip last-minute decor tweaks to satisfy minimal viability.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (moving to behind the cafe counter)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Record today's sales in the closing log.)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp",
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (moving to refrigerator)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Check refrigeration temperature and log readings.)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp",
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Wipe down refrigerator exterior and sanitize handles.)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Arrange pastry display and rotate stock to promote items.)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp",
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (moving to piano)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Update tomorrow's event readiness note with decorations and playlist plan.)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:piano",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp",
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (moving to behind the cafe counter)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Seal decorative items and label prep materials for tomorrow.)",
+      3,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp",
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Close POS session and generate end of day report.)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow (Perform a security sweep of the cafe to verify all entry points are secured.)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp",
+        "decreased_duration": true
+      }
+    ],
+    [
+      "Checking phone",
+      2,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._normalize_decomposition_durations"
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Discuss Valentine decor theme and mood board ideas for Hobbs Cafe)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Insertion before the greeting to start decor planning earlier in the discussion.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Wait for Maria Lopez at Hobbs Cafe)",
+      4,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Inserted per modification goal before the greeting task.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Greet Maria Lopez warmly and sit together at a quiet table)",
+      8,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Preserved initial greeting step; content unchanged.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Maria Lopez is present at Hobbs Cafe or arrives there for the meeting",
+            "The cafe is open (8am-8pm) and operating normally in the evening",
+            "There exists a quiet table available (not occupied or reserved) for two people",
+            "Isabella Rodriguez is able to approach and greet Maria Lopez (not obstructed by staff or counter activity)",
+            "No loud disturbances or other customers interrupting (environment is quiet enough for a debrief)"
+          ],
+          "effects": [
+            "Maria Lopez is greeted warmly by Isabella Rodriguez",
+            "Maria Lopez and Isabella Rodriguez are seated together at a quiet table",
+            "A table at Hobbs Cafe becomes occupied by Isabella and Maria Lopez for the dinner/debrief",
+            "Isabella Rodriguez conveys hospitality and makes the environment welcoming for the conversation",
+            "Mutual social rapport between Isabella Rodriguez and Maria Lopez is established in this moment"
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Review seating plan and confirm space for five to seven pm guests)",
+      20,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Expanded seating discussion to cover the 5-7 pm window.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A2 (Review seating plan and confirm space for five to seven pm guests) has an unsatisfied precondition: quiet_table_available is false due to the preceding action A1 (greet_maria_lopez_warmly_and_sit_together_at_a_quiet_table) consuming the quiet table.",
+            "category": "need_replan",
+            "recommendation": "Reorder the plan so the seating-plan review happens before greeting and occupying the quiet table (or remove the blocking action). Ensure quiet_table_available remains true for A2."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe is open for business (operating hours 8am-8pm) on or before the planned seating review time.",
+            "There are at least five seats/tables available that are not fully reserved or blocked by other reservations.",
+            "The seating area is physically accessible (no furniture moved or blocked) and not under maintenance or closed for other reasons.",
+            "The seating plan document or layout is available to review, and Isabella Rodriguez has the authority to modify reservations or seating arrangements."
+          ],
+          "effects": [
+            "The seating plan is reviewed for consistency and feasibility.",
+            "A space is confirmed or reserved for 5-7 pm guests, specifying tables/chairs to accommodate them.",
+            "Seating arrangements are updated or noted (e.g., which tables are reserved, walkways kept clear).",
+            "Notes or decisions about capacity, table assignment, and guest flow are recorded for subsequent action (e.g., informing Maria Lopez and staff)."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to refrigerator)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Finalize light dinner options and note dietary restrictions)",
+      15,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Extended dinner options to accommodate dietary checks while keeping dinner flow.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez is present at Hobbs Cafe or in a kitchen area to discuss dinner plans.",
+            "Maria Lopez is available and present or reachable to participate in the debrief.",
+            "There are ingredients or pantry access to prepare light dinner options (e.g., salads, wraps, soups) or a means to source them.",
+            "There is a means to record notes (notebook or digital device).",
+            "There is a reasonable expectation to conduct planning during the evening within cafe operations (after opening hours or during remaining shift)."
+          ],
+          "effects": [
+            "A finalized shortlist of light dinner options is established (specific dishes chosen).",
+            "Maria Lopez's dietary restrictions and preferences are documented for the dinner plan (e.g., allergies, dietary needs).",
+            "A plan for serving or offering the dinner is outlined, including portions or menu presentation.",
+            "Notes about dietary restrictions are stored for reference during food preparation and future interactions."
+          ]
+        },
+        "was_decomposed": true,
+        "decreased_duration": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      1,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Confirm guest list updates and RSVP counts with Maria)",
+      11,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Preserved RSVP task with same content.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A4 (Confirm guest list updates and RSVP counts with Maria) has an unsatisfied precondition: quiet_table_available is false due to the preceding action A1 turning it off.",
+            "category": "need_replan",
+            "recommendation": "Move the greeting/quiet-table action to after A4 (or remove A1) so quiet_table_available stays true for A4."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "The current Valentine's Day party guest list and RSVP records are accessible to Isabella.",
+            "Maria Lopez is reachable for a meeting or discussion (in person at Hobbs Cafe or via phone/message).",
+            "There is an expected or possible opportunity to discuss updates (e.g., after opening hours or during a quiet moment) without interrupting cafe service."
+          ],
+          "effects": [
+            "Guest list updates are reviewed and confirmed with Maria.",
+            "RSVP counts are verified and updated as needed.",
+            "Any new guest additions or changes discussed with Maria are reflected in the master guest list.",
+            "Maria's RSVP status or feedback is clarified (attending/not attending) for the party."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Update the Valentine's playlist to match the party mood)",
+      10,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Preserved playlist update.",
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez has access to Hobbs Cafe's music system and playlist management interface.",
+            "A Valentine\u2019s Day themed playlist or appropriate Valentine songs are available in the music library (digital or local).",
+            "She has permission to modify the cafe's playlist (or is the owner/operator in control of the system)."
+          ],
+          "effects": [
+            "The playlist is updated to Valentine/romantic mood suitable for a Valentine's Day party.",
+            "The music system is set to play Valentine-themed tracks (either by switching to the updated playlist or by adding Valentine songs to the current queue).",
+            "The atmosphere in Hobbs Cafe is aligned with a Valentine mood for the evening dinner and debrief with Maria Lopez."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to cafe customer seating)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Wait for Maria Lopez to arrive at Hobbs Cafe)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:cafe customer seating",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "New pre-debrief wait added to satisfy the modification goal.",
+        "was_decomposed": true
+      }
+    ],
+    [
+      "moving (moving to behind the cafe counter)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Summarize decisions and assign follow up tasks to Maria)",
+      6,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "no_change",
+        "reasoning": "Preserved decisions summary.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A6 (Summarize decisions and assign follow up tasks to Maria) has an unsatisfied precondition: quiet_table_available is false due to the preceding action A1 turning it off.",
+            "category": "need_replan",
+            "recommendation": "Restructure sequence so A1 occurs after A6 (or remove A1) to keep quiet_table_available available for A6."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Hobbs Cafe is open and able to seat two people for dinner (before 8pm).",
+            "Maria Lopez is in town and available to attend the dinner at Hobbs Cafe.",
+            "There is sufficient food/beverage resources at Hobbs Cafe to host a dinner meeting.",
+            "Isabella Rodriguez has authority to assign follow-up tasks to Maria and can coordinate the debrief at the cafe."
+          ],
+          "effects": [
+            "Isabella and Maria have a dinner at Hobbs Cafe.",
+            "A debrief discussion occurs and decisions are summarized.",
+            "Follow-up tasks for Maria are identified and added to her to-do list (e.g., items related to the Valentine's Day party or cafe operations).",
+            "Assigned tasks and the debrief outcomes are communicated to Maria and likely documented for later reference."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez (Set reminders for tomorrow and record next steps in the chat)",
+      2,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "created_in": "NeuralSymbolicPlanningService._replan_schedule_with_llm:neuro-symbolic:replanning",
+        "category": "duration_changed",
+        "reasoning": "Reduced end-of-session wrap-up time to fit 90-minute window.",
+        "pddl_signature": null,
+        "replan_hints": [
+          {
+            "error": "Action A7 (Set reminders for tomorrow and record next steps in the chat) has an unsatisfied precondition: not (reminders_scheduled) is false because A6 schedules reminders.",
+            "category": "need_replan",
+            "recommendation": "Move the reminder step before the summarization step (A7 before A6) or otherwise adjust the sequence so that A7 can run before reminders are scheduled."
+          }
+        ],
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has access to a reminder/calendar tool (on a phone, computer, or cafe system).",
+            "There is a chat or conversation channel with Maria Lopez through which to record next steps.",
+            "The system supports creating a reminder for tomorrow at a specified time or with a specified prompt.",
+            "The content of the reminders and next steps is known to Isabella (e.g., tasks for dinner/debrief)."
+          ],
+          "effects": [
+            "A reminder is scheduled for tomorrow (e.g., for a time to follow up or complete tasks).",
+            "The chat/conversation log with Maria Lopez is updated to include the recorded next steps.",
+            "Maria Lopez is likely to be notified or see the reminder and the next steps through the chat or notification system."
+          ]
+        },
+        "was_decomposed": true
+      }
+    ],
+    [
+      "Wind down at home (moving to desk)",
+      2,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Wind down at home (Wind down at home)",
+      57,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp:neuro-symbolic:replanning",
+        "category": "activity_added",
+        "reasoning": "Replaced multiple wind-down subtasks with a single domain-defined wind down at home action to streamline the wrap-up period within the given time.",
+        "was_decomposed": false,
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "It is after 8pm (the cafe's closing time).",
+            "Isabella Rodriguez has access to her apartment (can enter and be present in Isabella Rodriguez's apartment)."
+          ],
+          "effects": [
+            "Isabella Rodriguez's location becomes Isabella Rodriguez's apartment (main room).",
+            "Hobbs Cafe is closed for the night (no longer serving customers)."
+          ]
+        }
+      }
+    ],
+    [
+      "Checking phone",
+      4,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._normalize_decomposition_durations"
+      }
+    ],
+    [
+      "Wind down at home (moving to bathroom sink)",
+      2,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Wind down at home (Wash face)",
+      6,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is in a bathroom with a sink and access to running water.",
+            "A towel or washcloth is available for drying the face.",
+            "Face wash or soap is available for cleansing (optional but common).",
+            "A means to dry the face (towel or air) is available."
+          ],
+          "effects": [
+            "Isabella's face is clean after washing.",
+            "Face is dry after sequence of washing and drying.",
+            "Any visible water on the face is removed."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Wind down at home (Brush teeth)",
+      4,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:bathroom sink",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella is in or has access to a bathroom with a sink",
+            "A toothbrush is available for Isabella to use",
+            "Toothpaste is available for Isabella to use",
+            "There is clean water available for brushing (running water)"
+          ],
+          "effects": [
+            "Teeth become clean after brushing",
+            "Mouth feels refreshed/fresher",
+            "Toothbrush is placed back on its holder or kept ready for next use",
+            "Bathroom sink has been used (water run and then stopped)"
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Checking phone",
+      3,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._normalize_decomposition_durations"
+      }
+    ],
+    [
+      "Evening wind-down and reminders (moving to desk)",
+      1,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._insert_movement_actions",
+        "is_moving": true
+      }
+    ],
+    [
+      "Evening wind-down and reminders (Open calendar on phone and review tomorrow's schedule.)",
+      10,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella Rodriguez has access to a smartphone with a calendar app",
+            "The smartphone is powered on and unlocked",
+            "The calendar app contains entries for tomorrow's date (February 14, 2023) or the user's schedule for that date is accessible",
+            "The calendar view can be opened and viewed (screen not blocked)"
+          ],
+          "effects": [
+            "Isabella's view now shows tomorrow's schedule (February 14, 2023).",
+            "Isabella gains awareness of scheduled events for tomorrow (e.g., Valentine's Day party at Hobbs Cafe 5pm\u20137pm).",
+            "No calendar entries are changed or removed by opening and reviewing the calendar."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Evening wind-down and reminders (Create reminders on the phone for the next day including wake up time and cafe tasks.)",
+      8,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Isabella has a phone with a reminders/app function available.",
+            "Phone is powered on and can schedule reminders.",
+            "Isabella knows the next-day date (Feb 14) and her cafe routine (open at 8:00 AM, close at 8:00 PM)."
+          ],
+          "effects": [
+            "Reminders are created for 6:00 AM to wake up on Feb 14.",
+            "Reminders are created for 8:00 AM to open Hobbs Cafe on Feb 14.",
+            "Reminders are created for 8:00 PM to close Hobbs Cafe on Feb 14."
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Evening wind-down and reminders (Write a brief note in the journal outlining the top priorities for tomorrow.)",
+      2,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "pddl_signature": null,
+        "nl_analysis": {
+          "preconditions": [
+            "Is in an evening wind-down moment with quiet environment",
+            "Has access to a journal or digital note-taking tool",
+            "Has a writing instrument (pen/pencil) or a device to type",
+            "Has sufficient light or a functioning screen to write",
+            "Is capable of reflecting on tomorrow's tasks and priorities"
+          ],
+          "effects": [
+            "A journal entry is created or updated containing a concise list of tomorrow's top priorities",
+            "The note includes time-bound or actionable items for the next day (e.g., tasks at Hobbs Cafe, event reminders)",
+            "The journal entry is timestamped or dated for tomorrow's plan"
+          ]
+        },
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService.generate_task_decomp"
+      }
+    ],
+    [
+      "Checking phone",
+      4,
+      "the Ville:Isabella Rodriguez's apartment:main room:desk",
+      {
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._normalize_decomposition_durations"
+      }
+    ],
+    [
+      "start bedtime routine",
+      35,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:shower",
+      {
+        "planned_work_minutes": 30,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 35,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "wash face, brush teeth, skincare, change into pajamas, set tomorrow's alarm",
+        "task_intent": "Begin the final personal care and prep for sleep to promote a restful night.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Go to bed and sleep",
+      200,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 200,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 200,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "sleep through the night without leaving bed or performing tasks; no errands or conversations; lights off and phone silenced",
+        "task_intent": "Fall asleep and rest through the night until wake time.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ]
+  ],
+  "f_daily_schedule_hourly_org": [
+    [
+      "Sleeping",
+      360,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 360,
+        "planned_travel_minutes": 0,
+        "planned_total_minutes": 360,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [],
+        "in_scope": "Stay in bed until wake up time.",
+        "task_intent": "Get rest and prepare for the day.",
+        "was_decomposed": true,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule (pre-sleep)"
+      }
+    ],
+    [
+      "completing morning routine and breakfast at home",
+      45,
+      "the Ville:Isabella Rodriguez's apartment:main room:refrigerator",
+      {
+        "planned_work_minutes": 40,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 45,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom"
+        ],
+        "in_scope": "hygiene, grooming, dressing, and a quick breakfast (coffee and toast or fruit) at home",
+        "task_intent": "Finish personal morning routine and have a quick breakfast before leaving for Hobbs Cafe",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Prep Hobbs Cafe for opening",
+      60,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "planned_work_minutes": 50,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 60,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "unlock doors, start coffee station, stock cups/napkins, arrange pastries, set up Valentine\u2019s decor",
+        "task_intent": "Get the cafe ready for 8am opening by starting coffee service setup, turning on equipment, and placing Valentine\u2019s d\u00e9cor.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Unlock cafe doors and begin coffee service",
+      155,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "planned_work_minutes": 150,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 155,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "unlock doors, start coffee machine, verify pastry display, ensure greeting area is tidy for customers",
+        "task_intent": "Prepare the cafe for opening by unlocking doors and starting the coffee station for the morning rush.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Welcome Maria Lopez and brainstorm Valentine's decorations",
+      35,
+      "the Ville:Hobbs Cafe:cafe:behind the cafe counter",
+      {
+        "planned_work_minutes": 30,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 35,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "talk about decor concepts, preferences, and requirements; note ideas and create a preliminary decoration checklist",
+        "task_intent": "Discuss and collect decoration ideas for tomorrow's Valentine\u2019s event with Maria Lopez.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus",
+      60,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "planned_work_minutes": 50,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 60,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:The Willows Market and Pharmacy:store"
+        ],
+        "in_scope": "Visit The Willows Market and Harvey Oak Supply Store to buy heart-themed decor, napkins, candles, and other party supplies; text Maria Lopez and Klaus Mueller with tomorrow's plans; update decor checklist",
+        "task_intent": "Acquire heart-themed decorations and supplies and inform Maria Lopez and Klaus Mueller about tomorrow's plans",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Lunch service and quick inventory review",
+      70,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 70,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "Lunch service, short lunch break, and inventory check/update for party supplies",
+        "task_intent": "Serve customers at lunch, take a short break, and review remaining party-supply needs for the afternoon setup.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Shop for Valentine decor and coordinate with Maria and Klaus",
+      80,
+      "the Ville:The Willows Market and Pharmacy:store:grocery store shelf",
+      {
+        "planned_work_minutes": 70,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 80,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:The Willows Market and Pharmacy:store"
+        ],
+        "in_scope": "Visit The Willows Market and Harvey Oak Supply Store to buy heart-themed decor, napkins, candles, etc.; text Maria Lopez and Klaus Mueller with tomorrow's plans; update decor checklist",
+        "task_intent": "Acquire heart-themed decorations and supplies and inform Maria Lopez and Klaus Mueller about tomorrow's plans.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Finalize Valentine\u2019s Day party setup",
+      75,
+      "the Ville:Isabella Rodriguez's apartment:main room:shelf",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 15,
+        "planned_total_minutes": 75,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "Finalize seating plan for 5-7pm, prepare a welcome sign, assemble a simple playlist, and note any last-minute decor tweaks; confirm changes with Maria and Klaus if needed",
+        "task_intent": "Complete seating, signage, and music prep for the event.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Close Hobbs Cafe and prep for tomorrow",
+      65,
+      "the Ville:Hobbs Cafe:cafe:refrigerator",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 65,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Hobbs Cafe:cafe"
+        ],
+        "in_scope": "Lock doors, turn off equipment, tally cash, update inventory, tidy dining area, restock as needed, leave notes for tomorrow, and brief Maria/Klaus if needed",
+        "task_intent": "Secure the cafe and finalize end-of-day tasks to be ready for tomorrow's operations",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Evening dinner and debrief with Maria Lopez",
+      100,
+      "the Ville:The Rose and Crown Pub:pub:microphone",
+      {
+        "planned_work_minutes": 90,
+        "planned_travel_minutes": 10,
+        "planned_total_minutes": 100,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:The Rose and Crown Pub:pub"
+        ],
+        "in_scope": "dinner at pub, casual debrief, and finalizing tomorrow's party logistics with Maria Lopez",
+        "task_intent": "Enjoy dinner at The Rose and Crown Pub and confirm any last-minute Valentine\u2019s Day party details with Maria.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Wind down at home",
+      75,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 60,
+        "planned_travel_minutes": 15,
+        "planned_total_minutes": 75,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "Travel home from pub, review tomorrow's schedule, set reminders, prepare belongings for tomorrow, and complete a light bedtime routine (wash face, brush teeth) before bed.",
+        "task_intent": "Review tomorrow's Valentine\u2019s Day agenda, set reminders, and begin the bedtime routine to prepare for a restful night.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Evening wind-down and reminders",
+      25,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 20,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 25,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "Review tomorrow's agenda, set reminders/alarms, and start bedtime routine",
+        "task_intent": "Confirm tomorrow's schedule, set reminders, and complete bedtime prep.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "start bedtime routine",
+      35,
+      "the Ville:Isabella Rodriguez's apartment:bathroom:shower",
+      {
+        "planned_work_minutes": 30,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 35,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room",
+          "the Ville:Isabella Rodriguez's apartment:bathroom",
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "wash face, brush teeth, skincare, change into pajamas, set tomorrow's alarm",
+        "task_intent": "Begin the final personal care and prep for sleep to promote a restful night.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ],
+    [
+      "Go to bed and sleep",
+      200,
+      "the Ville:Isabella Rodriguez's apartment:main room:bed",
+      {
+        "planned_work_minutes": 200,
+        "planned_travel_minutes": 5,
+        "planned_total_minutes": 200,
+        "planned_intra_task_travel_minutes": 0,
+        "planned_intra_task_travel_path": [
+          "the Ville:Isabella Rodriguez's apartment:main room"
+        ],
+        "in_scope": "sleep through the night without leaving bed or performing tasks; no errands or conversations; lights off and phone silenced",
+        "task_intent": "Fall asleep and rest through the night until wake time.",
+        "was_decomposed": false,
+        "created_in": "NeuralSymbolicPlanningService._generate_iterative_schedule"
+      }
+    ]
+  ],
+  "act_address": "the Ville:Isabella Rodriguez's apartment:main room:bed",
+  "act_start_time": "February 13, 2023, 20:40:00",
+  "act_duration": 200,
+  "act_description": "Go to bed and sleep",
+  "act_pronunciatio": "\ud83d\udecf\ufe0f\ud83d\ude34",
+  "act_event": [
+    "Isabella Rodriguez",
+    "sleep",
+    "bed"
+  ],
+  "act_obj_description": "being used for sleeping",
+  "act_obj_pronunciatio": "\ud83d\udecf\ufe0f\ud83d\ude34",
+  "act_obj_event": [
+    "bed",
+    "be used for",
+    "sleeping"
+  ],
+  "chatting_with": null,
+  "chat": null,
+  "chatting_with_buffer": {
+    "Klaus Mueller": -1952,
+    "Maria Lopez": -2306
+  },
+  "chatting_end_time": null,
+  "act_path_set": true,
+  "planned_path": []
+}
