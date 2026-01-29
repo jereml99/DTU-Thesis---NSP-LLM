@@ -16,120 +16,65 @@ It defines core concepts (LLMs, agents, planning paradigms including PDDL), revi
 \subsection{Planning}
 \label{subsec:planning}
 
-To ground our approach, we introduce the formal concepts underlying planning.
+To ground our approach, we introduce the formal concepts underlying automated planning. Formally, planning is grounded in \emph{restricted state-transition systems} \cite{ghallab2004automated, bolanderGentleIntroductionEpistemic2017}. However, to enable efficient modeling and solving, we focus on the \emph{structured representation} known as STRIPS \cite{fikes1971strips}, which defines states and actions using logic rather than explicit graphs. We assume a deterministic, fully observable environment.
 
 \begin{definition}[State]
     \label{def:state}
-    A \emph{state} $s \in S$ is a complete description of the environment at a given time, capturing all facts that are relevant for action execution and goal satisfaction. In classical planning, states are assumed to be fully observable and are typically represented as sets of propositional facts that are true in the world; any fact not included in the set is assumed to be false (closed-world assumption).
+    A \emph{state} $s$ is a description of the environment at a specific point in time. In classical planning, a state is represented as a finite set of logical facts (ground atoms) that are true. By the Closed-World Assumption, any fact not present in the state is false.
 \end{definition}
 
 \begin{definition}[Action]
     \label{def:action}
-    An \emph{action} is a discrete event that transitions the system from one state to another. Formally, in a planning problem, an action $a \in A$ is an element of the action set. An action is characterized by:
+    An \emph{action} $a$ defines a transition between states. It is characterized by:
     \begin{itemize}
-        \item \textbf{Preconditions}: facts that must be true in the current state for the action to be executable;
-        \item \textbf{Effects}: facts that become true (or false) after the action executes.
+        \item $\text{name}(a)$: A unique identifier (e.g., $\texttt{move(isabella, home, cafe)}$);
+        \item $\text{pre}(a)$: \emph{Preconditions}—a set of facts that must be in the current state for the action to be applicable;
+        \item $\text{eff}^{+}(a)$: \emph{Add effects}—facts that become true after execution;
+        \item $\text{eff}^{-}(a)$: \emph{Delete effects}—facts that become false.
     \end{itemize}
-
-    More precisely, an action $a$ can be represented as a tuple $a = (\text{pre}(a), \text{eff}^{+}(a), \text{eff}^{-}(a))$, where:
-    \begin{itemize}
-        \item $\text{pre}(a) \subseteq S$ is the set of precondition facts; an action is applicable in state $s$ if $\text{pre}(a) \subseteq s$ (under the closed-world assumption);
-        \item $\text{eff}^{+}(a) \subseteq S$ are the \emph{positive effects}—facts that become true after execution;
-        \item $\text{eff}^{-}(a) \subseteq S$ are the \emph{negative effects}—facts that become false after execution.
-    \end{itemize}
-    % Do that
-    [Check math and maybe add some references]
-
-    \begin{definition}[Transition Function]
-        \label{def:transition}
-        A \emph{transition function} $T: S \times A \to S$ maps a current state and an action to a resulting state. For an action $a$ and state $s$, $T(s, a) = s'$ describes how the environment evolves when action $a$ is executed in state $s$.
-    \end{definition}
-
-    The transition function for an action is thus: if $\text{pre}(a) \subseteq s$, then $T(s, a) = (s \setminus \text{eff}^{-}(a)) \cup \text{eff}^{+}(a)$, producing a new state $s'$ that reflects the additions and deletions induced by the action.
-
-    When the preconditions of an action are satisfied, the action is said to be \emph{applicable} in the current state. Executing an applicable action transitions the system via the transition function $T$: $T(s, a) = s'$, where $s$ is the current state and $s'$ is the resulting state after the action's effects are applied.
+    An action $a$ is applicable in state $s$ if $\text{pre}(a) \subseteq s$. It compactly represents a transition in the underlying system to a new state $s' = (s \setminus \text{eff}^{-}(a)) \cup \text{eff}^{+}(a)$.
 \end{definition}
 
 \begin{definition}[Classical Planning Problem]
     \label{def:planning-problem}
-    A \emph{classical planning problem} is a tuple $\langle S, A, T, I, G \rangle$:
+    A classical planning problem is a tuple $\Pi = \langle P, A, I, G \rangle$, where:
     \begin{itemize}
-        \item $S$ is a finite set of states;
+        \item $P$ is a finite set of all possible facts (propositions);
         \item $A$ is a finite set of actions;
-        \item $T: S \times A \to S$ is a deterministic transition function mapping a state and action to a next state;
-        \item $I \subseteq S$ is a non-empty set of initial states;
-        \item $G \subseteq S$ is a non-empty set of goal states (any state in $G$ is an acceptable outcome).
+        \item $I \subseteq P$ is the \emph{initial state};
+        \item $G \subseteq P$ is the \emph{goal condition} (a set of facts that must be true).
     \end{itemize}
 \end{definition}
 
-\begin{definition}[Plan, Validity, and Solution]
+\begin{definition}[Plan and Solution]
     \label{def:plan}
-    A \emph{plan} is a finite sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$. For an initial state $s_0 \in I$, the \emph{execution} of $\pi$ from $s_0$ is defined recursively: let $s_0' = s_0$, and for $i = 1, \ldots, n$, let $s_i' = T(s_{i-1}', a_i)$.
-
-    The plan $\pi$ is \emph{valid} for a planning problem $\langle S, A, T, I, G \rangle$ (from Definition \ref{def:planning-problem}) if, for every initial state $s_0 \in I$ % Dose this make sense?
-    , the execution of $\pi$ reaches a goal state, i.e., $s_n' \in G$. A valid plan is called a \emph{solution} to the planning problem.
+    A \emph{plan} is a sequence of actions $\pi = \langle a_1, \ldots, a_n \rangle$. A plan is a \emph{solution} if actions are sequentially applicable starting from $I$ and the final state satisfies all facts in $G$.
 \end{definition}
 
-\paragraph{Classical Planning Assumptions}
-The formulation above relies on standard assumptions commonly adopted in classical planning:
-\begin{itemize}
-    \item \textbf{Determinism}: actions have deterministic outcomes;
-    \item \textbf{Full observability}: the planner has complete knowledge of the current state;
-    \item \textbf{Instantaneous actions}: actions do not consume time;
-    \item \textbf{Single-agent setting}: interactions with other agents are not considered.
-\end{itemize}
-These assumptions enable precise reasoning about plan validity and correctness. Relaxing them leads to more expressive planning models but can lead to fewer logical guarantees; some of these are discussed later in this thesis.
-
-\begin{definition}[Planner]
-    \label{def:planner}
-    A \emph{planner} is an algorithm that, given a classical planning problem $\langle S, A, T, I, G \rangle$, searches for a valid plan $\pi$ (if one exists) that transforms an initial state $I$ into a state satisfying the goal condition $G$ by applying actions whose preconditions are satisfied and whose effects induce state transitions \cite{russell2010aima,ghallab2004automated}.
-
-    Planners explore the induced state space using different search strategies, including breadth-first search, depth-first search, and heuristic-guided search, and may optimize for criteria such as plan length, action cost, or makespan \cite{ghallab2004automated}. Classical planning systems include STRIPS \cite{fikes1971strips}, GraphPlan \cite{blum1997graphplan}, and modern heuristic planners such as Fast Downward \cite{helmert2006fast}.
-\end{definition}
-
-% Okey in thise example we define the actions but the dont define the precodition and effect, is it correct or do we have some lacking in eather the example of the definition? I think like we mixing two deffinition of the planning above the action should not have preconditions and effects. (we have the transition function for that precondtion and effect are for STRIP language) 
-\begin{example}[Simple Classical Planning Problem]
+\begin{example}[Isabella's Commute]
     \label{ex:simple-planning}
-    Consider a minimal instance for Isabella's routine.
+    Consider Isabella needing to open her cafe.
 
-    \textbf{States}: Isabella can be in two locations: her apartment or Hobbs Cafe. The state set is:
-    \[
-        S = \{\texttt{at-apartment}, \texttt{at-cafe}\}.
-    \]
+    \textbf{Facts}: $P = \{ \texttt{at(home)}, \texttt{at(cafe)}, \texttt{cafe-open} \}$.
 
-    \textbf{Actions}: Isabella can move between locations:
-    \[
-        A = \{\texttt{walk-to-cafe}, \texttt{walk-to-apartment}\}.
-    \]
+    \textbf{Initial State}: $I = \{ \texttt{at(home)} \}$.
+    \textbf{Goal}: $G = \{ \texttt{at(cafe)}, \texttt{cafe-open} \}$.
 
-    \textbf{Transition function}: The transition function $T$ encodes how each action changes the state. For example:
+    \textbf{Actions}:
     \begin{itemize}
-        \item $T(\texttt{at-apartment}, \texttt{walk-to-cafe}) = \texttt{at-cafe}$;
-        \item $T(\texttt{at-cafe}, \texttt{walk-to-apartment}) = \texttt{at-apartment}$;
-        \item $T(\texttt{at-apartment}, \texttt{walk-to-apartment}) = \texttt{at-apartment}$ (no change);
+        \item $\texttt{drive-to-cafe}$:
+              \begin{itemize}
+                  \item Pre: $\{ \texttt{at(home)} \}$
+                  \item Eff: Add $\{ \texttt{at(cafe)} \}$, Delete $\{ \texttt{at(home)} \}$
+              \end{itemize}
+        \item $\texttt{open-up}$:
+              \begin{itemize}
+                  \item Pre: $\{ \texttt{at(cafe)} \}$
+                  \item Eff: Add $\{ \texttt{cafe-open} \}$
+              \end{itemize}
     \end{itemize}
 
-    \textbf{Initial state}: Isabella begins at her apartment:
-    \[
-        I = \{\texttt{at-apartment}\}.
-    \]
-
-    \textbf{Goal state}: Isabella wants to be at the cafe to open it:
-    \[
-        G = \{\texttt{at-cafe}\}.
-    \]
-
-    \textbf{Solution}: The plan $\pi = \langle \texttt{walk-to-cafe} \rangle$ is valid:
-    \begin{itemize}
-        \item Start at $s_0' = \texttt{at-apartment} \in I$.
-        \item Execute action $\texttt{walk-to-cafe}$:
-              \[
-                  s_1' = T(\texttt{at-apartment}, \texttt{walk-to-cafe}) = \texttt{at-cafe}.
-              \]
-        \item End state: $s_1' \in G$.
-    \end{itemize}
-
-    This minimal problem has a unique solution; extending it with additional actions (like \texttt{unlock-door}) would yield more complex planning instances.
+    \textbf{Valid Plan}: $\pi = \langle \texttt{drive-to-cafe}, \texttt{open-up} \rangle$.
 \end{example}
 
 \subsubsection{Hierarchical Planning}
@@ -168,7 +113,7 @@ To enable symbolic planning, domains and problems must be specified formally. Th
     \begin{itemize}
         \item \textbf{Types}: A hierarchy of object classes (e.g., \texttt{agent}, \texttt{location}, \texttt{item}).
         \item \textbf{Predicates}: Atomic properties denoted $p(x_1, \ldots, x_k)$ that describe facts about objects. These can be $n$-ary relations (e.g., \texttt{(at ?a - agent ?l - location)}) or zero-arity propositions (e.g., \texttt{(shop-open)}).
-        \item \textbf{Action Schemas}: Parameterized operators with preconditions and effects.
+        \item \textbf{Action Schemas}: Parameterized operators with preconditions and effects (corresponding to the action model defined in Definition \ref{def:action}).
     \end{itemize}
 
     A PDDL \emph{problem} defines a specific instance:
